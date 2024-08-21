@@ -1,4 +1,4 @@
-site_name: My site
+site_name: Cancer variant analysis course
 nav:
     - Home: index.md
     - Precourse preparations: precourse.md
@@ -11,8 +11,8 @@ theme:
   favicon: assets/images/SIB_logo.svg
 
 # Repository
-repo_name: sib-swiss/course_website_template
-repo_url: https://github.com/sib-swiss/course_website_template
+repo_name: sib-swiss/cancer-variants-training
+repo_url: https://github.com/sib-swiss/cancer-variants-training
 
 markdown_extensions:
   - abbr

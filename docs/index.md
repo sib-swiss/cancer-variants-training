@@ -9,13 +9,11 @@
 
 ## Learning outcomes
 
-### General learning outcomes
-
 After this course, you will be able to:
 
-### Learning outcomes explained
-
-To reach the general learning outcomes above, we have set a number of smaller learning outcomes. Each chapter starts with these smaller learning outcomes. Use these at the start of a chapter to get an idea what you will learn. Use them also at the end of a chapter to evaluate whether you have learned what you were expected to learn.
+* Understand the difference between germline and somatic variants and the implication of computational analysis 
+* Perform a somatic variant analysis on a paired sample (tumor – normal) with GATK4  
+* Perform a somatic variant annotation with VEP and use the results to filter possible high-impact mutations in the cancer genome 
 
 ## Learning experiences
 
