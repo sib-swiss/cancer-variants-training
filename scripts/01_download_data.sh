@@ -60,3 +60,5 @@ bcftools index --tbi af-only-gnomad.hg38.subset.vcf.gz
 
 bcftools view -Oz -r chr6,chr17 1000g_pon.hg38.vcf.gz > 1000g_pon.hg38.subset.vcf.gz
 bcftools index --tbi 1000g_pon.hg38.subset.vcf.gz
+
+wget https://hgdownload.soe.ucsc.edu/goldenPath/hg38/database/refFlat.txt.gz

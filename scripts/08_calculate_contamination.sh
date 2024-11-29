@@ -7,4 +7,4 @@ RESOURCEDIR=/config/data/resources
 gatk CalculateContamination \
 -I "$VARIANTDIR"/tumor.pileups.table \
 -matched "$VARIANTDIR"/normal.pileups.table \
--O "$VARIANTDIR"/ontamination.table
+-O "$VARIANTDIR"/contamination.table
