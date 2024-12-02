@@ -1,0 +1,79 @@
+[
+  {
+    "objectID": "course_schedule.html",
+    "href": "course_schedule.html",
+    "title": "Course schedule",
+    "section": "",
+    "text": "Note\n\n\n\nApart from the starting time the time schedule is indicative. Because we can not plan a course by the minute, in practice the time points will deviate."
+  },
+  {
+    "objectID": "course_schedule.html#day-1",
+    "href": "course_schedule.html#day-1",
+    "title": "Course schedule",
+    "section": "Day 1",
+    "text": "Day 1\n\n\n\n\n\n\n\n\n\nblock\nstart\nend\nsubject\n\n\n\n\nintroduction\n9:00 AM\n9:30 AM\nIntroduction\n\n\nblock 1\n9:30 AM\n10:30 AM\nVariant calling for cancer - lecture\n\n\n\n10:30 AM\n11:00 AM\nBREAK\n\n\nblock 2\n11:00 AM\n12:00 PM\nVariant calling - exercises\n\n\n\n12:00 PM\n1:00 PM\nBREAK\n\n\nblock 3\n1:00 PM\n1:45 PM\nVariant annotation - lecture\n\n\nblock 4\n1:45 PM\n3:00\nVariant annotation - exercises\n\n\n\n3:00 PM\n3:30 PM\nBREAK\n\n\nblock 4\n3:30 PM\n4:10 PM\nVariant annotation - exercises\n\n\nblock 5\n4:10 PM\n5:00 PM\nVisualization - exercises"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "SIB course cancer variant analysis",
+    "section": "",
+    "text": "Flavio Lombardo ORCiD\nGeert van Geest ORCiD"
+  },
+  {
+    "objectID": "index.html#teachers-and-authors",
+    "href": "index.html#teachers-and-authors",
+    "title": "SIB course cancer variant analysis",
+    "section": "",
+    "text": "Flavio Lombardo ORCiD\nGeert van Geest ORCiD"
+  },
+  {
+    "objectID": "index.html#attribution",
+    "href": "index.html#attribution",
+    "title": "SIB course cancer variant analysis",
+    "section": "Attribution",
+    "text": "Attribution\nParts of this course are inspired by the Precision medicine course, from the Griffith lab."
+  },
+  {
+    "objectID": "index.html#license-copyright",
+    "href": "index.html#license-copyright",
+    "title": "SIB course cancer variant analysis",
+    "section": "License & copyright",
+    "text": "License & copyright\nLicense: CC BY 4.0\nCopyright: SIB Swiss Institute of Bioinformatics"
+  },
+  {
+    "objectID": "index.html#overview",
+    "href": "index.html#overview",
+    "title": "SIB course cancer variant analysis",
+    "section": "Overview",
+    "text": "Overview\nCancer is a disease of the genome. Mutations of genes that regulate cell proliferation and cell death result in uncontrolled growth eventually causing symptoms. During cancer progression, mutations build up that not only affect cell growth, but also can suppress the immune system, increase the chance of metastases and promote genome instability leading to additional malignant mutations.\nCharacterizing the mutations of malignant tissue has been instrumental for the development of the diagnosis, prognosis and treatment of cancer in the last decades. Cancer is a highly heterogeneous disease, and by knowing the type of mutations, we have a better understanding of the nature of tumors, and can apply precision medicine approaches, like targeted drug and immune therapy.\nCancer variants are somatic, which means that they exist in only a part of the cells in the tissue. Even in a sample of a solid tumor, only a part of the cells contains the driver mutations. This makes analysis of cancer variants more challenging than inherited variants, where we assume (almost) all cells have the same genome.\nIn this course, you will learn the concepts of calling somatic variants from next generation sequencing data, and the basics of performing cancer variant annotation. The practical work will be mainly based on the GATK4 (Mutect2) pipeline and Ensembl’s Variant Effect Predictor (VEP)."
+  },
+  {
+    "objectID": "index.html#audience",
+    "href": "index.html#audience",
+    "title": "SIB course cancer variant analysis",
+    "section": "Audience",
+    "text": "Audience\nThis intermediate level course is addressed to researchers and clinicians who work with cancer biology and want to get started with performing somatic variant analysis and interpretation of the results."
+  },
+  {
+    "objectID": "index.html#learning-outcomes",
+    "href": "index.html#learning-outcomes",
+    "title": "SIB course cancer variant analysis",
+    "section": "Learning outcomes",
+    "text": "Learning outcomes\nAt the end of the course, the participants should be able to:\n\nUnderstand the difference between germline and somatic variants and the implication of computational analysis\nPerform a somatic variant analysis on a paired sample (tumor – normal) with GATK4\nPerform a somatic variant annotation with VEP and use the results to filter possible high-impact mutations in the cancer genome"
+  },
+  {
+    "objectID": "precourse_preparations.html",
+    "href": "precourse_preparations.html",
+    "title": "Precourse preparations",
+    "section": "",
+    "text": "Participants should have knowledge in NGS techniques, quality control and alignment to a reference genome, and detection of genomic variants from read alignment to variant calling and annotation.\nThe competences and knowledge levels required correspond to those taught in courses such as: NGS - Quality Control, Alignment, Visualisation and NGS-Genome Variant Analysis.\nParticipants should have a basic understanding of working with command line tools on Unix-based systems. You can test your skills with Unix with the quiz here. If you do not feel comfortable with UNIX commands, please take our Unix fundamentals e-learning module.\n\n\n\nParticipants should have their own computer with a browser installed (e.g. chrome, firefox, edge), and can access http websites. Test it here: http://httpforever.com/."
+  },
+  {
+    "objectID": "precourse_preparations.html#prerequisites",
+    "href": "precourse_preparations.html#prerequisites",
+    "title": "Precourse preparations",
+    "section": "",
+    "text": "Participants should have knowledge in NGS techniques, quality control and alignment to a reference genome, and detection of genomic variants from read alignment to variant calling and annotation.\nThe competences and knowledge levels required correspond to those taught in courses such as: NGS - Quality Control, Alignment, Visualisation and NGS-Genome Variant Analysis.\nParticipants should have a basic understanding of working with command line tools on Unix-based systems. You can test your skills with Unix with the quiz here. If you do not feel comfortable with UNIX commands, please take our Unix fundamentals e-learning module.\n\n\n\nParticipants should have their own computer with a browser installed (e.g. chrome, firefox, edge), and can access http websites. Test it here: http://httpforever.com/."
+  }
+]

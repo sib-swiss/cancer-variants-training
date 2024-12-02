@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Cancer variant analysis - SIB course cancer variant analysis</title>
+<title>Cancer variant analysis - Precourse preparations</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -127,7 +127,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">SIB course cancer variant analysis</li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Precourse preparations</li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
     </div>
@@ -150,12 +150,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#teachers-and-authors" id="toc-teachers-and-authors" class="nav-link active" data-scroll-target="#teachers-and-authors">Teachers and authors</a></li>
-  <li><a href="#attribution" id="toc-attribution" class="nav-link" data-scroll-target="#attribution">Attribution</a></li>
-  <li><a href="#license-copyright" id="toc-license-copyright" class="nav-link" data-scroll-target="#license-copyright">License &amp; copyright</a></li>
-  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview">Overview</a></li>
-  <li><a href="#audience" id="toc-audience" class="nav-link" data-scroll-target="#audience">Audience</a></li>
-  <li><a href="#learning-outcomes" id="toc-learning-outcomes" class="nav-link" data-scroll-target="#learning-outcomes">Learning outcomes</a></li>
+  <li><a href="#prerequisites" id="toc-prerequisites" class="nav-link active" data-scroll-target="#prerequisites">Prerequisites</a>
+  <ul class="collapse">
+  <li><a href="#knowledge-competencies" id="toc-knowledge-competencies" class="nav-link" data-scroll-target="#knowledge-competencies">Knowledge / competencies</a></li>
+  <li><a href="#technical" id="toc-technical" class="nav-link" data-scroll-target="#technical">Technical</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -164,7 +163,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">SIB course cancer variant analysis</h1>
+<h1 class="title">Precourse preparations</h1>
 </div>
 
 
@@ -179,43 +178,20 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="teachers-and-authors" class="level2">
-<h2 class="anchored" data-anchor-id="teachers-and-authors">Teachers and authors</h2>
-<ul>
-<li>Flavio Lombardo <a href="">ORCiD</a></li>
-<li>Geert van Geest <a href="https://orcid.org/0000-0002-1561-078X">ORCiD</a></li>
-</ul>
+<section id="prerequisites" class="level2">
+<h2 class="anchored" data-anchor-id="prerequisites">Prerequisites</h2>
+<section id="knowledge-competencies" class="level3">
+<h3 class="anchored" data-anchor-id="knowledge-competencies">Knowledge / competencies</h3>
+<p>Participants should have knowledge in NGS techniques, quality control and alignment to a reference genome, and detection of genomic variants from read alignment to variant calling and annotation.</p>
+<p>The competences and knowledge levels required correspond to those taught in courses such as: <a href="https://www.sib.swiss/training/course/20240424_NGSQC">NGS - Quality Control, Alignment, Visualisation</a> and <a href="https://www.sib.swiss/training/course/20240905_NGSGV">NGS-Genome Variant Analysis</a>.</p>
+<p>Participants should have a basic understanding of working with command line tools on Unix-based systems. You can test your skills with Unix with the quiz <a href="https://docs.google.com/forms/d/e/1FAIpQLSd2BEWeOKLbIRGBT_aDEGPce1FOaVYBbhBiaqcaHoBKNB27MQ/viewform?usp=sf_link">here</a>. If you do not feel comfortable with UNIX commands, please take our <a href="https://edu.sib.swiss/pluginfile.php/2878/mod_resource/content/4/couselab-html/content.html">Unix fundamentals</a> e-learning module.</p>
 </section>
-<section id="attribution" class="level2">
-<h2 class="anchored" data-anchor-id="attribution">Attribution</h2>
-<p>Parts of this course are inspired by the <a href="https://pmbio.org/">Precision medicine course</a>, from the <a href="http://www.griffithlab.org/">Griffith lab</a>.</p>
-</section>
-<section id="license-copyright" class="level2">
-<h2 class="anchored" data-anchor-id="license-copyright">License &amp; copyright</h2>
-<p><strong>License:</strong> <a href="https://github.com/sib-swiss/cancer-variants-training/blob/master/LICENSE.md">CC BY 4.0</a></p>
-<p><strong>Copyright:</strong> <a href="https://www.sib.swiss/">SIB Swiss Institute of Bioinformatics</a></p>
-</section>
-<section id="overview" class="level2">
-<h2 class="anchored" data-anchor-id="overview">Overview</h2>
-<p>Cancer is a disease of the genome. Mutations of genes that regulate cell proliferation and cell death result in uncontrolled growth eventually causing symptoms. During cancer progression, mutations build up that not only affect cell growth, but also can suppress the immune system, increase the chance of metastases and promote genome instability leading to additional malignant mutations.</p>
-<p>Characterizing the mutations of malignant tissue has been instrumental for the development of the diagnosis, prognosis and treatment of cancer in the last decades. Cancer is a highly heterogeneous disease, and by knowing the type of mutations, we have a better understanding of the nature of tumors, and can apply precision medicine approaches, like targeted drug and immune therapy.</p>
-<p>Cancer variants are somatic, which means that they exist in only a part of the cells in the tissue. Even in a sample of a solid tumor, only a part of the cells contains the driver mutations. This makes analysis of cancer variants more challenging than inherited variants, where we assume (almost) all cells have the same genome.</p>
-<p>In this course, you will learn the concepts of calling somatic variants from next generation sequencing data, and the basics of performing cancer variant annotation. The practical work will be mainly based on the GATK4 (Mutect2) pipeline and Ensembl’s Variant Effect Predictor (VEP).</p>
-</section>
-<section id="audience" class="level2">
-<h2 class="anchored" data-anchor-id="audience">Audience</h2>
-<p>This intermediate level course is addressed to researchers and clinicians who work with cancer biology and want to get started with performing somatic variant analysis and interpretation of the results.</p>
-</section>
-<section id="learning-outcomes" class="level2">
-<h2 class="anchored" data-anchor-id="learning-outcomes">Learning outcomes</h2>
-<p>At the end of the course, the participants should be able to:</p>
-<ul>
-<li><p>Understand the difference between germline and somatic variants and the implication of computational analysis</p></li>
-<li><p>Perform a somatic variant analysis on a paired sample (tumor – normal) with GATK4</p></li>
-<li><p>Perform a somatic variant annotation with VEP and use the results to filter possible high-impact mutations in the cancer genome</p></li>
-</ul>
+<section id="technical" class="level3">
+<h3 class="anchored" data-anchor-id="technical">Technical</h3>
+<p>Participants should have their own computer with a browser installed (e.g.&nbsp;chrome, firefox, edge), and can access http websites. Test it here: <a href="http://httpforever.com/">http://httpforever.com/</a>.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
