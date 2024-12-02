@@ -5,9 +5,8 @@ on:
   push:
     branches: main
     paths: 
-      - index.qmd
+      - '*.qmd'
       - custom.scss
-      - renv.lock
       - _quarto.yml
   # every week on sunday
   schedule:
