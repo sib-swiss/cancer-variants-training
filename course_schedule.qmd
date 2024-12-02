@@ -11,12 +11,12 @@ title: "Course schedule"
 | block   	| start    	| end      	| subject                        	|
 |---------	|----------	|----------	|--------------------------------	|
 | introduction 	| 9:00 AM  	| 9:30 AM 	| Introduction |
-| block 1 	| 9:30 AM  	| 10:30 AM 	| Variant calling for cancer - lecture |
+| block 1 	| 9:30 AM  	| 10:30 AM 	| [Variant calling](variant_calling.qmd) - lecture |
 |         	| 10:30 AM 	| 11:00 AM 	| BREAK                          	|
-| block 2 	| 11:00 AM 	| 12:00 PM 	| Variant calling - exercises	     |
+| block 2 	| 11:00 AM 	| 12:00 PM 	| [Variant calling](variant_calling.qmd) - exercises	     |
 |         	| 12:00 PM 	| 1:00 PM  	| BREAK                          	|
-| block 3 	| 1:00 PM  	| 1:45 PM  	| Variant annotation - lecture             	 |
-| block 4   | 1:45 PM   | 3:00      | Variant annotation - exercises
+| block 3 	| 1:00 PM  	| 1:45 PM  	| [Variant annotation](variant_annotation.qmd) - lecture             	 |
+| block 4   | 1:45 PM   | 3:00      | [Variant annotation](variant_annotation.qmd) - exercises
 |         	| 3:00 PM  	| 3:30 PM  	| BREAK                          	|
-| block 4 	| 3:30 PM  	| 4:10 PM  	| Variant annotation - exercises         |
+| block 4 	| 3:30 PM  	| 4:10 PM  	| [Variant annotation](variant_annotation.qmd) - exercises         |
 | block 5 	| 4:10 PM  	| 5:00 PM  	| Visualization - exercises         |
