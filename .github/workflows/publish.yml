@@ -4,10 +4,6 @@ on:
   # pushing to main
   push:
     branches: main
-    paths: 
-      - '*.qmd'
-      - custom.scss
-      - _quarto.yml
   # every week on sunday
   schedule:
     - cron: "0 0 * * SUN"
