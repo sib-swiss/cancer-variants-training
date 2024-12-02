@@ -1,5 +1,19 @@
 [
   {
+    "objectID": "precourse_preparations.html",
+    "href": "precourse_preparations.html",
+    "title": "Precourse preparations",
+    "section": "",
+    "text": "Participants should have knowledge in NGS techniques, quality control and alignment to a reference genome, and detection of genomic variants from read alignment to variant calling and annotation.\nThe competences and knowledge levels required correspond to those taught in courses such as: NGS - Quality Control, Alignment, Visualisation and NGS-Genome Variant Analysis.\nParticipants should have a basic understanding of working with command line tools on Unix-based systems. You can test your skills with Unix with the quiz here. If you do not feel comfortable with UNIX commands, please take our Unix fundamentals e-learning module.\n\n\n\nParticipants should have their own computer with a browser installed (e.g. chrome, firefox, edge), and can access http websites. Test it here: http://httpforever.com/."
+  },
+  {
+    "objectID": "precourse_preparations.html#prerequisites",
+    "href": "precourse_preparations.html#prerequisites",
+    "title": "Precourse preparations",
+    "section": "",
+    "text": "Participants should have knowledge in NGS techniques, quality control and alignment to a reference genome, and detection of genomic variants from read alignment to variant calling and annotation.\nThe competences and knowledge levels required correspond to those taught in courses such as: NGS - Quality Control, Alignment, Visualisation and NGS-Genome Variant Analysis.\nParticipants should have a basic understanding of working with command line tools on Unix-based systems. You can test your skills with Unix with the quiz here. If you do not feel comfortable with UNIX commands, please take our Unix fundamentals e-learning module.\n\n\n\nParticipants should have their own computer with a browser installed (e.g. chrome, firefox, edge), and can access http websites. Test it here: http://httpforever.com/."
+  },
+  {
     "objectID": "course_schedule.html",
     "href": "course_schedule.html",
     "title": "Course schedule",
@@ -61,19 +75,5 @@
     "title": "SIB course cancer variant analysis",
     "section": "Learning outcomes",
     "text": "Learning outcomes\nAt the end of the course, the participants should be able to:\n\nUnderstand the difference between germline and somatic variants and the implication of computational analysis\nPerform a somatic variant analysis on a paired sample (tumor – normal) with GATK4\nPerform a somatic variant annotation with VEP and use the results to filter possible high-impact mutations in the cancer genome"
-  },
-  {
-    "objectID": "precourse_preparations.html",
-    "href": "precourse_preparations.html",
-    "title": "Precourse preparations",
-    "section": "",
-    "text": "Participants should have knowledge in NGS techniques, quality control and alignment to a reference genome, and detection of genomic variants from read alignment to variant calling and annotation.\nThe competences and knowledge levels required correspond to those taught in courses such as: NGS - Quality Control, Alignment, Visualisation and NGS-Genome Variant Analysis.\nParticipants should have a basic understanding of working with command line tools on Unix-based systems. You can test your skills with Unix with the quiz here. If you do not feel comfortable with UNIX commands, please take our Unix fundamentals e-learning module.\n\n\n\nParticipants should have their own computer with a browser installed (e.g. chrome, firefox, edge), and can access http websites. Test it here: http://httpforever.com/."
-  },
-  {
-    "objectID": "precourse_preparations.html#prerequisites",
-    "href": "precourse_preparations.html#prerequisites",
-    "title": "Precourse preparations",
-    "section": "",
-    "text": "Participants should have knowledge in NGS techniques, quality control and alignment to a reference genome, and detection of genomic variants from read alignment to variant calling and annotation.\nThe competences and knowledge levels required correspond to those taught in courses such as: NGS - Quality Control, Alignment, Visualisation and NGS-Genome Variant Analysis.\nParticipants should have a basic understanding of working with command line tools on Unix-based systems. You can test your skills with Unix with the quiz here. If you do not feel comfortable with UNIX commands, please take our Unix fundamentals e-learning module.\n\n\n\nParticipants should have their own computer with a browser installed (e.g. chrome, firefox, edge), and can access http websites. Test it here: http://httpforever.com/."
   }
 ]
