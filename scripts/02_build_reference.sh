@@ -1,5 +1,5 @@
 
-REFDIR=/config/data/reference/
+REFDIR=~/project/data/reference/
 
 mkdir -p "$ALIGNDIR"
 

@@ -1,7 +1,7 @@
 
-REFDIR=/config/data/reference/
-READDIR=/config/data/reads
-ALIGNDIR=/config/data/alignments
+REFDIR=~/project/data/reference/
+READDIR=~/project/data/reads
+ALIGNDIR=~/project/data/alignments
 
 mkdir -p "$ALIGNDIR"
 

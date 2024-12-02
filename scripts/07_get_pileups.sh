@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-ALIGNDIR=/config/data/alignments
-RESOURCEDIR=/config/data/resources
-VARIANTDIR=/config/data/variants
+ALIGNDIR=~/project/data/alignments
+RESOURCEDIR=~/project/data/resources
+VARIANTDIR=~/project/data/variants
 
 for sample in tumor normal
 do

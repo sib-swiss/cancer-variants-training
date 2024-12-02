@@ -1,8 +1,8 @@
 
 #!/usr/bin/env bash
 
-ALIGNDIR=/config/data/alignments
-RESOURCEDIR=/config/data/resources
+ALIGNDIR=~/project/data/alignments
+RESOURCEDIR=~/project/data/resources
 
 gatk CalculateContamination \
 -I "$VARIANTDIR"/tumor.pileups.table \

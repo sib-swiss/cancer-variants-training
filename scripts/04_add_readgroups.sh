@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ALIGNDIR=/config/data/alignments
+ALIGNDIR=~/project/data/alignments
 
 for sample in tumor normal
 do

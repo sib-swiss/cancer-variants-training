@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-ALIGNDIR=/config/data/alignments
-REFDIR=/config/data/reference
-RESOURCEDIR=/config/data/resources
-VARIANTDIR=/config/data/variants
+ALIGNDIR=~/project/data/alignments
+REFDIR=~/project/data/reference
+RESOURCEDIR=~/project/data/resources
+VARIANTDIR=~/project/data/variants
 
 gatk FilterMutectCalls \
 -R "$REFDIR"/ref_genome.fa \
