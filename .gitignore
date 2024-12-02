@@ -11,3 +11,8 @@ data/
 .local/
 .profile
 extensions/
+.Rproj.user
+
+/env/
+/.quarto/
+/_site/

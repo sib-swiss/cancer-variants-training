@@ -1,0 +1,42 @@
+---
+title: "SIB course cancer variant analysis"
+---
+
+
+## Teachers and authors
+
+- Flavio Lombardo [ORCiD]()
+- Geert van Geest [ORCiD](https://orcid.org/0000-0002-1561-078X)
+
+## Attribution
+
+Parts of this course are inspired by the [Precision medicine course](https://pmbio.org/), from the [Griffith lab](http://www.griffithlab.org/).
+
+## License & copyright
+
+**License:** [CC BY 4.0](https://github.com/sib-swiss/cancer-variants-training/blob/master/LICENSE.md)
+
+**Copyright:** [SIB Swiss Institute of Bioinformatics](https://www.sib.swiss/)
+
+## Overview
+
+Cancer is a disease of the genome. Mutations of genes that regulate cell proliferation and cell death result in uncontrolled growth eventually causing symptoms. During cancer progression, mutations build up that not only affect cell growth, but also can suppress the immune system, increase the chance of metastases and promote genome instability leading to additional malignant mutations.  
+
+Characterizing the mutations of malignant tissue has been instrumental for the development of the diagnosis, prognosis and treatment of cancer in the last decades. Cancer is a highly heterogeneous disease, and by knowing the type of mutations, we have a better understanding of the nature of tumors, and can apply precision medicine approaches, like targeted drug and immune therapy.  
+
+Cancer variants are somatic, which means that they exist in only a part of the cells in the tissue. Even in a sample of a solid tumor, only a part of the cells contains the driver mutations. This makes analysis of cancer variants more challenging than inherited variants, where we assume (almost) all cells have the same genome.  
+
+In this course, you will learn the concepts of calling somatic variants from next generation sequencing data, and the basics of performing cancer variant annotation. The practical work will be mainly based on the GATK4 (Mutect2) pipeline and Ensembl's Variant Effect Predictor (VEP).  
+
+## Audience
+
+This intermediate level course is addressed to researchers and clinicians who work with cancer biology and want to get started with performing somatic variant analysis and interpretation of the results.  
+
+## Learning outcomes
+At the end of the course, the participants should be able to: 
+
+* Understand the difference between germline and somatic variants and the implication of computational analysis 
+
+* Perform a somatic variant analysis on a paired sample (tumor – normal) with GATK4  
+
+* Perform a somatic variant annotation with VEP and use the results to filter possible high-impact mutations in the cancer genome 

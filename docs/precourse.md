@@ -1,5 +1,0 @@
-Participants should have knowledge in NGS techniques, quality control and alignment to a reference genome, and detection of genomic variants from read alignment to variant calling and annotation.  
-
-The competences and knowledge levels required correspond to those taught in courses such as: [NGS - Quality Control, Alignment, Visualisation](https://www.sib.swiss/training/course/20240424_NGSQC) and [NGS-Genome Variant Analysis](https://www.sib.swiss/training/course/20240905_NGSGV). 
-
-Participants should have a basic understanding of working with command line tools on Unix-based systems. You can test your skills with Unix with the quiz <a href="https://docs.google.com/forms/d/e/1FAIpQLSd2BEWeOKLbIRGBT_aDEGPce1FOaVYBbhBiaqcaHoBKNB27MQ/viewform?usp=sf_link">here</a>. If you do not feel comfortable with UNIX commands, please take our <a href="https://edu.sib.swiss/pluginfile.php/2878/mod_resource/content/4/couselab-html/content.html" target="”_blank”">Unix fundamentals</a> e-learning module. 
