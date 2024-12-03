@@ -154,3 +154,27 @@ returns:
 Showing us that we have 12,744,793 reads and 1,397,598 alignments were marked as duplicate. If we do the same for the tumor bam file we see that it has 16,674,562 reads and 1,871,521 alignment marked as duplicate. 
 
 :::
+
+So, all looks good until now. We have many reads, high alignment rates, and the bam files seem to be ready for variant analysis, because they have read groups, duplicates are marked and they are sorted by coordinate. However, since we are working with whole exome sequencing (WES) data, we would like to know whether the reads align to the target regions and what kind of coverage we have. For this, we use `gatk CollectHsMetrics`. 
+
+::: {.callout-important}
+## Exercise
+
+Create a script called `02_gatk_collecthsmetrics.sh` in `~/project/scripts` to run `gatk CollectHsMetrics` on the two bam files. Here's an example:
+
+```sh
+ALIGNDIR=~/project/results/alignments
+REFDIR=~/project/data/reference
+RESOURCEDIR=~/project/data/resources
+
+for sample in tumor normal
+do
+    gatk CollectHsMetrics \
+    -I "$ALIGNDIR"/"$sample".rg.md.bam \
+    -O "$ALIGNDIR"/"$sample".rg.md.bam_hs_metrics.txt \
+    -R "$REFDIR"/ref_genome.fa \
+    --BAIT_INTERVALS "$REFDIR"/exome_regions.bed.interval_list \
+    --TARGET_INTERVALS "$REFDIR"/exome_regions.bed.interval_list
+done 
+```
+:::
