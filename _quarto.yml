@@ -18,6 +18,10 @@ website:
         text: Home
       - href: precourse_preparations.qmd
       - href: course_schedule.qmd
+      - text: 'Course material'
+        menu:
+            - href: variant_calling.qmd
+            - href: variant_annotation.qmd 
           
     right:
       - icon: github
