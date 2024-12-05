@@ -3,6 +3,13 @@ mkdir -p data/resources
 
 cd data/resources
 
+# check out contents
+
+aws s3 \
+--no-sign-request --region eu-west-1 \
+ls \
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/
+
 # panel of normals
 
 aws s3 \
@@ -15,6 +22,48 @@ aws s3 \
 --no-sign-request --region eu-west-1 \
 cp \
 s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/1000g_pon.hg38.vcf.gz.tbi \
+.
+
+# gnomad af-only
+
+aws s3 \
+--no-sign-request --region eu-west-1 \
+cp \
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/af-only-gnomad.hg38.vcf.gz \
+.
+
+aws s3 \
+--no-sign-request --region eu-west-1 \
+cp \
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/af-only-gnomad.hg38.vcf.gz.tbi \
+.
+
+# known sites snp
+
+aws s3 \
+--no-sign-request --region eu-west-1 \
+cp \
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/1000G_phase1.snps.high_confidence.hg38.vcf.gz \
+.
+
+aws s3 \
+--no-sign-request --region eu-west-1 \
+cp \
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/1000G_phase1.snps.high_confidence.hg38.vcf.gz.tbi \
+.
+
+# known sites indel
+
+aws s3 \
+--no-sign-request --region eu-west-1 \
+cp \
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz \
+.
+
+aws s3 \
+--no-sign-request --region eu-west-1 \
+cp \
+s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi \
 .
 
 cd ../
@@ -60,5 +109,11 @@ bcftools index --tbi af-only-gnomad.hg38.subset.vcf.gz
 
 bcftools view -Oz -r chr6,chr17 1000g_pon.hg38.vcf.gz > 1000g_pon.hg38.subset.vcf.gz
 bcftools index --tbi 1000g_pon.hg38.subset.vcf.gz
+
+bcftools view -Oz -r chr6,chr17 1000G_phase1.snps.high_confidence.hg38.vcf.gz > 1000G_phase1.snps.high_confidence.hg38.subset.vcf.gz
+bcftools index --tbi 1000G_phase1.snps.high_confidence.hg38.subset.vcf.gz
+
+bcftools view -Oz -r chr6,chr17 Mills_and_1000G_gold_standard.indels.hg38.vcf.gz > Mills_and_1000G_gold_standard.indels.hg38.subset.vcf.gz
+bcftools index --tbi Mills_and_1000G_gold_standard.indels.hg38.subset.vcf.gz
 
 wget https://hgdownload.soe.ucsc.edu/goldenPath/hg38/database/refFlat.txt.gz

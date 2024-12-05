@@ -48,7 +48,8 @@ a. How is the bam file sorted?
 b. Which chromosomes were used as reference?
 c. How many read groups are in there, and what is the readgroup ID and what is the sample name? 
 d. Which aligner was used? 
-e. If there are duplicates in there, are they marked?
+e. If there are duplicates in there, how are they marked?
+f. Which other programs were run to create the bam file? 
 
 ::: 
 
@@ -58,7 +59,7 @@ e. If there are duplicates in there, are they marked?
 To get information on the bam header we run 
 
 ```sh
-samtools view -H normal.rg.md.bam
+samtools view -H normal.recal.bam
 ```
 
 Which returns:
@@ -71,13 +72,17 @@ Which returns:
 @PG     ID:bwa  PN:bwa  VN:0.7.17-r1188 CL:bwa mem /config/data/reference//ref_genome.fa /config/data/reads/normal_R1.fastq.gz /config/data/reads/normal_R2.fastq.gz
 @PG     ID:samtools     PN:samtools     PP:bwa  VN:1.21 CL:samtools sort
 @PG     ID:samtools.1   PN:samtools     PP:samtools     VN:1.21 CL:samtools view -bh
-@PG     ID:MarkDuplicates       VN:Version:4.5.0.0      CL:MarkDuplicates --INPUT /config/data/alignments/normal.rg.bam --OUTPUT /config/data/alignments/normal.rg.md.bam
+@PG     ID:MarkDuplicates       VN:Version:4.5.0.0      CL:MarkDuplicates --INPUT /config/data/alignments/normal.rg.bam --OUTPUT /config/data/alignments/normal.rg.md.bam --METRICS_FILE /config/data/alignments/marked_dup_metrics_normal.txt ...   PN:MarkDuplicates
+@PG     ID:GATK ApplyBQSR       VN:4.5.0.0      CL:ApplyBQSR --output /config/project/data/alignments/.recal.bam --bqsr-recal-file /config/project/data/alignments/normal.bqsr.recal.table --input /config/project/data/alignments/normal.rg.md.bam ...        PN:GATK ApplyBQSR
+@PG     ID:samtools.2   PN:samtools     PP:samtools.1   VN:1.21 CL:samtools view -H tumor.recal.bam
 ```
 
 a. From the `@HD` tag, we can see that the bam file is sorted by coordinate.
 b. We have two lines starting with `@SQ`, which gives us information about the reference used. The reference genome used contains chromosomes 6 and 17.
 c. We have one line starting with `@RG`. Specifying there is a read group with ID `HWI-ST466.C1TD1ACXX.normal` and sample name `normal`. 
-d. In order to know which programs were run to generate this bam file, we can use the `@PG` tags. Here, we see that the aligner used was `bwa mem` and duplicates were marked with `MarkDuplicates`. 
+d. In order to know which programs were run to generate this bam file, we can use the `@PG` tags. Here, we see that the aligner used was `bwa mem` 
+e. The duplicates were marked with `MarkDuplicates`. 
+f. To sort and compress `samtools sort` and `samtools view` were used. For base quality score recalibration (BQSR) `GATK ApplyBQSR` was used. 
 
 :::
 
@@ -100,20 +105,20 @@ c. Are the first reads tagged with the readgroup ID?
 The command:
 
 ```sh
-samtools view normal.rg.md.bam | head -3
+samtools view normal.recal.bam | head -3
 ```
 
 Returns the first three alignments:
 
 ```
-HWI-ST466:135068617:C1TD1ACXX:7:1114:9733:82689 163     chr6    60001   60      100M    =       60106   205     GATCTTATATAACTGTGAGATTAATCTCAGATAATGACACAAAATATAGTGAAGTTGGTAAGTTATTTAGTAAAGCTCATGAAAATTGTGCCCTCCATTC      CCCFFFFFHHHHHJJIJHIJJJEIJIJJJJJIJJIJJJJIJJJJJJJJJIGIJJIIJJBGIIHIJJJJJJIIJJJJIIIIJFIJJHHHHHHFFFFFEEEE    MC:Z:100M MD:Z:100        PG:Z:MarkDuplicates     RG:Z:HWI-ST466.C1TD1ACXX.normal NM:i:0  AS:i:100        XS:i:0
-HWI-ST466:135068617:C1TD1ACXX:7:1303:2021:90688 99      chr6    60001   60      100M    =       60104   203     GATCTTATATAACTGTGAGATTAATCTCAGATAATGACACAAAATATAGTGAAGTTGGTAAGTTATTTAGTAAAGCTCATGAAAATTGTGCCCTCCATTC      @CCFFFFFFGGHHIIFHGIEGHJICEHIJJIIJIJEGHIIJJJIGHIIIGIFIG?FAFBEHHDGIHIJIGHGGGIGGGIGGIGJGHHHHCHFFDFFEEEE    MC:Z:100M MD:Z:100        PG:Z:MarkDuplicates     RG:Z:HWI-ST466.C1TD1ACXX.normal NM:i:0  AS:i:100        XS:i:0
-HWI-ST466:135068617:C1TD1ACXX:7:2304:7514:30978 113     chr6    60001   60      2S98M   =       61252   1194    TAGATCTTATATAACTGTGAGATTAATCTCAGATAATGACACAAAATATAGTGAAGTTGGTAAGTTATTTAGTAAAGCTCATGAAAATTGTGCCCTCCAT      DEDDCEEFEEEEFFFFFFHHHHHHIJJJHIGJJJJIHHFGGJIJJJIJJJJJJIJJIIIIGGJIJJJJJJIJIJIIJIIIJJIJJJJHHHHGFFFFFCCC    MC:Z:60S40M       MD:Z:98 PG:Z:MarkDuplicates     RG:Z:HWI-ST466.C1TD1ACXX.normal NM:i:0  AS:i:98 XS:i:0
+HWI-ST466:135068617:C1TD1ACXX:7:1114:9733:82689 163     chr6    60001   60      100M    =       60106   205     GATCTTATATAACTGTGAGATTAATCTCAGATAATGACACAAAATATAGTGAAGTTGGTAAGTTATTTAGTAAAGCTCATGAAAATTGTGCCCTCCATTC     ;B@EDB@A@A@DDDGBGBFCBC?DBEEGCGCAADAGCECDCDDDBABAGBECEGCBHH@?EGBCBCDDBHBAEEHGDFBBHBDDDBCHBGEFFEGEDBBG     MC:Z:100M       MD:Z:100        PG:Z:MarkDuplicates     RG:Z:HWI-ST466.C1TD1ACXX.normal NM:i:0  AS:i:100        XS:i:0
+HWI-ST466:135068617:C1TD1ACXX:7:1303:2021:90688 99      chr6    60001   60      100M    =       60104   203     GATCTTATATAACTGTGAGATTAATCTCAGATAATGACACAAAATATAGTGAAGTTGGTAAGTTATTTAGTAAAGCTCATGAAAATTGTGCCCTCCATTC     >A@FDB@A?@>DDCE@FAF@?BAC>ECFCGBAADBEADBDCDDD@@A@FAFADD?ABF@@EF?@ABCDAFB?DCGEBEB@EBCDCBCHBFEFFDGFCBBG     MC:Z:100M       MD:Z:100        PG:Z:MarkDuplicates     RG:Z:HWI-ST466.C1TD1ACXX.normal NM:i:0  AS:i:100        XS:i:0
+HWI-ST466:135068617:C1TD1ACXX:7:2304:7514:30978 113     chr6    60001   60      2S98M   =       61252   1194    TAGATCTTATATAACTGTGAGATTAATCTCAGATAATGACACAAAATATAGTGAAGTTGGTAAGTTATTTAGTAAAGCTCATGAAAATTGTGCCCTCCAT     >DHABFEACBBBCBGCECHEGBEACBDHCGCHCBDBBFAEAGBCCB@BAEECGBEEDBED>@EDDABDDADE@CBDFFBFBCFCCBADBDBDFFFAFF?@     MC:Z:60S40M     MD:Z:98 PG:Z:MarkDuplicates     RG:Z:HWI-ST466.C1TD1ACXX.normal NM:i:0  AS:i:98 XS:i:0
 ```
 
 a. At the CIGAR strings we see `100M` and `2S98M`, meaning that the original read had 100 base pairs. So it's likely a read length of 100 bp has been used. 
-b. This question might be a bit more challenging. In the 5th column we see an equal sign (`=`). This shows that the mate is mapped to same chromsome, so suggesting we are working with paired-end reads. In additon at the `@PG` header tag, we saw that `bwa mem` took two fastq files (`normal_R1.fastq.gz` and `normal_R2.fastq.gz`) as input.
-c. Yes, the read group tag starts with `RG`, and is specified for all three reads. 
+b. This question might be a bit more challenging. In the 5th column we see an equal sign (`=`). This shows that the mate is mapped to same chromsome, so suggesting we are working with paired-end reads. Secondly, at the `@PG` header tag, we saw that `bwa mem` took two fastq files (`normal_R1.fastq.gz` and `normal_R2.fastq.gz`) as input. Lastly, we can use the sam flags in the second column to figure that out. If you paste the first flag, `163`, in the [explain sam flags website](https://broadinstitute.github.io/picard/explain-flags.html), we can see that the read is paired.
+c. Yes, the read group tag starts with `RG`, and is specified for all three alignments. 
 :::
 
 ::: {.callout-important}
@@ -127,7 +132,7 @@ Use `samtools flagstat` to summarize the alignments in both bam files. How many 
 ## Answer
 
 ```sh 
-samtools flagstat normal.rg.md.bam
+samtools flagstat normal.recal.bam
 ```
 
 returns:
@@ -170,11 +175,94 @@ RESOURCEDIR=~/project/data/resources
 for sample in tumor normal
 do
     gatk CollectHsMetrics \
-    -I "$ALIGNDIR"/"$sample".rg.md.bam \
-    -O "$ALIGNDIR"/"$sample".rg.md.bam_hs_metrics.txt \
+    -I "$ALIGNDIR"/"$sample".recal.bam \
+    -O "$ALIGNDIR"/"$sample".recal.bam_hs_metrics.txt \
     -R "$REFDIR"/ref_genome.fa \
     --BAIT_INTERVALS "$REFDIR"/exome_regions.bed.interval_list \
     --TARGET_INTERVALS "$REFDIR"/exome_regions.bed.interval_list
 done 
 ```
+The produced reports are not so easy to read. To parse the metrics file, we run `multiqc` on the directory:
+
+```sh 
+cd ~/project/results/alignments
+multiqc .
+```
+
+Download the multiqc report (`multiqc_report.html`) by right-clicking on the file and select 'Download'. Check out the hybrid-selection metrics. How did the hybrid capture go? Are most bases on-target? What kind of coverages can we expect in the target regions?
+
 :::
+
+::: {.callout-note}
+You can find the documentation on the different metrics [here](https://broadinstitute.github.io/picard/picard-metric-definitions.html#HsMetrics). Note that the descriptions are not always correct. The metrics with `ON_BAIT` contain information including duplicates, while `ON_TARGET` without duplicates. This has been an issue [since 2020](https://github.com/broadinstitute/picard/issues/1494), and hasn't been worked on unfortunately. 
+::: 
+
+::: {.callout-tip collapse="true"}
+## Answer
+
+We see that we have a fold enrichment of around 22 and about 45% usable bases on-target. About 90% were 'selected bases', which means bases aligning within 250 bp of the target region. We're looking at a de-duplicated coverage of 84x for the normal sample and 114.3x for the tumor sample. So, on average, we seem to have acceptable coverages for both samples. 
+::: 
+
+Now that we have quality-controlled the BAM files, we can go ahead with the variant calling itself. For this, we used `mutect2` which is a somatic variant caller from GATK based on `HaplotypeCaller`. In addition to the expected bam files and references genome, the `mutect2` command requires some additional input:
+
+- `--intervals`: the intervals of our target regions. This is in the `interval_list` format.
+- `-normal`: the sample name of the normal sample. So, the `SM` tag of the read group of the normal sample. 
+- `--germline-resource`: know sites of germline variants with their allele frequencies in the population. These are used to estimate the confidence of a germline variant in the normal sample. 
+- `--panel-of-normals`: A VCF generated from normal samples that contain sites with known technical artifacts. Ideally, you create a PON from your own normal samples, but this is typically recommended if you have more than 40 normal samples. Therefore, here, we use a pre-generated PON from the 1000 genomes project. More information on PON in [this article](https://gatk.broadinstitute.org/hc/en-us/articles/360035890631-Panel-of-Normals-PON).
+
+::: {.callout-important}
+## Exercise
+
+Check out the [manual of `Mutect2`](https://gatk.broadinstitute.org/hc/en-us/articles/360037593851-Mutect2) and replace the placeholders `FIXME` with the required values of the `Mutect2` below command and run it:
+
+```bash
+
+#!/usr/bin/env bash
+
+ALIGNDIR=~/project/data/alignments
+REFDIR=~/project/data/reference
+RESOURCEDIR=~/project/data/resources
+VARIANTDIR=~/project/data/variants
+
+mkdir -p $VARIANTDIR
+
+gatk Mutect2 \
+-R FIXME \
+--intervals "$REFDIR"/exome_regions.bed.interval_list \
+-I FIXME \
+-I FIXME \
+-normal FIXME \
+--germline-resource "$RESOURCEDIR"/af-only-gnomad.hg38.subset.vcf.gz \
+--panel-of-normals "$RESOURCEDIR"/1000g_pon.hg38.subset.vcf.gz \
+-O "$VARIANTDIR"/somatic.vcf.gz
+
+
+```
+
+:::
+
+::: {.callout-tip collapse="true"}
+## Answer
+
+```sh
+#!/usr/bin/env bash
+
+ALIGNDIR=~/project/data/alignments
+REFDIR=~/project/data/reference
+RESOURCEDIR=~/project/data/resources
+VARIANTDIR=~/project/data/variants
+
+mkdir -p $VARIANTDIR
+
+gatk Mutect2 \
+-R "$REFDIR"/ref_genome.fa \
+--intervals "$REFDIR"/exome_regions.bed.interval_list \
+-I "$ALIGNDIR"/sample.recal.bam \
+-I "$ALIGNDIR"/normal.recal.bam \
+-normal normal \
+--germline-resource "$RESOURCEDIR"/af-only-gnomad.hg38.subset.vcf.gz \
+--panel-of-normals "$RESOURCEDIR"/1000g_pon.hg38.subset.vcf.gz \
+-O "$VARIANTDIR"/somatic.vcf.gz
+```
+
+::: 
