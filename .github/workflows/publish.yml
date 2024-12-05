@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
   # pushing to main
   push:
-    branches: main
+    branches: master
   # every week on sunday
   schedule:
     - cron: "0 0 * * SUN"
