@@ -7,10 +7,11 @@ VARIANTDIR=~/project/data/variants
 
 mkdir -p $VARIANTDIR
 
+# takes about 12 minutes to run
 gatk Mutect2 \
 -R "$REFDIR"/ref_genome.fa \
 --intervals "$REFDIR"/exome_regions.bed.interval_list \
--I "$ALIGNDIR"/sample.recal.bam \
+-I "$ALIGNDIR"/tumor.recal.bam \
 -I "$ALIGNDIR"/normal.recal.bam \
 -normal normal \
 --germline-resource "$RESOURCEDIR"/af-only-gnomad.hg38.subset.vcf.gz \

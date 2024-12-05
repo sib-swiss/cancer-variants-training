@@ -12,3 +12,6 @@ gatk FilterMutectCalls \
 
 bcftools view -f PASS "$VARIANTDIR"/somatic.filtered.vcf.gz -Oz > "$VARIANTDIR"/somatic.filtered.PASS.vcf.gz
 bcftools index --tbi "$VARIANTDIR"/somatic.filtered.PASS.vcf.gz
+
+zcat somatic.filtered.vcf.gz | grep -v "^#" | cut -f 7 | sort | uniq -c | sort -nr | head -n 10
+zcat somatic.vcf.gz | grep -v "^#" | wc -l

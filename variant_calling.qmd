@@ -203,6 +203,8 @@ You can find the documentation on the different metrics [here](https://broadinst
 We see that we have a fold enrichment of around 22 and about 45% usable bases on-target. About 90% were 'selected bases', which means bases aligning within 250 bp of the target region. We're looking at a de-duplicated coverage of 84x for the normal sample and 114.3x for the tumor sample. So, on average, we seem to have acceptable coverages for both samples. 
 ::: 
 
+## Short variant calling
+
 Now that we have quality-controlled the BAM files, we can go ahead with the variant calling itself. For this, we used `mutect2` which is a somatic variant caller from GATK based on `HaplotypeCaller`. In addition to the expected bam files and references genome, the `mutect2` command requires some additional input:
 
 - `--intervals`: the intervals of our target regions. This is in the `interval_list` format.
@@ -266,3 +268,111 @@ gatk Mutect2 \
 ```
 
 ::: 
+
+After calling the variants we can do an initial filtering step. We do this with `FilterMutectCalls`. This method takes technical artifacts, possibility of germline variants, and sequencing error in account, calculates an error probability and tries to optimize between recall and precision. 
+
+::: {.callout-important}
+## Exercise
+
+Run the command to filter the somatic variants:
+
+```sh
+#!/usr/bin/env bash
+
+ALIGNDIR=~/project/data/alignments
+REFDIR=~/project/data/reference
+RESOURCEDIR=~/project/data/resources
+VARIANTDIR=~/project/data/variants
+
+gatk FilterMutectCalls \
+-R "$REFDIR"/ref_genome.fa \
+-V "$VARIANTDIR"/somatic.vcf.gz \
+-O "$VARIANTDIR"/somatic.filtered.vcf.gz
+```
+
+How many variants were kept? What were the main reason for filtering them out?
+
+::: 
+
+
+::: {.callout-note}
+
+The filtering information is in the 7th column of the vcf, so you can do something like:
+
+```sh
+zcat my_variants.vcf.gz | grep -v "^#" | cut -f 7 | sort | uniq -c | sort -nr | head -n 10
+```
+
+::: 
+
+::: {.callout-tip collapse="true"}
+## Answer
+
+To get the number of variants in the unfiltered vcf:
+
+```sh
+zcat somatic.vcf.gz | grep -v "^#" | wc -l
+```
+
+Resulting in 467 unfiltered variants. 
+
+To get the 10 most frequently occurring filters in the filter column of the filtered vcf:
+
+```sh
+zcat somatic.filtered.vcf.gz | grep -v "^#" | cut -f 7 | sort | uniq -c | sort -nr | head -n 10
+```
+
+Resulting in:
+
+```
+133 PASS
+48 weak_evidence
+26 normal_artifact;strand_bias
+21 panel_of_normals
+17 normal_artifact
+13 normal_artifact;slippage;weak_evidence
+13 clustered_events;normal_artifact;strand_bias
+12 germline;multiallelic;normal_artifact;panel_of_normals
+12 base_qual;normal_artifact;strand_bias
+9 strand_bias;weak_evidence
+```
+
+So most variants were filtered out, and most of the variants were filtered out because of 'weak evidence'. 
+
+In order to figure out what that means we can check out the vcf header:
+
+```sh 
+zcat somatic.filtered.vcf.gz | 
+```
+
+Resulting in:
+
+```
+##FILTER=<ID=FAIL,Description="Fail the site if all alleles fail but for different reasons.">
+##FILTER=<ID=PASS,Description="Site contains at least one allele that passes filters">
+##FILTER=<ID=base_qual,Description="alt median base quality">
+##FILTER=<ID=clustered_events,Description="Clustered events observed in the tumor">
+##FILTER=<ID=contamination,Description="contamination">
+##FILTER=<ID=duplicate,Description="evidence for alt allele is overrepresented by apparent duplicates">
+##FILTER=<ID=fragment,Description="abs(ref - alt) median fragment length">
+##FILTER=<ID=germline,Description="Evidence indicates this site is germline, not somatic">
+##FILTER=<ID=haplotype,Description="Variant near filtered variant on same haplotype.">
+##FILTER=<ID=low_allele_frac,Description="Allele fraction is below specified threshold">
+##FILTER=<ID=map_qual,Description="ref - alt median mapping quality">
+##FILTER=<ID=multiallelic,Description="Site filtered because too many alt alleles pass tumor LOD">
+##FILTER=<ID=n_ratio,Description="Ratio of N to alt exceeds specified ratio">
+##FILTER=<ID=normal_artifact,Description="artifact_in_normal">
+##FILTER=<ID=orientation,Description="orientation bias detected by the orientation bias mixture model">
+##FILTER=<ID=panel_of_normals,Description="Blacklisted site in panel of normals">
+##FILTER=<ID=position,Description="median distance of alt variants from end of reads">
+##FILTER=<ID=possible_numt,Description="Allele depth is below expected coverage of NuMT in autosome">
+##FILTER=<ID=slippage,Description="Site filtered due to contraction of short tandem repeat region">
+##FILTER=<ID=strand_bias,Description="Evidence for alt allele comes from one read direction only">
+##FILTER=<ID=strict_strand,Description="Evidence for alt allele is not represented in both directions">
+##FILTER=<ID=weak_evidence,Description="Mutation does not meet likelihood threshold">
+```
+
+Showing us that these mutations do not meet the likelihood threshold, basically telling us that these are the variants filtered out because of the combined error probability based on technical artifacts, possibility of germline variants, and sequencing error. The other filters are so called 'hard filters', meaning that by themselves they do not meet a fixed threshold.  
+
+:::
+

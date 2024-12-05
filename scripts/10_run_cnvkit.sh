@@ -5,8 +5,8 @@ REFDIR=~/project/data/reference
 RESOURCEDIR=~/project/data/resources
 VARIANTDIR=~/project/data/variants
 
-cnvkit.py batch "$ALIGNDIR"/tumor.rg.md.bam \
---normal "$ALIGNDIR"/normal.rg.md.bam \
+cnvkit.py batch "$ALIGNDIR"/tumor.recal.bam \
+--normal "$ALIGNDIR"/normal.recal.bam \
 --targets "$REFDIR"/exome_regions.bed.interval_list \
 --fasta "$REFDIR"/ref_genome.fa \
 --annotate "$RESOURCEDIR"/refFlat.txt \
