@@ -212,6 +212,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
   <li><a href="#validating-the-bam-files" id="toc-validating-the-bam-files" class="nav-link" data-scroll-target="#validating-the-bam-files">Validating the bam files</a></li>
   </ul></li>
+  <li><a href="#short-variant-calling" id="toc-short-variant-calling" class="nav-link" data-scroll-target="#short-variant-calling">Short variant calling</a></li>
   </ul>
 </nav>
     </div>
@@ -481,6 +482,10 @@ Answer
 </div>
 </div>
 </div>
+</section>
+</section>
+<section id="short-variant-calling" class="level2">
+<h2 class="anchored" data-anchor-id="short-variant-calling">Short variant calling</h2>
 <p>Now that we have quality-controlled the BAM files, we can go ahead with the variant calling itself. For this, we used <code>mutect2</code> which is a somatic variant caller from GATK based on <code>HaplotypeCaller</code>. In addition to the expected bam files and references genome, the <code>mutect2</code> command requires some additional input:</p>
 <ul>
 <li><code>--intervals</code>: the intervals of our target regions. This is in the <code>interval_list</code> format.</li>
@@ -554,9 +559,106 @@ Answer
 </div>
 </div>
 </div>
+<p>After calling the variants we can do an initial filtering step. We do this with <code>FilterMutectCalls</code>. This method takes technical artifacts, possibility of germline variants, and sequencing error in account, calculates an error probability and tries to optimize between recall and precision.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Run the command to filter the somatic variants:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="va">ALIGNDIR</span><span class="op">=</span>~/project/data/alignments</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="va">REFDIR</span><span class="op">=</span>~/project/data/reference</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="va">RESOURCEDIR</span><span class="op">=</span>~/project/data/resources</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/data/variants</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> FilterMutectCalls <span class="dt">\</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>-R <span class="st">"</span><span class="va">$REFDIR</span><span class="st">"</span>/ref_genome.fa <span class="dt">\</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>-V <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/somatic.vcf.gz <span class="dt">\</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>-O <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/somatic.filtered.vcf.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>How many variants were kept? What were the main reason for filtering them out?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The filtering information is in the 7th column of the vcf, so you can do something like:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> my_variants.vcf.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> <span class="st">"^#"</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f</span> 7 <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-nr</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>To get the number of variants in the unfiltered vcf:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> somatic.vcf.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> <span class="st">"^#"</span> <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Resulting in 467 unfiltered variants.</p>
+<p>To get the 10 most frequently occurring filters in the filter column of the filtered vcf:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> <span class="st">"^#"</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f</span> 7 <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-nr</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Resulting in:</p>
+<pre><code>133 PASS
+48 weak_evidence
+26 normal_artifact;strand_bias
+21 panel_of_normals
+17 normal_artifact
+13 normal_artifact;slippage;weak_evidence
+13 clustered_events;normal_artifact;strand_bias
+12 germline;multiallelic;normal_artifact;panel_of_normals
+12 base_qual;normal_artifact;strand_bias
+9 strand_bias;weak_evidence</code></pre>
+<p>So most variants were filtered out, and most of the variants were filtered out because of ‘weak evidence’.</p>
+<p>In order to figure out what that means we can check out the vcf header:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> somatic.filtered.vcf.gz <span class="kw">|</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Resulting in:</p>
+<pre><code>##FILTER=&lt;ID=FAIL,Description="Fail the site if all alleles fail but for different reasons."&gt;
+##FILTER=&lt;ID=PASS,Description="Site contains at least one allele that passes filters"&gt;
+##FILTER=&lt;ID=base_qual,Description="alt median base quality"&gt;
+##FILTER=&lt;ID=clustered_events,Description="Clustered events observed in the tumor"&gt;
+##FILTER=&lt;ID=contamination,Description="contamination"&gt;
+##FILTER=&lt;ID=duplicate,Description="evidence for alt allele is overrepresented by apparent duplicates"&gt;
+##FILTER=&lt;ID=fragment,Description="abs(ref - alt) median fragment length"&gt;
+##FILTER=&lt;ID=germline,Description="Evidence indicates this site is germline, not somatic"&gt;
+##FILTER=&lt;ID=haplotype,Description="Variant near filtered variant on same haplotype."&gt;
+##FILTER=&lt;ID=low_allele_frac,Description="Allele fraction is below specified threshold"&gt;
+##FILTER=&lt;ID=map_qual,Description="ref - alt median mapping quality"&gt;
+##FILTER=&lt;ID=multiallelic,Description="Site filtered because too many alt alleles pass tumor LOD"&gt;
+##FILTER=&lt;ID=n_ratio,Description="Ratio of N to alt exceeds specified ratio"&gt;
+##FILTER=&lt;ID=normal_artifact,Description="artifact_in_normal"&gt;
+##FILTER=&lt;ID=orientation,Description="orientation bias detected by the orientation bias mixture model"&gt;
+##FILTER=&lt;ID=panel_of_normals,Description="Blacklisted site in panel of normals"&gt;
+##FILTER=&lt;ID=position,Description="median distance of alt variants from end of reads"&gt;
+##FILTER=&lt;ID=possible_numt,Description="Allele depth is below expected coverage of NuMT in autosome"&gt;
+##FILTER=&lt;ID=slippage,Description="Site filtered due to contraction of short tandem repeat region"&gt;
+##FILTER=&lt;ID=strand_bias,Description="Evidence for alt allele comes from one read direction only"&gt;
+##FILTER=&lt;ID=strict_strand,Description="Evidence for alt allele is not represented in both directions"&gt;
+##FILTER=&lt;ID=weak_evidence,Description="Mutation does not meet likelihood threshold"&gt;</code></pre>
+<p>Showing us that these mutations do not meet the likelihood threshold, basically telling us that these are the variants filtered out because of the combined error probability based on technical artifacts, possibility of germline variants, and sequencing error. The other filters are so called ‘hard filters’, meaning that by themselves they do not meet a fixed threshold.</p>
+</div>
+</div>
+</div>
 
 
-</section>
 </section>
 
 </main> <!-- /main -->
