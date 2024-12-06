@@ -40,7 +40,7 @@ format:
         - custom.scss
       dark: 
         - darkly
-        - custom.scss
+        - custom-dark.scss
     toc: true
     header-includes: |
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">

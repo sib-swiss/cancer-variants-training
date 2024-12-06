@@ -63,6 +63,7 @@ course_data
 ```
 
 Showing us that we have three directories:
+
 - `alignments`: containing bam files of tumor and normal
 - `reference`: containing the genome fasta file and target intervals
 - `resources`: containing variant files (`vcf`) from amongst other the [1000 genomes](https://www.internationalgenome.org/) project and [gnomAD](https://gnomad.broadinstitute.org/). 
