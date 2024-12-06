@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Variant calling – Cancer variant analysis</title>
+<title>Setup &amp; quality control – Cancer variant analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -190,7 +190,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Variant calling</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Setup &amp; quality control</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -213,8 +213,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#short-variant-calling" id="toc-short-variant-calling" class="nav-link active" data-scroll-target="#short-variant-calling">Short variant calling</a></li>
-  <li><a href="#copy-number-variation-calling" id="toc-copy-number-variation-calling" class="nav-link" data-scroll-target="#copy-number-variation-calling">Copy number variation calling</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link active" data-scroll-target="#exercises">Exercises</a>
+  <ul class="collapse">
+  <li><a href="#first-login" id="toc-first-login" class="nav-link" data-scroll-target="#first-login">First login</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a></li>
+  <li><a href="#quality-control-of-the-bam-files" id="toc-quality-control-of-the-bam-files" class="nav-link" data-scroll-target="#quality-control-of-the-bam-files">Quality control of the bam files</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -223,7 +227,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Variant calling</h1>
+<h1 class="title">Setup &amp; quality control</h1>
 </div>
 
 
@@ -240,107 +244,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="short-variant-calling" class="level3">
-<h3 class="anchored" data-anchor-id="short-variant-calling">Short variant calling</h3>
-<p>Now that we have quality-controlled the BAM files, we can go ahead with the variant calling itself. For this, we used <code>mutect2</code> which is a somatic variant caller from GATK based on <code>HaplotypeCaller</code>. In addition to the expected bam files and references genome, the <code>mutect2</code> command requires some additional input:</p>
-<ul>
-<li><code>--intervals</code>: the intervals of our target regions. This is in the <code>interval_list</code> format.</li>
-<li><code>-normal</code>: the sample name of the normal sample. So, the <code>SM</code> tag of the read group of the normal sample.</li>
-<li><code>--germline-resource</code>: know sites of germline variants with their allele frequencies in the population. These are used to estimate the confidence of a germline variant in the normal sample.</li>
-<li><code>--panel-of-normals</code>: A VCF generated from normal samples that contain sites with known technical artifacts. Ideally, you create a PON from your own normal samples, but this is typically recommended if you have more than 40 normal samples. Therefore, here, we use a pre-generated PON from the 1000 genomes project. More information on PON in <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360035890631-Panel-of-Normals-PON">this article</a>.</li>
-</ul>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Exercise
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Check out the <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037593851-Mutect2">manual of <code>Mutect2</code></a> and replace the placeholders <code>FIXME</code> with the required values of the <code>Mutect2</code> below command and run it:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="va">ALIGNDIR</span><span class="op">=</span>~/project/data/alignments</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="va">REFDIR</span><span class="op">=</span>~/project/data/reference</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="va">RESOURCEDIR</span><span class="op">=</span>~/project/data/resources</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/data/variants</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="va">$VARIANTDIR</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> Mutect2 <span class="dt">\</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>-R FIXME <span class="dt">\</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>--intervals <span class="st">"</span><span class="va">$REFDIR</span><span class="st">"</span>/exome_regions.bed.interval_list <span class="dt">\</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>-I FIXME <span class="dt">\</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>-I FIXME <span class="dt">\</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>-normal FIXME <span class="dt">\</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>--germline-resource <span class="st">"</span><span class="va">$RESOURCEDIR</span><span class="st">"</span>/af-only-gnomad.hg38.subset.vcf.gz <span class="dt">\</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>--panel-of-normals <span class="st">"</span><span class="va">$RESOURCEDIR</span><span class="st">"</span>/1000g_pon.hg38.subset.vcf.gz <span class="dt">\</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>-O <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/somatic.vcf.gz</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Answer
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-2" class="callout-2-contents callout-collapse collapse">
-<div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="va">ALIGNDIR</span><span class="op">=</span>~/project/data/alignments</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="va">REFDIR</span><span class="op">=</span>~/project/data/reference</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="va">RESOURCEDIR</span><span class="op">=</span>~/project/data/resources</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/data/variants</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="va">$VARIANTDIR</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> Mutect2 <span class="dt">\</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>-R <span class="st">"</span><span class="va">$REFDIR</span><span class="st">"</span>/ref_genome.fa <span class="dt">\</span></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>--intervals <span class="st">"</span><span class="va">$REFDIR</span><span class="st">"</span>/exome_regions.bed.interval_list <span class="dt">\</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>-I <span class="st">"</span><span class="va">$ALIGNDIR</span><span class="st">"</span>/sample.recal.bam <span class="dt">\</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>-I <span class="st">"</span><span class="va">$ALIGNDIR</span><span class="st">"</span>/normal.recal.bam <span class="dt">\</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>-normal normal <span class="dt">\</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>--germline-resource <span class="st">"</span><span class="va">$RESOURCEDIR</span><span class="st">"</span>/af-only-gnomad.hg38.subset.vcf.gz <span class="dt">\</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>--panel-of-normals <span class="st">"</span><span class="va">$RESOURCEDIR</span><span class="st">"</span>/1000g_pon.hg38.subset.vcf.gz <span class="dt">\</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>-O <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/somatic.vcf.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</div>
-</div>
-<p>After calling the variants we can do an initial filtering step. We do this with <code>FilterMutectCalls</code>. This method takes technical artifacts, possibility of germline variants, and sequencing error in account, calculates an error probability and tries to optimize between recall and precision.</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Exercise
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Run the command to filter the somatic variants:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="va">ALIGNDIR</span><span class="op">=</span>~/project/data/alignments</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="va">REFDIR</span><span class="op">=</span>~/project/data/reference</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="va">RESOURCEDIR</span><span class="op">=</span>~/project/data/resources</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/data/variants</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> FilterMutectCalls <span class="dt">\</span></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>-R <span class="st">"</span><span class="va">$REFDIR</span><span class="st">"</span>/ref_genome.fa <span class="dt">\</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>-V <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/somatic.vcf.gz <span class="dt">\</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>-O <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/somatic.filtered.vcf.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>How many variants were kept? What were the main reason for filtering them out?</p>
-</div>
-</div>
+<section id="exercises" class="level2">
+<h2 class="anchored" data-anchor-id="exercises">Exercises</h2>
+<section id="first-login" class="level3">
+<h3 class="anchored" data-anchor-id="first-login">First login</h3>
+<p>If you are participating in this course with a teacher, you have received a link and a password. Copy-paste the link (including the port, e.g.: <code>http://12.345.678.91:10002</code>) in your browser. This should result in the following page:</p>
+<p><img src="assets/images/vscode_login_page.png" class="img-fluid" width="300"></p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -351,8 +260,97 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The filtering information is in the 7th column of the vcf, so you can do something like:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> my_variants.vcf.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> <span class="st">"^#"</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f</span> 7 <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-nr</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The link gives you access to a web version of <a href="https://code.visualstudio.com">Visual Studio Code</a>. This is a powerful code editor that you can also use as a local application on your computer.</p>
+</div>
+</div>
+<p>Type in the password that was provided to you by the teacher. Now let’s open the terminal. You can do that with ++ctrl+grave++. Or by clicking <strong>Application menu</strong> &gt; <strong>Terminal</strong> &gt; <strong>New Terminal</strong>:</p>
+<p><img src="assets/images/open_terminal.gif" class="img-fluid" width="500"></p>
+<p>For a.o. efficiency and reproducibility it makes sense to execute your commands from a script. With use of the ‘new file’ button:</p>
+<p><img src="assets/images/new_file.gif" class="img-fluid" width="500"></p>
+</section>
+<section id="setup" class="level3">
+<h3 class="anchored" data-anchor-id="setup">Setup</h3>
+<p>We will start the exercises with pre-aligned bam files. To start, download and extract the course_data folder:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> linkk</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gunzip</span> course_data.tar.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="quality-control-of-the-bam-files" class="level3">
+<h3 class="anchored" data-anchor-id="quality-control-of-the-bam-files">Quality control of the bam files</h3>
+<p>First we use the information in the header to get information about the contents of the bam file and how it was generated.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Check out the contents of the bam header with <code>samtools view -H</code>, and answer the following questions:</p>
+<ol type="a">
+<li>How is the bam file sorted?</li>
+<li>Which chromosomes were used as reference?</li>
+<li>How many read groups are in there, what is the readgroup ID and what is the sample name?</li>
+<li>Which aligner was used?</li>
+<li>If there are duplicates in there, how are they marked?</li>
+<li>Which other programs were run to create the bam file?</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>To get information on the bam header we run</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view <span class="at">-H</span> normal.recal.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Which returns:</p>
+<pre><code>@HD     VN:1.6  SO:coordinate
+@SQ     SN:chr6 LN:170805979
+@SQ     SN:chr17        LN:83257441
+@RG     ID:HWI-ST466.C1TD1ACXX.normal   LB:normal       PL:ILLUMINA     SM:normal       PU:HWI-ST466.C1TD1ACXX
+@PG     ID:bwa  PN:bwa  VN:0.7.17-r1188 CL:bwa mem /config/data/reference//ref_genome.fa /config/data/reads/normal_R1.fastq.gz /config/data/reads/normal_R2.fastq.gz
+@PG     ID:samtools     PN:samtools     PP:bwa  VN:1.21 CL:samtools sort
+@PG     ID:samtools.1   PN:samtools     PP:samtools     VN:1.21 CL:samtools view -bh
+@PG     ID:MarkDuplicates       VN:Version:4.5.0.0      CL:MarkDuplicates --INPUT /config/data/alignments/normal.rg.bam --OUTPUT /config/data/alignments/normal.rg.md.bam --METRICS_FILE /config/data/alignments/marked_dup_metrics_normal.txt ...   PN:MarkDuplicates
+@PG     ID:GATK ApplyBQSR       VN:4.5.0.0      CL:ApplyBQSR --output /config/project/data/alignments/.recal.bam --bqsr-recal-file /config/project/data/alignments/normal.bqsr.recal.table --input /config/project/data/alignments/normal.rg.md.bam ...        PN:GATK ApplyBQSR
+@PG     ID:samtools.2   PN:samtools     PP:samtools.1   VN:1.21 CL:samtools view -H tumor.recal.bam</code></pre>
+<ol type="a">
+<li>From the <code>@HD</code> tag, we can see that the bam file is sorted by coordinate.</li>
+<li>We have two lines starting with <code>@SQ</code>, which gives us information about the reference used. The reference genome used contains chromosomes 6 and 17.</li>
+<li>We have one line starting with <code>@RG</code>. Specifying there is a read group with ID <code>HWI-ST466.C1TD1ACXX.normal</code> and sample name (<code>SM</code>) <code>normal</code>.</li>
+<li>In order to know which programs were run to generate this bam file, we can use the <code>@PG</code> tags. Here, we see that the aligner used was <code>bwa mem</code></li>
+<li>The duplicates were marked with <code>MarkDuplicates</code>.</li>
+<li>To sort and compress <code>samtools sort</code> and <code>samtools view</code> were used. For base quality score recalibration (BQSR) <code>GATK ApplyBQSR</code> was used.</li>
+</ol>
+</div>
+</div>
+</div>
+<p>Now we extract information from the alignments themselves. We first have a look at few alignments and then get a summary of the alignments with <code>samtools flagstat</code>.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Check out the first few alignments with <code>samtools view</code> and <code>head</code>.</p>
+<ol type="a">
+<li>What is likely the read length used?</li>
+<li>Are the reads single-end or paired-end?</li>
+<li>Are the first reads tagged with the readgroup ID?</li>
+</ol>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -367,56 +365,20 @@ Answer
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>To get the number of variants in the unfiltered vcf:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> somatic.vcf.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> <span class="st">"^#"</span> <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Resulting in 467 unfiltered variants.</p>
-<p>To get the 10 most frequently occurring filters in the filter column of the filtered vcf:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> <span class="st">"^#"</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f</span> 7 <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-nr</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Resulting in:</p>
-<pre><code>133 PASS
-48 weak_evidence
-26 normal_artifact;strand_bias
-21 panel_of_normals
-17 normal_artifact
-13 normal_artifact;slippage;weak_evidence
-13 clustered_events;normal_artifact;strand_bias
-12 germline;multiallelic;normal_artifact;panel_of_normals
-12 base_qual;normal_artifact;strand_bias
-9 strand_bias;weak_evidence</code></pre>
-<p>So most variants were filtered out, and most of the variants were filtered out because of ‘weak evidence’.</p>
-<p>In order to figure out what that means we can check out the vcf header:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> <span class="st">"^#"</span> <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Resulting in:</p>
-<pre><code>##FILTER=&lt;ID=FAIL,Description="Fail the site if all alleles fail but for different reasons."&gt;
-##FILTER=&lt;ID=PASS,Description="Site contains at least one allele that passes filters"&gt;
-##FILTER=&lt;ID=base_qual,Description="alt median base quality"&gt;
-##FILTER=&lt;ID=clustered_events,Description="Clustered events observed in the tumor"&gt;
-##FILTER=&lt;ID=contamination,Description="contamination"&gt;
-##FILTER=&lt;ID=duplicate,Description="evidence for alt allele is overrepresented by apparent duplicates"&gt;
-##FILTER=&lt;ID=fragment,Description="abs(ref - alt) median fragment length"&gt;
-##FILTER=&lt;ID=germline,Description="Evidence indicates this site is germline, not somatic"&gt;
-##FILTER=&lt;ID=haplotype,Description="Variant near filtered variant on same haplotype."&gt;
-##FILTER=&lt;ID=low_allele_frac,Description="Allele fraction is below specified threshold"&gt;
-##FILTER=&lt;ID=map_qual,Description="ref - alt median mapping quality"&gt;
-##FILTER=&lt;ID=multiallelic,Description="Site filtered because too many alt alleles pass tumor LOD"&gt;
-##FILTER=&lt;ID=n_ratio,Description="Ratio of N to alt exceeds specified ratio"&gt;
-##FILTER=&lt;ID=normal_artifact,Description="artifact_in_normal"&gt;
-##FILTER=&lt;ID=orientation,Description="orientation bias detected by the orientation bias mixture model"&gt;
-##FILTER=&lt;ID=panel_of_normals,Description="Blacklisted site in panel of normals"&gt;
-##FILTER=&lt;ID=position,Description="median distance of alt variants from end of reads"&gt;
-##FILTER=&lt;ID=possible_numt,Description="Allele depth is below expected coverage of NuMT in autosome"&gt;
-##FILTER=&lt;ID=slippage,Description="Site filtered due to contraction of short tandem repeat region"&gt;
-##FILTER=&lt;ID=strand_bias,Description="Evidence for alt allele comes from one read direction only"&gt;
-##FILTER=&lt;ID=strict_strand,Description="Evidence for alt allele is not represented in both directions"&gt;
-##FILTER=&lt;ID=weak_evidence,Description="Mutation does not meet likelihood threshold"&gt;</code></pre>
-<p>Showing us that these mutations do not meet the likelihood threshold, basically telling us that these are the variants filtered out because of the combined error probability based on technical artifacts, possibility of germline variants, and sequencing error. The other filters are so called ‘hard filters’, meaning that by themselves they do not meet a fixed threshold.</p>
+<p>The command:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view normal.recal.bam <span class="kw">|</span> <span class="fu">head</span> <span class="at">-3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Returns the first three alignments:</p>
+<pre><code>HWI-ST466:135068617:C1TD1ACXX:7:1114:9733:82689 163     chr6    60001   60      100M    =       60106   205     GATCTTATATAACTGTGAGATTAATCTCAGATAATGACACAAAATATAGTGAAGTTGGTAAGTTATTTAGTAAAGCTCATGAAAATTGTGCCCTCCATTC     ;B@EDB@A@A@DDDGBGBFCBC?DBEEGCGCAADAGCECDCDDDBABAGBECEGCBHH@?EGBCBCDDBHBAEEHGDFBBHBDDDBCHBGEFFEGEDBBG     MC:Z:100M       MD:Z:100        PG:Z:MarkDuplicates     RG:Z:HWI-ST466.C1TD1ACXX.normal NM:i:0  AS:i:100        XS:i:0
+HWI-ST466:135068617:C1TD1ACXX:7:1303:2021:90688 99      chr6    60001   60      100M    =       60104   203     GATCTTATATAACTGTGAGATTAATCTCAGATAATGACACAAAATATAGTGAAGTTGGTAAGTTATTTAGTAAAGCTCATGAAAATTGTGCCCTCCATTC     &gt;A@FDB@A?@&gt;DDCE@FAF@?BAC&gt;ECFCGBAADBEADBDCDDD@@A@FAFADD?ABF@@EF?@ABCDAFB?DCGEBEB@EBCDCBCHBFEFFDGFCBBG     MC:Z:100M       MD:Z:100        PG:Z:MarkDuplicates     RG:Z:HWI-ST466.C1TD1ACXX.normal NM:i:0  AS:i:100        XS:i:0
+HWI-ST466:135068617:C1TD1ACXX:7:2304:7514:30978 113     chr6    60001   60      2S98M   =       61252   1194    TAGATCTTATATAACTGTGAGATTAATCTCAGATAATGACACAAAATATAGTGAAGTTGGTAAGTTATTTAGTAAAGCTCATGAAAATTGTGCCCTCCAT     &gt;DHABFEACBBBCBGCECHEGBEACBDHCGCHCBDBBFAEAGBCCB@BAEECGBEEDBED&gt;@EDDABDDADE@CBDFFBFBCFCCBADBDBDFFFAFF?@     MC:Z:60S40M     MD:Z:98 PG:Z:MarkDuplicates     RG:Z:HWI-ST466.C1TD1ACXX.normal NM:i:0  AS:i:98 XS:i:0</code></pre>
+<ol type="a">
+<li>At the CIGAR strings we see <code>100M</code> and <code>2S98M</code>, meaning that the original read had 100 base pairs. So it’s likely a read length of 100 bp has been used.</li>
+<li>This question might be a bit more challenging. In the 5th column we see an equal sign (<code>=</code>). This shows that the mate is mapped to same chromsome, so suggesting we are working with paired-end reads. Secondly, at the <code>@PG</code> header tag, we saw that <code>bwa mem</code> took two fastq files (<code>normal_R1.fastq.gz</code> and <code>normal_R2.fastq.gz</code>) as input. Lastly, we can use the sam flags in the second column to figure that out. If you paste the first flag, <code>163</code>, in the <a href="https://broadinstitute.github.io/picard/explain-flags.html">explain sam flags website</a>, we can see that the read is paired.</li>
+<li>Yes, the read group tag starts with <code>RG</code>, and is specified for all three alignments.</li>
+</ol>
 </div>
 </div>
 </div>
-</section>
-<section id="copy-number-variation-calling" class="level3">
-<h3 class="anchored" data-anchor-id="copy-number-variation-calling">Copy number variation calling</h3>
-<p>Variation of copy number in genes can have a large effect on the phenotype of a tumor. Therefore, we will also estimate the copy number variation occurring on chromosome 6 and 17. For that, we use <a href="https://cnvkit.readthedocs.io/en/stable/">CNVkit</a>.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -427,25 +389,77 @@ Exercise
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Check out the <a href="https://cnvkit.readthedocs.io/en/stable/quickstart.html#build-a-reference-from-normal-samples-and-infer-tumor-copy-ratios">documentation</a> of <code>CNVkit.py bash</code>, and the helper (<code>cnvkit.py batch -h</code>), and replace the missing values at <code>FIXME</code>.</p>
-<p>After that, checkout the visualizations (<code>tumor-scatter.png</code> and <code>tumor-scatter.png</code>) at <code>~/project/data/variants/cnvkit</code>. Do you see any evidence for copy number variation?</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="va">ALIGNDIR</span><span class="op">=</span>~/project/data/alignments</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="va">REFDIR</span><span class="op">=</span>~/project/data/reference</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="va">RESOURCEDIR</span><span class="op">=</span>~/project/data/resources</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/data/variants</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="ex">cnvkit.py</span> batch FIXME <span class="dt">\</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>--normal FIXME <span class="dt">\</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>--targets FIXME <span class="dt">\</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>--fasta FIXME <span class="dt">\</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>--annotate <span class="st">"</span><span class="va">$RESOURCEDIR</span><span class="st">"</span>/refFlat.txt <span class="dt">\</span></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>--output-reference <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/reference.cnn <span class="dt">\</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>--output-dir <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/cnvkit/ <span class="dt">\</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>--processes 4 <span class="dt">\</span></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>--scatter <span class="dt">\</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>--diagram</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Use <code>samtools flagstat</code> to summarize the alignments in both bam files. How many reads are in the bam files? And how many alignments are marked as duplicate?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Answer
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/project/data/alignments</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sample <span class="kw">in</span> tumor normal</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">samtools</span> flagstat <span class="st">"</span><span class="va">$sample</span><span class="st">"</span>.recal.bam <span class="op">&gt;</span> <span class="st">"</span><span class="va">$sample</span><span class="st">"</span>.recal.bam.flagstat</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>returns for <code>normal.recal.bam</code>:</p>
+<pre><code>12744793 + 0 in total (QC-passed reads + QC-failed reads)
+12733034 + 0 primary
+0 + 0 secondary
+11759 + 0 supplementary
+1397598 + 0 duplicates
+1397598 + 0 primary duplicates
+12671529 + 0 mapped (99.43% : N/A)
+12659770 + 0 primary mapped (99.42% : N/A)
+12733034 + 0 paired in sequencing
+6366517 + 0 read1
+6366517 + 0 read2
+12515974 + 0 properly paired (98.30% : N/A)
+12586532 + 0 with itself and mate mapped
+73238 + 0 singletons (0.58% : N/A)
+20414 + 0 with mate mapped to a different chr
+13194 + 0 with mate mapped to a different chr (mapQ&gt;=5)</code></pre>
+<p>Showing us that we have 12,744,793 reads, and all those were paired. Of the alignments, 1,397,598 were marked as duplicate. If we do the same for the tumor bam file we see that it has 16,674,562 reads and 1,871,521 alignment marked as duplicate.</p>
+</div>
+</div>
+</div>
+<p>So, all looks good until now. We have many reads and high alignment rates. The bam files seem to be ready for variant analysis, because they have read groups, duplicates are marked and they are sorted by coordinate. However, since we are working with whole exome sequencing (WES) data, we would like to know whether the reads align to the target regions and what kind of coverage we have. For this, we use <code>gatk CollectHsMetrics</code>.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Create a script called <code>02_gatk_collecthsmetrics.sh</code> in <code>~/project/scripts</code> to run <code>gatk CollectHsMetrics</code> on the two bam files. Here’s an example:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="va">ALIGNDIR</span><span class="op">=</span>~/project/results/alignments</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="va">REFDIR</span><span class="op">=</span>~/project/data/reference</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="va">RESOURCEDIR</span><span class="op">=</span>~/project/data/resources</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sample <span class="kw">in</span> tumor normal</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">gatk</span> CollectHsMetrics <span class="dt">\</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">-I</span> <span class="st">"</span><span class="va">$ALIGNDIR</span><span class="st">"</span>/<span class="st">"</span><span class="va">$sample</span><span class="st">"</span>.recal.bam <span class="dt">\</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">-O</span> <span class="st">"</span><span class="va">$ALIGNDIR</span><span class="st">"</span>/<span class="st">"</span><span class="va">$sample</span><span class="st">"</span>.recal.bam_hs_metrics.txt <span class="dt">\</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">-R</span> <span class="st">"</span><span class="va">$REFDIR</span><span class="st">"</span>/ref_genome.fa <span class="dt">\</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">--BAIT_INTERVALS</span> <span class="st">"</span><span class="va">$REFDIR</span><span class="st">"</span>/exome_regions.bed.interval_list <span class="dt">\</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">--TARGET_INTERVALS</span> <span class="st">"</span><span class="va">$REFDIR</span><span class="st">"</span>/exome_regions.bed.interval_list</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The produced reports are not so easy to read. To parse the metrics file, we run <code>multiqc</code> on the directory:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/project/results/alignments</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">multiqc</span> .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Download the multiqc report (<code>multiqc_report.html</code>) by right-clicking on the file and select ‘Download’. Check out the hybrid-selection metrics. How did the hybrid capture go? Are most bases on-target? What kind of coverages can we expect in the target regions?</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -458,11 +472,11 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The scale on the scatter plot is log2(copy ratio). So, if there is a duplication at one chromsome you would expect a copy ratio of 1.5 (3 chromsomes/2 chromsomes). The log2 of 1.5 is 0.58. So estimates at 0.58 mean a gain of one copy, and estimates at -0.5 (log2(0.5)) a loss of one copy.</p>
+<p>You can find the documentation on the different metrics <a href="https://broadinstitute.github.io/picard/picard-metric-definitions.html#HsMetrics">here</a>. Note that the descriptions of the metrics are not always correct. The metrics with <code>ON_BAIT</code> contain information including duplicates, while <code>ON_TARGET</code> without duplicates. This has been an issue <a href="https://github.com/broadinstitute/picard/issues/1494">since 2020</a>, and hasn’t been worked on unfortunately.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -471,34 +485,15 @@ Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-8" class="callout-8-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<p>We provide the tumor bam, normal bam, the interval list (can also be a bed file) and our reference genome:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="va">ALIGNDIR</span><span class="op">=</span>~/project/data/alignments</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="va">REFDIR</span><span class="op">=</span>~/project/data/reference</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="va">RESOURCEDIR</span><span class="op">=</span>~/project/data/resources</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/data/variants</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="ex">cnvkit.py</span> batch <span class="st">"</span><span class="va">$ALIGNDIR</span><span class="st">"</span>/tumor.recal.bam <span class="dt">\</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>--normal <span class="st">"</span><span class="va">$ALIGNDIR</span><span class="st">"</span>/normal.recal.bam <span class="dt">\</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>--targets <span class="st">"</span><span class="va">$REFDIR</span><span class="st">"</span>/exome_regions.bed.interval_list <span class="dt">\</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>--fasta <span class="st">"</span><span class="va">$REFDIR</span><span class="st">"</span>/ref_genome.fa <span class="dt">\</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>--annotate <span class="st">"</span><span class="va">$RESOURCEDIR</span><span class="st">"</span>/refFlat.txt <span class="dt">\</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>--output-reference <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/reference.cnn <span class="dt">\</span></span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>--output-dir <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/cnvkit/ <span class="dt">\</span></span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>--processes 4 <span class="dt">\</span></span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>--scatter <span class="dt">\</span></span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>--diagram</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>After running cnvkit, multiple files are created in <code>~/project/data/variants/cnvkit</code>. The scatter plot is typically interesting to investigate at first:</p>
-<p><img src="assets/images/tumor-scatter.png" class="img-fluid"></p>
-<p>Here we see that there is evidence for both losses and gains on both chromosomes.</p>
+<p>We see that we have a fold enrichment of around 22 and about 45% usable bases on-target. About 90% were ‘selected bases’, which means bases aligning within 250 bp of the target region. We’re looking at a de-duplicated coverage of 84x for the normal sample and 114.3x for the tumor sample. So, on average, we seem to have acceptable coverages for both samples.</p>
 </div>
 </div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
