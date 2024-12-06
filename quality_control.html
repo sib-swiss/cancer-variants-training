@@ -271,12 +271,42 @@ Note
 <section id="setup" class="level3">
 <h3 class="anchored" data-anchor-id="setup">Setup</h3>
 <p>We will start the exercises with pre-aligned bam files. To start, download and extract the course_data folder:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> linkk</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gunzip</span> course_data.tar.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">https://cancer-variants-training.s3.eu-central-1.amazonaws.com/course_data.tar.gz</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">gunzip</span> course_data.tar.gz</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span> course_data.tar.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Now, check out the directory <code>course_data</code> and see what’s in there (e.g.&nbsp;with <code>tree</code>):</p>
+<pre><code>course_data
+├── alignments
+│   ├── normal.recal.bai
+│   ├── normal.recal.bam
+│   ├── tumor.recal.bai
+│   └── tumor.recal.bam
+├── reference
+│   ├── exome_regions.bed
+│   ├── exome_regions.bed.interval_list
+│   ├── ref_genome.dict
+│   └── ref_genome.fa
+└── resources
+    ├── 1000G_phase1.snps.high_confidence.hg38.subset.vcf.gz
+    ├── 1000G_phase1.snps.high_confidence.hg38.subset.vcf.gz.tbi
+    ├── 1000g_pon.hg38.subset.vcf.gz
+    ├── 1000g_pon.hg38.subset.vcf.gz.tbi
+    ├── af-only-gnomad.hg38.subset.vcf.gz
+    ├── af-only-gnomad.hg38.subset.vcf.gz.tbi
+    ├── Mills_and_1000G_gold_standard.indels.hg38.subset.vcf.gz
+    ├── Mills_and_1000G_gold_standard.indels.hg38.subset.vcf.gz.tbi
+    └── refFlat.txt
+
+4 directories, 17 files</code></pre>
+<p>Showing us that we have three directories: - <code>alignments</code>: containing bam files of tumor and normal - <code>reference</code>: containing the genome fasta file and target intervals - <code>resources</code>: containing variant files (<code>vcf</code>) from amongst other the <a href="https://www.internationalgenome.org/">1000 genomes</a> project and <a href="https://gnomad.broadinstitute.org/">gnomAD</a>.</p>
+<p>You are strongly encourage that your work with scripts during the course, that you store in the directory <code>scripts</code>. Therefore create a scripts directory:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/project/</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> scripts </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="quality-control-of-the-bam-files" class="level3">
 <h3 class="anchored" data-anchor-id="quality-control-of-the-bam-files">Quality control of the bam files</h3>
-<p>First we use the information in the header to get information about the contents of the bam file and how it was generated.</p>
+<p>First we use the information in the header to get information about the contents of the bam file and how it was generated. In order to use the tools installed for this course activate the mamba environment (do this every time you open a new terminal):</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate ngs-tools </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -287,7 +317,7 @@ Exercise
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Check out the contents of the bam header with <code>samtools view -H</code>, and answer the following questions:</p>
+<p>Check out the contents of the headers of the bam files with <code>samtools view -H</code>, and answer the following questions:</p>
 <ol type="a">
 <li>How is the bam file sorted?</li>
 <li>Which chromosomes were used as reference?</li>
@@ -311,7 +341,8 @@ Answer
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>To get information on the bam header we run</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view <span class="at">-H</span> normal.recal.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/project/course_data/alignments</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view <span class="at">-H</span> normal.recal.bam</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Which returns:</p>
 <pre><code>@HD     VN:1.6  SO:coordinate
 @SQ     SN:chr6 LN:170805979
@@ -366,7 +397,7 @@ Answer
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>The command:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view normal.recal.bam <span class="kw">|</span> <span class="fu">head</span> <span class="at">-3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">samtools</span> view normal.recal.bam <span class="kw">|</span> <span class="fu">head</span> <span class="at">-3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Returns the first three alignments:</p>
 <pre><code>HWI-ST466:135068617:C1TD1ACXX:7:1114:9733:82689 163     chr6    60001   60      100M    =       60106   205     GATCTTATATAACTGTGAGATTAATCTCAGATAATGACACAAAATATAGTGAAGTTGGTAAGTTATTTAGTAAAGCTCATGAAAATTGTGCCCTCCATTC     ;B@EDB@A@A@DDDGBGBFCBC?DBEEGCGCAADAGCECDCDDDBABAGBECEGCBHH@?EGBCBCDDBHBAEEHGDFBBHBDDDBCHBGEFFEGEDBBG     MC:Z:100M       MD:Z:100        PG:Z:MarkDuplicates     RG:Z:HWI-ST466.C1TD1ACXX.normal NM:i:0  AS:i:100        XS:i:0
 HWI-ST466:135068617:C1TD1ACXX:7:1303:2021:90688 99      chr6    60001   60      100M    =       60104   203     GATCTTATATAACTGTGAGATTAATCTCAGATAATGACACAAAATATAGTGAAGTTGGTAAGTTATTTAGTAAAGCTCATGAAAATTGTGCCCTCCATTC     &gt;A@FDB@A?@&gt;DDCE@FAF@?BAC&gt;ECFCGBAADBEADBDCDDD@@A@FAFADD?ABF@@EF?@ABCDAFB?DCGEBEB@EBCDCBCHBFEFFDGFCBBG     MC:Z:100M       MD:Z:100        PG:Z:MarkDuplicates     RG:Z:HWI-ST466.C1TD1ACXX.normal NM:i:0  AS:i:100        XS:i:0
@@ -389,7 +420,7 @@ Exercise
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Use <code>samtools flagstat</code> to summarize the alignments in both bam files. How many reads are in the bam files? And how many alignments are marked as duplicate?</p>
+<p>Create a script called <code>01_samtools_flagstat.sh</code> and store it in <code>~/project/scripts</code>. Use <code>samtools flagstat</code> to summarize the alignments in both bam files. How many reads are in the bam files? And how many alignments are marked as duplicate?</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -404,12 +435,12 @@ Answer
 </div>
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/project/data/alignments</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sample <span class="kw">in</span> tumor normal</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">samtools</span> flagstat <span class="st">"</span><span class="va">$sample</span><span class="st">"</span>.recal.bam <span class="op">&gt;</span> <span class="st">"</span><span class="va">$sample</span><span class="st">"</span>.recal.bam.flagstat</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/project/course_data/alignments</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sample <span class="kw">in</span> tumor normal</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="ex">samtools</span> flagstat <span class="st">"</span><span class="va">$sample</span><span class="st">"</span>.recal.bam <span class="op">&gt;</span> <span class="st">"</span><span class="va">$sample</span><span class="st">"</span>.recal.bam.flagstat</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>returns for <code>normal.recal.bam</code>:</p>
 <pre><code>12744793 + 0 in total (QC-passed reads + QC-failed reads)
 12733034 + 0 primary
@@ -443,22 +474,22 @@ Exercise
 </div>
 <div class="callout-body-container callout-body">
 <p>Create a script called <code>02_gatk_collecthsmetrics.sh</code> in <code>~/project/scripts</code> to run <code>gatk CollectHsMetrics</code> on the two bam files. Here’s an example:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="va">ALIGNDIR</span><span class="op">=</span>~/project/results/alignments</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="va">REFDIR</span><span class="op">=</span>~/project/data/reference</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="va">RESOURCEDIR</span><span class="op">=</span>~/project/data/resources</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sample <span class="kw">in</span> tumor normal</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">gatk</span> CollectHsMetrics <span class="dt">\</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">-I</span> <span class="st">"</span><span class="va">$ALIGNDIR</span><span class="st">"</span>/<span class="st">"</span><span class="va">$sample</span><span class="st">"</span>.recal.bam <span class="dt">\</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">-O</span> <span class="st">"</span><span class="va">$ALIGNDIR</span><span class="st">"</span>/<span class="st">"</span><span class="va">$sample</span><span class="st">"</span>.recal.bam_hs_metrics.txt <span class="dt">\</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">-R</span> <span class="st">"</span><span class="va">$REFDIR</span><span class="st">"</span>/ref_genome.fa <span class="dt">\</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">--BAIT_INTERVALS</span> <span class="st">"</span><span class="va">$REFDIR</span><span class="st">"</span>/exome_regions.bed.interval_list <span class="dt">\</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">--TARGET_INTERVALS</span> <span class="st">"</span><span class="va">$REFDIR</span><span class="st">"</span>/exome_regions.bed.interval_list</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="va">ALIGNDIR</span><span class="op">=</span>~/project/course_data/alignments</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="va">REFDIR</span><span class="op">=</span>~/project/course_data/reference</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="va">RESOURCEDIR</span><span class="op">=</span>~/project/course_data/resources</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> sample <span class="kw">in</span> tumor normal</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="cf">do</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">gatk</span> CollectHsMetrics <span class="dt">\</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">-I</span> <span class="st">"</span><span class="va">$ALIGNDIR</span><span class="st">"</span>/<span class="st">"</span><span class="va">$sample</span><span class="st">"</span>.recal.bam <span class="dt">\</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">-O</span> <span class="st">"</span><span class="va">$ALIGNDIR</span><span class="st">"</span>/<span class="st">"</span><span class="va">$sample</span><span class="st">"</span>.recal.bam_hs_metrics.txt <span class="dt">\</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">-R</span> <span class="st">"</span><span class="va">$REFDIR</span><span class="st">"</span>/ref_genome.fa <span class="dt">\</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">--BAIT_INTERVALS</span> <span class="st">"</span><span class="va">$REFDIR</span><span class="st">"</span>/exome_regions.bed.interval_list <span class="dt">\</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">--TARGET_INTERVALS</span> <span class="st">"</span><span class="va">$REFDIR</span><span class="st">"</span>/exome_regions.bed.interval_list</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The produced reports are not so easy to read. To parse the metrics file, we run <code>multiqc</code> on the directory:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/project/results/alignments</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="ex">multiqc</span> .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/project/course_data/alignments</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">multiqc</span> .</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Download the multiqc report (<code>multiqc_report.html</code>) by right-clicking on the file and select ‘Download’. Check out the hybrid-selection metrics. How did the hybrid capture go? Are most bases on-target? What kind of coverages can we expect in the target regions?</p>
 </div>
 </div>
