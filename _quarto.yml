@@ -20,6 +20,7 @@ website:
       - href: course_schedule.qmd
       - text: 'Course material'
         menu:
+            - href: quality_control.qmd
             - href: variant_calling.qmd
             - href: variant_annotation.qmd 
           
@@ -34,8 +35,12 @@ format:
   html:
     code-link: true
     theme: 
-      - default
-      - custom.scss
+      light:
+        - default
+        - custom.scss
+      dark: 
+        - darkly
+        - custom.scss
     toc: true
     header-includes: |
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">

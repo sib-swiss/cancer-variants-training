@@ -12,5 +12,6 @@ cnvkit.py batch "$ALIGNDIR"/tumor.recal.bam \
 --annotate "$RESOURCEDIR"/refFlat.txt \
 --output-reference "$VARIANTDIR"/reference.cnn \
 --output-dir "$VARIANTDIR"/cnvkit/ \
+--processes 4 \
 --scatter \
 --diagram
