@@ -29,18 +29,63 @@ For a.o. efficiency and reproducibility it makes sense to execute your commands 
 We will start the exercises with pre-aligned bam files. To start, download and extract the course_data folder:
 
 ```sh
-wget linkk
+https://cancer-variants-training.s3.eu-central-1.amazonaws.com/course_data.tar.gz
 gunzip course_data.tar.gz
+rm course_data.tar.gz
+```
+
+Now, check out the directory `course_data` and see what's in there (e.g. with `tree`):
+
+```
+course_data
+├── alignments
+│   ├── normal.recal.bai
+│   ├── normal.recal.bam
+│   ├── tumor.recal.bai
+│   └── tumor.recal.bam
+├── reference
+│   ├── exome_regions.bed
+│   ├── exome_regions.bed.interval_list
+│   ├── ref_genome.dict
+│   └── ref_genome.fa
+└── resources
+    ├── 1000G_phase1.snps.high_confidence.hg38.subset.vcf.gz
+    ├── 1000G_phase1.snps.high_confidence.hg38.subset.vcf.gz.tbi
+    ├── 1000g_pon.hg38.subset.vcf.gz
+    ├── 1000g_pon.hg38.subset.vcf.gz.tbi
+    ├── af-only-gnomad.hg38.subset.vcf.gz
+    ├── af-only-gnomad.hg38.subset.vcf.gz.tbi
+    ├── Mills_and_1000G_gold_standard.indels.hg38.subset.vcf.gz
+    ├── Mills_and_1000G_gold_standard.indels.hg38.subset.vcf.gz.tbi
+    └── refFlat.txt
+
+4 directories, 17 files
+```
+
+Showing us that we have three directories:
+- `alignments`: containing bam files of tumor and normal
+- `reference`: containing the genome fasta file and target intervals
+- `resources`: containing variant files (`vcf`) from amongst other the [1000 genomes](https://www.internationalgenome.org/) project and [gnomAD](https://gnomad.broadinstitute.org/). 
+
+You are strongly encourage that your work with scripts during the course, that you store in the directory `scripts`. Therefore create a scripts directory:
+
+```sh
+cd ~/project/
+mkdir scripts 
 ```
 
 ### Quality control of the bam files
 
-First we use the information in the header to get information about the contents of the bam file and how it was generated. 
+First we use the information in the header to get information about the contents of the bam file and how it was generated. In order to use the tools installed for this course activate the mamba environment (do this every time you open a new terminal):
+
+```sh
+mamba activate ngs-tools 
+```
 
 ::: {.callout-important}
 ## Exercise
 
-Check out the contents of the bam header with `samtools view -H`, and answer the following questions:
+Check out the contents of the headers of the bam files with `samtools view -H`, and answer the following questions:
 
 a. How is the bam file sorted?
 b. Which chromosomes were used as reference?
@@ -57,6 +102,7 @@ f. Which other programs were run to create the bam file?
 To get information on the bam header we run 
 
 ```sh
+cd ~/project/course_data/alignments
 samtools view -H normal.recal.bam
 ```
 
@@ -122,7 +168,7 @@ c. Yes, the read group tag starts with `RG`, and is specified for all three alig
 ::: {.callout-important}
 ## Exercise
 
-Use `samtools flagstat` to summarize the alignments in both bam files. How many reads are in the bam files? And how many alignments are marked as duplicate? 
+Create a script called `01_samtools_flagstat.sh` and store it in `~/project/scripts`. Use `samtools flagstat` to summarize the alignments in both bam files. How many reads are in the bam files? And how many alignments are marked as duplicate? 
 
 ::: 
 
@@ -130,7 +176,7 @@ Use `samtools flagstat` to summarize the alignments in both bam files. How many 
 ## Answer
 
 ```sh 
-cd ~/project/data/alignments
+cd ~/project/course_data/alignments
 
 for sample in tumor normal
 do
@@ -171,9 +217,9 @@ So, all looks good until now. We have many reads and high alignment rates. The b
 Create a script called `02_gatk_collecthsmetrics.sh` in `~/project/scripts` to run `gatk CollectHsMetrics` on the two bam files. Here's an example:
 
 ```sh
-ALIGNDIR=~/project/results/alignments
-REFDIR=~/project/data/reference
-RESOURCEDIR=~/project/data/resources
+ALIGNDIR=~/project/course_data/alignments
+REFDIR=~/project/course_data/reference
+RESOURCEDIR=~/project/course_data/resources
 
 for sample in tumor normal
 do
@@ -188,7 +234,7 @@ done
 The produced reports are not so easy to read. To parse the metrics file, we run `multiqc` on the directory:
 
 ```sh 
-cd ~/project/results/alignments
+cd ~/project/course_data/alignments
 multiqc .
 ```
 

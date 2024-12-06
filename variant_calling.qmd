@@ -14,16 +14,16 @@ Now that we have quality-controlled the BAM files, we can go ahead with the vari
 ::: {.callout-important}
 ## Exercise
 
-Check out the [manual of `Mutect2`](https://gatk.broadinstitute.org/hc/en-us/articles/360037593851-Mutect2) and replace the placeholders `FIXME` with the required values of the `Mutect2` below command and run it:
+Create a script called `03_run_mutect2.sh`. After that, check out the [manual of `Mutect2`](https://gatk.broadinstitute.org/hc/en-us/articles/360037593851-Mutect2) and replace the placeholders `FIXME` with the required values of the `Mutect2` below command and run it:
 
 ```bash
 
 #!/usr/bin/env bash
 
-ALIGNDIR=~/project/data/alignments
-REFDIR=~/project/data/reference
-RESOURCEDIR=~/project/data/resources
-VARIANTDIR=~/project/data/variants
+ALIGNDIR=~/project/course_data/alignments
+REFDIR=~/project/course_data/reference
+RESOURCEDIR=~/project/course_data/resources
+VARIANTDIR=~/project/course_data/variants
 
 mkdir -p $VARIANTDIR
 
@@ -42,23 +42,27 @@ gatk Mutect2 \
 
 :::
 
+::: {.callout-caution}
+This takes a while to run. Have a break!
+:::
+
 ::: {.callout-tip collapse="true"}
 ## Answer
 
 ```sh
 #!/usr/bin/env bash
 
-ALIGNDIR=~/project/data/alignments
-REFDIR=~/project/data/reference
-RESOURCEDIR=~/project/data/resources
-VARIANTDIR=~/project/data/variants
+ALIGNDIR=~/project/course_data/alignments
+REFDIR=~/project/course_data/reference
+RESOURCEDIR=~/project/course_data/resources
+VARIANTDIR=~/project/course_data/variants
 
 mkdir -p $VARIANTDIR
 
 gatk Mutect2 \
 -R "$REFDIR"/ref_genome.fa \
 --intervals "$REFDIR"/exome_regions.bed.interval_list \
--I "$ALIGNDIR"/sample.recal.bam \
+-I "$ALIGNDIR"/tumor.recal.bam \
 -I "$ALIGNDIR"/normal.recal.bam \
 -normal normal \
 --germline-resource "$RESOURCEDIR"/af-only-gnomad.hg38.subset.vcf.gz \
@@ -73,15 +77,13 @@ After calling the variants we can do an initial filtering step. We do this with 
 ::: {.callout-important}
 ## Exercise
 
-Run the command to filter the somatic variants:
+Create a script called `04_filter_mutect_calls.sh` in `~/project/scripts`. From the script, run the command to filter the somatic variants:
 
 ```sh
 #!/usr/bin/env bash
 
-ALIGNDIR=~/project/data/alignments
-REFDIR=~/project/data/reference
-RESOURCEDIR=~/project/data/resources
-VARIANTDIR=~/project/data/variants
+REFDIR=~/project/course_data/reference
+VARIANTDIR=~/project/course_data/variants
 
 gatk FilterMutectCalls \
 -R "$REFDIR"/ref_genome.fa \
@@ -99,7 +101,7 @@ How many variants were kept? What were the main reason for filtering them out?
 The filtering information is in the 7th column of the vcf, so you can do something like:
 
 ```sh
-zcat my_variants.vcf.gz | grep -v "^#" | cut -f 7 | sort | uniq -c | sort -nr | head -n 10
+bcftools view -H somatic.vcf.gz | cut -f 7 | sort | uniq -c | sort -nr | head -n 10
 ```
 
 ::: 
@@ -110,7 +112,7 @@ zcat my_variants.vcf.gz | grep -v "^#" | cut -f 7 | sort | uniq -c | sort -nr | 
 To get the number of variants in the unfiltered vcf:
 
 ```sh
-zcat somatic.vcf.gz | grep -v "^#" | wc -l
+bcftools view -H somatic.vcf.gz | wc -l
 ```
 
 Resulting in 467 unfiltered variants. 
@@ -118,7 +120,7 @@ Resulting in 467 unfiltered variants.
 To get the 10 most frequently occurring filters in the filter column of the filtered vcf:
 
 ```sh
-zcat somatic.filtered.vcf.gz | grep -v "^#" | cut -f 7 | sort | uniq -c | sort -nr | head -n 10
+bcftools view -H somatic.filtered.vcf.gz | cut -f 7 | sort | uniq -c | sort -nr | head -n 10
 ```
 
 Resulting in:
@@ -141,7 +143,7 @@ So most variants were filtered out, and most of the variants were filtered out b
 In order to figure out what that means we can check out the vcf header:
 
 ```sh 
-zcat somatic.filtered.vcf.gz | grep -v "^#" | wc -l
+bcftools view -h somatic.filtered.vcf.gz | grep "^##FILTER"
 ```
 
 Resulting in:
@@ -175,6 +177,111 @@ Showing us that these mutations do not meet the likelihood threshold, basically 
 
 :::
 
+Let's check out the VCF in a bit more detail. We'd like to have an idea what kind of variants are in there, and what for example their variant allele frequency is. 
+
+First, we can check what the variants look like:
+
+```sh 
+bcftools view -H somatic.filtered.vcf.gz | head
+```
+
+Showing us that both the `FORMAT` and `INFO` fields are filled with information. To check out the meaning of what is in the `INFO` field you can run:
+
+```sh 
+bcftools view -h somatic.filtered.vcf.gz | grep "^##INFO"
+```
+
+And you can do the same for the format fields:
+
+```sh
+bcftools view -h somatic.filtered.vcf.gz | grep "^##FORMAT"
+```
+
+To summarize the vcf for information in the format or info fields you can use [`bcftools query`](https://samtools.github.io/bcftools/bcftools.html#query). For example, for getting the likelihood of variant and depth of each sample, you can do the following (for the first 20 variants):
+
+```sh
+bcftools query -f '%CHROM\t%POS\t%FILTER\t\t%INFO/TLOD\t[%SAMPLE=%DP;]\n' somatic.filtered.vcf.gz | head -20
+```
+
+::: {.callout-important}
+## Exercise
+
+Instead of the depth `DP` for each sample get the variant allele frequency for each sample, and compare that with the FILTER column. 
+
+:::
+
+::: {.callout-tip collapse="true"}
+## Answer
+
+We can check which tag contains the variant allele frequency in the vcf:
+
+```sh
+bcftools view -h somatic.filtered.vcf.gz | grep "^##FORMAT"
+```
+
+Returning:
+
+```
+##FORMAT=<ID=AD,Number=R,Type=Integer,Description="Allelic depths for the ref and alt alleles in the order listed">
+##FORMAT=<ID=AF,Number=A,Type=Float,Description="Allele fractions of alternate alleles in the tumor">
+##FORMAT=<ID=DP,Number=1,Type=Integer,Description="Approximate read depth (reads with MQ=255 or with bad mates are filtered)">
+##FORMAT=<ID=F1R2,Number=R,Type=Integer,Description="Count of reads in F1R2 pair orientation supporting each allele">
+##FORMAT=<ID=F2R1,Number=R,Type=Integer,Description="Count of reads in F2R1 pair orientation supporting each allele">
+##FORMAT=<ID=FAD,Number=R,Type=Integer,Description="Count of fragments supporting each allele.">
+##FORMAT=<ID=GQ,Number=1,Type=Integer,Description="Genotype Quality">
+##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
+##FORMAT=<ID=PGT,Number=1,Type=String,Description="Physical phasing haplotype information, describing how the alternate alleles are phased in relation to one another; will always be heterozygous and is not intended to describe called alleles">
+##FORMAT=<ID=PID,Number=1,Type=String,Description="Physical phasing ID information, where each unique ID within a given sample (but not across samples) connects records within a phasing group">
+##FORMAT=<ID=PL,Number=G,Type=Integer,Description="Normalized, Phred-scaled likelihoods for genotypes as defined in the VCF specification">
+##FORMAT=<ID=PS,Number=1,Type=Integer,Description="Phasing set (typically the position of the first variant in the set)">
+##FORMAT=<ID=SB,Number=4,Type=Integer,Description="Per-sample component statistics which comprise the Fisher's Exact Test to detect strand bias.">
+```
+
+Where `AF` contains 'Allele fractions of alternate alleles in the tumor', so that is the tag we are looking for. So, we replace `DP` with `AF`:
+
+```sh
+bcftools query -f '%CHROM\t%POS\t%FILTER\t\t%INFO/TLOD\t[%SAMPLE=%AF;]\n' somatic.filtered.vcf.gz | head -30
+```
+
+Returning:
+
+```
+chr6    106265  map_qual;strand_bias;weak_evidence              3.99    normal=0.00671;tumor=0.01;
+chr6    325357  PASS            719.91  normal=0.001054;tumor=0.161;
+chr6    325783  PASS            1292.31 normal=0.0009626;tumor=0.224;
+chr6    325901  PASS            1030.6  normal=0.005447;tumor=0.183;
+chr6    325916  PASS            937.7   normal=0.004142;tumor=0.116;
+chr6    1742560 panel_of_normals                235.6   normal=0.02;tumor=0.41;
+chr6    1916336 PASS            187.23  normal=0.022;tumor=0.482;
+chr6    1930220 PASS            152.54  normal=0.016;tumor=0.207;
+chr6    2674999 PASS            190.32  normal=0.028;tumor=0.514;
+chr6    2834013 PASS            245.04  normal=0.02;tumor=0.494;
+chr6    2840548 PASS            274.4   normal=0.021;tumor=0.522;
+chr6    3110986 weak_evidence           3.03    normal=0.017;tumor=0.019;
+chr6    3723708 PASS            266.67  normal=0.017;tumor=0.42;
+chr6    4892169 weak_evidence           4.43    normal=0.024;tumor=0.02;
+chr6    5103987 germline;multiallelic;normal_artifact;panel_of_normals          13.57,257.27    normal=0.037,0.825;tumor=0.077,0.834;
+chr6    6250887 PASS            260.99  normal=0.018;tumor=0.459;
+chr6    7176847 PASS            107.39  normal=0.026;tumor=0.319;
+chr6    7585458 PASS            171.88  normal=0.015;tumor=0.283;
+chr6    7833697 PASS            122.24  normal=0.057;tumor=0.513;
+chr6    7883281 germline                99.5    normal=0.05;tumor=0.476;
+chr6    8054329 PASS            420.89  normal=0.045;tumor=0.446;
+chr6    9900366 panel_of_normals                525.07  normal=0.024;tumor=0.992;
+chr6    10397660        germline;multiallelic;slippage          3.21,50.94      normal=0.042,0.043;tumor=0.098,0.798;
+chr6    10398435        PASS            365.76  normal=0.013;tumor=0.943;
+chr6    10801908        PASS            91.41   normal=0.02;tumor=0.312;
+chr6    10989772        PASS            71.25   normal=0.041;tumor=0.49;
+chr6    11306007        PASS            209.24  normal=0.009359;tumor=0.4;
+chr6    13479062        germline;multiallelic;normal_artifact;panel_of_normals          4.63,5.86,13.96 normal=0.022,0.027,0.258;tumor=0.043,0.068,0.165;
+chr6    13977507        weak_evidence           3.4     normal=0.012;tumor=0.027;
+chr6    16147945        PASS            331.72  normal=0.014;tumor=0.978;
+```
+
+Where we see that if there's the filter `weak_evidence` the VAF of the tumor is typically low. 
+
+::: 
+
 ### Copy number variation calling
 
 Variation of copy number in genes can have a large effect on the phenotype of a tumor. Therefore, we will also estimate the copy number variation occurring on chromosome 6 and 17. For that, we use [CNVkit](https://cnvkit.readthedocs.io/en/stable/). 
@@ -184,15 +291,16 @@ Variation of copy number in genes can have a large effect on the phenotype of a 
 
 Check out the [documentation](https://cnvkit.readthedocs.io/en/stable/quickstart.html#build-a-reference-from-normal-samples-and-infer-tumor-copy-ratios) of `CNVkit.py bash`, and the helper (`cnvkit.py batch -h`), and replace the missing values at `FIXME`.
 
-After that, checkout the visualizations (`tumor-scatter.png` and `tumor-scatter.png`) at `~/project/data/variants/cnvkit`. Do you see any evidence for copy number variation? 
+After that, checkout the visualizations (`tumor-scatter.png` and `tumor-scatter.png`) at `~/project/course_data/variants/cnvkit`. Do you see any evidence for copy number variation? 
+
 
 ```sh
 #!/usr/bin/env bash
 
-ALIGNDIR=~/project/data/alignments
-REFDIR=~/project/data/reference
-RESOURCEDIR=~/project/data/resources
-VARIANTDIR=~/project/data/variants
+ALIGNDIR=~/project/course_data/alignments
+REFDIR=~/project/course_data/reference
+RESOURCEDIR=~/project/course_data/resources
+VARIANTDIR=~/project/course_data/variants
 
 cnvkit.py batch FIXME \
 --normal FIXME \
@@ -219,10 +327,10 @@ We provide the tumor bam, normal bam, the interval list (can also be a bed file)
 ```sh
 #!/usr/bin/env bash
 
-ALIGNDIR=~/project/data/alignments
-REFDIR=~/project/data/reference
-RESOURCEDIR=~/project/data/resources
-VARIANTDIR=~/project/data/variants
+ALIGNDIR=~/project/course_data/alignments
+REFDIR=~/project/course_data/reference
+RESOURCEDIR=~/project/course_data/resources
+VARIANTDIR=~/project/course_data/variants
 
 cnvkit.py batch "$ALIGNDIR"/tumor.recal.bam \
 --normal "$ALIGNDIR"/normal.recal.bam \
@@ -236,7 +344,7 @@ cnvkit.py batch "$ALIGNDIR"/tumor.recal.bam \
 --diagram
 ```
 
-After running cnvkit, multiple files are created in `~/project/data/variants/cnvkit`. The scatter plot is typically interesting to investigate at first:
+After running cnvkit, multiple files are created in `~/project/course_data/variants/cnvkit`. The scatter plot is typically interesting to investigate at first:
 
 ![](assets/images/tumor-scatter.png)
 

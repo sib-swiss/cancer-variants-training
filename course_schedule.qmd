@@ -10,8 +10,8 @@ title: "Course schedule"
 
 | block   	| start    	| end      	| subject                        	|
 |---------	|----------	|----------	|--------------------------------	|
-| introduction 	| 9:00 AM  	| 9:30 AM 	| Introduction |
-| block 1 	| 9:30 AM  	| 10:30 AM 	| [Variant calling](variant_calling.qmd) - lecture |
+| introduction 	| 9:00 AM  	| 10:00 AM 	| Introduction - lecture |
+| block 1 	| 10:00 AM  	| 10:30 AM 	| [Setup and quality control](quality_control.qmd) - exercises |
 |         	| 10:30 AM 	| 11:00 AM 	| BREAK                          	|
 | block 2 	| 11:00 AM 	| 12:00 PM 	| [Variant calling](variant_calling.qmd) - exercises	     |
 |         	| 12:00 PM 	| 1:00 PM  	| BREAK                          	|
