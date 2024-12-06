@@ -29,7 +29,7 @@ For a.o. efficiency and reproducibility it makes sense to execute your commands 
 We will start the exercises with pre-aligned bam files. To start, download and extract the course_data folder:
 
 ```sh
-https://cancer-variants-training.s3.eu-central-1.amazonaws.com/course_data.tar.gz
+wget https://cancer-variants-training.s3.eu-central-1.amazonaws.com/course_data.tar.gz
 gunzip course_data.tar.gz
 rm course_data.tar.gz
 ```
