@@ -68,7 +68,7 @@ Showing us that we have three directories:
 - `reference`: containing the genome fasta file and target intervals
 - `resources`: containing variant files (`vcf`) from amongst other the [1000 genomes](https://www.internationalgenome.org/) project and [gnomAD](https://gnomad.broadinstitute.org/). 
 
-You are strongly encourage that your work with scripts during the course, that you store in the directory `scripts`. Therefore create a scripts directory:
+You are strongly encouraged to your work with scripts during the course, which you store in the directory `scripts`. Therefore create a scripts directory:
 
 ```sh
 cd ~/project/
