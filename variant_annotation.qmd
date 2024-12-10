@@ -1,3 +1,1164 @@
 ---
 title: "Variant annotation"
+execute:
+  eval: false
+format:
+  html:
+    toc: true
 ---
+
+### Ensembl VEP (Variant effect predictor)
+VEP is a powerful and flexible tool for annotating, analyzing, and
+prioritizing genomic variants. It is particularly useful in cancer
+genomics, where understanding the functional impact of somatic mutations
+is crucial for research and clinical applications. We can answer
+questions like: 
+
+- How damaging is a certain somatic mutation (according
+to reference databases) 
+- What is the impact of this mutation in the
+particular cancer type of study 
+- Is the mutation known for that
+cancer? 
+- Is there a relation with a certain mutation and a
+chemotherapeutic (or a class of them)
+
+### Why do we need a tool like VEP?
+
+In the genomic era we can get thousands of somatic mutations and those
+are rarely analyzed one by one. We need a way to summarize those SNVs
+consistently and to understand which are the variants to focus on. In this
+context a tool like VEP becomes very useful.
+
+## Key Concepts
+
+### Install VEP
+
+::: {.callout-important}
+``` bash
+# Installing Conda #https://docs.anaconda.com/miniconda/
+mkdir -p ~/miniconda3
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+rm ~/miniconda3/miniconda.sh
+source ~/miniconda3/bin/activate
+conda init --all
+
+# Using Conda
+conda create -n vep samtools python=3.10 ensembl-vep=113
+# conda install -c bioconda ensembl-vep=113 # if installing in current env
+
+# Activate VEP's env
+conda activate vep
+
+# Plugins installation
+# vep_install -a p --PLUGINS all
+```
+:::
+
+::: {.callout-note}
+Instead of conda you could try installing `mamba`. If you are on Unix-based system this is simple. [mamba](https://mamba.readthedocs.io/en/latest/installation/mamba-installation.html)
+:::
+
+### Transcript Selection
+
+VEP can report consequences for all transcripts overlapping a variant.
+However, this often results in multiple annotations per variant. Several
+approaches are available to handle this:
+
+-   `--pick`: Selects one consequence per variant based on a predefined hierarchy
+-   `--pick_allele`: Selects one consequence per variant allele
+-   `--pick_allele_gene`: Selects one consequence per variant allele per gene
+-   `--per_gene`: Selects one consequence per gene
+-   `--flag_pick`: Flags the selected consequence while retaining others
+
+### Consequence Priority
+
+VEP ranks consequences by severity:
+
+1.   Transcript ablation
+
+2.  Splice acceptor/donor variant
+
+3.  Stop gained
+
+4.  Frameshift variant
+
+5.  Stop lost
+
+6.  Start lost
+
+7.  Transcript amplification
+
+8.  Inframe insertion/deletion
+
+9.  Missense variant
+
+10. Protein altering variant
+
+## Practical Exercises
+
+In case that you do not have the Mutect2 call and/or the CNVkit call, you can obtain those from [here](https://drive.google.com/drive/folders/1Rh6qRMGGY1QZL7INrcNd7hULTr8mB6tu?usp=sharing). In this folder there are also a `README.md` and some folders containing preprocessed data for the addional resources that we will use with Ensembl-VEP. 
+
+::: {.callout-important}
+## Basic VEP Analysis
+**Objective**: Annotate a small VCF file and understand the basic output
+format.
+
+**Input Data**:
+
+``` vcf
+##fileformat=VCFv4.2
+#CHROM    POS    ID    REF    ALT    QUAL    FILTER    INFO
+chr7    55242465    rs121913529    A    T    .    PASS    .
+chr17    7577121    rs28934578    C    T    .    PASS    .
+chr13    32936646    rs28897743    C    T    .    PASS    .
+chr17    7674894    rs28934574    G    A    .    PASS    .
+chr13    32914438    rs80357090    T    C    .    PASS    .
+chr17    41245466    rs28897686    G    A    .    PASS    .
+chr3    178936091    rs63751289    G    A    .    PASS    .
+chr10    89624230    rs61751507    G    A    .    PASS    .
+chr11    108098576    rs386833395    G    A    .    PASS    .
+chr4    55141055    rs1800744    A    G    .    PASS    .
+chr1    11190510    rs6603781    G    A    .    PASS    .
+chr7    140453136    rs121913530    A    T    .    PASS    .
+chr5    112175770    rs121913343    C    T    .    PASS    .
+```
+
+**Task**: Annotate these variants using VEP and identify which genes are
+affected.
+
+:::
+
+::: {.callout-note collapse="false"}
+## Command
+**VEP can be provided with a VCF file as an input (or vcf.gz + index) file or other formats, see documentation [here](https://www.ensembl.org/info/docs/tools/vep/vep_formats.html) **
+
+``` bash
+vep -i input.vcf --cache --species homo_sapiens \
+--assembly GRCh38 --offline --format vcf \
+--symbol --force_overwrite --domains \
+--sift b --polyphen b \
+--output_file output.txt
+```
+:::
+
+::: {.callout-tip collapse="true"}
+## Solution
+
+``` bash
+# 1. First, create a script that will generate our VCF file. 
+# Copy this code into a new file named `create_vcf.sh`
+# with the command `nano create_vcf.sh`:
+
+#!/usr/bin/env bash
+
+echo -e '##fileformat=VCFv4.2
+##INFO=<ID=AF,Number=A,Type=Float,Description="Allele Frequency">
+#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO
+chr7\t55242465\trs121913529\tA\tT\t.\tPASS\t.
+chr17\t7577121\trs28934578\tC\tT\t.\tPASS\t.
+chr13\t32936646\trs28897743\tC\tT\t.\tPASS\t.
+chr17\t7674894\trs28934574\tG\tA\t.\tPASS\t.
+chr13\t32914438\trs80357090\tT\tC\t.\tPASS\t.
+chr17\t41245466\trs28897686\tG\tA\t.\tPASS\t.
+chr3\t178936091\trs63751289\tG\tA\t.\tPASS\t.
+chr10\t89624230\trs61751507\tG\tA\t.\tPASS\t.
+chr11\t108098576\trs386833395\tG\tA\t.\tPASS\t.
+chr4\t55141055\trs1800744\tA\tG\t.\tPASS\t.
+chr1\t11190510\trs6603781\tG\tA\t.\tPASS\t.
+chr7\t140453136\trs121913530\tA\tT\t.\tPASS\t.
+chr5\t112175770\trs121913343\tC\tT\t.\tPASS\t.' > cancer_variants.vcf
+
+# 2. Make the script executable:
+chmod +x create_vcf.sh
+
+# 3. Run the script:
+./create_vcf.sh
+
+# 4. Verify the file was created correctly:
+# Check the content
+cat cancer_variants.vcf
+
+# Make sure you have 13 variants
+grep -v '^#' cancer_variants.vcf | wc -l  # Should show 13
+
+# Run VEP ~< 5min
+vep -i cancer_variants.vcf -cache \
+    --species homo_sapiens \
+    --offline \
+    --force_overwrite \
+    --assembly GRCh38 \
+    --format vcf \
+    --symbol \
+    --sift b \
+    --polyphen b \
+    --pick \
+    --domains \
+    --output_file output.txt
+
+# Some of the variants affect:
+
+## VEP command-line: vep --assembly GRCh38 --cache --database 0 --force_overwrite --format vcf --input_file cancer_variants.vcf --offline --output_file output.txt --pick --symbol
+#Uploaded_variation	Location	Allele	Gene	Feature	Feature_type	Consequence	cDNA_position	CDS_position	Protein_position	Amino_acids	Codons	Existing_variation	Extra
+rs121913529	chr7:55242465	T	ENSG00000280890	ENST00000626532	Transcript	intron_variant,non_coding_transcript_variant	-	-	-	-	-	-	IMPACT=MODIFIER;STRAND=-1;SYMBOL=ELDR;SYMBOL_SOURCE=HGNC;HGNC_ID=HGNC:49511
+rs28934578	chr17:7577121	T	ENSG00000161960	ENST00000293831	Transcript	missense_variant	597	580	194	D/Y	Gac/Tac	-	IMPACT=MODERATE;STRAND=1;SYMBOL=EIF4A1;SYMBOL_SOURCE=HGNC;HGNC_ID=HGNC:3282
+rs28897743	chr13:32936646	T	-	-	-	intergenic_variant	-	-	-	-	-	-	IMPACT=MODIFIER
+rs28934574	chr17:7674894	A	ENSG00000141510	ENST00000269305	Transcript	stop_gained	779	637	213	R/*	Cga/Tga	-	IMPACT=HIGH;STRAND=-1;SYMBOL=TP53;SYMBOL_SOURCE=HGNC;HGNC_ID=HGNC:11998
+rs28897686	chr17:41245466	A	ENSG00000241595	ENST00000334109	Transcript	upstream_gene_variant	-	-	-	-	-	-	IMPACT=MODIFIER;DISTANCE=4221;STRAND=1;SYMBOL=KRTAP9-4;SYMBOL_SOURCE=HGNC;HGNC_ID=HGNC:18902
+```
+
+```rs28934574``` from this example is a TP53 stop gained mutation commonly found in cancer.
+
+**You can try to run without ```--pick``` and ```--everything``` see what happens.**
+:::
+
+After running the command you will also notice a ```output.txt_summary.html``` that will show some statistics on the annotation process. 
+If you tried running ```--everything``` or  ```-e``` this is a shortcut for the following options:
+
+::: {.callout-note collapse="true"}
+## \--everything
+```
+--sift b, --polyphen b, --ccds, --hgvs, --symbol, --numbers, --domains, --regulatory, --canonical, --protein, --biotype, --af, --af_1kg, --af_esp, --af_gnomade, --af_gnomadg, --max_af, --pubmed, --uniprot, --mane, --tsl, --appris, --variant_class, --gene_phenotype, --mirna 
+```
+
+This an example of the highput from the TP53 mutation
+
+| Field | Value | Description |
+|-------|--------|-------------|
+| Uploaded Variation | rs28934574 | dbSNP identifier |
+| Location | chr17:7674894 | Genomic coordinates (GRCh38) |
+| Allele | A | Alternative allele |
+| Gene | ENSG00000141510 | Ensembl gene ID for TP53 |
+| Transcript | ENST00000455263 | Ensembl transcript ID |
+| Feature Type | Transcript | Type of genomic feature affected |
+| Consequence | stop_gained | Creates premature stop codon |
+| cDNA Position | 770 | Position in the cDNA |
+| CDS Position | 637 | Position in the coding sequence |
+| Protein Position | 213 | Position in the protein |
+| Amino Acids | R/* | Change from Arginine to stop codon |
+| Codons | Cga/Tga | Codon change |
+| Impact | HIGH | Severity of variant impact |
+| Symbol | TP53 | HGNC gene symbol |
+| Biotype | protein_coding | Type of transcript |
+| CCDS | CCDS45605.1 | Consensus CDS identifier |
+| UniProt | P04637.305 | UniProt protein identifier |
+| HGVSc | ENST00000455263.6:c.637C>T | Coding sequence change in HGVS notation |
+| HGVSp | ENSP00000398846.2:p.Arg213Ter | Protein change in HGVS notation |
+| Clinical Significance | pathogenic | Clinical interpretation |
+| gnomAD AF | 1.368e-06 | Allele frequency in gnomAD |
+| Maximum AF | 1.656e-05 | Maximum allele frequency observed |
+:::
+
+
+You can have a look at the documentation to learn more about VEP's many options [here](https://www.ensembl.org/info/docs/tools/vep/script/vep_options.html)
+
+::: {.callout-note collapse="false"}
+## **Damage prediction tools**
+
+- SIFT: Based on sequence homology and physical properties of amino acids
+- PolyPhen: Combines sequence-based features with structural information
+:::
+
+### Mutect2 results annotation
+
+In the example above we used an example to undestand how to run VEP and some different arguments that can make a big difference in the output generated and the information provided.
+
+If we use the results coming from the somatic call from the WES of chr6 and chr17 we get a table of variants. These results can be enriched with annotations. Let's use VEP to annotate this file
+
+**Extract from the resulting Mutect2 somatic call**
+
+``` vcf
+##fileformat=VCFv4.2 
+#CHROM  POS     ID      REF  ALT   QUAL  FILTER  INFO 
+chr17   745040    .   G   T   .   PASS
+chr17   1492466   .   C   T   .   PASS
+chr17   2364457   .   T   G   .   PASS
+chr17   3433669   .   G   T   .   PASS
+chr17   4545725   .   T   C   .   PASS
+chr17   4934441   .   G   T   .   PASS
+chr17   5007047   .   C   T   .   PASS
+chr17   7560755   .   G   A   .   PASS
+chr17   7588500   .   G   C   .   PASS
+chr6    325357    .   G   A   .   PASS
+chr6    325783    .   G   C   .   PASS
+chr6    325901    .   G   A   .   PASS
+chr6    1916336   .   G   A   .   PASS
+chr6    2674999   .   A   C   .   PASS
+chr6    2834013   .   C   G   .   PASS
+chr6    2840548   .   C   T   .   PASS
+chr6    3723708   .   C   G   .   PASS
+```
+
+## Using VEP to annotate Mutect2 variants 
+
+The somatic variant call can be annotated with this command
+``` bash
+vep -i somatic.filtered.PASS.vcf.gz --cache --species homo_sapiens \
+--assembly GRCh38 --offline --format vcf \
+--symbol --force_overwrite -e \
+--output_file chr6ch17_mutect2_annotated.txt
+```
+
+::: {.callout-important}
+## Output to VCF
+What if the output of this file should be formatted as vcf instead? You can check VEP's documentation [here](https://www.ensembl.org/info/docs/tools/vep/vep_formats.html)
+
+:::
+
+::: {.callout-tip collapse="true"}
+## Solution
+
+With the option ``--output_file`` you can use ``vcf``.
+After you can compress the VCF ``bgzip <output_file.vcf>`` and then you can index it ``tabix -p vcf <output_file.vcf.gz>``. 
+If you see VEP's documentation there is an option to skip `bgzip` and instead incorporating it directly in VEP, which will be doing the compression for you `--compress_output bgzip` in the call. Afterwards you still need to index the file.
+:::
+
+**Interesting results:**
+We will obtain a file with many annotations.
+
+>  ````chr6_1930220_GA/TT	chr6:1930220-1930221	TT	ENSG00000112699	ENST00000380815	Transcript	stop_gained	836-837	653-654	218	F/*	tTC/tAA	-	IMPACT=HIGH;STRAND=-1;SYMBOL=GMDS;SYMBOL_SOURCE=HGNC;HGNC_ID=HGNC:4369````
+
+| Impact | Gene | Location | Consequence | Change | Details |
+|--------|------|-----------|-------------|---------|----------|
+| HIGH | GMDS | chr6:1930220 | stop_gained | F→* | Creates premature stop codon |
+
+::: {.callout-note collapse="true"}
+## And other interesting variants
+
+| Impact | Gene | Location | Consequence | Change | Details |
+|--------|------|-----------|-------------|---------|----------|
+| HIGH | SERPINB1 | chr6:2834013 | splice_acceptor_variant | C>G | Affects splice site |
+| MODERATE | OR1E2 | chr17:3433669 | missense_variant | P→H | Position 58 |
+| MODERATE | PLD2 | chr17:4818362 | inframe_deletion | VDRILK→V | 15bp deletion |
+| LOW | GEMIN4 | chr17:745040 | synonymous_variant | L→L | No amino acid change |
+| MODIFIER | DUSP22 | chr6:325357 | intron_variant | G>A | Within intron |
+:::
+
+::: {.callout-note}
+## Performance Trick
+
+Can you run the same command as before adding `--fork 2`, do you note any difference?
+
+``` bash
+vep -i somatic.filtered.PASS.vcf.gz --cache --species homo_sapiens \
+--assembly GRCh38 --offline --format vcf \
+--symbol --force_overwrite -e --fork 2 \
+--output_file chr6ch17_mutect2_annotated.txt
+```
+:::
+
+Now when we anaylize our output file `chr6ch17_mutect2_annotated.txt` in more details, there are about 160 lines and a lot of information on different transcripts that are related to the mutations found by Mutect2.
+Let's say that now we would like to filter only the deleterious predictions and moderate/high impact variants. We can do that in a couple of ways:
+
+``` bash
+filter_vep \
+-i chr6ch17_mutect2_annotated.txt \
+-o chr6ch17_mutect2_annotated_filtered.txt \
+--force_overwrite \
+--filter "(IMPACT is HIGH or IMPACT is MODERATE) or (SIFT match deleterious or PolyPhen match probably_damaging)"
+```
+
+::: {.callout-caution}
+in this line `--filter "(IMPACT is HIGH or IMPACT is MODERATE) or (SIFT match deleterious or PolyPhen match probably_damaging)"` consider that there is a difference in saying `or` or `and` as the latter is much more stringent and it would look only for variants whose prediction is in agreement.
+:::
+
+
+But what if we want more information on the cancer mutations, can we integrate other databases to VEP? Yes we can. This can be useful prior to filtering to find additional consensus on potential interesting targets.
+
+::: {.callout-important}
+## Cancer-Specific Annotation
+
+**Objective**: Add cancer-specific annotations using ClinVar and filter
+for potentially pathogenic variants.
+
+**Task**: Enhance the previous analysis by: 
+
+1. Adding [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) annotations
+2. Filtering for HIGH/MODERATE impact variants
+4. Creating a summary of mutation types
+
+You can download from here
+```
+# Download latest ClinVar VCF
+wget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz
+wget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz.tbi
+```
+:::
+
+::: {.callout-tip collapse="true"}
+## Solution
+
+``` bash
+# Download ClinVar VCF
+
+# Run VEP with cancer-specific annotations
+vep -i somatic.filtered.PASS.vcf.gz \
+    --cache \
+    --assembly GRCh38 \
+    --format vcf \
+    --force_overwrite \
+    --fork 2 \
+    --everything \
+    --custom clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN \
+    --output_file chr6ch17_mutect2_annotated_with_clinVar.txt
+
+# Filter results
+filter_vep \
+-i chr6ch17_mutect2_annotated_with_clinVar.txt \
+-o chr6ch17_mutect2_annotated_with_clinVar_filtered.txt \
+--force_overwrite \
+--filter "(IMPACT is HIGH or IMPACT is MODERATE) or \
+(SIFT match deleterious or PolyPhen match probably_damaging) or \
+(ClinVar_CLNSIG match pathogenic)"
+
+# Generate summary (using simple grep/awk commands)
+echo "Mutation Type Summary:" > summary.txt
+grep -v "#" chr6ch17_mutect2_annotated_with_clinVar_filtered.txt | cut -f7 | sort | uniq -c >> summary.txt
+```
+
+The possible values for ClinVar_CLNSIG include:
+
+- Pathogenic - Strong evidence the variant causes disease
+- Likely_pathogenic - Evidence suggests it is probably disease-causing
+- Uncertain_significance (VUS) - Not enough evidence to classify either way
+- Likely_benign - Evidence suggests it is probably not disease-causing
+- Benign - Strong evidence the variant is not disease-causing
+- Conflicting_interpretations_of_pathogenicity - Different submitters disagree
+- Not_provided - No interpretation was provided
+- Drug_response - Affects response to medications
+- Other - Other interpretations
+
+:::
+
+The clinvar data provided us with more information coming from curated databases, and for some variants we can have multiple levels of consensus (however this is not a garantee of pathogenicity), but there are many other additional databases that one can try. However not all the databases have the same licensing, therefore each of the integrated datasets should be checked. For example `COSMIC` databases can be accessed only after registration, `onkoKB` as well. <br>
+Please do not forget to cite the data that you use and it is important to keep note of the version used.
+
+## Advanced Topics
+
+### Using VEP Plugins
+
+VEP's functionality can be extended through plugins. Here are some
+essential plugins for cancer analysis:
+
+1. **REVEL**: Rare Exome Variant Ensemble Learner
+
+>  [REVEL paper](https://pubmed.ncbi.nlm.nih.gov/27666373/): An Ensemble Method for Predicting the Pathogenicity of Rare Missense Variants
+
+::: {.callout-tip collapse="true"}
+## REVEL
+
+## [REVEL](http://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#revel)
+
+You can download here the data (~6.5GB):
+[https://sites.google.com/site/revelgenomics/downloads](https://sites.google.com/site/revelgenomics/downloads) or [https://zenodo.org/records/7072866](https://zenodo.org/records/7072866)
+
+``` bash
+unzip revel-v1.3_all_chromosomes.zip
+cat revel_with_transcript_ids | tr "," "\t" > tabbed_revel.tsv
+sed '1s/.*/#&/' tabbed_revel.tsv > new_tabbed_revel.tsv
+bgzip new_tabbed_revel.tsv
+```
+
+Prepare for GRCh38
+``` bash
+zcat new_tabbed_revel.tsv.gz | head -n1 > h
+zgrep -h -v ^#chr new_tabbed_revel.tsv.gz | awk '$3 != "." ' | sort -k1,1 -k3,3n - | cat h - | bgzip -c > new_tabbed_revel_grch38.tsv.gz
+tabix -f -s 1 -b 3 -e 3 new_tabbed_revel_grch38.tsv.gz
+```
+
+Usage:
+``` bash
+--plugin REVEL,file=/path/to/revel/data.tsv.gz
+```
+:::
+
+2.  **AlphaMissense**: Deep learning-based predictor
+
+> [AlphaMissense's Paper](https://www.science.org/doi/10.1126/science.adg7492): Accurate proteome-wide missense variant effect prediction with AlphaMissense
+
+::: {.callout-tip collapse="true"}
+## AlphaMissense
+
+## [AlphaMissense](http://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#alphamissense)
+
+[**Download link**](https://console.cloud.google.com/storage/browser/dm_alphamissense;tab=objects?pli=1&prefix=&forceOnObjectsSortingFiltering=false)
+
+Prepare for GRCh38
+``` bash
+wget https://storage.googleapis.com/dm_alphamissense/AlphaMissense_hg38.tsv.gz
+tabix -s 1 -b 2 -e 2 -f -S 1 AlphaMissense_hg38.tsv.gz
+```
+Run it with VEP
+``` bash
+--plugin AlphaMissense,file=/full/path/to/file.tsv.gz
+```
+:::
+
+We have seen how to run VEP and how to filter the output. Now we can make another call on the Mutect2 output to annotate the variants using a combination of some plugins and some custom databases.
+
+::: {.callout-note collapse="false"}
+## **Damage prediction tools**
+
+- REVEL: An ensemble method that integrates multiple prediction tools
+- AlphaMissense: Uses deep learning trained on evolutionary data
+:::
+
+## Complex VEP run
+
+::: {.callout-important}
+## Complex VEP run
+
+**Objective**: Learn how to comprehensively annotate cancer variants using VEP's advanced features, plugins, and filtering capabilities to identify potentially pathogenic variants.
+
+**Task**: Enhance the previous analysis by: 
+
+1. Adding [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) annotations
+2. Adding [REVEL](https://pubmed.ncbi.nlm.nih.gov/27666373/) annotations
+3. Adding population frequencies `--af_gnomade` (gnomAD data is included in VEP cache)
+4. Adding plugins (`--plugin SpliceRegion`, `--plugin AlphaMissense`, `--plugin REVEL`)
+5. Filtering for HIGH/MODERATE impact variants
+
+:::
+
+::: {.callout-tip collapse="true"}
+## Solution
+
+``` bash
+vep -i somatic.filtered.PASS.vcf.gz \
+    --cache \
+    --assembly GRCh38 \
+    --format vcf \
+    --fork 2 \
+    --everything \
+    --af_gnomade \
+    --force_overwrite \
+    --plugin SpliceRegion \
+    --plugin REVEL,file=new_tabbed_revel_grch38.tsv.gz \
+    --plugin AlphaMissense,file=AlphaMissense_hg38.tsv.gz \
+    --custom clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN \
+    --output_file chr6ch17_mutect2_annotated_with_clinVar_and_plugins.txt
+    
+# Filter the data -> Stringent
+filter_vep \
+-i chr6ch17_mutect2_annotated_with_clinVar_and_plugins.txt \
+-o stringent_filtered.txt \
+--force_overwrite \
+--filter "(IMPACT is HIGH or IMPACT is MODERATE) and \
+       (REVEL >= 0.75 or \
+        am_class = 'likely_pathogenic' or \
+        SIFT = 'deleterious' and PolyPhen = 'probably_damaging')"
+          
+# Filter the data -> Moderate
+filter_vep \
+-i chr6ch17_mutect2_annotated_with_clinVar_and_plugins.txt \
+-o moderate_filtered.txt \
+--force_overwrite \
+--filter "(IMPACT is HIGH or IMPACT is MODERATE) and \
+         (REVEL >= 0.5 or \
+          am_class = 'likely_pathogenic' or \
+          SIFT = 'deleterious' or \
+          PolyPhen = 'probably_damaging')"
+
+```
+
+**A glimpse on the results**
+
+::: {collapse="true"}
+## Variant Details
+
+```
+chr6_10801908_C/G	chr6:10801908	G	ENSG00000111837	ENST00000313243	Transcript	missense_variant	1198	815	272	R/P	cGa/cCa	COSV57568710	IMPACT=MODERATE;STRAND=-1;VARIANT_CLASS=SNV;SYMBOL=MAK;SYMBOL_SOURCE=HGNC;HGNC_ID=HGNC:6816;BIOTYPE=protein_coding;TSL=5;APPRIS=A1;CCDS=CCDS4516.1;ENSP=ENSP00000313021;SWISSPROT=P20794.202;TREMBL=A0A140VK28.35;UNIPARC=UPI0000001BCD;UNIPROT_ISOFORM=P20794-1;GENE_PHENO=1;SIFT=deleterious(0);PolyPhen=probably_damaging(1);EXON=8/14;DOMAINS=Gene3D:1.10.510.10,AFDB-ENSP_mappings:AF-P20794-F1,Pfam:PF00069,PROSITE_profiles:PS50011,PANTHER:PTHR24055,SMART:SM00220,Superfamily:SSF56112,CDD:cd07830;HGVSc=ENST00000313243.6:c.815G>C;HGVSp=ENSP00000313021.2:p.Arg272Pro;SOMATIC=1;PHENO=1;REVEL=0.884;am_class=likely_pathogenic;am_pathogenicity=0.9946
+chr6_10801908_C/G	chr6:10801908	G	ENSG00000111837	ENST00000354489	Transcript	missense_variant	1081	815	272	R/P	cGa/cCa	COSV57568710	IMPACT=MODERATE;STRAND=-1;VARIANT_CLASS=SNV;SYMBOL=MAK;SYMBOL_SOURCE=HGNC;HGNC_ID=HGNC:6816;BIOTYPE=protein_coding;CANONICAL=YES;MANE=MANE_Select;MANE_SELECT=NM_001242957.3;TSL=5;APPRIS=P4;CCDS=CCDS75399.1;ENSP=ENSP00000346484;SWISSPROT=P20794.202;UNIPARC=UPI000217CBBA;UNIPROT_ISOFORM=P20794-2;GENE_PHENO=1;SIFT=deleterious(0);PolyPhen=probably_damaging(0.999);EXON=8/15;DOMAINS=Gene3D:1.10.510.10,AFDB-ENSP_mappings:AF-P20794-F1,Pfam:PF00069,PROSITE_profiles:PS50011,PANTHER:PTHR24055,SMART:SM00220,Superfamily:SSF56112,CDD:cd07830;HGVSc=ENST00000354489.7:c.815G>C;HGVSp=ENSP00000346484.3:p.Arg272Pro;SOMATIC=1;PHENO=1;REVEL=0.884;am_class=likely_pathogenic;am_pathogenicity=0.9946
+```
+
+| Category | Information | Description |
+|----------|-------------|-------------|
+| **Basic Information** |  |  |
+| Genomic Location | chr6:10801908 | GRCh38 coordinates |
+| Variant Type | SNV (C>G) | Single nucleotide variant |
+| Gene | MAK | Male Germ Cell-Associated Kinase |
+| Impact | MODERATE | VEP impact classification |
+
+## Transcript Effects
+
+### Transcript 1 (ENST00000313243)
+
+| Feature | Value | Note |
+|---------|-------|------|
+| Consequence | missense_variant | Changes amino acid |
+| Protein Change | p.Arg272Pro | Arginine to Proline |
+| Transcript Support | TSL=5, APPRIS=A1 | Low transcript support level |
+| SIFT | deleterious(0) | Maximum deleteriousness score |
+| PolyPhen | probably_damaging(1) | Maximum damaging score |
+| Affected Domain | PF00069 (Protein kinase domain) | Functional domain impact |
+
+### Transcript 2 (ENST00000354489)
+
+| Feature | Value | Note |
+|---------|-------|------|
+| Consequence | missense_variant | Changes amino acid |
+| Protein Change | p.Arg272Pro | Arginine to Proline |
+| Transcript Status | CANONICAL, MANE_Select | Principal transcript |
+| SIFT | deleterious(0) | Maximum deleteriousness score |
+| PolyPhen | probably_damaging(0.999) | Near maximum damaging score |
+| Affected Domain | PF00069 (Protein kinase domain) | Functional domain impact |
+
+##  Prediction Tools
+
+- **REVEL score**: 0.884 (>0.5 considered possibly pathogenic)
+- **AlphaMissense**: 
+  - Class: likely_pathogenic
+  - Pathogenicity score: 0.9946 (very high confidence)
+- **SpliceRegion**: No splice site effects detected
+- **ClinVar**: No clinical data found in ClinVar database
+- **SIF**: SIFT=deleterious(0)
+- **PolyPhen**: PolyPhe=probably_damaging(1)
+- **IMPACT**: MODERATE
+
+## Additional Annotations
+
+| Feature | Value | Description |
+|---------|-------|-------------|
+| COSMIC ID | COSV57568710 | Catalogued in COSMIC database |
+| Somatic Status | SOMATIC=1 | Confirmed somatic variant |
+| Phenotype | PHENO=1 | Associated with phenotype |
+| UniProt | P20794.202 | Protein database reference |
+
+:::
+
+:::
+
+::: {.callout-note}
+At this point we obtained a good annotated set of somatic variants. This paves the way for further analysis. For example you can add more databases to your annotation call, such as COSMIC, cancerhotspots, onkoKB etc. You can also try other plugins, depending on your biological question(s). Those can add addtional data ond possibly additional filtering options.
+
+- Add other databases
+- Try additional plugins
+- Find interesting genes that could be _drivers_ in your samples
+- Consider population frequency of the mutation(s) (common variants are less likely to be pathogenic)
+- Consider possible drug-gene interactions
+- Check in the literature
+- Visualize the results
+:::
+
+# Annotating CNVkit output
+The CNVkit is a software that is specifically tailered to call CNV (Copy number Variants) from WES data. It does that by using metrics based on proper targets and off-targets reads in WES data. CNVkit is a python-based tool, that by default outputs `*.call.cns` and `*.cnr`. <br>
+
+::: {.callout-note collapse=true}
+## In case you want to transform from `.cns` to `.vcf`
+
+1. Let's convert the *.cns (segmentation file) into a VCF file. ~5min
+``` bash
+cnvkit.py export vcf tumor.rg.md.call.cns -o tumor.rg.md.call.cns_cnv.vcf
+```
+2. We can zip the output
+``` bash
+bgzip tumor.rg.md.call.cns_cnv.vcf
+```
+3. Now let's index the file
+``` bash
+tabix -p vcf tumor.rg.md.call.cns_cnv.vcf.gz
+```
+:::
+
+Now we have a nice VCF file and in the right format to call VEP
+
+::: {.callout-important}
+## Call VEP on CNVkit's VCF
+
+**Objective**: Perform comprehensive annotation of CNVkit's output VCF file using Ensembl Variant Effect Predictor (VEP).
+
+**Task**: Consider that those are not small regions: 
+
+1. Adding [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) annotations
+2. Adding [REVEL](https://pubmed.ncbi.nlm.nih.gov/27666373/) annotations
+3. Using `--max_sv_size 100000000` to increase the region size of annotation
+4. Using `--regulatory` as it could be interesting 
+5. Adding population frequencies `--af_gnomade` (gnomAD data is included in VEP cache)
+6. Adding plugins (`--plugin SpliceRegion`, `--plugin AlphaMissense`, `--plugin REVEL`)
+7. Filtering for HIGH/MODERATE impact variants
+
+**Option**: Consider that VEP will add annotation for each of the transcripts that is overlapping the CNV regions. Therefore the file might be very comprehensive, you can simplify with `--per_gene`, `--pick_allele_gene` or `--pick`. However this can also be excluding interesting data. Moreover for the call you can substitute in the custom clinvar annotation `exact` with `overlap`.
+
+**VEP version matter** We are using VEP v.113. 
+:::
+
+::: {.callout-tip collapse="true"}
+## Solution
+
+``` bash
+# Call VEP with full calls ~5min (overlap)
+vep -i tumor.rg.md.call.cns_cnv.vcf.gz \
+    --cache \
+    --assembly GRCh38 \
+    --format vcf \
+    --fork 2 \
+    --max_sv_size 100000000 \
+    --everything \
+    --regulatory \
+    --af_gnomade \
+    --force_overwrite \
+    --plugin SpliceRegion \
+    --plugin REVEL,file=new_tabbed_revel_grch38.tsv.gz \
+    --plugin AlphaMissense,file=AlphaMissense_hg38.tsv.gz \
+    --custom clinvar.vcf.gz,ClinVar,vcf,overlap,0,CLNSIG,CLNREVSTAT,CLNDN \
+    --output_file chr6ch17_mtumor.rg.md.call.cns_cnv_annotated_with_clinVar_and_plugins_all.txt
+
+# Call VEP with per gene only annotation (overlap)
+vep -i tumor.rg.md.call.cns_cnv.vcf.gz \
+    --cache \
+    --assembly GRCh38 \
+    --format vcf \
+    --fork 2 \
+    --max_sv_size 100000000 \
+    --everything \
+    --regulatory \
+    --af_gnomade \
+    --per_gene \
+    --force_overwrite \
+    --plugin SpliceRegion \
+    --plugin REVEL,file=new_tabbed_revel_grch38.tsv.gz \
+    --plugin AlphaMissense,file=AlphaMissense_hg38.tsv.gz \
+    --custom clinvar.vcf.gz,ClinVar,vcf,overlap,0,CLNSIG,CLNREVSTAT,CLNDN \
+    --output_file chr6ch17_mtumor.rg.md.call.cns_cnv_annotated_with_clinVar_and_plugins_perGene.txt
+    
+# Call VEP with per gene only annotation (exact)
+vep -i tumor.rg.md.call.cns_cnv.vcf.gz \
+    --cache \
+    --assembly GRCh38 \
+    --format vcf \
+    --fork 2 \
+    --max_sv_size 100000000 \
+    --everything \
+    --regulatory \
+    --af_gnomade \
+    --per_gene \
+    --force_overwrite \
+    --plugin SpliceRegion \
+    --plugin REVEL,file=new_tabbed_revel_grch38.tsv.gz \
+    --plugin AlphaMissense,file=AlphaMissense_hg38.tsv.gz \
+    --custom clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN \
+    --output_file chr6ch17_mtumor.rg.md.call.cns_cnv_annotated_with_clinVar_and_plugins_perGene.txt
+    
+# Filter the data
+filter_vep \
+-i chr6ch17_mtumor.rg.md.call.cns_cnv_annotated_with_clinVar_and_plugins_all.txt \
+-o chr6ch17_mtumor.rg.md.call.cns_cnv_annotated_with_clinVar_and_plugins.stringent_filtered.txt \
+--force_overwrite \
+--filter "(IMPACT is HIGH or IMPACT is MODERATE) and \
+       (REVEL >= 0.75 or \
+        am_class = 'likely_pathogenic' or \
+        SIFT = 'deleterious' and PolyPhen = 'probably_damaging')"
+        
+```
+You can also simplify the output with vep filter
+``` bash
+filter_vep \
+-i chr6ch17_mtumor.rg.md.call.cns_cnv_annotated_with_clinVar_and_plugins_all.txt \
+-o chr6ch17_mtumor.rg.md.call.cns_cnv_annotated_with_clinVar_and_plugins_all.filtered_simplified.txt \
+--filter "SYMBOL exists" \
+--force_overwrite
+```
+
+We get for example a duplication of RANBP9 that is annotated having HIGH impact and it is part of the MAME selection (matched between NCBI and Esembl)
+```vcf
+#Uploaded_variation	Location	Allele	Gene	Feature	Feature_type	Consequence	cDNA_position	CDS_position	Protein_position	Amino_acids	Codons	Existing_variation	Extra
+chr6_123855_<DUP>	chr6:123855-28994479	duplication	ENSG00000010017	ENST00000011619	Transcript	transcript_amplification	-	-	-	-	-	-	IMPACT=HIGH;STRAND=-1;VARIANT_CLASS=duplication;SYMBOL=RANBP9;SYMBOL_SOURCE=HGNC;HGNC_ID=HGNC:13727;BIOTYPE=protein_coding;CANONICAL=YES;MANE=MANE_Select;MANE_SELECT=NM_005493.3;TSL=1;APPRIS=P1;CCDS=CCDS4529.1;ENSP=ENSP00000011619;SWISSPROT=Q96S59.191;UNIPARC=UPI000006ED83;UNIPROT_ISOFORM=Q96S59-1;OverlapBP=90338;OverlapPC=100.00
+```
+For CNV annotation we get no data from the plugins and some limited data for clinvar. This is happening because those tools add on SNV and not on CNVs (but in clinvar if you change `exact` to `overalp` you will see all the transcripts that are overalapping that region).
+
+:::
+
+From the previous exercise, you might have noticed that annotating CNVs is more challenging than annotating SNVs. This is because:
+
+- CNV breakpoints can be imprecise and variable
+- The same CNV event might be reported with slightly different coordinates in different databases
+- The functional impact of CNVs can be complex, affecting multiple genes and regulatory elements
+- Tools like REVEL and AlphaMissense are specifically designed for SNVs and cannot be applied to CNVs
+
+One could use more specific data such as the [COSMIC](https://cancer.sanger.ac.uk/cosmic/download/cosmic), that also contain data on CNVs. Or try [DECIPHER (DatabasE of genomiC varIation and Phenotype in Humans using Ensembl Resources)](https://www.deciphergenomics.org/) database
+
+# Let's visualize some of the data from our somatic call annotation!
+
+At first we should load one of the vep annotated files from one of the exercises. I am loading the annotation from exercise 3, `chr6ch17_mutect2_annotated_with_clinVar.txt` from the exercise `Cancer-Specific Annotation`. 
+
+Feel free to load another one.
+
+```{r}
+#| echo: true
+#| warning: false
+#| code-fold: true
+#| code-tools: true
+#| title: "Some data preprocessing"
+
+# get libraries
+library(tidyverse);library(magrittr)
+
+# VEP output in
+vep_data <- read.table("chr6ch17_mutect2_annotated_with_clinVar.txt", 
+                       header=F, 
+                       sep="\t", 
+                       comment.char="#")
+
+# The standard VEP column names are:
+colNames <- c("#Uploaded_variation", "Location", "Allele", "Gene", "Feature", "Feature_type",
+"Consequence", "cDNA_position", "CDS_position", "Protein_position", "Amino_acids",
+"Codons", "Existing_variation", "Extra")
+
+# Set column names
+colnames(vep_data) <- colNames
+
+# Split when it contains multiple values
+consequences_df <- vep_data %>%
+  separate_rows(Consequence, sep="&") %>%
+  select(Consequence)
+
+# get chr
+vep_data <- vep_data %>%
+  separate(Location, into = c("chr", "position"), sep=":") %>% 
+  mutate(chr = factor(chr, levels = c("chr6", "chr17")))
+
+# Extract IMPACT from Extra column
+vep_data$IMPACT <- gsub(".*IMPACT=([^;]+).*", "\\1", vep_data$Extra)
+
+# get nice data out of the df
+extract_field <- function(data, field) {
+  gsub(paste0(".*", field, "=([^;]+).*"), "\\1", data$Extra)
+}
+
+# combine multiple fields
+vep_data <- vep_data %>%
+  mutate(
+    IMPACT = extract_field(., "IMPACT"),
+    SYMBOL = extract_field(., "SYMBOL"),
+    VARIANT_CLASS = extract_field(., "VARIANT_CLASS"),
+    BIOTYPE = extract_field(., "BIOTYPE")
+  )
+```
+
+::: {.callout-important}
+## Visualize the data from VEP
+
+**Objective**: Learn how to quickly visualize your variants.
+
+**Task**: Visualize: 
+
+1. Consequence plot, to visualize the distribution of consequences?
+2. Consequence plot, by chromosome?
+3. Can we see the consequence colored by impact?
+4. Can we see the consequence colored by impact by chromosome?
+5. What are the most common variant classes?
+6. What are the most common biotypes?
+7. Bonus: ClinVar, SIFT, ans PolyPhen
+
+:::
+
+::: {.callout-tip collapse="true"}
+## 1. Consequence plot, to visualize the distribution of consequences
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+
+# consequence plot
+ggplot(vep_data, aes(x=reorder(Consequence, table(Consequence)[Consequence]))) +
+  geom_bar() +
+  coord_flip() +
+  theme_minimal() +
+  labs(title="Distribution of \n Variant Consequences",
+       x="Consequence Type",
+       y="Count")
+```
+![](assets/variant_annotation/unnamed-chunk-2-1.png)
+
+:::
+
+::: {.callout-tip collapse="true"}
+## 2. Consequence plot, by chromosome
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+# consequence plot 
+ggplot(vep_data, aes(x=reorder(Consequence, table(Consequence)[Consequence]))) +
+  geom_bar() +
+  coord_flip() +
+  theme_minimal() +
+  labs(title="Distribution of \n Variant Consequences",
+       x="Consequence Type",
+       y="Count") +
+  facet_grid(~chr) +
+  theme(
+    legend.position = "bottom"
+  )
+```
+![](assets/variant_annotation/unnamed-chunk-3-1.png)
+:::
+
+
+::: {.callout-tip collapse="true"}
+## 3. Can we see the consequence colored by impact
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+
+# Impact + Consequence plot
+ggplot(vep_data, aes(x=reorder(Consequence, table(Consequence)[Consequence]), fill=IMPACT)) +
+  geom_bar() +
+  coord_flip() +
+  theme_minimal() +
+  scale_fill_brewer(palette="Set1") +
+  labs(title="Variant Consequences \n by Impact",
+       x="Consequence Type",
+       y="Count") +
+  theme(
+    legend.position = "bottom"
+  )
+```
+![](assets/variant_annotation/unnamed-chunk-4-1.png)
+:::
+
+
+::: {.callout-tip collapse="true"}
+## 4. Can we see the consequence colored by impact by chromosome
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+# Impact + Consequence plot x chr
+ggplot(vep_data, aes(x=reorder(Consequence, table(Consequence)[Consequence]), fill=IMPACT)) +
+  geom_bar() +
+  coord_flip() +
+  theme_minimal() +
+  scale_fill_brewer(palette="Set1") +
+  labs(title="Variant Consequences \n by Impact",
+       x="Consequence Type",
+       y="Count") +
+  facet_grid(~chr) +
+  theme(
+    legend.position = "bottom"
+  )
+```
+![](assets/variant_annotation/unnamed-chunk-5-1.png)
+:::
+
+
+::: {.callout-tip collapse="true"}
+## 5. What are the most common variant classes?
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+# variant class plot
+vep_data %>%
+  count(VARIANT_CLASS) %>%  # Count occurrences of each variant class
+  arrange(desc(n)) %>%      # Sort by count in descending order
+  ggplot(aes(x = reorder(VARIANT_CLASS, n), y = n)) +
+  geom_bar(stat = "identity", fill = "steelblue") +
+  coord_flip() +
+  theme_minimal() +
+  labs(title = "Distribution of \n Variant Classes",
+       x = "Variant Class",
+       y = "Count")
+```
+![](assets/variant_annotation/unnamed-chunk-6-1.png)
+:::
+
+
+::: {.callout-tip collapse="true"}
+## 6. What are the most common biotypes?
+```{r}
+#| fig-width: 8
+#| fig-height: 6
+# biotype distribution
+ggplot(vep_data, aes(x=reorder(BIOTYPE, table(BIOTYPE)[BIOTYPE]))) +
+  geom_bar(fill="steelblue") +
+  coord_flip() +
+  theme_minimal() +
+  labs(title="Distribution of \n Biotypes",
+       x="Biotype",
+       y="Count")
+```
+![](assets/variant_annotation/unnamed-chunk-7-1.png)
+:::
+
+::: {.callout-tip collapse="true"}
+## 7. Bonus: ClinVar, SIFT, ans PolyPhen
+```{r}
+# Extract SIFT
+vep_data$sift <- str_extract(vep_data$Extra, "SIFT=.*?;")
+vep_data$sift <- str_replace(vep_data$sift, "SIFT=", "") 
+vep_data$sift <- str_replace(vep_data$sift, ";", "")
+vep_data$sift <- str_replace(vep_data$sift, "\\(.*\\)", "")
+
+# Extract PolyPhen 
+vep_data$polyphen <- vep_data$Extra %>%
+  str_extract("PolyPhen=.*?;") %>%
+  str_replace("PolyPhen=", "") %>%
+  str_replace(";", "") %>%
+  str_replace("\\(.*\\)", "")
+
+# Extract ClinVar
+vep_data$clinvar <- vep_data$Extra %>%
+  str_extract("CLIN_SIG=.*?;") %>%
+  str_replace("CLIN_SIG=", "") %>%
+  str_replace(";", "")
+
+# Distribution of SIFT predictions
+ggplot(subset(vep_data, !is.na(sift)), 
+       aes(x = reorder(sift, table(sift)[sift]))) +
+  geom_bar(fill = "steelblue") +
+  coord_flip() +
+  theme_minimal() +
+  labs(title = "Distribution of SIFT Predictions",
+       x = "SIFT Prediction",
+       y = "Count",
+       caption = "Only missense variants are scored by SIFT")
+
+# Distribution of PolyPhen predictions 
+ggplot(subset(vep_data, !is.na(polyphen)), 
+       aes(x = reorder(polyphen, table(polyphen)[polyphen]))) +
+  geom_bar(fill = "darkred") +
+  coord_flip() +
+  theme_minimal() +
+  labs(title = "Distribution of PolyPhen Predictions",
+       x = "PolyPhen Prediction",
+       y = "Count",
+       caption = "Only missense variants are scored by PolyPhen")
+```
+![](assets/variant_annotation/unnamed-chunk-8-1.png)
+![](assets/variant_annotation/unnamed-chunk-8-2.png)
+
+### Combined SIFT and PolyPhen predictions with Impact
+```{r}
+# Only for variants with both predictions
+p3 <- subset(vep_data, !is.na(sift) & !is.na(polyphen)) %>%
+  ggplot(aes(x = sift, fill = IMPACT)) +
+  geom_bar() +
+  facet_wrap(~polyphen) +
+  coord_flip() +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Set1") +
+  labs(title = "SIFT and PolyPhen Predictions by Impact",
+       x = "SIFT Prediction",
+       y = "Count") +
+  theme(legend.position = "bottom")
+
+# 4. ClinVar significance with Impact 
+p4 <- subset(vep_data, !is.na(clinvar)) %>%
+  ggplot(aes(x = reorder(clinvar, table(clinvar)[clinvar]), fill = IMPACT)) +
+  geom_bar() +
+  coord_flip() +
+  scale_fill_brewer(palette = "Set1") +
+  theme_minimal() +
+  labs(title = "Clinical Significance by Impact",
+       x = "ClinVar Clinical Significance",
+       y = "Count") +
+  theme(legend.position = "bottom")
+
+# 5. For missense variants only - comparison of predictions
+p5 <- subset(vep_data, Consequence == "missense_variant" & !is.na(sift) & !is.na(polyphen)) %>%
+  ggplot(aes(x = sift, fill = polyphen)) +
+  geom_bar(position = "dodge") +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Set2") +
+  labs(title = "SIFT vs PolyPhen Predictions\nfor Missense Variants",
+       x = "SIFT Prediction",
+       y = "Count",
+       fill = "PolyPhen Prediction") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+### Plot
+```{r}
+print(p3)
+```
+![](assets/variant_annotation/unnamed-chunk-10-1.png)
+
+```{r}
+print(p4)
+```
+![](assets/variant_annotation/unnamed-chunk-10-2.png)
+
+```{r}
+print(p5)
+```
+![](assets/variant_annotation/unnamed-chunk-10-3.png)
+:::
+
+### VEP Performance Optimization
+
+For large-scale analyses, consider these optimization strategies:
+
+1.  **Using Cache**:
+
+``` bash
+--cache
+--dir_cache /path/to/cache
+--offline
+```
+
+2.  **Parallel Processing**:
+
+``` bash
+--fork 4
+```
+
+3.  **Minimal Output**:
+
+``` bash
+--fields "Consequence,IMPACT,SYMBOL,Feature"
+--no_stats
+```
+
+## Tips for Cancer Variant Analysis
+
+1.  **Quality Control**
+    -   Filter low-quality variants before VEP annotation
+    -   Use matched normal samples when available (if not consider PONs)
+    -   Consider sequencing artifacts
+2.  **Annotation Strategy**
+    -   Use multiple prediction algorithms
+    -   Consider tissue-specific expression
+    -   Include population frequencies
+    -   Add clinical annotations
+3.  **Interpretation Guidelines**
+    -   Use cancer-specific frameworks for somatic variants
+    -   Document all filtering criteria
+    -   Maintain version control of annotation sources
+
+### Databases
+
+-   COSMIC: <https://cancer.sanger.ac.uk/cosmic>
+-   ClinVar: <https://www.ncbi.nlm.nih.gov/clinvar/>
+-   gnomAD: <https://gnomad.broadinstitute.org/>
+-   OncoKB: <https://www.oncokb.org/>
+
+### Download data to COSMIC
+
+* For COSMIC:
+We cannot provide those files (they require licensing), you need to register and download the files.
+```CosmicMutantExport.tsv.gz```
+You can register [here:](https://cancer.sanger.ac.uk/cosmic)
+
+### Tools and Documentation
+
+-   VEP Documentation: <http://www.ensembl.org/info/docs/tools/vep/>
+-   VEP GitHub: <https://github.com/Ensembl/ensembl-vep>
+-   Cancer Gene Census: <https://cancer.sanger.ac.uk/census>
+
+**Remember to:**
+
+1.  Always verify file paths and permissions
+2.  Check input data format and quality
+3.  Validate output at each step
+4.  Consider computational resources when processing large datasets
+5.  Document any modifications to the pipeline
+
+## References
+
+1.  McLaren W, et al. The Ensembl Variant Effect Predictor. Genome
+    Biology (2016)
+2.  Eilbeck K, et al. The Sequence Ontology: a tool for the unification
+    of genome annotations. Genome Biology (2005)
+3.  Richards S, et al. Standards and guidelines for the interpretation
+    of sequence variants. Genetics in Medicine (2015)
+    
+
+
