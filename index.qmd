@@ -5,7 +5,7 @@ title: "SIB course cancer variant analysis"
 
 ## Teachers and authors
 
-- Flavio Lombardo [ORCiD]()
+- Flavio Lombardo [ORCiD](https://orcid.org/0000-0002-4853-6838)
 - Geert van Geest [ORCiD](https://orcid.org/0000-0002-1561-078X)
 
 ## Attribution
