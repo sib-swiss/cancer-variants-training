@@ -22,7 +22,7 @@ RUN mamba env create \
     -n ngs-tools \
     -f environment.yml
 
-RUN mamba init 
+RUN . ~/.bashrc && conda activate ngs-tools && vep_install -a p --PLUGINS all
 
 COPY settings.json /config/data/User/
 COPY keybindings.json /config/data/User/

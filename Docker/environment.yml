@@ -11,3 +11,4 @@ dependencies:
   - cnvkit>=0.9.10
   - bcftools
   - multiqc
+  - ensembl-vep=113
