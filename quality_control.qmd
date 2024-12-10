@@ -34,7 +34,7 @@ We will start the exercises with pre-aligned bam files. To start, download and e
 
 ```sh
 wget https://cancer-variants-training.s3.eu-central-1.amazonaws.com/course_data.tar.gz
-tar -xvf course_data.tar.gz
+tar -xvzf course_data.tar.gz
 rm course_data.tar.gz
 ```
 
