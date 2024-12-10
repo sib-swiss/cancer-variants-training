@@ -19,7 +19,7 @@ If you are participating in this course with a teacher, you have received a link
 The link gives you access to a web version of [Visual Studio Code](https://code.visualstudio.com). This is a powerful code editor that you can also use as a local application on your computer. 
 ::: 
 
-Type in the password that was provided to you by the teacher. Now let's open the terminal. You can do that with ++ctrl+grave++. Or by clicking **Application menu** > **Terminal** > **New Terminal**:
+Type in the password that was provided to you by the teacher. Now let's open the terminal. You can do that by clicking **Application menu** > **Terminal** > **New Terminal**:
 
 ![](assets/images/open_terminal.gif){width=500}
 
@@ -34,7 +34,7 @@ We will start the exercises with pre-aligned bam files. To start, download and e
 
 ```sh
 wget https://cancer-variants-training.s3.eu-central-1.amazonaws.com/course_data.tar.gz
-gunzip course_data.tar.gz
+tar -xvf course_data.tar.gz
 rm course_data.tar.gz
 ```
 
