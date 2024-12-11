@@ -16,3 +16,5 @@ extensions/
 /env/
 /.quarto/
 /_site/
+/_freeze/
+*_cache/

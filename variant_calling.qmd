@@ -289,7 +289,7 @@ Variation of copy number in genes can have a large effect on the phenotype of a 
 ::: {.callout-important}
 ## Exercise
 
-Check out the [documentation](https://cnvkit.readthedocs.io/en/stable/quickstart.html#build-a-reference-from-normal-samples-and-infer-tumor-copy-ratios) of `CNVkit.py bash`, and the helper (`cnvkit.py batch -h`), and replace the missing values at `FIXME`.
+Check out the [documentation](https://cnvkit.readthedocs.io/en/stable/quickstart.html#build-a-reference-from-normal-samples-and-infer-tumor-copy-ratios) of `CNVkit.py bash`, and the helper (`cnvkit.py batch -h`), create a script called `05_run_cnvkit.sh`, and replace the missing values at `FIXME`.
 
 After that, checkout the visualizations (`tumor-scatter.png` and `tumor-scatter.png`) at `~/project/course_data/variants/cnvkit`. Do you see any evidence for copy number variation? 
 
