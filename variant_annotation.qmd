@@ -8,6 +8,9 @@ format:
 ---
 
 ### Ensembl VEP (Variant effect predictor)
+
+[SLIDES -> Variant annotation](slides/VEP_variantAnnotationPresentation.qmd)
+
 VEP is a powerful and flexible tool for annotating, analyzing, and
 prioritizing genomic variants. It is particularly useful in cancer
 genomics, where understanding the functional impact of somatic mutations
@@ -51,13 +54,19 @@ conda create -n vep samtools python=3.10 ensembl-vep=113
 # Activate VEP's env
 conda activate vep
 
+# PLEASE DO RUN During the course, only if you follow locally
+# Install all the data locally
+#vep_install -a cf -s homo_sapiens -y GRCh38
+
 # Plugins installation
 # vep_install -a p --PLUGINS all
 ```
 :::
 
 ::: {.callout-note}
-Instead of conda you could try installing `mamba`. If you are on Unix-based system this is simple. [mamba](https://mamba.readthedocs.io/en/latest/installation/mamba-installation.html)
+Instead of conda you could try installing `mamba`. If you are on Unix-based system this is simple [mamba](https://mamba.readthedocs.io/en/latest/installation/mamba-installation.html). 
+<br>
+_If you are following along the course, `mamba` is already installed for you, with all the software required for this course. In this case you can activate the enviroment with `mamba activate ngs-tools`._
 :::
 
 ### Transcript Selection
@@ -66,7 +75,7 @@ VEP can report consequences for all transcripts overlapping a variant.
 However, this often results in multiple annotations per variant. Several
 approaches are available to handle this:
 
--   `--pick`: Selects one consequence per variant based on a predefined hierarchy
+-   `--pick`: Selects one consequence per variant based on a predefined hierarchy (e.g., HIGH > MODERATE > LOW > MODIFIER)
 -   `--pick_allele`: Selects one consequence per variant allele
 -   `--pick_allele_gene`: Selects one consequence per variant allele per gene
 -   `--per_gene`: Selects one consequence per gene
@@ -75,30 +84,36 @@ approaches are available to handle this:
 ### Consequence Priority
 
 VEP ranks consequences by severity:
+![Cancer somatic mut](https://www.ensembl.org/info/genome/variation/prediction/consequences.svg){fig-align="center" #fig-vep_effects}
+**Figure 1:** Image from the [Ensembl VEP website](https://www.ensembl.org/info/genome/variation/prediction/predicted_data.html).
 
-1.   Transcript ablation
+| Consequence | Impact | Description |
+|-------------|--------|-------------|
+| Transcript ablation | HIGH | Complete deletion of a gene transcript |
+| Splice acceptor variant | HIGH | Variant at the 3' end of an intron that disrupts RNA splicing |
+| Splice donor variant | HIGH | Variant at the 5' end of an intron that disrupts RNA splicing |
+| Stop gained | HIGH | Variant that introduces a premature stop codon |
+| Frameshift variant | HIGH | Insertion/deletion causing reading frame disruption |
+| Stop lost | HIGH | Variant removes stop codon, extending protein length |
+| Start lost | HIGH | Loss of start codon prevents proper translation initiation |
+| Transcript amplification | HIGH | Increased copy number of transcript regions |
+| Inframe insertion | MODERATE | Insertion of bases in multiples of 3, no frameshift |
+| Inframe deletion | MODERATE | Deletion of bases in multiples of 3, no frameshift |
+| Missense variant | MODERATE | Single nucleotide change causing amino acid substitution |
+| Protein altering variant | MODERATE | Variant changes protein sequence |
 
-2.  Splice acceptor/donor variant
-
-3.  Stop gained
-
-4.  Frameshift variant
-
-5.  Stop lost
-
-6.  Start lost
-
-7.  Transcript amplification
-
-8.  Inframe insertion/deletion
-
-9.  Missense variant
-
-10. Protein altering variant
 
 ## Practical Exercises
 
-In case that you do not have the Mutect2 call and/or the CNVkit call, you can obtain those from [here](https://drive.google.com/drive/folders/1Rh6qRMGGY1QZL7INrcNd7hULTr8mB6tu?usp=sharing). In this folder there are also a `README.md` and some folders containing preprocessed data for the addional resources that we will use with Ensembl-VEP. 
+In case that you do not have the Mutect2 call and/or the CNVkit call, you can obtain those from [here](https://drive.google.com/drive/folders/1Rh6qRMGGY1QZL7INrcNd7hULTr8mB6tu?usp=sharing). In this folder there are also a `README.md` and some folders containing preprocessed data for the addional resources that we will use with Ensembl-VEP.
+
+_If you are following along the course you should download and extract the data into your `project/` folder_.
+
+::: {.callout-caution collapse="false"}
+## `--cache` option
+By default VEP will install the cache and plugins into your home folder (`~/.vep/`) and if that is the case, then you can leeave it like `--cache `. 
+- If you are following along the course, you need to change the cache folder to `--cache /data/.vep` or VEP will not find the local cache.
+:::
 
 ::: {.callout-important}
 ## Basic VEP Analysis
@@ -135,10 +150,16 @@ affected.
 **VEP can be provided with a VCF file as an input (or vcf.gz + index) file or other formats, see documentation [here](https://www.ensembl.org/info/docs/tools/vep/vep_formats.html) **
 
 ``` bash
-vep -i input.vcf --cache --species homo_sapiens \
---assembly GRCh38 --offline --format vcf \
---symbol --force_overwrite --domains \
---sift b --polyphen b \
+vep -i cancer_variants.vcf \
+--cache /data/.vep \
+--species homo_sapiens \
+--assembly GRCh38 \
+--offline --format vcf \
+--symbol \
+--force_overwrite \
+--domains \
+--sift b \
+--polyphen b \
 --output_file output.txt
 ```
 :::
@@ -147,8 +168,12 @@ vep -i input.vcf --cache --species homo_sapiens \
 ## Solution
 
 ``` bash
+
+# 0. from your terminal go to your project folder
+cd ~/project
+
 # 1. First, create a script that will generate our VCF file. 
-# Copy this code into a new file named `create_vcf.sh`
+# Copy this code (from #!/usr/bin/env bash) into a new file named `create_vcf.sh`
 # with the command `nano create_vcf.sh`:
 
 #!/usr/bin/env bash
@@ -181,10 +206,11 @@ chmod +x create_vcf.sh
 cat cancer_variants.vcf
 
 # Make sure you have 13 variants
-grep -v '^#' cancer_variants.vcf | wc -l  # Should show 13
+grep -v '^#' cancer_variants.vcf | wc -l  # it should show 13
 
 # Run VEP ~< 5min
-vep -i cancer_variants.vcf -cache \
+vep -i cancer_variants.vcf \
+    --cache /data/.vep \
     --species homo_sapiens \
     --offline \
     --force_overwrite \
@@ -199,7 +225,7 @@ vep -i cancer_variants.vcf -cache \
 
 # Some of the variants affect:
 
-## VEP command-line: vep --assembly GRCh38 --cache --database 0 --force_overwrite --format vcf --input_file cancer_variants.vcf --offline --output_file output.txt --pick --symbol
+## VEP command-line: vep --assembly GRCh38 --cache /data/.vep --database 0 --force_overwrite --format vcf --input_file cancer_variants.vcf --offline --output_file output.txt --pick --symbol
 #Uploaded_variation	Location	Allele	Gene	Feature	Feature_type	Consequence	cDNA_position	CDS_position	Protein_position	Amino_acids	Codons	Existing_variation	Extra
 rs121913529	chr7:55242465	T	ENSG00000280890	ENST00000626532	Transcript	intron_variant,non_coding_transcript_variant	-	-	-	-	-	-	IMPACT=MODIFIER;STRAND=-1;SYMBOL=ELDR;SYMBOL_SOURCE=HGNC;HGNC_ID=HGNC:49511
 rs28934578	chr17:7577121	T	ENSG00000161960	ENST00000293831	Transcript	missense_variant	597	580	194	D/Y	Gac/Tac	-	IMPACT=MODERATE;STRAND=1;SYMBOL=EIF4A1;SYMBOL_SOURCE=HGNC;HGNC_ID=HGNC:3282
@@ -217,7 +243,7 @@ After running the command you will also notice a ```output.txt_summary.html``` t
 If you tried running ```--everything``` or  ```-e``` this is a shortcut for the following options:
 
 ::: {.callout-note collapse="true"}
-## \--everything
+## \-e or \-\-everything
 ```
 --sift b, --polyphen b, --ccds, --hgvs, --symbol, --numbers, --domains, --regulatory, --canonical, --protein, --biotype, --af, --af_1kg, --af_esp, --af_gnomade, --af_gnomadg, --max_af, --pubmed, --uniprot, --mane, --tsl, --appris, --variant_class, --gene_phenotype, --mirna 
 ```
@@ -248,6 +274,7 @@ This an example of the highput from the TP53 mutation
 | Clinical Significance | pathogenic | Clinical interpretation |
 | gnomAD AF | 1.368e-06 | Allele frequency in gnomAD |
 | Maximum AF | 1.656e-05 | Maximum allele frequency observed |
+
 :::
 
 
@@ -294,9 +321,15 @@ chr6    3723708   .   C   G   .   PASS
 
 The somatic variant call can be annotated with this command
 ``` bash
-vep -i somatic.filtered.PASS.vcf.gz --cache --species homo_sapiens \
---assembly GRCh38 --offline --format vcf \
---symbol --force_overwrite -e \
+vep -i ~/project/course_data/resources/Mutect2_data/somatic.filtered.PASS.vcf.gz \
+--cache /data/.vep \
+--species homo_sapiens \
+--assembly GRCh38 \
+--offline \
+--format vcf \
+--symbol \
+--force_overwrite \
+--everything \
 --output_file chr6ch17_mutect2_annotated.txt
 ```
 
@@ -341,9 +374,16 @@ We will obtain a file with many annotations.
 Can you run the same command as before adding `--fork 2`, do you note any difference?
 
 ``` bash
-vep -i somatic.filtered.PASS.vcf.gz --cache --species homo_sapiens \
---assembly GRCh38 --offline --format vcf \
---symbol --force_overwrite -e --fork 2 \
+vep -i ~/project/course_data/resources/Mutect2_data/somatic.filtered.PASS.vcf.gz \
+--cache /data/.vep \
+--species homo_sapiens \
+--assembly GRCh38 \
+--offline \
+--format vcf \
+--symbol \
+--force_overwrite \
+--everything \
+--fork 2 \
 --output_file chr6ch17_mutect2_annotated.txt
 ```
 :::
@@ -393,14 +433,14 @@ wget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz.tbi
 # Download ClinVar VCF
 
 # Run VEP with cancer-specific annotations
-vep -i somatic.filtered.PASS.vcf.gz \
-    --cache \
+vep -i ~/project/course_data/resources/Mutect2_data/somatic.filtered.PASS.vcf.gz \
+    --cache /data/.vep \
     --assembly GRCh38 \
     --format vcf \
     --force_overwrite \
     --fork 2 \
     --everything \
-    --custom clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN \
+    --custom ~/project/course_data/resources/clinvar/clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN \
     --output_file chr6ch17_mutect2_annotated_with_clinVar.txt
 
 # Filter results
@@ -525,8 +565,8 @@ We have seen how to run VEP and how to filter the output. Now we can make anothe
 ## Solution
 
 ``` bash
-vep -i somatic.filtered.PASS.vcf.gz \
-    --cache \
+vep -i ~/project/course_data/resources/Mutect2_data/somatic.filtered.PASS.vcf.gz \
+    --cache /data/.vep \
     --assembly GRCh38 \
     --format vcf \
     --fork 2 \
@@ -534,9 +574,9 @@ vep -i somatic.filtered.PASS.vcf.gz \
     --af_gnomade \
     --force_overwrite \
     --plugin SpliceRegion \
-    --plugin REVEL,file=new_tabbed_revel_grch38.tsv.gz \
-    --plugin AlphaMissense,file=AlphaMissense_hg38.tsv.gz \
-    --custom clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN \
+    --plugin REVEL,file=~/project/course_data/resources/revel/new_tabbed_revel_grch38.tsv.gz \
+    --plugin AlphaMissense,file=~/project/course_data/resources/alphamissense/AlphaMissense_hg38.tsv.gz \
+    --custom ~/project/course_data/resources/clinvar/clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN \
     --output_file chr6ch17_mutect2_annotated_with_clinVar_and_plugins.txt
     
 # Filter the data -> Stringent
@@ -644,19 +684,28 @@ At this point we obtained a good annotated set of somatic variants. This paves t
 # Annotating CNVkit output
 The CNVkit is a software that is specifically tailered to call CNV (Copy number Variants) from WES data. It does that by using metrics based on proper targets and off-targets reads in WES data. CNVkit is a python-based tool, that by default outputs `*.call.cns` and `*.cnr`. <br>
 
-::: {.callout-note collapse=true}
+::: {.callout-important collapse=false}
 ## In case you want to transform from `.cns` to `.vcf`
 
 1. Let's convert the *.cns (segmentation file) into a VCF file. ~5min
 ``` bash
-cnvkit.py export vcf tumor.rg.md.call.cns -o tumor.rg.md.call.cns_cnv.vcf
+# Extract the CNVkit annotation data
+tar -xvzf ~/project/course_data/resources/CNVkit_data/cnvkit.tar.gz
+
+# Move the files to the resources folder
+mv ~/project/cnvkit/* ~/project/course_data/resources/CNVkit_data/.
+
+# Convert from call.cns to vcf 
+cnvkit.py export vcf ~/project/course_data/resources/CNVkit_data/tumor.rg.md.call.cns -o tumor.rg.md.call.cns_cnv.vcf
 ```
-2. We can zip the output
+2. We can gzip the output
 ``` bash
+# bgzip the file
 bgzip tumor.rg.md.call.cns_cnv.vcf
 ```
 3. Now let's index the file
 ``` bash
+# Index
 tabix -p vcf tumor.rg.md.call.cns_cnv.vcf.gz
 ```
 :::
@@ -680,7 +729,7 @@ Now we have a nice VCF file and in the right format to call VEP
 
 **Option**: Consider that VEP will add annotation for each of the transcripts that is overlapping the CNV regions. Therefore the file might be very comprehensive, you can simplify with `--per_gene`, `--pick_allele_gene` or `--pick`. However this can also be excluding interesting data. Moreover for the call you can substitute in the custom clinvar annotation `exact` with `overlap`.
 
-**VEP version matter** We are using VEP v.113. 
+**VEP version matter** We are using VEP v.113.
 :::
 
 ::: {.callout-tip collapse="true"}
@@ -689,7 +738,7 @@ Now we have a nice VCF file and in the right format to call VEP
 ``` bash
 # Call VEP with full calls ~5min (overlap)
 vep -i tumor.rg.md.call.cns_cnv.vcf.gz \
-    --cache \
+    --cache /data/.vep \
     --assembly GRCh38 \
     --format vcf \
     --fork 2 \
@@ -699,14 +748,14 @@ vep -i tumor.rg.md.call.cns_cnv.vcf.gz \
     --af_gnomade \
     --force_overwrite \
     --plugin SpliceRegion \
-    --plugin REVEL,file=new_tabbed_revel_grch38.tsv.gz \
-    --plugin AlphaMissense,file=AlphaMissense_hg38.tsv.gz \
-    --custom clinvar.vcf.gz,ClinVar,vcf,overlap,0,CLNSIG,CLNREVSTAT,CLNDN \
+    --plugin REVEL,file=/config/project/course_data/resources/revel/new_tabbed_revel_grch38.tsv.gz \
+    --plugin AlphaMissense,file=/config/project/course_data/resources/alphamissense/AlphaMissense_hg38.tsv.gz \
+    --custom /config/project/course_data/resources/clinvar/clinvar.vcf.gz,ClinVar,vcf,overlap,0,CLNSIG,CLNREVSTAT,CLNDN \
     --output_file chr6ch17_mtumor.rg.md.call.cns_cnv_annotated_with_clinVar_and_plugins_all.txt
 
 # Call VEP with per gene only annotation (overlap)
 vep -i tumor.rg.md.call.cns_cnv.vcf.gz \
-    --cache \
+    --cache /data/.vep \
     --assembly GRCh38 \
     --format vcf \
     --fork 2 \
@@ -717,14 +766,14 @@ vep -i tumor.rg.md.call.cns_cnv.vcf.gz \
     --per_gene \
     --force_overwrite \
     --plugin SpliceRegion \
-    --plugin REVEL,file=new_tabbed_revel_grch38.tsv.gz \
-    --plugin AlphaMissense,file=AlphaMissense_hg38.tsv.gz \
-    --custom clinvar.vcf.gz,ClinVar,vcf,overlap,0,CLNSIG,CLNREVSTAT,CLNDN \
+    --plugin REVEL,file=/config/project/course_data/resources/revel/new_tabbed_revel_grch38.tsv.gz \
+    --plugin AlphaMissense,file=/config/project/course_data/resources/alphamissense/AlphaMissense_hg38.tsv.gz \
+    --custom /config/project/course_data/resources/clinvar/clinvar.vcf.gz,ClinVar,vcf,overlap,0,CLNSIG,CLNREVSTAT,CLNDN \
     --output_file chr6ch17_mtumor.rg.md.call.cns_cnv_annotated_with_clinVar_and_plugins_perGene.txt
     
 # Call VEP with per gene only annotation (exact)
 vep -i tumor.rg.md.call.cns_cnv.vcf.gz \
-    --cache \
+    --cache /data/.vep \
     --assembly GRCh38 \
     --format vcf \
     --fork 2 \
@@ -735,9 +784,9 @@ vep -i tumor.rg.md.call.cns_cnv.vcf.gz \
     --per_gene \
     --force_overwrite \
     --plugin SpliceRegion \
-    --plugin REVEL,file=new_tabbed_revel_grch38.tsv.gz \
-    --plugin AlphaMissense,file=AlphaMissense_hg38.tsv.gz \
-    --custom clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN \
+    --plugin REVEL,file=/config/project/course_data/resources/revel/new_tabbed_revel_grch38.tsv.gz \
+    --plugin AlphaMissense,file=/config/project/course_data/resources/alphamissense/AlphaMissense_hg38.tsv.gz \
+    --custom /config/project/course_data/resources/clinvar/clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN \
     --output_file chr6ch17_mtumor.rg.md.call.cns_cnv_annotated_with_clinVar_and_plugins_perGene.txt
     
 # Filter the data
@@ -777,6 +826,11 @@ From the previous exercise, you might have noticed that annotating CNVs is more 
 - Tools like REVEL and AlphaMissense are specifically designed for SNVs and cannot be applied to CNVs
 
 One could use more specific data such as the [COSMIC](https://cancer.sanger.ac.uk/cosmic/download/cosmic), that also contain data on CNVs. Or try [DECIPHER (DatabasE of genomiC varIation and Phenotype in Humans using Ensembl Resources)](https://www.deciphergenomics.org/) database
+
+::: {.callout-tip collapse=false}
+## Additional useful options in VEP
+There are many other options available in VEP, and the documentation is very compherensive. Some common options are `--filter_common` (filters out variants with a minor allele frequency (MAF) ≥ 0.01 (1%)) in any of the populations within these databases) and `--total_length` (VEP sums up the lengths of all overlapping features, useful for structural variants (SV) annotation). `--coding_only` can reduce the amount of data to only the coding parts. `--check_existing` annotates variants with information from existing databases. <br> In addition there is a web interface to VEP from the ENSEMBL team [here](https://www.ensembl.org/Tools/VEP)
+:::
 
 # Let's visualize some of the data from our somatic call annotation!
 
@@ -922,7 +976,7 @@ ggplot(vep_data, aes(x=reorder(Consequence, table(Consequence)[Consequence]), fi
 ```{r}
 #| fig-width: 8
 #| fig-height: 6
-# Impact + Consequence plot x chr
+# Impact + consequence plot x chr
 ggplot(vep_data, aes(x=reorder(Consequence, table(Consequence)[Consequence]), fill=IMPACT)) +
   geom_bar() +
   coord_flip() +
@@ -947,8 +1001,8 @@ ggplot(vep_data, aes(x=reorder(Consequence, table(Consequence)[Consequence]), fi
 #| fig-height: 6
 # variant class plot
 vep_data %>%
-  count(VARIANT_CLASS) %>%  # Count occurrences of each variant class
-  arrange(desc(n)) %>%      # Sort by count in descending order
+  count(VARIANT_CLASS) %>%  # Count the classees
+  arrange(desc(n)) %>%  # Sort in descending ord
   ggplot(aes(x = reorder(VARIANT_CLASS, n), y = n)) +
   geom_bar(stat = "identity", fill = "steelblue") +
   coord_flip() +
@@ -1040,7 +1094,7 @@ p3 <- subset(vep_data, !is.na(sift) & !is.na(polyphen)) %>%
        y = "Count") +
   theme(legend.position = "bottom")
 
-# 4. ClinVar significance with Impact 
+# 4. ClinVar significance with impact 
 p4 <- subset(vep_data, !is.na(clinvar)) %>%
   ggplot(aes(x = reorder(clinvar, table(clinvar)[clinvar]), fill = IMPACT)) +
   geom_bar() +
