@@ -28,6 +28,13 @@
     "text": "Can the cell repair them?\nYes, there are many mechanisms of DNA repair. Some of the most common are:\n\nNER (Nucleotide Excision Repair): Repairs bulky lesions such as thymine dimers caused by UV radiation. This mechanism involves the removal of a short single-stranded DNA segment containing the damage, followed by DNA synthesis using the complementary strand as a template.\nMMR (Mismatch Repair): Fixes replication errors such as base mismatches or insertion/deletion loops. MMR recognizes the newly synthesized strand and corrects errors by removing the incorrect nucleotides and replacing them.\nBER (Base Excision Repair): Repairs single-base lesions such as oxidative damage, alkylation, or deamination. This involves the removal of damaged bases by specific glycosylases, followed by the excision of the resulting abasic site.\nHR (Homologous Recombination): Repairs double-strand breaks using a homologous sequence as a template, typically from a sister chromatid. This is an error-free repair mechanism.\nNHEJ (Non-Homologous End Joining): Repairs double-strand breaks without the need for a homologous template. While quicker, this method is error-prone and can lead to insertions or deletions.\n\nVisualizing DNA Repair Mechanisms\n\n\n\n\n\n\n\nFigure 2: DNA Repair Mechanisms\n\n\n\n\nKey points: - https://www.nature.com/articles/nrclinonc.2012.3/figures/1"
   },
   {
+    "objectID": "slides/VEP_variantAnnotationPresentation.html#acquisition-of-mutation-in-cancer",
+    "href": "slides/VEP_variantAnnotationPresentation.html#acquisition-of-mutation-in-cancer",
+    "title": "Variant Effect Predictor (VEP)",
+    "section": "Acquisition of mutation in cancer",
+    "text": "Acquisition of mutation in cancer\n\n\nFigure 3: Cancer somatic mut\n\nKey points: - https://www.nature.com/articles/nature07943"
+  },
+  {
     "objectID": "slides/VEP_variantAnnotationPresentation.html#concept-of-driver-mutation",
     "href": "slides/VEP_variantAnnotationPresentation.html#concept-of-driver-mutation",
     "title": "Variant Effect Predictor (VEP)",
@@ -84,6 +91,20 @@
     "text": "In summary: Why do we use VEP?\nWe can answer questions like:\n\nHow damaging is a certain somatic mutation?\nWhat is the impact in a particular cancer type?\nIs the mutation known for that cancer?\nAre there therapeutic implications?"
   },
   {
+    "objectID": "slides/VEP_variantAnnotationPresentation.html#installation-using-conda",
+    "href": "slides/VEP_variantAnnotationPresentation.html#installation-using-conda",
+    "title": "Variant Effect Predictor (VEP)",
+    "section": "Installation using conda",
+    "text": "Installation using conda\n\nConda/Bioconda\n\n\n# Installing Conda #https://docs.anaconda.com/miniconda/\nmkdir -p ~/miniconda3\nwget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh\nbash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3\nrm ~/miniconda3/miniconda.sh\nsource ~/miniconda3/bin/activate\nconda init --all\n\n# Using Conda\nconda create -n vep samtools python=3.10 ensembl-vep=113\n# conda install -c bioconda ensembl-vep # if installing in current env\n\n# Activate VEP's env\nconda activate vep\n\n\nmamba create -n vep samtools python=3.10 ensembl-vep=113 -c bioconda -c conda-forge"
+  },
+  {
+    "objectID": "slides/VEP_variantAnnotationPresentation.html#veps-basic-configuration",
+    "href": "slides/VEP_variantAnnotationPresentation.html#veps-basic-configuration",
+    "title": "Variant Effect Predictor (VEP)",
+    "section": "VEP’s Basic Configuration",
+    "text": "VEP’s Basic Configuration\n\n\n# Test installation\nvep --help\n\n# Download cache files, it takes a long time and ~/.vep (~25GB)\nvep_install -a cf -s homo_sapiens -y GRCh38 # download precomputed human data\n\n# if install official plugins\nvep_install -a p --PLUGINS list # a for action LIST akk plugins\n# vep_install -a p --PLUGINS all # install all plugins\n# vep_install -a p --PLUGINS dbNSFP,... # install specific plugins\n if you want to specify a specific folder to store the VEP’s cache: -c ~/vep_cache"
+  },
+  {
     "objectID": "slides/VEP_variantAnnotationPresentation.html#example-plugin-installation",
     "href": "slides/VEP_variantAnnotationPresentation.html#example-plugin-installation",
     "title": "Variant Effect Predictor (VEP)",
@@ -95,7 +116,7 @@
     "href": "slides/VEP_variantAnnotationPresentation.html#vep-plugins-manual-install",
     "title": "Variant Effect Predictor (VEP)",
     "section": "VEP Plugins: Manual install",
-    "text": "VEP Plugins: Manual install\nPlugins can enhance VEP’s capabilities and can add additional depth of information to the annotations (with the price of more complexity).\nIf this command does not work\n# if installing the official plugins\nvep_install -a p # a for action\nPlease use this manual option\n# clone repository\ngit clone https://github.com/Ensembl/VEP_plugins.git\n\n# make a folder in the ~/.vep folder\nmkdir -p ~/.vep/Plugins/ # Assuming your cache folder is in your $HOME\n\n# Copy all the files with extension *.pm to the Plugins folder \ncp VEP_plugins/*.pm ~/.vep/Plugins/"
+    "text": "VEP Plugins: Manual install\nPlugins can enhance VEP’s capabilities and can add additional depth of information to the annotations (with the price of more complexity).\nIf this command does not work\n# if installing the official plugins\nvep_install -a p --PLUGINS all # a for action\n\nPlease use this manual option\n# clone repository\ngit clone https://github.com/Ensembl/VEP_plugins.git\n\n# make a folder in the ~/.vep folder\nmkdir -p ~/.vep/Plugins/ # Assuming your cache folder is in your $HOME\n\n# Copy all the files with extension *.pm to the Plugins folder \ncp VEP_plugins/*.pm ~/.vep/Plugins/"
   },
   {
     "objectID": "slides/VEP_variantAnnotationPresentation.html#transcript-selection",
@@ -116,7 +137,14 @@
     "href": "slides/VEP_variantAnnotationPresentation.html#vep-consequences-prediction",
     "title": "Variant Effect Predictor (VEP)",
     "section": "VEP consequences prediction",
-    "text": "VEP consequences prediction\n\nCancer somatic mut"
+    "text": "VEP consequences prediction\n\nVEP’s consequences"
+  },
+  {
+    "objectID": "slides/VEP_variantAnnotationPresentation.html#sif-sequence-ontology-impact-factors-categories",
+    "href": "slides/VEP_variantAnnotationPresentation.html#sif-sequence-ontology-impact-factors-categories",
+    "title": "Variant Effect Predictor (VEP)",
+    "section": "SIF (Sequence Ontology Impact Factors) Categories",
+    "text": "SIF (Sequence Ontology Impact Factors) Categories"
   },
   {
     "objectID": "slides/VEP_variantAnnotationPresentation.html#high-impact",
@@ -175,6 +203,13 @@
     "text": "Example 1: Basic Analysis\nInput VCF:\n##fileformat=VCFv4.2 \n#CHROM  POS     ID      REF  ALT   QUAL  FILTER  INFO \nchr7       55242465  rs121913529  A    T     .     PASS    . \nchr17      7577121   rs28934578    C    T     .     PASS    . \nchr13      32936646  rs28897743    C    T     .     PASS    .\nResults:\nThen we get something more informative like:\n\nBRAF: p.Val600Glu (melanoma)\nTP53: p.Arg248Trp (multiple cancers)\nBRCA2: missense variant"
   },
   {
+    "objectID": "slides/VEP_variantAnnotationPresentation.html#download-databases-data",
+    "href": "slides/VEP_variantAnnotationPresentation.html#download-databases-data",
+    "title": "Variant Effect Predictor (VEP)",
+    "section": "Download databases’ data",
+    "text": "Download databases’ data\nFor ClinVar\n# Download latest ClinVar VCF\nwget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz\nwget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz.tbi\nFor COSMIC  We cannot provide those files (a license is required), you need to register on the COSMIC’s website and download the files. For example: CosmicMutantExport.tsv.gz.\nYou can register here"
+  },
+  {
     "objectID": "slides/VEP_variantAnnotationPresentation.html#example-command-for-somatic-analysis",
     "href": "slides/VEP_variantAnnotationPresentation.html#example-command-for-somatic-analysis",
     "title": "Variant Effect Predictor (VEP)",
@@ -217,6 +252,13 @@
     "text": "dbNSFP\n\ndbNSFP v4 paper: a comprehensive database of transcript-specific functional predictions and annotations for human nonsynonymous and splice-site SNVs\n\nA VEP plugin that retrieves data for missense variants from a tabix-indexed dbNSFP file.\n--plugin dbNSFP,/path/to/dbNSFP.gz,SIFT_score,HDIV_score\nPrepare the data\nversion=4.7c\nwget ftp://dbnsfp:dbnsfp@dbnsfp.softgenetics.com/dbNSFP${version}.zip\nunzip dbNSFP${version}.zip\nzcat dbNSFP${version}_variant.chr1.gz | head -n1 &gt; h\nPrepare for GRCh38\nzgrep -h -v ^#chr dbNSFP${version}_variant.chr* | sort -k1,1 -k2,2n - | cat h - | bgzip -c &gt; dbNSFP${version}_grch38.gz\n  tabix -s 1 -b 2 -e 2 dbNSFP${version}_grch38.gz\nRun it with VEP\n--plugin dbNSFP,/path/to/dbNSFP.gz,LRT_score,GERP++_RS"
   },
   {
+    "objectID": "slides/VEP_variantAnnotationPresentation.html#filter-variants-with-vep",
+    "href": "slides/VEP_variantAnnotationPresentation.html#filter-variants-with-vep",
+    "title": "Variant Effect Predictor (VEP)",
+    "section": "Filter Variants with VEP",
+    "text": "Filter Variants with VEP\nYou can use the tool that is included in the VEP’s suite of tools. This tool generally works very well with data that have been VEP-annotated\nFilter SIFT deleterious events `filter_vep -i variant_effect_output.txt -filter \"SIFT is deleterious\" | grep -v \"##\" | head -n5  Can be used with pipes, for example (might save memory)\nvep -i examples/homo_sapiens_GRCh38.vcf --cache --force_overwrite --sift b --canonical --symbol --tab --fields Uploaded_variation,SYMBOL,CANONICAL,SIFT -o STDOUT | \\\nfilter_vep --filter \"CANONICAL is YES and SIFT is deleterious\""
+  },
+  {
     "objectID": "slides/VEP_variantAnnotationPresentation.html#notes",
     "href": "slides/VEP_variantAnnotationPresentation.html#notes",
     "title": "Variant Effect Predictor (VEP)",
@@ -242,7 +284,7 @@
     "href": "slides/VEP_variantAnnotationPresentation.html#points-to-keep-in-mind",
     "title": "Variant Effect Predictor (VEP)",
     "section": "Points to keep in mind",
-    "text": "Points to keep in mind\n\nUsing not only the HIGH impact somatic mutations but also the MODERATE\nRemembering that the “driver” mutation is not necessarily fully representative, we simply do not know many of them\nCNVs (Copy number variants) calling is hard, especially for WES data (WES is only 2% of a genome)\nNo tool is perfect, not even Google deepvariant or alphafold! This is especially true for CNV calling\n\nIf samples’ tumor purity is too low, or the quality is too low one should be especially careful with the results\nExperimental design is very important"
+    "text": "Points to keep in mind\n\nUsing not only the HIGH impact somatic mutations but also the MODERATE\nRemembering that the “driver” mutation is not necessarily fully representative, we simply do not know many of them\nCNVs (Copy number variants) calling is hard, especially for WES data (WES is only 2% of a genome)\nNo tool is perfect! This is especially true for CNV calling\n\nIf samples’ tumor purity is too low, or the quality is too low one should be especially careful with the results\nExperimental design is very important"
   },
   {
     "objectID": "slides/VEP_variantAnnotationPresentation.html#useful-links",

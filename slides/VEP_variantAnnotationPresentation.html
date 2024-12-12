@@ -96,6 +96,12 @@
     code span.wa { color: #ff5555; } /* Warning */
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-ead73dfc3850dcfda1a1ff053a736f71.css">
+  <link rel="stylesheet" href=".reveal h1 {
+  font-size: 1.6em !important;
+}
+.title-slide h1 {
+  font-size: 1.8em !important;
+}">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -220,7 +226,7 @@ Flavio Lombardo
 </ul>
 </div>
 <div class="fragment fade-in">
-<div id="fig-germliine" class="quarto-float quarto-figure quarto-figure-center" data-fig-caption="Germline vs somatic mutations" data-fig-align="center">
+<div id="fig-germliine" class="quarto-float quarto-figure quarto-figure-center" data-fig-align="center" data-fig-caption="Germline vs somatic mutations">
 <figure class="quarto-float quarto-float-fig">
 <div aria-describedby="fig-germliine-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img data-src="https://www.codexgenetics.com/blog/images/30-somatic-mutation-and-germline-mutation%20(eng).png" class="quarto-figure quarto-figure-center" data-fig-caption="Germline vs somatic mutations" width="350" height="300">
@@ -299,10 +305,9 @@ Figure&nbsp;2: DNA Repair Mechanisms
           display:block!important;
       }</style></aside>
 </div>
-</section></section>
-<section>
-<section id="acquisition-of-mutation-in-cancer" class="title-slide slide level1 center">
-<h1>Acquisition of mutation in cancer</h1>
+</section>
+<section id="acquisition-of-mutation-in-cancer" class="slide level2">
+<h2>Acquisition of mutation in cancer</h2>
 
 <img data-src="../assets/variant_annotation/cancer_somatic_mut.jpg" data-fig-caption="https://www.nature.com/articles/nature07943" class="r-stretch quarto-figure-center" id="fig-progression_to_cancer"><p class="caption">
 Figure&nbsp;3: Cancer somatic mut
@@ -442,7 +447,7 @@ Figure&nbsp;3: Cancer somatic mut
 <section>
 <section id="what-is-vep-not-doing-for-you" class="title-slide slide level1 center">
 <h1>What is VEP NOT doing for you?</h1>
-<p>VEP is a great tool, but it does not remove the work from the scientists. Automation simplifies the process but it can give false positives and false negatives. If the experimental setup is poor, the results most likely will be poor quality too.</p>
+<p>VEP is a great tool, but it does not remove the work from the scientists. Automation simplifies the process but it can give false positives and false negatives. If the experimental setup is low quality, the results most likely will be low quality too.</p>
 <div>
 <ul>
 <li class="fragment">Calling variants</li>
@@ -492,6 +497,7 @@ Figure&nbsp;3: Cancer somatic mut
 <li>Are there therapeutic implications?</li>
 </ul>
 </section></section>
+<section>
 <section id="installation-setup" class="title-slide slide level1 center scrollable" data-background-color="#2C3E50">
 <h1>Installation &amp; Setup</h1>
 <ol type="1">
@@ -501,9 +507,8 @@ Figure&nbsp;3: Cancer somatic mut
 <li><a href="https://docs.conda.io/projects/conda/en/stable/user-guide/getting-started.html">Conda/Bioconda</a></li>
 </ol>
 </section>
-
-<section id="installation-using-conda" class="title-slide slide level1 center" data-background-color="#2C3E50">
-<h1>Installation using conda</h1>
+<section id="installation-using-conda" class="slide level2">
+<h2>Installation using conda</h2>
 <ul>
 <li><a href="https://docs.conda.io/projects/conda/en/stable/user-guide/getting-started.html">Conda/Bioconda</a></li>
 </ul>
@@ -537,10 +542,8 @@ Figure&nbsp;3: Cancer somatic mut
           display:block!important;
       }</style></aside>
 </section>
-
-<section>
-<section id="veps-basic-configuration" class="title-slide slide level1 center">
-<h1>VEP’s Basic Configuration</h1>
+<section id="veps-basic-configuration" class="slide level2">
+<h2>VEP’s Basic Configuration</h2>
 <p><br></p>
 <div class="fragment">
 <div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="co"># Test installation</span></span>
@@ -573,7 +576,8 @@ Figure&nbsp;3: Cancer somatic mut
 <p>Plugins can enhance VEP’s capabilities and can add additional depth of information to the annotations <strong>(with the price of more complexity)</strong>.</p>
 <p>If this command does not work</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a></a><span class="co"># if installing the official plugins</span></span>
-<span id="cb5-2"><a></a><span class="ex">vep_install</span> <span class="at">-a</span> p <span class="co"># a for action</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-2"><a></a><span class="ex">vep_install</span> <span class="at">-a</span> p <span class="at">--PLUGINS</span> all <span class="co"># a for action</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="fragment">
 <p>Please use this manual option</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a></a><span class="co"># clone repository</span></span>
 <span id="cb6-2"><a></a><span class="fu">git</span> clone https://github.com/Ensembl/VEP_plugins.git</span>
@@ -583,6 +587,7 @@ Figure&nbsp;3: Cancer somatic mut
 <span id="cb6-6"><a></a></span>
 <span id="cb6-7"><a></a><span class="co"># Copy all the files with extension *.pm to the Plugins folder </span></span>
 <span id="cb6-8"><a></a><span class="fu">cp</span> VEP_plugins/<span class="pp">*</span>.pm ~/.vep/Plugins/</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section></section>
 <section>
 <section id="core-concepts" class="title-slide slide level1 center" data-background-color="#2C3E50">
@@ -619,11 +624,9 @@ Figure&nbsp;3: Cancer somatic mut
 <section id="vep-consequences-prediction" class="slide level2">
 <h2>VEP consequences prediction</h2>
 
-<img data-src="../assets/variant_annotation/VEP_consequences.png" class="r-stretch quarto-figure-center" id="fig_vep_effects"><p class="caption">Cancer somatic mut</p></section></section>
-<section>
-<section id="sif-sequence-ontology-impact-factors-categories" class="title-slide slide level1 center">
-<h1>SIF (Sequence Ontology Impact Factors) Categories</h1>
-
+<img data-src="../assets/variant_annotation/VEP_consequences.png" class="r-stretch quarto-figure-center" id="fig_vep_effects"><p class="caption">VEP’s consequences</p></section>
+<section id="sif-sequence-ontology-impact-factors-categories" class="slide level2">
+<h2>SIF (Sequence Ontology Impact Factors) Categories</h2>
 </section>
 <section id="high-impact" class="slide level2">
 <h2>HIGH Impact:</h2>
@@ -743,17 +746,15 @@ Figure&nbsp;3: Cancer somatic mut
 </ul>
 </section>
 
-</section>
-<section>
-<section id="download-data-to-cosmic-and-clinvar" class="title-slide slide level1 center">
-<h1>Download data to COSMIC and ClinVar</h1>
+
+<section id="download-databases-data" class="slide level2">
+<h2>Download databases’ data</h2>
 <p>For ClinVar</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a></a><span class="co"># Download latest ClinVar VCF</span></span>
 <span id="cb8-2"><a></a><span class="fu">wget</span> https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz</span>
 <span id="cb8-3"><a></a><span class="fu">wget</span> https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz.tbi</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>For COSMIC We cannot provide those files (for licenses issues), you need to register and download the files. <code>CosmicMutantExport.tsv.gz</code></p>
-<p>You can register <a href="https://cancer.sanger.ac.uk/cosmic">here:</a></p>
-<p><strong>More in the practical part</strong></p>
+<p>For COSMIC <br> We cannot provide those files (a license is required), you need to register on the COSMIC’s website and download the files. For example: <code>CosmicMutantExport.tsv.gz</code>.</p>
+<p>You can register <a href="https://cancer.sanger.ac.uk/cosmic">here</a></p>
 </section>
 <section id="example-command-for-somatic-analysis" class="slide level2">
 <h2>Example Command for Somatic Analysis</h2>
@@ -843,14 +844,13 @@ Figure&nbsp;3: Cancer somatic mut
 <span id="cb19-2"><a></a>  <span class="ex">tabix</span> <span class="at">-s</span> 1 <span class="at">-b</span> 2 <span class="at">-e</span> 2 dbNSFP<span class="va">${version}</span>_grch38.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Run it with VEP</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a></a><span class="ex">--plugin</span> dbNSFP,/path/to/dbNSFP.gz,LRT_score,GERP++_RS</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section></section>
-<section>
-<section id="filter-variants-with-vep" class="title-slide slide level1 center">
-<h1>Filter Variants with VEP</h1>
+</section>
+<section id="filter-variants-with-vep" class="slide level2">
+<h2>Filter Variants with VEP</h2>
 <p>You can use the tool that is included in the VEP’s suite of tools. This tool generally works very well with data that have been VEP-annotated</p>
-<p>Filter SIFT deleterious events `<code>filter_vep -i variant_effect_output.txt -filter "SIFT is deleterious" | grep -v "##" | head -n5</code> Can be used with pipes, for example (might save memory)</p>
-<pre><code>vep -i examples/homo_sapiens_GRCh38.vcf --cache --force_overwrite --sift b --canonical --symbol --tab --fields Uploaded_variation,SYMBOL,CANONICAL,SIFT -o STDOUT | \
-filter_vep --filter "CANONICAL is YES and SIFT is deleterious"</code></pre>
+<p>Filter SIFT deleterious events `<code>filter_vep -i variant_effect_output.txt -filter "SIFT is deleterious" | grep -v "##" | head -n5</code> <br> Can be used with pipes, for example (might save memory)</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a></a><span class="ex">vep</span> <span class="at">-i</span> examples/homo_sapiens_GRCh38.vcf <span class="at">--cache</span> <span class="at">--force_overwrite</span> <span class="at">--sift</span> b <span class="at">--canonical</span> <span class="at">--symbol</span> <span class="at">--tab</span> <span class="at">--fields</span> Uploaded_variation,SYMBOL,CANONICAL,SIFT <span class="at">-o</span> STDOUT <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb21-2"><a></a><span class="ex">filter_vep</span> <span class="at">--filter</span> <span class="st">"CANONICAL is YES and SIFT is deleterious"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 <section id="notes" class="slide level2">
 <h2>Notes</h2>
@@ -892,7 +892,7 @@ filter_vep --filter "CANONICAL is YES and SIFT is deleterious"</code></pre>
 <li>Using not only the HIGH impact somatic mutations but also the MODERATE</li>
 <li>Remembering that the “driver” mutation is not necessarily fully representative, we simply do not know many of them</li>
 <li>CNVs (Copy number variants) calling is hard, especially for WES data (WES is only 2% of a genome)</li>
-<li>No tool is perfect, not even Google deepvariant or alphafold! This is especially true for CNV calling
+<li>No tool is perfect! This is especially true for CNV calling
 <ul>
 <li>If samples’ tumor purity is too low, or the quality is too low one should be especially careful with the results</li>
 <li>Experimental design is very important</li>
