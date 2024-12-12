@@ -270,6 +270,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="ensembl-vep-variant-effect-predictor" class="level3">
 <h3 class="anchored" data-anchor-id="ensembl-vep-variant-effect-predictor">Ensembl VEP (Variant effect predictor)</h3>
+<p><a href="./slides/VEP_variantAnnotationPresentation.html">SLIDES -&gt; Variant annotation</a></p>
 <p>VEP is a powerful and flexible tool for annotating, analyzing, and prioritizing genomic variants. It is particularly useful in cancer genomics, where understanding the functional impact of somatic mutations is crucial for research and clinical applications. We can answer questions like:</p>
 <ul>
 <li>How damaging is a certain somatic mutation (according to reference databases)</li>
@@ -311,8 +312,12 @@ Important
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Activate VEP's env</span></span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="ex">conda</span> activate vep</span>
 <span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Plugins installation</span></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># vep_install -a p --PLUGINS all</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># PLEASE DO RUN During the course, only if you follow locally</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Install all the data locally</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co">#vep_install -a cf -s homo_sapiens -y GRCh38</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Plugins installation</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># vep_install -a p --PLUGINS all</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -325,7 +330,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Instead of conda you could try installing <code>mamba</code>. If you are on Unix-based system this is simple. <a href="https://mamba.readthedocs.io/en/latest/installation/mamba-installation.html">mamba</a></p>
+<p>Instead of conda you could try installing <code>mamba</code>. If you are on Unix-based system this is simple <a href="https://mamba.readthedocs.io/en/latest/installation/mamba-installation.html">mamba</a>. <br> <em>If you are following along the course, <code>mamba</code> is already installed for you, with all the software required for this course. In this case you can activate the enviroment with <code>mamba activate ngs-tools</code>.</em></p>
 </div>
 </div>
 </section>
@@ -333,7 +338,7 @@ Note
 <h3 class="anchored" data-anchor-id="transcript-selection">Transcript Selection</h3>
 <p>VEP can report consequences for all transcripts overlapping a variant. However, this often results in multiple annotations per variant. Several approaches are available to handle this:</p>
 <ul>
-<li><code>--pick</code>: Selects one consequence per variant based on a predefined hierarchy</li>
+<li><code>--pick</code>: Selects one consequence per variant based on a predefined hierarchy (e.g., HIGH &gt; MODERATE &gt; LOW &gt; MODIFIER)</li>
 <li><code>--pick_allele</code>: Selects one consequence per variant allele</li>
 <li><code>--pick_allele_gene</code>: Selects one consequence per variant allele per gene</li>
 <li><code>--per_gene</code>: Selects one consequence per gene</li>
@@ -342,24 +347,105 @@ Note
 </section>
 <section id="consequence-priority" class="level3">
 <h3 class="anchored" data-anchor-id="consequence-priority">Consequence Priority</h3>
-<p>VEP ranks consequences by severity:</p>
-<ol type="1">
-<li><p>Transcript ablation</p></li>
-<li><p>Splice acceptor/donor variant</p></li>
-<li><p>Stop gained</p></li>
-<li><p>Frameshift variant</p></li>
-<li><p>Stop lost</p></li>
-<li><p>Start lost</p></li>
-<li><p>Transcript amplification</p></li>
-<li><p>Inframe insertion/deletion</p></li>
-<li><p>Missense variant</p></li>
-<li><p>Protein altering variant</p></li>
-</ol>
+<p>VEP ranks consequences by severity: <img src="https://www.ensembl.org/info/genome/variation/prediction/consequences.svg" id="fig-vep_effects" class="img-fluid quarto-figure quarto-figure-center anchored" alt="Cancer somatic mut"> <strong>Figure 1:</strong> Image from the <a href="https://www.ensembl.org/info/genome/variation/prediction/predicted_data.html">Ensembl VEP website</a>.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 38%">
+<col style="width: 23%">
+<col style="width: 38%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Consequence</th>
+<th>Impact</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Transcript ablation</td>
+<td>HIGH</td>
+<td>Complete deletion of a gene transcript</td>
+</tr>
+<tr class="even">
+<td>Splice acceptor variant</td>
+<td>HIGH</td>
+<td>Variant at the 3’ end of an intron that disrupts RNA splicing</td>
+</tr>
+<tr class="odd">
+<td>Splice donor variant</td>
+<td>HIGH</td>
+<td>Variant at the 5’ end of an intron that disrupts RNA splicing</td>
+</tr>
+<tr class="even">
+<td>Stop gained</td>
+<td>HIGH</td>
+<td>Variant that introduces a premature stop codon</td>
+</tr>
+<tr class="odd">
+<td>Frameshift variant</td>
+<td>HIGH</td>
+<td>Insertion/deletion causing reading frame disruption</td>
+</tr>
+<tr class="even">
+<td>Stop lost</td>
+<td>HIGH</td>
+<td>Variant removes stop codon, extending protein length</td>
+</tr>
+<tr class="odd">
+<td>Start lost</td>
+<td>HIGH</td>
+<td>Loss of start codon prevents proper translation initiation</td>
+</tr>
+<tr class="even">
+<td>Transcript amplification</td>
+<td>HIGH</td>
+<td>Increased copy number of transcript regions</td>
+</tr>
+<tr class="odd">
+<td>Inframe insertion</td>
+<td>MODERATE</td>
+<td>Insertion of bases in multiples of 3, no frameshift</td>
+</tr>
+<tr class="even">
+<td>Inframe deletion</td>
+<td>MODERATE</td>
+<td>Deletion of bases in multiples of 3, no frameshift</td>
+</tr>
+<tr class="odd">
+<td>Missense variant</td>
+<td>MODERATE</td>
+<td>Single nucleotide change causing amino acid substitution</td>
+</tr>
+<tr class="even">
+<td>Protein altering variant</td>
+<td>MODERATE</td>
+<td>Variant changes protein sequence</td>
+</tr>
+</tbody>
+</table>
 </section>
 </section>
 <section id="practical-exercises" class="level2">
 <h2 class="anchored" data-anchor-id="practical-exercises">Practical Exercises</h2>
 <p>In case that you do not have the Mutect2 call and/or the CNVkit call, you can obtain those from <a href="https://drive.google.com/drive/folders/1Rh6qRMGGY1QZL7INrcNd7hULTr8mB6tu?usp=sharing">here</a>. In this folder there are also a <code>README.md</code> and some folders containing preprocessed data for the addional resources that we will use with Ensembl-VEP.</p>
+<p><em>If you are following along the course you should download and extract the data into your <code>project/</code> folder</em>.</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<code>--cache</code> option
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>By default VEP will install the cache and plugins into your home folder (<code>~/.vep/</code>) and if that is the case, then you can leeave it like <code>--cache</code>. - If you are following along the course, you need to change the cache folder to <code>--cache /data/.vep</code> or VEP will not find the local cache.</p>
+</div>
+</div>
+</div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -391,7 +477,7 @@ chr5    112175770    rs121913343    C    T    .    PASS    .</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -400,19 +486,25 @@ Command
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-4" class="callout-4-contents callout-collapse collapse show">
+<div id="callout-5" class="callout-5-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p><strong>VEP can be provided with a VCF file as an input (or vcf.gz + index) file or other formats, see documentation <a href="https://www.ensembl.org/info/docs/tools/vep/vep_formats.html">here</a> </strong></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> input.vcf <span class="at">--cache</span> <span class="at">--species</span> homo_sapiens <span class="dt">\</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>--assembly GRCh38 <span class="at">--offline</span> <span class="at">--format</span> vcf <span class="dt">\</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>--symbol <span class="at">--force_overwrite</span> <span class="at">--domains</span> <span class="dt">\</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>--sift b <span class="at">--polyphen</span> b <span class="dt">\</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>--output_file output.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> cancer_variants.vcf <span class="dt">\</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>--cache /data/.vep <span class="dt">\</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>--species homo_sapiens <span class="dt">\</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>--assembly GRCh38 <span class="dt">\</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>--offline <span class="at">--format</span> vcf <span class="dt">\</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>--symbol <span class="dt">\</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>--force_overwrite <span class="dt">\</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>--domains <span class="dt">\</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>--sift b <span class="dt">\</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>--polyphen b <span class="dt">\</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>--output_file output.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -421,67 +513,72 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. First, create a script that will generate our VCF file. </span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy this code into a new file named `create_vcf.sh`</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># with the command `nano create_vcf.sh`:</span></span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 0. from your terminal go to your project folder</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/project</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-e</span> <span class="st">'##fileformat=VCFv4.2</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="st">##INFO=&lt;ID=AF,Number=A,Type=Float,Description="Allele Frequency"&gt;</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="st">#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="st">chr7\t55242465\trs121913529\tA\tT\t.\tPASS\t.</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="st">chr17\t7577121\trs28934578\tC\tT\t.\tPASS\t.</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="st">chr13\t32936646\trs28897743\tC\tT\t.\tPASS\t.</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="st">chr17\t7674894\trs28934574\tG\tA\t.\tPASS\t.</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="st">chr13\t32914438\trs80357090\tT\tC\t.\tPASS\t.</span></span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="st">chr17\t41245466\trs28897686\tG\tA\t.\tPASS\t.</span></span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="st">chr3\t178936091\trs63751289\tG\tA\t.\tPASS\t.</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="st">chr10\t89624230\trs61751507\tG\tA\t.\tPASS\t.</span></span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="st">chr11\t108098576\trs386833395\tG\tA\t.\tPASS\t.</span></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="st">chr4\t55141055\trs1800744\tA\tG\t.\tPASS\t.</span></span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="st">chr1\t11190510\trs6603781\tG\tA\t.\tPASS\t.</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="st">chr7\t140453136\trs121913530\tA\tT\t.\tPASS\t.</span></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="st">chr5\t112175770\trs121913343\tC\tT\t.\tPASS\t.'</span> <span class="op">&gt;</span> cancer_variants.vcf</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Make the script executable:</span></span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x create_vcf.sh</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Run the script:</span></span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="ex">./create_vcf.sh</span></span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Verify the file was created correctly:</span></span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the content</span></span>
-<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> cancer_variants.vcf</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. First, create a script that will generate our VCF file. </span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy this code (from #!/usr/bin/env bash) into a new file named `create_vcf.sh`</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># with the command `nano create_vcf.sh`:</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="at">-e</span> <span class="st">'##fileformat=VCFv4.2</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="st">##INFO=&lt;ID=AF,Number=A,Type=Float,Description="Allele Frequency"&gt;</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="st">#CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="st">chr7\t55242465\trs121913529\tA\tT\t.\tPASS\t.</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="st">chr17\t7577121\trs28934578\tC\tT\t.\tPASS\t.</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="st">chr13\t32936646\trs28897743\tC\tT\t.\tPASS\t.</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="st">chr17\t7674894\trs28934574\tG\tA\t.\tPASS\t.</span></span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a><span class="st">chr13\t32914438\trs80357090\tT\tC\t.\tPASS\t.</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="st">chr17\t41245466\trs28897686\tG\tA\t.\tPASS\t.</span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="st">chr3\t178936091\trs63751289\tG\tA\t.\tPASS\t.</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="st">chr10\t89624230\trs61751507\tG\tA\t.\tPASS\t.</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="st">chr11\t108098576\trs386833395\tG\tA\t.\tPASS\t.</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="st">chr4\t55141055\trs1800744\tA\tG\t.\tPASS\t.</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="st">chr1\t11190510\trs6603781\tG\tA\t.\tPASS\t.</span></span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="st">chr7\t140453136\trs121913530\tA\tT\t.\tPASS\t.</span></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="st">chr5\t112175770\trs121913343\tC\tT\t.\tPASS\t.'</span> <span class="op">&gt;</span> cancer_variants.vcf</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Make the script executable:</span></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> +x create_vcf.sh</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Run the script:</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a><span class="ex">./create_vcf.sh</span></span>
 <span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure you have 13 variants</span></span>
-<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">'^#'</span> cancer_variants.vcf <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span>  <span class="co"># Should show 13</span></span>
-<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Run VEP ~&lt; 5min</span></span>
-<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> cancer_variants.vcf <span class="at">-cache</span> <span class="dt">\</span></span>
-<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">--species</span> homo_sapiens <span class="dt">\</span></span>
-<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">--offline</span> <span class="dt">\</span></span>
-<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">--force_overwrite</span> <span class="dt">\</span></span>
-<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">--assembly</span> GRCh38 <span class="dt">\</span></span>
-<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">--format</span> vcf <span class="dt">\</span></span>
-<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">--symbol</span> <span class="dt">\</span></span>
-<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">--sift</span> b <span class="dt">\</span></span>
-<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">--polyphen</span> b <span class="dt">\</span></span>
-<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">--pick</span> <span class="dt">\</span></span>
-<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">--domains</span> <span class="dt">\</span></span>
-<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">--output_file</span> output.txt</span>
-<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a><span class="co"># Some of the variants affect:</span></span>
-<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a><span class="co">## VEP command-line: vep --assembly GRCh38 --cache --database 0 --force_overwrite --format vcf --input_file cancer_variants.vcf --offline --output_file output.txt --pick --symbol</span></span>
-<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="co">#Uploaded_variation Location    Allele  Gene    Feature Feature_type    Consequence cDNA_position   CDS_position    Protein_position    Amino_acids Codons  Existing_variation  Extra</span></span>
-<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a><span class="ex">rs121913529</span> chr7:55242465   T   ENSG00000280890 ENST00000626532 Transcript  intron_variant,non_coding_transcript_variant    <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   IMPACT=MODIFIER<span class="kw">;</span><span class="va">STRAND</span><span class="op">=</span>-1<span class="kw">;</span><span class="va">SYMBOL</span><span class="op">=</span>ELDR<span class="kw">;</span><span class="va">SYMBOL_SOURCE</span><span class="op">=</span>HGNC<span class="kw">;</span><span class="va">HGNC_ID</span><span class="op">=</span>HGNC:49511</span>
-<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="ex">rs28934578</span>  chr17:7577121   T   ENSG00000161960 ENST00000293831 Transcript  missense_variant    597 580 194 D/Y Gac/Tac <span class="at">-</span>   IMPACT=MODERATE<span class="kw">;</span><span class="va">STRAND</span><span class="op">=</span>1<span class="kw">;</span><span class="va">SYMBOL</span><span class="op">=</span>EIF4A1<span class="kw">;</span><span class="va">SYMBOL_SOURCE</span><span class="op">=</span>HGNC<span class="kw">;</span><span class="va">HGNC_ID</span><span class="op">=</span>HGNC:3282</span>
-<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a><span class="ex">rs28897743</span>  chr13:32936646  T   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   intergenic_variant  <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   IMPACT=MODIFIER</span>
-<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a><span class="ex">rs28934574</span>  chr17:7674894   A   ENSG00000141510 ENST00000269305 Transcript  stop_gained 779 637 213 R/<span class="pp">*</span> Cga/Tga <span class="at">-</span>   IMPACT=HIGH<span class="kw">;</span><span class="va">STRAND</span><span class="op">=</span>-1<span class="kw">;</span><span class="va">SYMBOL</span><span class="op">=</span>TP53<span class="kw">;</span><span class="va">SYMBOL_SOURCE</span><span class="op">=</span>HGNC<span class="kw">;</span><span class="va">HGNC_ID</span><span class="op">=</span>HGNC:11998</span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="ex">rs28897686</span>  chr17:41245466  A   ENSG00000241595 ENST00000334109 Transcript  upstream_gene_variant   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   IMPACT=MODIFIER<span class="kw">;</span><span class="va">DISTANCE</span><span class="op">=</span>4221<span class="kw">;</span><span class="va">STRAND</span><span class="op">=</span>1<span class="kw">;</span><span class="va">SYMBOL</span><span class="op">=</span>KRTAP9-4<span class="kw">;</span><span class="va">SYMBOL_SOURCE</span><span class="op">=</span>HGNC<span class="kw">;</span><span class="va">HGNC_ID</span><span class="op">=</span>HGNC:18902</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Verify the file was created correctly:</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Check the content</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> cancer_variants.vcf</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Make sure you have 13 variants</span></span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">'^#'</span> cancer_variants.vcf <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span>  <span class="co"># it should show 13</span></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Run VEP ~&lt; 5min</span></span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> cancer_variants.vcf <span class="dt">\</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">--cache</span> /data/.vep <span class="dt">\</span></span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">--species</span> homo_sapiens <span class="dt">\</span></span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">--offline</span> <span class="dt">\</span></span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">--force_overwrite</span> <span class="dt">\</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">--assembly</span> GRCh38 <span class="dt">\</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">--format</span> vcf <span class="dt">\</span></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">--symbol</span> <span class="dt">\</span></span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">--sift</span> b <span class="dt">\</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">--polyphen</span> b <span class="dt">\</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">--pick</span> <span class="dt">\</span></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">--domains</span> <span class="dt">\</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">--output_file</span> output.txt</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a><span class="co"># Some of the variants affect:</span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a><span class="co">## VEP command-line: vep --assembly GRCh38 --cache /data/.vep --database 0 --force_overwrite --format vcf --input_file cancer_variants.vcf --offline --output_file output.txt --pick --symbol</span></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="co">#Uploaded_variation Location    Allele  Gene    Feature Feature_type    Consequence cDNA_position   CDS_position    Protein_position    Amino_acids Codons  Existing_variation  Extra</span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="ex">rs121913529</span> chr7:55242465   T   ENSG00000280890 ENST00000626532 Transcript  intron_variant,non_coding_transcript_variant    <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   IMPACT=MODIFIER<span class="kw">;</span><span class="va">STRAND</span><span class="op">=</span>-1<span class="kw">;</span><span class="va">SYMBOL</span><span class="op">=</span>ELDR<span class="kw">;</span><span class="va">SYMBOL_SOURCE</span><span class="op">=</span>HGNC<span class="kw">;</span><span class="va">HGNC_ID</span><span class="op">=</span>HGNC:49511</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a><span class="ex">rs28934578</span>  chr17:7577121   T   ENSG00000161960 ENST00000293831 Transcript  missense_variant    597 580 194 D/Y Gac/Tac <span class="at">-</span>   IMPACT=MODERATE<span class="kw">;</span><span class="va">STRAND</span><span class="op">=</span>1<span class="kw">;</span><span class="va">SYMBOL</span><span class="op">=</span>EIF4A1<span class="kw">;</span><span class="va">SYMBOL_SOURCE</span><span class="op">=</span>HGNC<span class="kw">;</span><span class="va">HGNC_ID</span><span class="op">=</span>HGNC:3282</span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a><span class="ex">rs28897743</span>  chr13:32936646  T   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   intergenic_variant  <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   IMPACT=MODIFIER</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a><span class="ex">rs28934574</span>  chr17:7674894   A   ENSG00000141510 ENST00000269305 Transcript  stop_gained 779 637 213 R/<span class="pp">*</span> Cga/Tga <span class="at">-</span>   IMPACT=HIGH<span class="kw">;</span><span class="va">STRAND</span><span class="op">=</span>-1<span class="kw">;</span><span class="va">SYMBOL</span><span class="op">=</span>TP53<span class="kw">;</span><span class="va">SYMBOL_SOURCE</span><span class="op">=</span>HGNC<span class="kw">;</span><span class="va">HGNC_ID</span><span class="op">=</span>HGNC:11998</span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a><span class="ex">rs28897686</span>  chr17:41245466  A   ENSG00000241595 ENST00000334109 Transcript  upstream_gene_variant   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   IMPACT=MODIFIER<span class="kw">;</span><span class="va">DISTANCE</span><span class="op">=</span>4221<span class="kw">;</span><span class="va">STRAND</span><span class="op">=</span>1<span class="kw">;</span><span class="va">SYMBOL</span><span class="op">=</span>KRTAP9-4<span class="kw">;</span><span class="va">SYMBOL_SOURCE</span><span class="op">=</span>HGNC<span class="kw">;</span><span class="va">HGNC_ID</span><span class="op">=</span>HGNC:18902</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>rs28934574</code> from this example is a TP53 stop gained mutation commonly found in cancer.</p>
 <p><strong>You can try to run without <code>--pick</code> and <code>--everything</code> see what happens.</strong></p>
 </div>
@@ -489,16 +586,16 @@ Solution
 </div>
 <p>After running the command you will also notice a <code>output.txt_summary.html</code> that will show some statistics on the annotation process. If you tried running <code>--everything</code> or <code>-e</code> this is a shortcut for the following options:</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
---everything
+-e or --everything
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-6" class="callout-6-contents callout-collapse collapse">
+<div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <pre><code>--sift b, --polyphen b, --ccds, --hgvs, --symbol, --numbers, --domains, --regulatory, --canonical, --protein, --biotype, --af, --af_1kg, --af_esp, --af_gnomade, --af_gnomadg, --max_af, --pubmed, --uniprot, --mane, --tsl, --appris, --variant_class, --gene_phenotype, --mirna </code></pre>
 <p>This an example of the highput from the TP53 mutation</p>
@@ -633,7 +730,7 @@ Solution
 </div>
 <p>You can have a look at the documentation to learn more about VEP’s many options <a href="https://www.ensembl.org/info/docs/tools/vep/script/vep_options.html">here</a></p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-7-contents" aria-controls="callout-7" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-8-contents" aria-controls="callout-8" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -642,7 +739,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-7" class="callout-7-contents callout-collapse collapse show">
+<div id="callout-8" class="callout-8-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <ul>
 <li>SIFT: Based on sequence homology and physical properties of amino acids</li>
@@ -680,10 +777,16 @@ chr6    3723708   .   C   G   .   PASS</code></pre>
 <section id="using-vep-to-annotate-mutect2-variants" class="level2">
 <h2 class="anchored" data-anchor-id="using-vep-to-annotate-mutect2-variants">Using VEP to annotate Mutect2 variants</h2>
 <p>The somatic variant call can be annotated with this command</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> somatic.filtered.PASS.vcf.gz <span class="at">--cache</span> <span class="at">--species</span> homo_sapiens <span class="dt">\</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>--assembly GRCh38 <span class="at">--offline</span> <span class="at">--format</span> vcf <span class="dt">\</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>--symbol <span class="at">--force_overwrite</span> <span class="at">-e</span> <span class="dt">\</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>--output_file chr6ch17_mutect2_annotated.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> ~/project/course_data/resources/Mutect2_data/somatic.filtered.PASS.vcf.gz <span class="dt">\</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>--cache /data/.vep <span class="dt">\</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>--species homo_sapiens <span class="dt">\</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>--assembly GRCh38 <span class="dt">\</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>--offline <span class="dt">\</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>--format vcf <span class="dt">\</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>--symbol <span class="dt">\</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>--force_overwrite <span class="dt">\</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>--everything <span class="dt">\</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>--output_file chr6ch17_mutect2_annotated.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -698,7 +801,7 @@ Output to VCF
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -707,7 +810,7 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-9" class="callout-9-contents callout-collapse collapse">
+<div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>With the option <code>--output_file</code> you can use <code>vcf</code>. After you can compress the VCF <code>bgzip &lt;output_file.vcf&gt;</code> and then you can index it <code>tabix -p vcf &lt;output_file.vcf.gz&gt;</code>. If you see VEP’s documentation there is an option to skip <code>bgzip</code> and instead incorporating it directly in VEP, which will be doing the compression for you <code>--compress_output bgzip</code> in the call. Afterwards you still need to index the file.</p>
 </div>
@@ -748,7 +851,7 @@ Solution
 </tbody>
 </table>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-11-contents" aria-controls="callout-11" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -757,7 +860,7 @@ And other interesting variants
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-10" class="callout-10-contents callout-collapse collapse">
+<div id="callout-11" class="callout-11-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <table class="caption-top table">
 <colgroup>
@@ -835,10 +938,17 @@ Performance Trick
 </div>
 <div class="callout-body-container callout-body">
 <p>Can you run the same command as before adding <code>--fork 2</code>, do you note any difference?</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> somatic.filtered.PASS.vcf.gz <span class="at">--cache</span> <span class="at">--species</span> homo_sapiens <span class="dt">\</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>--assembly GRCh38 <span class="at">--offline</span> <span class="at">--format</span> vcf <span class="dt">\</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>--symbol <span class="at">--force_overwrite</span> <span class="at">-e</span> <span class="at">--fork</span> 2 <span class="dt">\</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>--output_file chr6ch17_mutect2_annotated.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> ~/project/course_data/resources/Mutect2_data/somatic.filtered.PASS.vcf.gz <span class="dt">\</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>--cache /data/.vep <span class="dt">\</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>--species homo_sapiens <span class="dt">\</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>--assembly GRCh38 <span class="dt">\</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>--offline <span class="dt">\</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>--format vcf <span class="dt">\</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>--symbol <span class="dt">\</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>--force_overwrite <span class="dt">\</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>--everything <span class="dt">\</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>--fork 2 <span class="dt">\</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>--output_file chr6ch17_mutect2_annotated.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p>Now when we anaylize our output file <code>chr6ch17_mutect2_annotated.txt</code> in more details, there are about 160 lines and a lot of information on different transcripts that are related to the mutations found by Mutect2. Let’s say that now we would like to filter only the deleterious predictions and moderate/high impact variants. We can do that in a couple of ways:</p>
@@ -885,7 +995,7 @@ wget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz.tbi</cod
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -894,19 +1004,19 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-14" class="callout-14-contents callout-collapse collapse">
+<div id="callout-15" class="callout-15-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download ClinVar VCF</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Run VEP with cancer-specific annotations</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> somatic.filtered.PASS.vcf.gz <span class="dt">\</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--cache</span> <span class="dt">\</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> ~/project/course_data/resources/Mutect2_data/somatic.filtered.PASS.vcf.gz <span class="dt">\</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--cache</span> /data/.vep <span class="dt">\</span></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">--assembly</span> GRCh38 <span class="dt">\</span></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">--format</span> vcf <span class="dt">\</span></span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">--force_overwrite</span> <span class="dt">\</span></span>
 <span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">--fork</span> 2 <span class="dt">\</span></span>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">--everything</span> <span class="dt">\</span></span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">--custom</span> clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN <span class="dt">\</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">--custom</span> ~/project/course_data/resources/clinvar/clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN <span class="dt">\</span></span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">--output_file</span> chr6ch17_mutect2_annotated_with_clinVar.txt</span>
 <span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter results</span></span>
@@ -950,7 +1060,7 @@ Solution
 <p><a href="https://pubmed.ncbi.nlm.nih.gov/27666373/">REVEL paper</a>: An Ensemble Method for Predicting the Pathogenicity of Rare Missense Variants</p>
 </blockquote>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -959,7 +1069,7 @@ REVEL
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-15" class="callout-15-contents callout-collapse collapse">
+<div id="callout-16" class="callout-16-contents callout-collapse collapse">
 <section id="revel-1" class="level2 callout-body-container callout-body">
 <h2 class="anchored" data-anchor-id="revel-1"><a href="http://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#revel">REVEL</a></h2>
 <p>You can download here the data (~6.5GB): <a href="https://sites.google.com/site/revelgenomics/downloads">https://sites.google.com/site/revelgenomics/downloads</a> or <a href="https://zenodo.org/records/7072866">https://zenodo.org/records/7072866</a></p>
@@ -983,7 +1093,7 @@ REVEL
 <p><a href="https://www.science.org/doi/10.1126/science.adg7492">AlphaMissense’s Paper</a>: Accurate proteome-wide missense variant effect prediction with AlphaMissense</p>
 </blockquote>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -992,7 +1102,7 @@ AlphaMissense
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-16" class="callout-16-contents callout-collapse collapse">
+<div id="callout-17" class="callout-17-contents callout-collapse collapse">
 <section id="alphamissense-1" class="level2 callout-body-container callout-body">
 <h2 class="anchored" data-anchor-id="alphamissense-1"><a href="http://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#alphamissense">AlphaMissense</a></h2>
 <p><a href="https://console.cloud.google.com/storage/browser/dm_alphamissense;tab=objects?pli=1&amp;prefix=&amp;forceOnObjectsSortingFiltering=false"><strong>Download link</strong></a></p>
@@ -1006,7 +1116,7 @@ AlphaMissense
 </div>
 <p>We have seen how to run VEP and how to filter the output. Now we can make another call on the Mutect2 output to annotate the variants using a combination of some plugins and some custom databases.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-17-contents" aria-controls="callout-17" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-18-contents" aria-controls="callout-18" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1015,7 +1125,7 @@ AlphaMissense
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-17" class="callout-17-contents callout-collapse collapse show">
+<div id="callout-18" class="callout-18-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <ul>
 <li>REVEL: An ensemble method that integrates multiple prediction tools</li>
@@ -1050,7 +1160,7 @@ Complex VEP run
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-20-contents" aria-controls="callout-20" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1059,10 +1169,10 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-19" class="callout-19-contents callout-collapse collapse">
+<div id="callout-20" class="callout-20-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> somatic.filtered.PASS.vcf.gz <span class="dt">\</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--cache</span> <span class="dt">\</span></span>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> ~/project/course_data/resources/Mutect2_data/somatic.filtered.PASS.vcf.gz <span class="dt">\</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--cache</span> /data/.vep <span class="dt">\</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--assembly</span> GRCh38 <span class="dt">\</span></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--format</span> vcf <span class="dt">\</span></span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--fork</span> 2 <span class="dt">\</span></span>
@@ -1070,9 +1180,9 @@ Solution
 <span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">--af_gnomade</span> <span class="dt">\</span></span>
 <span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">--force_overwrite</span> <span class="dt">\</span></span>
 <span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> SpliceRegion <span class="dt">\</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> REVEL,file=new_tabbed_revel_grch38.tsv.gz <span class="dt">\</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> AlphaMissense,file=AlphaMissense_hg38.tsv.gz <span class="dt">\</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">--custom</span> clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN <span class="dt">\</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> REVEL,file=~/project/course_data/resources/revel/new_tabbed_revel_grch38.tsv.gz <span class="dt">\</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> AlphaMissense,file=~/project/course_data/resources/alphamissense/AlphaMissense_hg38.tsv.gz <span class="dt">\</span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">--custom</span> ~/project/course_data/resources/clinvar/clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN <span class="dt">\</span></span>
 <span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">--output_file</span> chr6ch17_mutect2_annotated_with_clinVar_and_plugins.txt</span>
 <span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data -&gt; Stringent</span></span>
@@ -1319,8 +1429,8 @@ Note
 <section id="annotating-cnvkit-output" class="level1">
 <h1>Annotating CNVkit output</h1>
 <p>The CNVkit is a software that is specifically tailered to call CNV (Copy number Variants) from WES data. It does that by using metrics based on proper targets and off-targets reads in WES data. CNVkit is a python-based tool, that by default outputs <code>*.call.cns</code> and <code>*.cnr</code>. <br></p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-21-contents" aria-controls="callout-21" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-22-contents" aria-controls="callout-22" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1329,20 +1439,29 @@ In case you want to transform from <code>.cns</code> to <code>.vcf</code>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-21" class="callout-21-contents callout-collapse collapse">
+<div id="callout-22" class="callout-22-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li>Let’s convert the *.cns (segmentation file) into a VCF file. ~5min</li>
 </ol>
-<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="ex">cnvkit.py</span> export vcf tumor.rg.md.call.cns <span class="at">-o</span> tumor.rg.md.call.cns_cnv.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the CNVkit annotation data</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xvzf</span> ~/project/course_data/resources/CNVkit_data/cnvkit.tar.gz</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Move the files to the resources folder</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> ~/project/cnvkit/<span class="pp">*</span> ~/project/course_data/resources/CNVkit_data/.</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert from call.cns to vcf </span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="ex">cnvkit.py</span> export vcf ~/project/course_data/resources/CNVkit_data/tumor.rg.md.call.cns <span class="at">-o</span> tumor.rg.md.call.cns_cnv.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="2" type="1">
-<li>We can zip the output</li>
+<li>We can gzip the output</li>
 </ol>
-<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bgzip</span> tumor.rg.md.call.cns_cnv.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bgzip the file</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="ex">bgzip</span> tumor.rg.md.call.cns_cnv.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <ol start="3" type="1">
 <li>Now let’s index the file</li>
 </ol>
-<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="ex">tabix</span> <span class="at">-p</span> vcf tumor.rg.md.call.cns_cnv.vcf.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Index</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tabix</span> <span class="at">-p</span> vcf tumor.rg.md.call.cns_cnv.vcf.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </div>
@@ -1373,7 +1492,7 @@ Call VEP on CNVkit’s VCF
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1382,11 +1501,11 @@ Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-23" class="callout-23-contents callout-collapse collapse">
+<div id="callout-24" class="callout-24-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Call VEP with full calls ~5min (overlap)</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> tumor.rg.md.call.cns_cnv.vcf.gz <span class="dt">\</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--cache</span> <span class="dt">\</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--cache</span> /data/.vep <span class="dt">\</span></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--assembly</span> GRCh38 <span class="dt">\</span></span>
 <span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--format</span> vcf <span class="dt">\</span></span>
 <span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">--fork</span> 2 <span class="dt">\</span></span>
@@ -1396,14 +1515,14 @@ Solution
 <span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">--af_gnomade</span> <span class="dt">\</span></span>
 <span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">--force_overwrite</span> <span class="dt">\</span></span>
 <span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> SpliceRegion <span class="dt">\</span></span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> REVEL,file=new_tabbed_revel_grch38.tsv.gz <span class="dt">\</span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> AlphaMissense,file=AlphaMissense_hg38.tsv.gz <span class="dt">\</span></span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">--custom</span> clinvar.vcf.gz,ClinVar,vcf,overlap,0,CLNSIG,CLNREVSTAT,CLNDN <span class="dt">\</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> REVEL,file=/config/project/course_data/resources/revel/new_tabbed_revel_grch38.tsv.gz <span class="dt">\</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> AlphaMissense,file=/config/project/course_data/resources/alphamissense/AlphaMissense_hg38.tsv.gz <span class="dt">\</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">--custom</span> /config/project/course_data/resources/clinvar/clinvar.vcf.gz,ClinVar,vcf,overlap,0,CLNSIG,CLNREVSTAT,CLNDN <span class="dt">\</span></span>
 <span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">--output_file</span> chr6ch17_mtumor.rg.md.call.cns_cnv_annotated_with_clinVar_and_plugins_all.txt</span>
 <span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Call VEP with per gene only annotation (overlap)</span></span>
 <span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> tumor.rg.md.call.cns_cnv.vcf.gz <span class="dt">\</span></span>
-<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">--cache</span> <span class="dt">\</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">--cache</span> /data/.vep <span class="dt">\</span></span>
 <span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">--assembly</span> GRCh38 <span class="dt">\</span></span>
 <span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">--format</span> vcf <span class="dt">\</span></span>
 <span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">--fork</span> 2 <span class="dt">\</span></span>
@@ -1414,14 +1533,14 @@ Solution
 <span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">--per_gene</span> <span class="dt">\</span></span>
 <span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">--force_overwrite</span> <span class="dt">\</span></span>
 <span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> SpliceRegion <span class="dt">\</span></span>
-<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> REVEL,file=new_tabbed_revel_grch38.tsv.gz <span class="dt">\</span></span>
-<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> AlphaMissense,file=AlphaMissense_hg38.tsv.gz <span class="dt">\</span></span>
-<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">--custom</span> clinvar.vcf.gz,ClinVar,vcf,overlap,0,CLNSIG,CLNREVSTAT,CLNDN <span class="dt">\</span></span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> REVEL,file=/config/project/course_data/resources/revel/new_tabbed_revel_grch38.tsv.gz <span class="dt">\</span></span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> AlphaMissense,file=/config/project/course_data/resources/alphamissense/AlphaMissense_hg38.tsv.gz <span class="dt">\</span></span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">--custom</span> /config/project/course_data/resources/clinvar/clinvar.vcf.gz,ClinVar,vcf,overlap,0,CLNSIG,CLNREVSTAT,CLNDN <span class="dt">\</span></span>
 <span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">--output_file</span> chr6ch17_mtumor.rg.md.call.cns_cnv_annotated_with_clinVar_and_plugins_perGene.txt</span>
 <span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Call VEP with per gene only annotation (exact)</span></span>
 <span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> tumor.rg.md.call.cns_cnv.vcf.gz <span class="dt">\</span></span>
-<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">--cache</span> <span class="dt">\</span></span>
+<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a>    <span class="at">--cache</span> /data/.vep <span class="dt">\</span></span>
 <span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">--assembly</span> GRCh38 <span class="dt">\</span></span>
 <span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">--format</span> vcf <span class="dt">\</span></span>
 <span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">--fork</span> 2 <span class="dt">\</span></span>
@@ -1432,9 +1551,9 @@ Solution
 <span id="cb22-46"><a href="#cb22-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">--per_gene</span> <span class="dt">\</span></span>
 <span id="cb22-47"><a href="#cb22-47" aria-hidden="true" tabindex="-1"></a>    <span class="at">--force_overwrite</span> <span class="dt">\</span></span>
 <span id="cb22-48"><a href="#cb22-48" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> SpliceRegion <span class="dt">\</span></span>
-<span id="cb22-49"><a href="#cb22-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> REVEL,file=new_tabbed_revel_grch38.tsv.gz <span class="dt">\</span></span>
-<span id="cb22-50"><a href="#cb22-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> AlphaMissense,file=AlphaMissense_hg38.tsv.gz <span class="dt">\</span></span>
-<span id="cb22-51"><a href="#cb22-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">--custom</span> clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN <span class="dt">\</span></span>
+<span id="cb22-49"><a href="#cb22-49" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> REVEL,file=/config/project/course_data/resources/revel/new_tabbed_revel_grch38.tsv.gz <span class="dt">\</span></span>
+<span id="cb22-50"><a href="#cb22-50" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> AlphaMissense,file=/config/project/course_data/resources/alphamissense/AlphaMissense_hg38.tsv.gz <span class="dt">\</span></span>
+<span id="cb22-51"><a href="#cb22-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">--custom</span> /config/project/course_data/resources/clinvar/clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN <span class="dt">\</span></span>
 <span id="cb22-52"><a href="#cb22-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">--output_file</span> chr6ch17_mtumor.rg.md.call.cns_cnv_annotated_with_clinVar_and_plugins_perGene.txt</span>
 <span id="cb22-53"><a href="#cb22-53" aria-hidden="true" tabindex="-1"></a>    </span>
 <span id="cb22-54"><a href="#cb22-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data</span></span>
@@ -1468,6 +1587,22 @@ chr6_123855_&lt;DUP&gt;   chr6:123855-28994479    duplication ENSG00000010017 EN
 <li>Tools like REVEL and AlphaMissense are specifically designed for SNVs and cannot be applied to CNVs</li>
 </ul>
 <p>One could use more specific data such as the <a href="https://cancer.sanger.ac.uk/cosmic/download/cosmic">COSMIC</a>, that also contain data on CNVs. Or try <a href="https://www.deciphergenomics.org/">DECIPHER (DatabasE of genomiC varIation and Phenotype in Humans using Ensembl Resources)</a> database</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Additional useful options in VEP
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-25" class="callout-25-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p>There are many other options available in VEP, and the documentation is very compherensive. Some common options are <code>--filter_common</code> (filters out variants with a minor allele frequency (MAF) ≥ 0.01 (1%)) in any of the populations within these databases) and <code>--total_length</code> (VEP sums up the lengths of all overlapping features, useful for structural variants (SV) annotation). <code>--coding_only</code> can reduce the amount of data to only the coding parts. <code>--check_existing</code> can be used to focus on known mutations. <br> In addition there is a web interface to VEP from the ENSEMBL team <a href="https://www.ensembl.org/Tools/VEP">here</a></p>
+</div>
+</div>
+</div>
 </section>
 <section id="lets-visualize-some-of-the-data-from-our-somatic-call-annotation" class="level1">
 <h1>Let’s visualize some of the data from our somatic call annotation!</h1>
@@ -1545,7 +1680,7 @@ Visualize the data from VEP
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-25-contents" aria-controls="callout-25" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1554,7 +1689,7 @@ Visualize the data from VEP
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-25" class="callout-25-contents callout-collapse collapse">
+<div id="callout-27" class="callout-27-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># consequence plot</span></span>
@@ -1571,7 +1706,7 @@ Visualize the data from VEP
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-28-contents" aria-controls="callout-28" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1580,7 +1715,7 @@ Visualize the data from VEP
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-26" class="callout-26-contents callout-collapse collapse">
+<div id="callout-28" class="callout-28-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># consequence plot </span></span>
@@ -1601,7 +1736,7 @@ Visualize the data from VEP
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1610,7 +1745,7 @@ Visualize the data from VEP
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-27" class="callout-27-contents callout-collapse collapse">
+<div id="callout-29" class="callout-29-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Impact + Consequence plot</span></span>
@@ -1631,7 +1766,7 @@ Visualize the data from VEP
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-28-contents" aria-controls="callout-28" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-30-contents" aria-controls="callout-30" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1640,10 +1775,10 @@ Visualize the data from VEP
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-28" class="callout-28-contents callout-collapse collapse">
+<div id="callout-30" class="callout-30-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Impact + Consequence plot x chr</span></span>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Impact + consequence plot x chr</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(vep_data, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(Consequence, <span class="fu">table</span>(Consequence)[Consequence]), <span class="at">fill=</span>IMPACT)) <span class="sc">+</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
@@ -1662,7 +1797,7 @@ Visualize the data from VEP
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1671,13 +1806,13 @@ Visualize the data from VEP
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-29" class="callout-29-contents callout-collapse collapse">
+<div id="callout-31" class="callout-31-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># variant class plot</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>vep_data <span class="sc">%&gt;%</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(VARIANT_CLASS) <span class="sc">%&gt;%</span>  <span class="co"># Count occurrences of each variant class</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span>      <span class="co"># Sort by count in descending order</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(VARIANT_CLASS) <span class="sc">%&gt;%</span>  <span class="co"># Count the classees</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span>  <span class="co"># Sort in descending ord</span></span>
 <span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(VARIANT_CLASS, n), <span class="at">y =</span> n)) <span class="sc">+</span></span>
 <span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
 <span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
@@ -1691,7 +1826,7 @@ Visualize the data from VEP
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-30-contents" aria-controls="callout-30" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-32-contents" aria-controls="callout-32" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1700,7 +1835,7 @@ Visualize the data from VEP
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-30" class="callout-30-contents callout-collapse collapse">
+<div id="callout-32" class="callout-32-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># biotype distribution</span></span>
@@ -1717,7 +1852,7 @@ Visualize the data from VEP
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-33-contents" aria-controls="callout-33" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
@@ -1726,7 +1861,7 @@ Visualize the data from VEP
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
-<div id="callout-31" class="callout-31-contents callout-collapse collapse">
+<div id="callout-33" class="callout-33-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract SIFT</span></span>
@@ -1787,7 +1922,7 @@ Visualize the data from VEP
 <span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
 <span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span>
 <span id="cb33-13"><a href="#cb33-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. ClinVar significance with Impact </span></span>
+<span id="cb33-14"><a href="#cb33-14" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. ClinVar significance with impact </span></span>
 <span id="cb33-15"><a href="#cb33-15" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">subset</span>(vep_data, <span class="sc">!</span><span class="fu">is.na</span>(clinvar)) <span class="sc">%&gt;%</span></span>
 <span id="cb33-16"><a href="#cb33-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(clinvar, <span class="fu">table</span>(clinvar)[clinvar]), <span class="at">fill =</span> IMPACT)) <span class="sc">+</span></span>
 <span id="cb33-17"><a href="#cb33-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
