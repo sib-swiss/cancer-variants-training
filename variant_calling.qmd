@@ -85,10 +85,17 @@ Create a script called `04_filter_mutect_calls.sh` in `~/project/scripts`. From 
 REFDIR=~/project/course_data/reference
 VARIANTDIR=~/project/course_data/variants
 
+# fill the filter column
 gatk FilterMutectCalls \
 -R "$REFDIR"/ref_genome.fa \
 -V "$VARIANTDIR"/somatic.vcf.gz \
 -O "$VARIANTDIR"/somatic.filtered.vcf.gz
+
+# create a vcf with variants passing filters (PASS)
+bcftools view -f PASS "$VARIANTDIR"/somatic.filtered.vcf.gz -Oz \
+> "$VARIANTDIR"/somatic.filtered.PASS.vcf.gz
+
+bcftools index --tbi "$VARIANTDIR"/somatic.filtered.PASS.vcf.gz
 ```
 
 How many variants were kept? What were the main reason for filtering them out?
@@ -101,7 +108,7 @@ How many variants were kept? What were the main reason for filtering them out?
 The filtering information is in the 7th column of the vcf, so you can do something like:
 
 ```sh
-bcftools view -H somatic.vcf.gz | cut -f 7 | sort | uniq -c | sort -nr | head -n 10
+bcftools view -H my_variants.vcf.gz | cut -f 7 | sort | uniq -c | sort -nr | head -n 10
 ```
 
 ::: 
