@@ -37,7 +37,15 @@ context a tool like VEP becomes very useful.
 
 ### Install VEP
 
-::: {.callout-important}
+VEP is already pre-installed on the cloud server. In order to load the environment, run:
+
+```bash
+mamba activate ngs-tools
+```
+
+If you want to install VEP locally or on your compute cluster, you can follow the instructions below. 
+
+::: {.callout-note collapse="true"}
 ``` bash
 # Installing Conda #https://docs.anaconda.com/miniconda/
 mkdir -p ~/miniconda3
@@ -61,12 +69,11 @@ conda activate vep
 # Plugins installation
 # vep_install -a p --PLUGINS all
 ```
-:::
 
-::: {.callout-note}
 Instead of conda you could try installing `mamba`. If you are on Unix-based system this is simple [mamba](https://mamba.readthedocs.io/en/latest/installation/mamba-installation.html). 
 <br>
 _If you are following along the course, `mamba` is already installed for you, with all the software required for this course. In this case you can activate the enviroment with `mamba activate ngs-tools`._
+
 :::
 
 ### Transcript Selection
