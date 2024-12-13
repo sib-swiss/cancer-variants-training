@@ -583,9 +583,9 @@ vep -i ~/project/course_data/resources/Mutect2_data/somatic.filtered.PASS.vcf.gz
     --af_gnomade \
     --force_overwrite \
     --plugin SpliceRegion \
-    --plugin REVEL,file=~/project/course_data/resources/revel/new_tabbed_revel_grch38.tsv.gz \
-    --plugin AlphaMissense,file=~/project/course_data/resources/alphamissense/AlphaMissense_hg38.tsv.gz \
-    --custom ~/project/course_data/resources/clinvar/clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN \
+    --plugin REVEL,file=/config/project/course_data/resources/revel/new_tabbed_revel_grch38.tsv.gz \
+    --plugin AlphaMissense,file=/config/project/course_data/resources/alphamissense/AlphaMissense_hg38.tsv.gz \
+    --custom /config/project/course_data/resources/clinvar/clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN \
     --output_file chr6ch17_mutect2_annotated_with_clinVar_and_plugins.txt
     
 # Filter the data -> Stringent
