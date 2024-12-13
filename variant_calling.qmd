@@ -2,7 +2,7 @@
 title: "Variant calling"
 ---
 
-### Short variant calling
+## Short variant calling
 
 Now that we have quality-controlled the BAM files, we can go ahead with the variant calling itself. For this, we used `mutect2` which is a somatic variant caller from GATK based on `HaplotypeCaller`. In addition to the expected bam files and references genome, the `mutect2` command requires some additional input:
 
@@ -184,6 +184,13 @@ Showing us that these mutations do not meet the likelihood threshold, basically 
 
 :::
 
+### EXTRA: Summarizing the VCF
+
+::: {.callout-caution}
+## Only when you have time
+Do the exercises about summarizing the VCF only if you have time. Otherwise, continue to [Copy number variation calling](#copy-number-variation-calling). 
+:::
+
 Let's check out the VCF in a bit more detail. We'd like to have an idea what kind of variants are in there, and what for example their variant allele frequency is. 
 
 First, we can check what the variants look like:
@@ -289,7 +296,7 @@ Where we see that if there's the filter `weak_evidence` the VAF of the tumor is 
 
 ::: 
 
-### Copy number variation calling
+## Copy number variation calling
 
 Variation of copy number in genes can have a large effect on the phenotype of a tumor. Therefore, we will also estimate the copy number variation occurring on chromosome 6 and 17. For that, we use [CNVkit](https://cnvkit.readthedocs.io/en/stable/). 
 
