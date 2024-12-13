@@ -35,9 +35,9 @@ code-overflow: wrap
 
 ## How do mutations appear?
 
-- Mutations occur due to replication errors (1 nucleotide per ~10^4) but with reparation mechanisms (1 error per 10^9 10^10)
+- Mutations occur due to replication errors (1 nucleotide per ~10^4) but with reparation mechanisms (1 error per 10^7 - 10^9)
 - As a consequence of DNA damage (~70,000 nucleotide lesions or modifications per day)
-  - Exposure to mutagens such as UV, smoking increases the mutations' frequency
+- Exposure to mutagens such as UV, smoking increases the mutations' frequency
 
 ::: {.fragment .fade-in}
 ![Example UV damage](https://knowgenetics.org/wp-content/uploads/2012/12/amanda1.png){#fig_uv_damage fig-caption="Germline vs somatic mutations" width="250" height="200"}
