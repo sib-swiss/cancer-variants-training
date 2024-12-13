@@ -18,7 +18,7 @@
     "href": "slides/VEP_variantAnnotationPresentation.html#how-do-mutations-appear",
     "title": "Variant Effect Predictor (VEP)",
     "section": "How do mutations appear?",
-    "text": "How do mutations appear?\n\nMutations occur due to replication errors (1 nucleotide per ~10^4) but with reparation mechanisms (1 error per 10^9 10^10)\nAs a consequence of DNA damage (~70,000 nucleotide lesions or modifications per day)\n\nExposure to mutagens such as UV, smoking increases the mutations’ frequency\n\n\n\n\n\n\nExample UV damage\n\n\n\n\nKey points: - https://www.nature.com/articles/s41576-021-00376-2"
+    "text": "How do mutations appear?\n\nMutations occur due to replication errors (1 nucleotide per ~10^4) but with reparation mechanisms (1 error per 10^7 - 10^9)\nAs a consequence of DNA damage (~70,000 nucleotide lesions or modifications per day)\nExposure to mutagens such as UV, smoking increases the mutations’ frequency\n\n\n\n\n\nExample UV damage\n\n\n\n\nKey points: - https://www.nature.com/articles/s41576-021-00376-2"
   },
   {
     "objectID": "slides/VEP_variantAnnotationPresentation.html#can-the-cell-repair-them",
