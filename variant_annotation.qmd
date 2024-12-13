@@ -46,6 +46,8 @@ mamba activate ngs-tools
 If you want to install VEP locally or on your compute cluster, you can follow the instructions below. 
 
 ::: {.callout-note collapse="true"}
+## Instructions for local install
+
 ``` bash
 # Installing Conda #https://docs.anaconda.com/miniconda/
 mkdir -p ~/miniconda3
