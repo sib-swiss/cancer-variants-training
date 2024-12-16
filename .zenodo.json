@@ -1,0 +1,28 @@
+{
+  "upload_type": "lesson",
+  "title": "Course material Cancer variant analysis",
+  "license": "cc-by-4.0",
+  "keywords": [
+    "NGS",
+    "variant analysis",
+    "cancer",
+    "tumor",
+    "somatic",
+    "germline",
+    "bioinformatics",
+    "course",
+    "training"
+  ],
+  "creators": [
+    {
+      "name": "Lombardo, Flavio",
+      "affiliation": "University Hospital Basel",
+      "orcid": "0000-0002-4853-6838"
+    },
+    {
+      "name": "van Geest, Geert",
+      "affiliation": "SIB Swiss Institute of Bioinformatics",
+      "orcid": "0000-0002-1561-078X"
+    }
+  ]
+}
