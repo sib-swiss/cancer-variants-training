@@ -67,7 +67,7 @@
     "href": "slides/VEP_variantAnnotationPresentation.html#types-of-driver-mutations",
     "title": "Variant Effect Predictor (VEP)",
     "section": "Types of Driver Mutations",
-    "text": "Types of Driver Mutations\n\n\nOncogenes:\n\nGain-of-function mutations in genes like KRAS, BRAF, and EGFR drive tumor growth by promoting uncontrolled cell division or survival.\n\nTumor Suppressors:\n\nLoss-of-function mutations in genes like TP53, RB1, and PTEN impair cellular mechanisms that prevent tumor formation.\n\nMutator Genes:\n\nMutations in genes like MLH1 or MSH2 lead to genomic instability, enabling the accumulation of additional mutations."
+    "text": "Types of Driver Mutations\n\nOncogenes:\n\nGain-of-function mutations in genes like KRAS, BRAF, and EGFR drive tumor growth by promoting uncontrolled cell division or survival.\n\nTumor Suppressors:\n\nLoss-of-function mutations in genes like TP53, RB1, and PTEN impair cellular mechanisms that prevent tumor formation.\n\nMutator Genes:\n\nMutations in genes like MLH1 or MSH2 lead to genomic instability, enabling the accumulation of additional mutations."
   },
   {
     "objectID": "slides/VEP_variantAnnotationPresentation.html#vep-variant-effect-predictor",
@@ -81,14 +81,14 @@
     "href": "slides/VEP_variantAnnotationPresentation.html#what-is-vep",
     "title": "Variant Effect Predictor (VEP)",
     "section": "What is VEP?",
-    "text": "What is VEP?\n\n\n2010: The first version of VEP was introduced as part of the Ensembl project.\n2012-2015 Functional prediction scores were introduced.\n2017 Other databases are now part of the VEP, such as COSMIC, ClinVar, gnomAD. The tool was made more generalizable and personalizable with the addition of VEP’s plugin feature.\nVEP is 100% written in perl VEP Github\n\n\n\nKey points: - VEP is widely used in research and clinical settings - Provides comprehensive variant annotation - Especially useful for large-scale analysis"
+    "text": "What is VEP?\n\n2010: The first version of VEP was introduced as part of the Ensembl project.\n2012-2015 Functional prediction scores were introduced.\n2017 Other databases are now part of the VEP, such as COSMIC, ClinVar, gnomAD. The tool was made more generalizable and personalizable with the addition of VEP’s plugin feature.\nVEP is 100% written in perl VEP Github\n\n\nKey points: - VEP is widely used in research and clinical settings - Provides comprehensive variant annotation - Especially useful for large-scale analysis"
   },
   {
     "objectID": "slides/VEP_variantAnnotationPresentation.html#important-databases",
     "href": "slides/VEP_variantAnnotationPresentation.html#important-databases",
     "title": "Variant Effect Predictor (VEP)",
     "section": "Important databases",
-    "text": "Important databases\n\n\n\nCOSMIC  What it tells us: Somatic mutations found in cancer Example output: COSV59384583; OCCURENCE=1(skin) Interpretation: Mutation seen in skin cancer; frequency helps assess if likely driver\nClinVar  What it tells us: Clinical significance of variants  Example output: Pathogenic/Likely_pathogenic  Interpretation: Strong evidence for disease causation\ngnomAD  What it tells us: Population frequency  Example output: AF=0.00001  Interpretation: Very rare variant (&lt;0.01% frequency)\nAlphaMissense  What it tells us: Predicted functional impact  Example output: likely_pathogenic  Interpretation: AI model predicts damaging effect"
+    "text": "Important databases\n\n\nCOSMIC  What it tells us: Somatic mutations found in cancer Example output: COSV59384583; OCCURENCE=1(skin) Interpretation: Mutation seen in skin cancer; frequency helps assess if likely driver\nClinVar  What it tells us: Clinical significance of variants  Example output: Pathogenic/Likely_pathogenic  Interpretation: Strong evidence for disease causation\ngnomAD  What it tells us: Population frequency  Example output: AF=0.00001  Interpretation: Very rare variant (&lt;0.01% frequency)\nAlphaMissense  What it tells us: Predicted functional impact  Example output: likely_pathogenic  Interpretation: AI model predicts damaging effect"
   },
   {
     "objectID": "slides/VEP_variantAnnotationPresentation.html#what-is-not-well-understood",
@@ -200,7 +200,7 @@
     "href": "slides/VEP_variantAnnotationPresentation.html#polyphen-2-another-predictor-included-in-vep",
     "title": "Variant Effect Predictor (VEP)",
     "section": "PolyPhen-2 (another predictor included in VEP):",
-    "text": "PolyPhen-2 (another predictor included in VEP):\n\n\nPredicts impact of amino acid substitutions\nAnalyzes both structure and evolutionary conservation\nSpecific to human proteins\nScores range from 0.0 (benign) to 1.0 (damaging)"
+    "text": "PolyPhen-2 (another predictor included in VEP):\n\nPredicts impact of amino acid substitutions\nAnalyzes both structure and evolutionary conservation\nSpecific to human proteins\nScores range from 0.0 (benign) to 1.0 (damaging)"
   },
   {
     "objectID": "slides/VEP_variantAnnotationPresentation.html#categories",
