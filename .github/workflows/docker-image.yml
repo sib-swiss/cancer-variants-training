@@ -9,6 +9,13 @@ on:
 jobs:
   docker-vscode:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - image_name: sibswiss/cancer-variants-vscode
+            context: ./Docker/vscode
+          - image_name: sibswiss/cancer-variants-rstudio
+            context: ./Docker/rstudio
     steps:
       -
         name: Checkout
@@ -20,7 +27,7 @@ jobs:
         with:
           # list of Docker images to use as base name for tags
           images: |
-            geertvangeest/cancer-variants-vscode
+            ${{ matrix.image_name }}
           # generate Docker tags based on the following events/attributes
           tags: |
             type=semver,pattern={{major}}.{{minor}}
@@ -30,44 +37,19 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
+      - 
+        name: Log in to Docker Hub
+        run: |
+          echo "Logging into Docker Hub"
+          echo ${{ secrets.DOCKERHUB_TOKEN }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+        shell: bash
+    
+      - name: Build and push
         id: docker_build
         uses: docker/build-push-action@v5
         with:
           push: true
-          context: ./Docker/vscode
+          context: ${{ matrix.context }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-  docker-rstudio:
-    runs-on: ubuntu-latest
-    steps:
-      -
-        name: Checkout
-        uses: actions/checkout@v4
-      -
-        name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          # list of Docker images to use as base name for tags
-          images: |
-            geertvangeest/cancer-variants-rstudio
-          # generate Docker tags based on the following events/attributes
-          tags: |
-            type=semver,pattern={{major}}.{{minor}}
-      -
-        name: Login to DockerHub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
-        id: docker_build
-        uses: docker/build-push-action@v5
-        with:
-          push: true
-          context: ./Docker/rstudio
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+  
