@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.34">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -68,18 +68,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./assets/SIB_logo.svg" rel="icon" type="image/svg+xml">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-befe23ebd2f54d8af2c8a89d1a1611f1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b651517ce65839d647a86e2780455cfb.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c689c328c07166c7d6ed12bed5f4ae6b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-c1560d6f039ed120f0f0b4b76ebaea55.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-c689c328c07166c7d6ed12bed5f4ae6b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-e3927889d5cf2ac3822bdfd92e19c7ec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-cf0c033d08fda11833696aae45611517.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-e3927889d5cf2ac3822bdfd92e19c7ec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -296,6 +297,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Cancer variant analysis</span>
     </a>
@@ -368,7 +371,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./assets/SIB_LogoQ_GBv.svg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="./assets/SIB_LogoQ_GBv.svg" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="./assets/SIB_LogoQ_GBv.svg" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
       </div>
 </nav>
@@ -425,12 +429,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise
+<span class="screen-reader-only">Important</span>Exercise
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>Create a script called <code>03_run_mutect2.sh</code>. After that, check out the <a href="https://gatk.broadinstitute.org/hc/en-us/articles/360037593851-Mutect2">manual of <code>Mutect2</code></a> and replace the placeholders <code>FIXME</code> with the required values of the <code>Mutect2</code> below command and run it:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="va">ALIGNDIR</span><span class="op">=</span>~/project/course_data/alignments</span>
@@ -449,7 +453,7 @@ Exercise
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>--germline-resource <span class="st">"</span><span class="va">$RESOURCEDIR</span><span class="st">"</span>/af-only-gnomad.hg38.subset.vcf.gz <span class="dt">\</span></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>--panel-of-normals <span class="st">"</span><span class="va">$RESOURCEDIR</span><span class="st">"</span>/1000g_pon.hg38.subset.vcf.gz <span class="dt">\</span></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>-O <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/somatic.vcf.gz</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div class="callout callout-style-default callout-caution callout-titled">
@@ -466,18 +470,18 @@ Caution
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-3" class="callout-3-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="va">ALIGNDIR</span><span class="op">=</span>~/project/course_data/alignments</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="va">REFDIR</span><span class="op">=</span>~/project/course_data/reference</span>
@@ -494,7 +498,7 @@ Answer
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>-normal normal <span class="dt">\</span></span>
 <span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>--germline-resource <span class="st">"</span><span class="va">$RESOURCEDIR</span><span class="st">"</span>/af-only-gnomad.hg38.subset.vcf.gz <span class="dt">\</span></span>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>--panel-of-normals <span class="st">"</span><span class="va">$RESOURCEDIR</span><span class="st">"</span>/1000g_pon.hg38.subset.vcf.gz <span class="dt">\</span></span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>-O <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/somatic.vcf.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>-O <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/somatic.vcf.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -505,12 +509,12 @@ Answer
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise
+<span class="screen-reader-only">Important</span>Exercise
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>Create a script called <code>04_filter_mutect_calls.sh</code> in <code>~/project/scripts</code>. From the script, run the command to filter the somatic variants:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="va">REFDIR</span><span class="op">=</span>~/project/course_data/reference</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/course_data/variants</span>
@@ -525,7 +529,7 @@ Exercise
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-f</span> PASS <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/somatic.filtered.vcf.gz <span class="at">-Oz</span> <span class="dt">\</span></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/somatic.filtered.PASS.vcf.gz</span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> index <span class="at">--tbi</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/somatic.filtered.PASS.vcf.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> index <span class="at">--tbi</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/somatic.filtered.PASS.vcf.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>How many variants were kept? What were the main reason for filtering them out?</p>
 </div>
 </div>
@@ -540,26 +544,26 @@ Note
 </div>
 <div class="callout-body-container callout-body">
 <p>The filtering information is in the 7th column of the vcf, so you can do something like:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-H</span> my_variants.vcf.gz <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f</span> 7 <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-nr</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-H</span> my_variants.vcf.gz <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f</span> 7 <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-nr</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 10</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-6" class="callout-6-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>To get the number of variants in the unfiltered vcf:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-H</span> somatic.vcf.gz <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-H</span> somatic.vcf.gz <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Resulting in 467 unfiltered variants.</p>
 <p>To get the 10 most frequently occurring filters in the filter column of the filtered vcf:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-H</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f</span> 7 <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-nr</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 10</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-H</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f</span> 7 <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-nr</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 10</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Resulting in:</p>
 <pre><code>133 PASS
 48 weak_evidence
@@ -573,7 +577,7 @@ Answer
 9 strand_bias;weak_evidence</code></pre>
 <p>So most variants were filtered out, and most of the variants were filtered out because of ‘weak evidence’.</p>
 <p>In order to figure out what that means we can check out the vcf header:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-h</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"^##FILTER"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-h</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"^##FILTER"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Resulting in:</p>
 <pre><code>##FILTER=&lt;ID=FAIL,Description="Fail the site if all alleles fail but for different reasons."&gt;
 ##FILTER=&lt;ID=PASS,Description="Site contains at least one allele that passes filters"&gt;
@@ -609,7 +613,7 @@ Answer
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Only when you have time
+<span class="screen-reader-only">Caution</span>Only when you have time
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -618,20 +622,20 @@ Only when you have time
 </div>
 <p>Let’s check out the VCF in a bit more detail. We’d like to have an idea what kind of variants are in there, and what for example their variant allele frequency is.</p>
 <p>First, we can check what the variants look like:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-H</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">head</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-H</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">head</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Showing us that both the <code>FORMAT</code> and <code>INFO</code> fields are filled with information. To check out the meaning of what is in the <code>INFO</code> field you can run:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-h</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"^##INFO"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-h</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"^##INFO"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And you can do the same for the format fields:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-h</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"^##FORMAT"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-h</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"^##FORMAT"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>To summarize the vcf for information in the format or info fields you can use <a href="https://samtools.github.io/bcftools/bcftools.html#query"><code>bcftools query</code></a>. For example, for getting the likelihood of variant and depth of each sample, you can do the following (for the first 20 variants):</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> query <span class="at">-f</span> <span class="st">'%CHROM\t%POS\t%FILTER\t\t%INFO/TLOD\t[%SAMPLE=%DP;]\n'</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-20</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> query <span class="at">-f</span> <span class="st">'%CHROM\t%POS\t%FILTER\t\t%INFO/TLOD\t[%SAMPLE=%DP;]\n'</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-20</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise
+<span class="screen-reader-only">Important</span>Exercise
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -639,19 +643,19 @@ Exercise
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-9" class="callout-9-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>We can check which tag contains the variant allele frequency in the vcf:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-h</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"^##FORMAT"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-h</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"^##FORMAT"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Returning:</p>
 <pre><code>##FORMAT=&lt;ID=AD,Number=R,Type=Integer,Description="Allelic depths for the ref and alt alleles in the order listed"&gt;
 ##FORMAT=&lt;ID=AF,Number=A,Type=Float,Description="Allele fractions of alternate alleles in the tumor"&gt;
@@ -667,7 +671,7 @@ Answer
 ##FORMAT=&lt;ID=PS,Number=1,Type=Integer,Description="Phasing set (typically the position of the first variant in the set)"&gt;
 ##FORMAT=&lt;ID=SB,Number=4,Type=Integer,Description="Per-sample component statistics which comprise the Fisher's Exact Test to detect strand bias."&gt;</code></pre>
 <p>Where <code>AF</code> contains ‘Allele fractions of alternate alleles in the tumor’, so that is the tag we are looking for. So, we replace <code>DP</code> with <code>AF</code>:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> query <span class="at">-f</span> <span class="st">'%CHROM\t%POS\t%FILTER\t\t%INFO/TLOD\t[%SAMPLE=%AF;]\n'</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-30</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> query <span class="at">-f</span> <span class="st">'%CHROM\t%POS\t%FILTER\t\t%INFO/TLOD\t[%SAMPLE=%AF;]\n'</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-30</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Returning:</p>
 <pre><code>chr6    106265  map_qual;strand_bias;weak_evidence              3.99    normal=0.00671;tumor=0.01;
 chr6    325357  PASS            719.91  normal=0.001054;tumor=0.161;
@@ -714,13 +718,13 @@ chr6    16147945        PASS            331.72  normal=0.014;tumor=0.978;</code>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Exercise
+<span class="screen-reader-only">Important</span>Exercise
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>Check out the <a href="https://cnvkit.readthedocs.io/en/stable/quickstart.html#build-a-reference-from-normal-samples-and-infer-tumor-copy-ratios">documentation</a> of <code>CNVkit.py bash</code>, and the helper (<code>cnvkit.py batch -h</code>), create a script called <code>05_run_cnvkit.sh</code>, and replace the missing values at <code>FIXME</code>.</p>
 <p>After that, checkout the visualizations (<code>tumor-scatter.png</code> and <code>tumor-scatter.png</code>) at <code>~/project/course_data/variants/cnvkit</code>. Do you see any evidence for copy number variation?</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="va">ALIGNDIR</span><span class="op">=</span>~/project/course_data/alignments</span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="va">REFDIR</span><span class="op">=</span>~/project/course_data/reference</span>
@@ -736,7 +740,7 @@ Exercise
 <span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>--output-dir <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/cnvkit/ <span class="dt">\</span></span>
 <span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>--processes 4 <span class="dt">\</span></span>
 <span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>--scatter <span class="dt">\</span></span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>--diagram</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>--diagram</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -753,19 +757,19 @@ Note
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-12-contents" aria-controls="callout-12" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Answer
+<span class="screen-reader-only">Tip</span>Answer
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-12" class="callout-12-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>We provide the tumor bam, normal bam, the interval list (can also be a bed file) and our reference genome:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="va">ALIGNDIR</span><span class="op">=</span>~/project/course_data/alignments</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="va">REFDIR</span><span class="op">=</span>~/project/course_data/reference</span>
@@ -781,7 +785,7 @@ Answer
 <span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>--output-dir <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/cnvkit/ <span class="dt">\</span></span>
 <span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>--processes 4 <span class="dt">\</span></span>
 <span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>--scatter <span class="dt">\</span></span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>--diagram</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>--diagram</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>After running cnvkit, multiple files are created in <code>~/project/course_data/variants/cnvkit</code>. The scatter plot is typically interesting to investigate at first:</p>
 <p><img src="assets/images/tumor-scatter.png" class="img-fluid"></p>
 <p>Here we see that there is evidence for both losses and gains on both chromosomes.</p>
@@ -857,13 +861,14 @@ Answer
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

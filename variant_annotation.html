@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.34">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -68,18 +68,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./assets/SIB_logo.svg" rel="icon" type="image/svg+xml">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-befe23ebd2f54d8af2c8a89d1a1611f1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-b651517ce65839d647a86e2780455cfb.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-c689c328c07166c7d6ed12bed5f4ae6b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark-c1560d6f039ed120f0f0b4b76ebaea55.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="site_libs/bootstrap/bootstrap-c689c328c07166c7d6ed12bed5f4ae6b.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-e3927889d5cf2ac3822bdfd92e19c7ec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-cf0c033d08fda11833696aae45611517.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap-e3927889d5cf2ac3822bdfd92e19c7ec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -296,6 +297,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    </a>
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">Cancer variant analysis</span>
     </a>
@@ -368,7 +371,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
       <a href="./index.html" class="sidebar-logo-link">
-      <img src="./assets/SIB_LogoQ_GBv.svg" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <img src="./assets/SIB_LogoQ_GBv.svg" alt="" class="sidebar-logo light-content py-0 d-lg-inline d-none">
+      <img src="./assets/SIB_LogoQ_GBv.svg" alt="" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
       </div>
 </nav>
@@ -455,21 +459,21 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="install-vep" class="level3">
 <h3 class="anchored" data-anchor-id="install-vep">Install VEP</h3>
 <p>VEP is already pre-installed on the cloud server. In order to load the environment, run:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate ngs-tools</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mamba</span> activate ngs-tools</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If you want to install VEP locally or on your compute cluster, you can follow the instructions below.</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Instructions for local install
+<span class="screen-reader-only">Note</span>Instructions for local install
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-1" class="callout-1-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Installing Conda #https://docs.anaconda.com/miniconda/</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Installing Conda #https://docs.anaconda.com/miniconda/</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/miniconda3</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh <span class="at">-O</span> ~/miniconda3/miniconda.sh</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">bash</span> ~/miniconda3/miniconda.sh <span class="at">-b</span> <span class="at">-u</span> <span class="at">-p</span> ~/miniconda3</span>
@@ -489,7 +493,7 @@ Instructions for local install
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#vep_install -a cf -s homo_sapiens -y GRCh38</span></span>
 <span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Plugins installation</span></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co"># vep_install -a p --PLUGINS all</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="co"># vep_install -a p --PLUGINS all</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Instead of conda you could try installing <code>mamba</code>. If you are on Unix-based system this is simple <a href="https://mamba.readthedocs.io/en/latest/installation/mamba-installation.html">mamba</a>. <br> <em>If you are following along the course, <code>mamba</code> is already installed for you, with all the software required for this course. In this case you can activate the enviroment with <code>mamba activate ngs-tools</code>.</em></p>
 </div>
 </div>
@@ -597,7 +601,7 @@ Instructions for local install
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<code>--cache</code> option
+<span class="screen-reader-only">Caution</span><code>--cache</code> option
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -613,7 +617,7 @@ Instructions for local install
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Basic VEP Analysis
+<span class="screen-reader-only">Important</span>Basic VEP Analysis
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -643,14 +647,14 @@ chr5    112175770    rs121913343    C    T    .    PASS    .</code></pre>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Command
+<span class="screen-reader-only">Note</span>Command
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-4" class="callout-4-contents callout-collapse collapse show">
 <div class="callout-body-container callout-body">
 <p><strong>VEP can be provided with a VCF file as an input (or vcf.gz + index) file or other formats, see documentation <a href="https://www.ensembl.org/info/docs/tools/vep/vep_formats.html">here</a> </strong></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> cancer_variants.vcf <span class="dt">\</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> cancer_variants.vcf <span class="dt">\</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>--cache /data/.vep <span class="dt">\</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>--species homo_sapiens <span class="dt">\</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>--assembly GRCh38 <span class="dt">\</span></span>
@@ -660,23 +664,23 @@ Command
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>--domains <span class="dt">\</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>--sift b <span class="dt">\</span></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>--polyphen b <span class="dt">\</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>--output_file output.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>--output_file output.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Solution
+<span class="screen-reader-only">Tip</span>Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-5" class="callout-5-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 0. from your terminal go to your project folder</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/project</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -739,7 +743,7 @@ Solution
 <span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a><span class="ex">rs28934578</span>  chr17:7577121   T   ENSG00000161960 ENST00000293831 Transcript  missense_variant    597 580 194 D/Y Gac/Tac <span class="at">-</span>   IMPACT=MODERATE<span class="kw">;</span><span class="va">STRAND</span><span class="op">=</span>1<span class="kw">;</span><span class="va">SYMBOL</span><span class="op">=</span>EIF4A1<span class="kw">;</span><span class="va">SYMBOL_SOURCE</span><span class="op">=</span>HGNC<span class="kw">;</span><span class="va">HGNC_ID</span><span class="op">=</span>HGNC:3282</span>
 <span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a><span class="ex">rs28897743</span>  chr13:32936646  T   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   intergenic_variant  <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   IMPACT=MODIFIER</span>
 <span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a><span class="ex">rs28934574</span>  chr17:7674894   A   ENSG00000141510 ENST00000269305 Transcript  stop_gained 779 637 213 R/<span class="pp">*</span> Cga/Tga <span class="at">-</span>   IMPACT=HIGH<span class="kw">;</span><span class="va">STRAND</span><span class="op">=</span>-1<span class="kw">;</span><span class="va">SYMBOL</span><span class="op">=</span>TP53<span class="kw">;</span><span class="va">SYMBOL_SOURCE</span><span class="op">=</span>HGNC<span class="kw">;</span><span class="va">HGNC_ID</span><span class="op">=</span>HGNC:11998</span>
-<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a><span class="ex">rs28897686</span>  chr17:41245466  A   ENSG00000241595 ENST00000334109 Transcript  upstream_gene_variant   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   IMPACT=MODIFIER<span class="kw">;</span><span class="va">DISTANCE</span><span class="op">=</span>4221<span class="kw">;</span><span class="va">STRAND</span><span class="op">=</span>1<span class="kw">;</span><span class="va">SYMBOL</span><span class="op">=</span>KRTAP9-4<span class="kw">;</span><span class="va">SYMBOL_SOURCE</span><span class="op">=</span>HGNC<span class="kw">;</span><span class="va">HGNC_ID</span><span class="op">=</span>HGNC:18902</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a><span class="ex">rs28897686</span>  chr17:41245466  A   ENSG00000241595 ENST00000334109 Transcript  upstream_gene_variant   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   <span class="at">-</span>   IMPACT=MODIFIER<span class="kw">;</span><span class="va">DISTANCE</span><span class="op">=</span>4221<span class="kw">;</span><span class="va">STRAND</span><span class="op">=</span>1<span class="kw">;</span><span class="va">SYMBOL</span><span class="op">=</span>KRTAP9-4<span class="kw">;</span><span class="va">SYMBOL_SOURCE</span><span class="op">=</span>HGNC<span class="kw">;</span><span class="va">HGNC_ID</span><span class="op">=</span>HGNC:18902</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><code>rs28934574</code> from this example is a TP53 stop gained mutation commonly found in cancer.</p>
 <p><strong>You can try to run without <code>--pick</code> and <code>--everything</code> see what happens.</strong></p>
 </div>
@@ -747,12 +751,12 @@ Solution
 </div>
 <p>After running the command you will also notice a <code>output.txt_summary.html</code> that will show some statistics on the annotation process. If you tried running <code>--everything</code> or <code>-e</code> this is a shortcut for the following options:</p>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-6-contents" aria-controls="callout-6" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
--e or --everything
+<span class="screen-reader-only">Note</span>-e or --everything
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -896,7 +900,7 @@ Solution
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<strong>Damage prediction tools</strong>
+<span class="screen-reader-only">Note</span><strong>Damage prediction tools</strong>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -938,7 +942,7 @@ chr6    3723708   .   C   G   .   PASS</code></pre>
 <section id="using-vep-to-annotate-mutect2-variants" class="level2">
 <h2 class="anchored" data-anchor-id="using-vep-to-annotate-mutect2-variants">Using VEP to annotate Mutect2 variants</h2>
 <p>The somatic variant call can be annotated with this command</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> ~/project/course_data/resources/Mutect2_data/somatic.filtered.PASS.vcf.gz <span class="dt">\</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> ~/project/course_data/resources/Mutect2_data/somatic.filtered.PASS.vcf.gz <span class="dt">\</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>--cache /data/.vep <span class="dt">\</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>--species homo_sapiens <span class="dt">\</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>--assembly GRCh38 <span class="dt">\</span></span>
@@ -947,14 +951,14 @@ chr6    3723708   .   C   G   .   PASS</code></pre>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>--symbol <span class="dt">\</span></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>--force_overwrite <span class="dt">\</span></span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>--everything <span class="dt">\</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>--output_file chr6ch17_mutect2_annotated.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>--output_file chr6ch17_mutect2_annotated.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Output to VCF
+<span class="screen-reader-only">Important</span>Output to VCF
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -962,12 +966,12 @@ Output to VCF
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-9-contents" aria-controls="callout-9" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Solution
+<span class="screen-reader-only">Tip</span>Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1012,12 +1016,12 @@ Solution
 </tbody>
 </table>
 <div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-10-contents" aria-controls="callout-10" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-And other interesting variants
+<span class="screen-reader-only">Note</span>And other interesting variants
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1094,12 +1098,12 @@ And other interesting variants
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Performance Trick
+<span class="screen-reader-only">Note</span>Performance Trick
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <p>Can you run the same command as before adding <code>--fork 2</code>, do you note any difference?</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> ~/project/course_data/resources/Mutect2_data/somatic.filtered.PASS.vcf.gz <span class="dt">\</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> ~/project/course_data/resources/Mutect2_data/somatic.filtered.PASS.vcf.gz <span class="dt">\</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>--cache /data/.vep <span class="dt">\</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>--species homo_sapiens <span class="dt">\</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>--assembly GRCh38 <span class="dt">\</span></span>
@@ -1109,15 +1113,15 @@ Performance Trick
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>--force_overwrite <span class="dt">\</span></span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>--everything <span class="dt">\</span></span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>--fork 2 <span class="dt">\</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>--output_file chr6ch17_mutect2_annotated.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>--output_file chr6ch17_mutect2_annotated.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 <p>Now when we anaylize our output file <code>chr6ch17_mutect2_annotated.txt</code> in more details, there are about 160 lines and a lot of information on different transcripts that are related to the mutations found by Mutect2. Let’s say that now we would like to filter only the deleterious predictions and moderate/high impact variants. We can do that in a couple of ways:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">filter_vep</span> <span class="dt">\</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">filter_vep</span> <span class="dt">\</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>-i chr6ch17_mutect2_annotated.txt <span class="dt">\</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>-o chr6ch17_mutect2_annotated_filtered.txt <span class="dt">\</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>--force_overwrite <span class="dt">\</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>--filter <span class="st">"(IMPACT is HIGH or IMPACT is MODERATE) or (SIFT match deleterious or PolyPhen match probably_damaging)"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>--filter <span class="st">"(IMPACT is HIGH or IMPACT is MODERATE) or (SIFT match deleterious or PolyPhen match probably_damaging)"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1138,7 +1142,7 @@ Caution
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Cancer-Specific Annotation
+<span class="screen-reader-only">Important</span>Cancer-Specific Annotation
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1156,18 +1160,18 @@ wget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz.tbi</cod
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-14-contents" aria-controls="callout-14" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Solution
+<span class="screen-reader-only">Tip</span>Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-14" class="callout-14-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download ClinVar VCF</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download ClinVar VCF</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Run VEP with cancer-specific annotations</span></span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> ~/project/course_data/resources/Mutect2_data/somatic.filtered.PASS.vcf.gz <span class="dt">\</span></span>
@@ -1191,7 +1195,7 @@ Solution
 <span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate summary (using simple grep/awk commands)</span></span>
 <span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"Mutation Type Summary:"</span> <span class="op">&gt;</span> summary.txt</span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">"#"</span> chr6ch17_mutect2_annotated_with_clinVar_filtered.txt <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f7</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="op">&gt;&gt;</span> summary.txt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">"#"</span> chr6ch17_mutect2_annotated_with_clinVar_filtered.txt <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f7</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="op">&gt;&gt;</span> summary.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The possible values for ClinVar_CLNSIG include:</p>
 <ul>
 <li>Pathogenic - Strong evidence the variant causes disease</li>
@@ -1221,12 +1225,12 @@ Solution
 <p><a href="https://pubmed.ncbi.nlm.nih.gov/27666373/">REVEL paper</a>: An Ensemble Method for Predicting the Pathogenicity of Rare Missense Variants</p>
 </blockquote>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-15-contents" aria-controls="callout-15" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-REVEL
+<span class="screen-reader-only">Tip</span>REVEL
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1234,16 +1238,16 @@ REVEL
 <section id="revel-1" class="level2 callout-body-container callout-body">
 <h2 class="anchored" data-anchor-id="revel-1"><a href="http://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#revel">REVEL</a></h2>
 <p>You can download here the data (~6.5GB): <a href="https://sites.google.com/site/revelgenomics/downloads">https://sites.google.com/site/revelgenomics/downloads</a> or <a href="https://zenodo.org/records/7072866">https://zenodo.org/records/7072866</a></p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span> revel-v1.3_all_chromosomes.zip</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">unzip</span> revel-v1.3_all_chromosomes.zip</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> revel_with_transcript_ids <span class="kw">|</span> <span class="fu">tr</span> <span class="st">","</span> <span class="st">"\t"</span> <span class="op">&gt;</span> tabbed_revel.tsv</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">'1s/.*/#&amp;/'</span> tabbed_revel.tsv <span class="op">&gt;</span> new_tabbed_revel.tsv</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="ex">bgzip</span> new_tabbed_revel.tsv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="ex">bgzip</span> new_tabbed_revel.tsv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Prepare for GRCh38</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> new_tabbed_revel.tsv.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n1</span> <span class="op">&gt;</span> h</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">zcat</span> new_tabbed_revel.tsv.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n1</span> <span class="op">&gt;</span> h</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">zgrep</span> <span class="at">-h</span> <span class="at">-v</span> ^#chr new_tabbed_revel.tsv.gz <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'$3 != "." '</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-k1,1</span> <span class="at">-k3,3n</span> <span class="at">-</span> <span class="kw">|</span> <span class="fu">cat</span> h <span class="at">-</span> <span class="kw">|</span> <span class="ex">bgzip</span> <span class="at">-c</span> <span class="op">&gt;</span> new_tabbed_revel_grch38.tsv.gz</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="ex">tabix</span> <span class="at">-f</span> <span class="at">-s</span> 1 <span class="at">-b</span> 3 <span class="at">-e</span> 3 new_tabbed_revel_grch38.tsv.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="ex">tabix</span> <span class="at">-f</span> <span class="at">-s</span> 1 <span class="at">-b</span> 3 <span class="at">-e</span> 3 new_tabbed_revel_grch38.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Usage:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">--plugin</span> REVEL,file=/path/to/revel/data.tsv.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">--plugin</span> REVEL,file=/path/to/revel/data.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </div>
 </div>
@@ -1254,12 +1258,12 @@ REVEL
 <p><a href="https://www.science.org/doi/10.1126/science.adg7492">AlphaMissense’s Paper</a>: Accurate proteome-wide missense variant effect prediction with AlphaMissense</p>
 </blockquote>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-16-contents" aria-controls="callout-16" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-AlphaMissense
+<span class="screen-reader-only">Tip</span>AlphaMissense
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1268,10 +1272,10 @@ AlphaMissense
 <h2 class="anchored" data-anchor-id="alphamissense-1"><a href="http://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#alphamissense">AlphaMissense</a></h2>
 <p><a href="https://console.cloud.google.com/storage/browser/dm_alphamissense;tab=objects?pli=1&amp;prefix=&amp;forceOnObjectsSortingFiltering=false"><strong>Download link</strong></a></p>
 <p>Prepare for GRCh38</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://storage.googleapis.com/dm_alphamissense/AlphaMissense_hg38.tsv.gz</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tabix</span> <span class="at">-s</span> 1 <span class="at">-b</span> 2 <span class="at">-e</span> 2 <span class="at">-f</span> <span class="at">-S</span> 1 AlphaMissense_hg38.tsv.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://storage.googleapis.com/dm_alphamissense/AlphaMissense_hg38.tsv.gz</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tabix</span> <span class="at">-s</span> 1 <span class="at">-b</span> 2 <span class="at">-e</span> 2 <span class="at">-f</span> <span class="at">-S</span> 1 AlphaMissense_hg38.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Run it with VEP</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">--plugin</span> AlphaMissense,file=/full/path/to/file.tsv.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">--plugin</span> AlphaMissense,file=/full/path/to/file.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </div>
 </div>
@@ -1282,7 +1286,7 @@ AlphaMissense
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<strong>Damage prediction tools</strong>
+<span class="screen-reader-only">Note</span><strong>Damage prediction tools</strong>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1305,7 +1309,7 @@ AlphaMissense
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Complex VEP run
+<span class="screen-reader-only">Important</span>Complex VEP run
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1321,18 +1325,18 @@ Complex VEP run
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-19-contents" aria-controls="callout-19" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Solution
+<span class="screen-reader-only">Tip</span>Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-19" class="callout-19-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> ~/project/course_data/resources/Mutect2_data/somatic.filtered.PASS.vcf.gz <span class="dt">\</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> ~/project/course_data/resources/Mutect2_data/somatic.filtered.PASS.vcf.gz <span class="dt">\</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">--cache</span> /data/.vep <span class="dt">\</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--assembly</span> GRCh38 <span class="dt">\</span></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--format</span> vcf <span class="dt">\</span></span>
@@ -1365,7 +1369,7 @@ Solution
 <span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a><span class="st">         (REVEL &gt;= 0.5 or </span><span class="dt">\</span></span>
 <span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a><span class="st">          am_class = 'likely_pathogenic' or </span><span class="dt">\</span></span>
 <span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a><span class="st">          SIFT = 'deleterious' or </span><span class="dt">\</span></span>
-<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a><span class="st">          PolyPhen = 'probably_damaging')"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a><span class="st">          PolyPhen = 'probably_damaging')"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>A glimpse on the results</strong></p>
 <div data-collapse="true">
 <section id="variant-details" class="level2">
@@ -1596,7 +1600,7 @@ Note
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-In case you want to transform from <code>.cns</code> to <code>.vcf</code>
+<span class="screen-reader-only">Important</span>In case you want to transform from <code>.cns</code> to <code>.vcf</code>
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1605,24 +1609,24 @@ In case you want to transform from <code>.cns</code> to <code>.vcf</code>
 <ol type="1">
 <li>Let’s convert the *.cns (segmentation file) into a VCF file. ~5min</li>
 </ol>
-<div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the CNVkit annotation data</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the CNVkit annotation data</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xvzf</span> ~/project/course_data/resources/CNVkit_data/cnvkit.tar.gz</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Move the files to the resources folder</span></span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> ~/project/cnvkit/<span class="pp">*</span> ~/project/course_data/resources/CNVkit_data/.</span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert from call.cns to vcf </span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="ex">cnvkit.py</span> export vcf ~/project/course_data/resources/CNVkit_data/tumor.rg.md.call.cns <span class="at">-o</span> tumor.rg.md.call.cns_cnv.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="ex">cnvkit.py</span> export vcf ~/project/course_data/resources/CNVkit_data/tumor.rg.md.call.cns <span class="at">-o</span> tumor.rg.md.call.cns_cnv.vcf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="2" type="1">
 <li>We can gzip the output</li>
 </ol>
-<div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bgzip the file</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">bgzip</span> tumor.rg.md.call.cns_cnv.vcf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb21"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># bgzip the file</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="ex">bgzip</span> tumor.rg.md.call.cns_cnv.vcf</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="3" type="1">
 <li>Now let’s index the file</li>
 </ol>
-<div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Index</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tabix</span> <span class="at">-p</span> vcf tumor.rg.md.call.cns_cnv.vcf.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Index</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="ex">tabix</span> <span class="at">-p</span> vcf tumor.rg.md.call.cns_cnv.vcf.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -1633,7 +1637,7 @@ In case you want to transform from <code>.cns</code> to <code>.vcf</code>
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Call VEP on CNVkit’s VCF
+<span class="screen-reader-only">Important</span>Call VEP on CNVkit’s VCF
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1653,18 +1657,18 @@ Call VEP on CNVkit’s VCF
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-23-contents" aria-controls="callout-23" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Solution
+<span class="screen-reader-only">Tip</span>Solution
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-23" class="callout-23-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
-<div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Call VEP with full calls ~5min (overlap)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb23"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Call VEP with full calls ~5min (overlap)</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> tumor.rg.md.call.cns_cnv.vcf.gz <span class="dt">\</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">--cache</span> /data/.vep <span class="dt">\</span></span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">--assembly</span> GRCh38 <span class="dt">\</span></span>
@@ -1726,13 +1730,13 @@ Solution
 <span id="cb23-60"><a href="#cb23-60" aria-hidden="true" tabindex="-1"></a><span class="st">       (REVEL &gt;= 0.75 or </span><span class="dt">\</span></span>
 <span id="cb23-61"><a href="#cb23-61" aria-hidden="true" tabindex="-1"></a><span class="st">        am_class = 'likely_pathogenic' or </span><span class="dt">\</span></span>
 <span id="cb23-62"><a href="#cb23-62" aria-hidden="true" tabindex="-1"></a><span class="st">        SIFT = 'deleterious' and PolyPhen = 'probably_damaging')"</span></span>
-<span id="cb23-63"><a href="#cb23-63" aria-hidden="true" tabindex="-1"></a>        </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-63"><a href="#cb23-63" aria-hidden="true" tabindex="-1"></a>        </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You can also simplify the output with vep filter</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">filter_vep</span> <span class="dt">\</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">filter_vep</span> <span class="dt">\</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>-i chr6ch17_mtumor.rg.md.call.cns_cnv_annotated_with_clinVar_and_plugins_all.txt <span class="dt">\</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>-o chr6ch17_mtumor.rg.md.call.cns_cnv_annotated_with_clinVar_and_plugins_all.filtered_simplified.txt <span class="dt">\</span></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>--filter <span class="st">"SYMBOL exists"</span> <span class="dt">\</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>--force_overwrite</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>--force_overwrite</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>We get for example a duplication of RANBP9 that is annotated having HIGH impact and it is part of the MAME selection (matched between NCBI and Esembl)</p>
 <pre class="vcf"><code>#Uploaded_variation Location    Allele  Gene    Feature Feature_type    Consequence cDNA_position   CDS_position    Protein_position    Amino_acids Codons  Existing_variation  Extra
 chr6_123855_&lt;DUP&gt;   chr6:123855-28994479    duplication ENSG00000010017 ENST00000011619 Transcript  transcript_amplification    -   -   -   -   -   -   IMPACT=HIGH;STRAND=-1;VARIANT_CLASS=duplication;SYMBOL=RANBP9;SYMBOL_SOURCE=HGNC;HGNC_ID=HGNC:13727;BIOTYPE=protein_coding;CANONICAL=YES;MANE=MANE_Select;MANE_SELECT=NM_005493.3;TSL=1;APPRIS=P1;CCDS=CCDS4529.1;ENSP=ENSP00000011619;SWISSPROT=Q96S59.191;UNIPARC=UPI000006ED83;UNIPROT_ISOFORM=Q96S59-1;OverlapBP=90338;OverlapPC=100.00</code></pre>
@@ -1754,7 +1758,7 @@ chr6_123855_&lt;DUP&gt;   chr6:123855-28994479    duplication ENSG00000010017 EN
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Additional useful options in VEP
+<span class="screen-reader-only">Tip</span>Additional useful options in VEP
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -1772,7 +1776,7 @@ Additional useful options in VEP
 <div class="cell" data-code-tools="true" title="Some data preprocessing">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get libraries</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># get libraries</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse);<span class="fu">library</span>(magrittr)</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="co"># VEP output in</span></span>
@@ -1814,7 +1818,7 @@ Additional useful options in VEP
 <span id="cb26-40"><a href="#cb26-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">SYMBOL =</span> <span class="fu">extract_field</span>(., <span class="st">"SYMBOL"</span>),</span>
 <span id="cb26-41"><a href="#cb26-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">VARIANT_CLASS =</span> <span class="fu">extract_field</span>(., <span class="st">"VARIANT_CLASS"</span>),</span>
 <span id="cb26-42"><a href="#cb26-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">BIOTYPE =</span> <span class="fu">extract_field</span>(., <span class="st">"BIOTYPE"</span>)</span>
-<span id="cb26-43"><a href="#cb26-43" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-43"><a href="#cb26-43" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -1823,7 +1827,7 @@ Additional useful options in VEP
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Visualize the data from VEP
+<span class="screen-reader-only">Important</span>Visualize the data from VEP
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1841,45 +1845,45 @@ Visualize the data from VEP
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-26-contents" aria-controls="callout-26" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-1. Consequence plot, to visualize the distribution of consequences
+<span class="screen-reader-only">Tip</span>1. Consequence plot, to visualize the distribution of consequences
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-26" class="callout-26-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># consequence plot</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># consequence plot</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(vep_data, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(Consequence, <span class="fu">table</span>(Consequence)[Consequence]))) <span class="sc">+</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Distribution of </span><span class="sc">\n</span><span class="st"> Variant Consequences"</span>,</span>
 <span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Consequence Type"</span>,</span>
-<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Count"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><img src="assets/variant_annotation/unnamed-chunk-2-1.png" class="img-fluid"></p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-27-contents" aria-controls="callout-27" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-2. Consequence plot, by chromosome
+<span class="screen-reader-only">Tip</span>2. Consequence plot, by chromosome
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-27" class="callout-27-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># consequence plot </span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># consequence plot </span></span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(vep_data, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(Consequence, <span class="fu">table</span>(Consequence)[Consequence]))) <span class="sc">+</span></span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
@@ -1890,26 +1894,26 @@ Visualize the data from VEP
 <span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span>chr) <span class="sc">+</span></span>
 <span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
 <span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"bottom"</span></span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><img src="assets/variant_annotation/unnamed-chunk-3-1.png" class="img-fluid"></p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-28-contents" aria-controls="callout-28" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-28-contents" aria-controls="callout-28" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-3. Can we see the consequence colored by impact
+<span class="screen-reader-only">Tip</span>3. Can we see the consequence colored by impact
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-28" class="callout-28-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Impact + Consequence plot</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Impact + Consequence plot</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(vep_data, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(Consequence, <span class="fu">table</span>(Consequence)[Consequence]), <span class="at">fill=</span>IMPACT)) <span class="sc">+</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
@@ -1920,26 +1924,26 @@ Visualize the data from VEP
 <span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Count"</span>) <span class="sc">+</span></span>
 <span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
 <span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"bottom"</span></span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><img src="assets/variant_annotation/unnamed-chunk-4-1.png" class="img-fluid"></p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-29-contents" aria-controls="callout-29" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-4. Can we see the consequence colored by impact by chromosome
+<span class="screen-reader-only">Tip</span>4. Can we see the consequence colored by impact by chromosome
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-29" class="callout-29-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Impact + consequence plot x chr</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Impact + consequence plot x chr</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(vep_data, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(Consequence, <span class="fu">table</span>(Consequence)[Consequence]), <span class="at">fill=</span>IMPACT)) <span class="sc">+</span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
@@ -1951,26 +1955,26 @@ Visualize the data from VEP
 <span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="sc">~</span>chr) <span class="sc">+</span></span>
 <span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
 <span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">legend.position =</span> <span class="st">"bottom"</span></span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><img src="assets/variant_annotation/unnamed-chunk-5-1.png" class="img-fluid"></p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-30-contents" aria-controls="callout-30" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-30-contents" aria-controls="callout-30" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-5. What are the most common variant classes?
+<span class="screen-reader-only">Tip</span>5. What are the most common variant classes?
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-30" class="callout-30-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># variant class plot</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># variant class plot</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>vep_data <span class="sc">%&gt;%</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(VARIANT_CLASS) <span class="sc">%&gt;%</span>  <span class="co"># Count the classees</span></span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n)) <span class="sc">%&gt;%</span>  <span class="co"># Sort in descending ord</span></span>
@@ -1980,52 +1984,52 @@ Visualize the data from VEP
 <span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of </span><span class="sc">\n</span><span class="st"> Variant Classes"</span>,</span>
 <span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Variant Class"</span>,</span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Count"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><img src="assets/variant_annotation/unnamed-chunk-6-1.png" class="img-fluid"></p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-31-contents" aria-controls="callout-31" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-6. What are the most common biotypes?
+<span class="screen-reader-only">Tip</span>6. What are the most common biotypes?
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-31" class="callout-31-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># biotype distribution</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># biotype distribution</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(vep_data, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">reorder</span>(BIOTYPE, <span class="fu">table</span>(BIOTYPE)[BIOTYPE]))) <span class="sc">+</span></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill=</span><span class="st">"steelblue"</span>) <span class="sc">+</span></span>
 <span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
 <span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Distribution of </span><span class="sc">\n</span><span class="st"> Biotypes"</span>,</span>
 <span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Biotype"</span>,</span>
-<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Count"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><img src="assets/variant_annotation/unnamed-chunk-7-1.png" class="img-fluid"></p>
 </div>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-32-contents" aria-controls="callout-32" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-32-contents" aria-controls="callout-32" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-7. Bonus: ClinVar, SIFT, ans PolyPhen
+<span class="screen-reader-only">Tip</span>7. Bonus: ClinVar, SIFT, ans PolyPhen
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
 <div id="callout-32" class="callout-32-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract SIFT</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract SIFT</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>vep_data<span class="sc">$</span>sift <span class="ot">&lt;-</span> <span class="fu">str_extract</span>(vep_data<span class="sc">$</span>Extra, <span class="st">"SIFT=.*?;"</span>)</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>vep_data<span class="sc">$</span>sift <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(vep_data<span class="sc">$</span>sift, <span class="st">"SIFT="</span>, <span class="st">""</span>) </span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>vep_data<span class="sc">$</span>sift <span class="ot">&lt;-</span> <span class="fu">str_replace</span>(vep_data<span class="sc">$</span>sift, <span class="st">";"</span>, <span class="st">""</span>)</span>
@@ -2064,13 +2068,13 @@ Visualize the data from VEP
 <span id="cb33-37"><a href="#cb33-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of PolyPhen Predictions"</span>,</span>
 <span id="cb33-38"><a href="#cb33-38" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"PolyPhen Prediction"</span>,</span>
 <span id="cb33-39"><a href="#cb33-39" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Count"</span>,</span>
-<span id="cb33-40"><a href="#cb33-40" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Only missense variants are scored by PolyPhen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-40"><a href="#cb33-40" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Only missense variants are scored by PolyPhen"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><img src="assets/variant_annotation/unnamed-chunk-8-1.png" class="img-fluid"> <img src="assets/variant_annotation/unnamed-chunk-8-2.png" class="img-fluid"></p>
 <section id="combined-sift-and-polyphen-predictions-with-impact" class="level3">
 <h3 class="anchored" data-anchor-id="combined-sift-and-polyphen-predictions-with-impact">Combined SIFT and PolyPhen predictions with Impact</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Only for variants with both predictions</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Only for variants with both predictions</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">subset</span>(vep_data, <span class="sc">!</span><span class="fu">is.na</span>(sift) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(polyphen)) <span class="sc">%&gt;%</span></span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> sift, <span class="at">fill =</span> IMPACT)) <span class="sc">+</span></span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
@@ -2105,21 +2109,21 @@ Visualize the data from VEP
 <span id="cb34-33"><a href="#cb34-33" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"SIFT Prediction"</span>,</span>
 <span id="cb34-34"><a href="#cb34-34" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Count"</span>,</span>
 <span id="cb34-35"><a href="#cb34-35" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"PolyPhen Prediction"</span>) <span class="sc">+</span></span>
-<span id="cb34-36"><a href="#cb34-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-36"><a href="#cb34-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="plot" class="level3">
 <h3 class="anchored" data-anchor-id="plot">Plot</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><img src="assets/variant_annotation/unnamed-chunk-10-1.png" class="img-fluid"></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p4)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p4)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><img src="assets/variant_annotation/unnamed-chunk-10-2.png" class="img-fluid"></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p5)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><img src="assets/variant_annotation/unnamed-chunk-10-3.png" class="img-fluid"></p>
 </section>
@@ -2132,18 +2136,18 @@ Visualize the data from VEP
 <ol type="1">
 <li><strong>Using Cache</strong>:</li>
 </ol>
-<div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">--cache</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb38"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">--cache</span></span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="ex">--dir_cache</span> /path/to/cache</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="ex">--offline</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="ex">--offline</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="2" type="1">
 <li><strong>Parallel Processing</strong>:</li>
 </ol>
-<div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="ex">--fork</span> 4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb39"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="ex">--fork</span> 4</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="3" type="1">
 <li><strong>Minimal Output</strong>:</li>
 </ol>
-<div class="sourceCode" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">--fields</span> <span class="st">"Consequence,IMPACT,SYMBOL,Feature"</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="ex">--no_stats</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb40"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="ex">--fields</span> <span class="st">"Consequence,IMPACT,SYMBOL,Feature"</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="ex">--no_stats</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="tips-for-cancer-variant-analysis" class="level2">
 <h2 class="anchored" data-anchor-id="tips-for-cancer-variant-analysis">Tips for Cancer Variant Analysis</h2>
@@ -2277,13 +2281,14 @@ Visualize the data from VEP
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
