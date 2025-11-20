@@ -1,16 +1,19 @@
 ---
-title: "Variant annotation"
+title: "Variants annotation"
 execute:
   eval: false
 format:
   html:
     toc: true
+    css: styles.css
 ---
+## Presentation
 
-### Ensembl VEP (Variant effect predictor)
+<a href="slides/VEP_variantAnnotationPresentation.qmd" class="btn btn-red" role="button">
+  Variants annotation
+</a>
 
-[SLIDES -> Variant annotation](slides/VEP_variantAnnotationPresentation.qmd)
-
+### Ensembl VEP
 VEP is a powerful and flexible tool for annotating, analyzing, and
 prioritizing genomic variants. It is particularly useful in cancer
 genomics, where understanding the functional impact of somatic mutations
@@ -690,6 +693,7 @@ At this point we obtained a good annotated set of somatic variants. This paves t
 - Visualize the results
 :::
 
+<!-- 
 # Annotating CNVkit output
 The CNVkit is a software that is specifically tailered to call CNV (Copy number Variants) from WES data. It does that by using metrics based on proper targets and off-targets reads in WES data. CNVkit is a python-based tool, that by default outputs `*.call.cns` and `*.cnr`. <br>
 
@@ -841,11 +845,13 @@ One could use more specific data such as the [COSMIC](https://cancer.sanger.ac.u
 There are many other options available in VEP, and the documentation is very compherensive. Some common options are `--filter_common` (filters out variants with a minor allele frequency (MAF) ≥ 0.01 (1%)) in any of the populations within these databases) and `--total_length` (VEP sums up the lengths of all overlapping features, useful for structural variants (SV) annotation). `--coding_only` can reduce the amount of data to only the coding parts. `--check_existing` annotates variants with information from existing databases. <br> In addition there is a web interface to VEP from the ENSEMBL team [here](https://www.ensembl.org/Tools/VEP)
 :::
 
+-->
+
 # Let's visualize some of the data from our somatic call annotation!
 
-At first we should load one of the vep annotated files from one of the exercises. I am loading the annotation from exercise 3, `chr6ch17_mutect2_annotated_with_clinVar.txt` from the exercise `Cancer-Specific Annotation`. 
+At first we should load one of the vep annotated files from one of the exercises. Let's load the results from exercise 3 (feel free to load another one!), `chr6ch17_mutect2_annotated_with_clinVar.txt` from the exercise `Cancer-Specific Annotation`. 
 
-Feel free to load another one.
+
 
 ```{r}
 #| echo: true

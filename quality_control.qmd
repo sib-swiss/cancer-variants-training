@@ -1,5 +1,8 @@
 ---
 title: Setup & quality control
+format:
+  html:
+    css: styles.css
 ---
 
 ## Presentations
@@ -93,9 +96,10 @@ Showing us that we have three directories:
 - `reference`: containing the genome fasta file and target intervals
 - `resources`: containing amongst other variant files (`vcf`) from amongst other the [1000 genomes](https://www.internationalgenome.org/) project and [gnomAD](https://gnomad.broadinstitute.org/), and subsets of the clinvar and alphamissense databases. 
 
-The dataset we're working with is prepared by the developers of the [Precision medicine bioinformatics course]() by the Griffith lab. It is whole exome sequencing data of cell lines derived from a tumor of triple negative breast cancer ([HCC1395](https://www.cellosaurus.org/CVCL_1249)) and derived from normal tissue ([HCC1395 BL](https://www.cellosaurus.org/CVCL_1250)). 
+The dataset we're working with is prepared by the developers of the [Precision medicine bioinformatics course]() by the Griffith lab. It is whole exome sequencing (WES) data of cell lines derived from a tumor of triple negative breast cancer (TNBC) ([HCC1395](https://www.cellosaurus.org/CVCL_1249)) and derived from normal tissue ([HCC1395 BL](https://www.cellosaurus.org/CVCL_1250)). 
 
-You are strongly encouraged to your work with scripts during the course, which you store in the directory `scripts`. Therefore create a scripts directory:
+You are strongly encouraged to your work with scripts during the course, which you store in the directory `scripts`. 
+Therefore create a scripts directory:
 
 ```sh
 cd ~/project/
@@ -189,7 +193,7 @@ HWI-ST466:135068617:C1TD1ACXX:7:2304:7514:30978 113     chr6    60001   60      
 ```
 
 a. At the CIGAR strings we see `100M` and `2S98M`, meaning that the original read had 100 base pairs. So it's likely a read length of 100 bp has been used. 
-b. This question might be a bit more challenging. In the 5th column we see an equal sign (`=`). This shows that the mate is mapped to same chromsome, so suggesting we are working with paired-end reads. Secondly, at the `@PG` header tag, we saw that `bwa mem` took two fastq files (`normal_R1.fastq.gz` and `normal_R2.fastq.gz`) as input. Lastly, we can use the sam flags in the second column to figure that out. If you paste the first flag, `163`, in the [explain sam flags website](https://broadinstitute.github.io/picard/explain-flags.html), we can see that the read is paired.
+b. This question might be a bit more challenging. In the 5th column we see an equal sign (`=`). This shows that the mate is mapped to same chromosome, so suggesting we are working with paired-end reads. Secondly, at the `@PG` header tag, we saw that `bwa mem` took two fastq files (`normal_R1.fastq.gz` and `normal_R2.fastq.gz`) as input. Lastly, we can use the sam flags in the second column to figure that out. If you paste the first flag, `163`, in the [explain sam flags website](https://broadinstitute.github.io/picard/explain-flags.html), we can see that the read is paired.
 c. Yes, the read group tag starts with `RG`, and is specified for all three alignments. 
 :::
 

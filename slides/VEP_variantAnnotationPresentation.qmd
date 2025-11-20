@@ -4,7 +4,7 @@ subtitle: "A Practical Introduction"
 author: "Flavio Lombardo"
 format: 
   revealjs:
-    theme: sky
+    theme: default
     scrollable: true
     css: |
       .reveal h1 {
@@ -13,7 +13,13 @@ format:
       .title-slide h1 {
         font-size: 1.8em !important;
       }
-transition: slide
+    footer: |
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <img src="../assets/logos/dbm_logo.jpg" alt="DBM Logo" style="height: 35px;">
+        <img src="../assets/logos/university_hospital_basel_logo.png" alt="USB Logo" style="height: 35px;">
+        <img src="assets/logos/university_of_basel_logo.png" alt="UniBasel Logo" style="height: 35px;">
+      </div>
+transition: fade
 slide-number: true
 code-block-background: true
 highlight-style: github

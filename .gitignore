@@ -18,3 +18,4 @@ extensions/
 /_site/
 /_freeze/
 *_cache/
+**/*.quarto_ipynb

@@ -1,5 +1,8 @@
 ---
 title: "Course schedule"
+format:
+  html:
+    css: styles.css
 ---
 
 ::: {.callout-note}

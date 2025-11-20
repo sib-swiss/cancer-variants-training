@@ -1,10 +1,12 @@
 ---
 title: "Variant calling"
+format:
+  html:
+    css: styles.css
 ---
-
 ## Short variant calling
 
-Now that we have quality-controlled the BAM files, we can go ahead with the variant calling itself. For this, we used `mutect2` which is a somatic variant caller from GATK based on `HaplotypeCaller`. In addition to the expected bam files and references genome, the `mutect2` command requires some additional input:
+Now that we have quality-controlled the BAM files, we can go ahead with the variant calling itself. For this, we used `mutect2` which is a somatic variant caller from GATK toolkit. In addition to the expected bam files and references genome, the `mutect2` requires some additional input:
 
 - `--intervals`: the intervals of our target regions. This is in the `interval_list` format.
 - `-normal`: the sample name of the normal sample. So, the `SM` tag of the read group of the normal sample. 
