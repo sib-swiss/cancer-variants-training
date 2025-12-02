@@ -17,4 +17,4 @@ extensions/
 /.quarto/
 /_site/
 /_freeze/
-*_cache/
+*_cache/.Rhistory
