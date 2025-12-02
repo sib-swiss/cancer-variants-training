@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
-ALIGNDIR=~/project/course_data/alignments
-REFDIR=~/project/course_data/reference
-RESOURCEDIR=~/project/course_data/resources
-VARIANTDIR=~/project/course_data/variants
+# Define directories
+ALIGNDIR="${HOME}/project/course_data/alignments"
+REFDIR="${HOME}/project/course_data/reference"
+RESOURCEDIR="${HOME}/project/course_data/resources"
+VARIANTDIR="${HOME}/project/course_data/variants"
 
 cnvkit.py batch "$ALIGNDIR"/tumor.recal.bam \
 --normal "$ALIGNDIR"/normal.recal.bam \

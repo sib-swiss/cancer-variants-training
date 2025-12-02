@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
-ALIGNDIR=~/project/course_data/alignments
-REFDIR=~/project/course_data/reference
-RESOURCEDIR=~/project/course_data/resources
-VARIANTDIR=~/project/course_data/variants
+# Define directories
+ALIGNDIR="${HOME}/project/course_data/alignments"
+REFDIR="${HOME}/project/course_data/reference"
 
 for sample in tumor normal
 do

@@ -6,15 +6,30 @@ format:
 ---
 ## Short variant calling
 
-Now that we have quality-controlled the BAM files, we can go ahead with the variant calling itself. For this, we used `mutect2` which is a somatic variant caller from GATK toolkit. In addition to the expected bam files and references genome, the `mutect2` requires some additional input:
+Now that we have quality-controlled the BAM files, we can go ahead with somatic variant calling. 
+
+::: {.callout-note}
+## Somatic vs Germline Variant Calling
+
+Somatic variant calling differs from germline calling in several key ways:
+
+- **Tumor-normal pairs**: We compare tumor against matched normal to identify somatic (tumor-only) variants
+- **Lower allele frequencies**: Somatic variants may be present in only a subset of tumor cells (subclonal)
+- **Artifacts**: Sequencing/alignment artifacts can mimic somatic variants, requiring careful filtering
+- **Statistical challenge**: Distinguishing true low-frequency somatic variants from noise
+
+This is why we need specialized tools like Mutect2 rather than standard germline callers.
+:::
+
+For this, we use `Mutect2` which is a somatic variant caller from the GATK toolkit. In addition to the expected bam files and references genome, `Mutect2` requires some additional input:
 
 - `--intervals`: the intervals of our target regions. This is in the `interval_list` format.
 - `-normal`: the sample name of the normal sample. So, the `SM` tag of the read group of the normal sample. 
-- `--germline-resource`: know sites of germline variants with their allele frequencies in the population. These are used to estimate the confidence of a germline variant in the normal sample. 
+- `--germline-resource`: known sites of germline variants with their allele frequencies in the population. These are used to estimate the confidence of a germline variant in the normal sample. 
 - `--panel-of-normals`: A VCF generated from normal samples that contain sites with known technical artifacts. Ideally, you create a PON from your own normal samples, but this is typically recommended if you have more than 40 normal samples. Therefore, here, we use a pre-generated PON from the 1000 genomes project. More information on PON in [this article](https://gatk.broadinstitute.org/hc/en-us/articles/360035890631-Panel-of-Normals-PON).
 
 ::: {.callout-important}
-## Exercise
+## Exercise 1
 
 Create a script called `03_run_mutect2.sh`. After that, check out the [manual of `Mutect2`](https://gatk.broadinstitute.org/hc/en-us/articles/360037593851-Mutect2) and replace the placeholders `FIXME` with the required values of the `Mutect2` below command and run it:
 
@@ -38,7 +53,6 @@ gatk Mutect2 \
 --germline-resource "$RESOURCEDIR"/af-only-gnomad.hg38.subset.vcf.gz \
 --panel-of-normals "$RESOURCEDIR"/1000g_pon.hg38.subset.vcf.gz \
 -O "$VARIANTDIR"/somatic.vcf.gz
-
 
 ```
 
@@ -72,12 +86,18 @@ gatk Mutect2 \
 -O "$VARIANTDIR"/somatic.vcf.gz
 ```
 
+**Notes**
+
+- `-normal`: comes from the read group in the bam files (`SM` tag)
+- `--germline-resource`: A VCF of **known germline variants** from large population studies (gnomAD, 1000 Genomes)
+- `--panel-of-normals`: These are NOT real biological variants - they're sequencing/alignment errors (ideally from >40-100 normal samples from the same cohort)
+
 ::: 
 
 After calling the variants we can do an initial filtering step. We do this with `FilterMutectCalls`. This method takes technical artifacts, possibility of germline variants, and sequencing error in account, calculates an error probability and tries to optimize between recall and precision. 
 
 ::: {.callout-important}
-## Exercise
+## Exercise 2
 
 Create a script called `04_filter_mutect_calls.sh` in `~/project/scripts`. From the script, run the command to filter the somatic variants:
 
@@ -220,7 +240,7 @@ bcftools query -f '%CHROM\t%POS\t%FILTER\t\t%INFO/TLOD\t[%SAMPLE=%DP;]\n' somati
 ```
 
 ::: {.callout-important}
-## Exercise
+## Exercise 3
 
 Instead of the depth `DP` for each sample get the variant allele frequency for each sample, and compare that with the FILTER column. 
 
@@ -294,7 +314,29 @@ chr6    13977507        weak_evidence           3.4     normal=0.012;tumor=0.027
 chr6    16147945        PASS            331.72  normal=0.014;tumor=0.978;
 ```
 
-Where we see that if there's the filter `weak_evidence` the VAF of the tumor is typically low. 
+Where we see that if there's the filter `weak_evidence` the VAF of the tumor is typically low.
+
+**Key observations:**
+
+1. **PASS variants** typically have:
+   - Tumor VAF >0.15 (15%) 
+   - Low/zero VAF in normal (<0.03)
+   - Example: chr6:325357 has tumor=0.161, normal=0.001
+
+2. **weak_evidence** variants show:
+   - Very low tumor VAF (<0.05)
+   - Near the detection limit
+   - Example: chr6:106265 has tumor=0.01, normal=0.00671
+
+3. **germline** tagged variants:
+   - Similar VAF in both tumor and normal
+   - Example: chr6:5103987 has normal=0.825, tumor=0.834 (very similar)
+   - These are inherited variants, not somatic
+
+4. **panel_of_normals** filtered variants:
+   - May have high VAF but appear in technical artifact database
+   - Example: chr6:9900366 has very high tumor VAF (0.992) but filtered
+
 
 ::: 
 
@@ -303,7 +345,7 @@ Where we see that if there's the filter `weak_evidence` the VAF of the tumor is 
 Variation of copy number in genes can have a large effect on the phenotype of a tumor. Therefore, we will also estimate the copy number variation occurring on chromosome 6 and 17. For that, we use [CNVkit](https://cnvkit.readthedocs.io/en/stable/). 
 
 ::: {.callout-important}
-## Exercise
+## Exercise 4
 
 Check out the [documentation](https://cnvkit.readthedocs.io/en/stable/quickstart.html#build-a-reference-from-normal-samples-and-infer-tumor-copy-ratios) of `CNVkit.py bash`, and the helper (`cnvkit.py batch -h`), create a script called `05_run_cnvkit.sh`, and replace the missing values at `FIXME`.
 
@@ -329,10 +371,6 @@ cnvkit.py batch FIXME \
 --scatter \
 --diagram
 ```
-:::
-
-::: {.callout-note}
-The scale on the scatter plot is log2(copy ratio). So, if there is a duplication at one chromsome you would expect a copy ratio of 1.5 (3 chromsomes/2 chromsomes). The log2 of 1.5 is 0.58. So estimates at 0.58 mean a gain of one copy, and estimates at -0.5 (log2(0.5)) a loss of one copy. 
 :::
 
 ::: {.callout-tip collapse="true"}
@@ -364,6 +402,81 @@ After running cnvkit, multiple files are created in `~/project/course_data/varia
 
 ![](assets/images/tumor-scatter.png)
 
-Here we see that there is evidence for both losses and gains on both chromosomes. 
+**Interpretation:**
+
+CNVkit reports log2 ratios relative to a diploid (2 copy) baseline:
+
+- **Formula**: Copy number = 2^(log2_ratio) × 2
+- **Examples**:
+  - log2 ratio = 0 → 2^(0) × 2 = 2 copies (normal diploid)
+  - log2 ratio = +0.58 → 2^(0.58) × 2 ≈ 3 copies (gain)
+  - log2 ratio = -1.0 → 2^(-1.0) × 2 = 1 copy (loss)
+  
+Here we see evidence for both losses and gains on both chromosomes:
+
+**Chromosome 6:**
+
+- Multiple segments with varying copy number
+- Regions around log2 ratio **+0.6** (gain - approximately 3 copies)
+- Regions around log2 ratio **-0.5** (loss - approximately 1 copy)
+- Some neutral regions around 0 (diploid)
+
+**Chromosome 17:**
+
+- **Large deletion** in the p-arm (short arm, left side): log2 ratio ≈ **-0.6 to -0.7**
+  - This represents loss of one copy across a large chromosomal region
+- **Gain** in the q-arm (long arm, right side): log2 ratio ≈ **+0.6**
+  - This represents an extra copy (3 copies total)
+
+**Key observations:**
+
+- Log2 ratio of **+0.6** ≈ 3 copies (one extra copy: log2(3/2) = 0.58)
+- Log2 ratio of **-0.6 to -0.7** ≈ 1.2-1.3 copies (partial loss of one allele)
+- Log2 ratio of **-1.0** = 1 copy (complete loss of one allele: log2(1/2) = -1.0)
+- Log2 ratio of **+1.0** ≈ 4 copies (duplication: log2(4/2) = 1.0)
+
+The **orange lines** represent segmented regions with similar copy number (segments), while the **gray dots** show individual bin-level measurements from targeted regions.
+
+**Note**: These HCC1395 cells are from a TNBC cell line, so we'd expect to see typical TNBC alterations including TP53 loss.
+
+::: {.callout-note}
+## Clinical significance: Chromosome 17 alterations in breast cancer
+
+The pattern observed on chromosome 17 is particularly interesting for breast cancer:
+
+- **Chr17p deletion** (the large loss we see) often involves **TP53** (17p13.1), a critical tumor suppressor
+  - TP53 loss is extremely common in TNBC (>80% of cases)
+  - Loss of p53 function removes a key cell cycle checkpoint
+  
+- **Chr17q gain** (the amplification we see) may include genes like **ERBB2/HER2** (17q12)
+  - Although TNBC is typically HER2-negative by definition, focal amplifications can occur
+  - Other oncogenes on 17q may also be amplified
+
+This type of arm-level copy number change (one arm deleted, other amplified) is characteristic of chromosomal instability common in cancer.
+:::
 
 :::
+
+::: {.callout-note}
+## Further reading
+
+CNVkit is described in detail in:
+
+> Talevich et al. (2016). CNVkit: Genome-Wide Copy Number Detection and Visualization from Targeted DNA Sequencing. *PLOS Computational Biology*. 
+:::
+
+## Summary
+
+In this section, you've:
+
+- ✅ Called somatic variants with Mutect2 using tumor-normal pairs
+- ✅ Filtered variants based on multiple quality metrics
+- ✅ Explored VCF format and variant characteristics
+- ✅ Identified copy number variations with CNVkit
+
+You now have:
+
+- `somatic.filtered.PASS.vcf.gz`: High-confidence somatic SNVs
+- CNVkit outputs: Copy number segmentation and visualizations
+
+**Next steps**: We'll annotate these variants to understand their functional impact and clinical significance.

@@ -1,8 +1,10 @@
-
 #!/usr/bin/env bash
 
-ALIGNDIR=~/project/data/alignments
-RESOURCEDIR=~/project/data/resources
+# Define directories
+ALIGNDIR="${HOME}/project/course_data/alignments"
+REFDIR="${HOME}/project/course_data/reference"
+VARIANTDIR="$HOME/project/course_data/variants"
+RESOURCEDIR="${HOME}/project/course_data/resources"
 
 gatk CalculateContamination \
 -I "$VARIANTDIR"/tumor.pileups.table \

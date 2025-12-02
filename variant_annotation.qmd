@@ -5,11 +5,12 @@ execute:
 format:
   html:
     toc: true
+    toc-expand: true
     css: styles.css
 ---
 ## Presentation
 
-<a href="slides/VEP_variantAnnotationPresentation.qmd" class="btn btn-red" role="button">
+<a href="slides/03_VEP_variantAnnotationPresentation.qmd" class="btn btn-red" role="button" target="_blank" rel="noopener noreferrer">
   Variants annotation
 </a>
 
@@ -40,6 +41,11 @@ context a tool like VEP becomes very useful.
 
 ### Install VEP
 
+::: {.callout-note}
+## VEP Version
+This course uses VEP v115 (2025). Some features and default behaviors may differ in other versions. Always check the [release notes](https://www.ensembl.org/info/docs/tools/vep/script/vep_other.html#history) for your version.
+:::
+
 VEP is already pre-installed on the cloud server. In order to load the environment, run:
 
 ```bash
@@ -61,15 +67,16 @@ source ~/miniconda3/bin/activate
 conda init --all
 
 # Using Conda
-conda create -n vep samtools python=3.10 ensembl-vep=113
-# conda install -c bioconda ensembl-vep=113 # if installing in current env
+conda create -n vep samtools python=3.10 ensembl-vep=115
+# conda install -c bioconda ensembl-vep=115 # if installing in current env
 
 # Activate VEP's env
 conda activate vep
 
 # PLEASE DO RUN During the course, only if you follow locally
 # Install all the data locally
-#vep_install -a cf -s homo_sapiens -y GRCh38
+#vep_install -a cf -s homo_sapiens -y GRCh38 --CONVERT (this command will download in $HOME/.vep the cache folder)
+#vep_install -a cf -s homo_sapiens -y GRCh38 -c $HOME/project/course_data/vep --CONVERT (this specify the cache folder)
 
 # Plugins installation
 # vep_install -a p --PLUGINS all
@@ -117,15 +124,17 @@ VEP ranks consequences by severity:
 
 ## Practical Exercises
 
-In case that you do not have the Mutect2 call and/or the CNVkit call, you can obtain those from [here](https://drive.google.com/drive/folders/1Rh6qRMGGY1QZL7INrcNd7hULTr8mB6tu?usp=sharing). In this folder there are also a `README.md` and some folders containing preprocessed data for the addional resources that we will use with Ensembl-VEP.
+In case that you do not have the Mutect2 call and/or the CNVkit call, you can obtain those from [here](https://drive.google.com/drive/folders/1Rh6qRMGGY1QZL7INrcNd7hULTr8mB6tu?usp=sharing). In this folder there are also a `README.md` and some folders containing preprocessed data for the additional resources that we will use with Ensembl-VEP. The script that is used to download all the databases resources mentioned in the exercises is in the course repo's `scripts` folder.  
 
-_If you are following along the course you should download and extract the data into your `project/` folder_.
+_If you are following along the course you should download and extract the data into your `$HOME/project/` folder_.
 
 ::: {.callout-caution collapse="false"}
 ## `--cache` option
-By default VEP will install the cache and plugins into your home folder (`~/.vep/`) and if that is the case, then you can leeave it like `--cache `. 
+By default VEP will install the cache and plugins into your home folder (`~/.vep/`) and if that is the case, then you can leave it like `--cache `. 
 - If you are following along the course, you need to change the cache folder to `--cache /data/.vep` or VEP will not find the local cache.
 :::
+
+### Exercise 1
 
 ::: {.callout-important}
 ## Basic VEP Analysis
@@ -150,6 +159,7 @@ chr4    55141055    rs1800744    A    G    .    PASS    .
 chr1    11190510    rs6603781    G    A    .    PASS    .
 chr7    140453136    rs121913530    A    T    .    PASS    .
 chr5    112175770    rs121913343    C    T    .    PASS    .
+chr17   43094464    rs28897672    A   C   .   PASS    .
 ```
 
 **Task**: Annotate these variants using VEP and identify which genes are
@@ -205,6 +215,7 @@ chr11\t108098576\trs386833395\tG\tA\t.\tPASS\t.
 chr4\t55141055\trs1800744\tA\tG\t.\tPASS\t.
 chr1\t11190510\trs6603781\tG\tA\t.\tPASS\t.
 chr7\t140453136\trs121913530\tA\tT\t.\tPASS\t.
+chr17\t43094464\trs28897672\tA\tC\t.\tPASS\t.
 chr5\t112175770\trs121913343\tC\tT\t.\tPASS\t.' > cancer_variants.vcf
 
 # 2. Make the script executable:
@@ -218,7 +229,7 @@ chmod +x create_vcf.sh
 cat cancer_variants.vcf
 
 # Make sure you have 13 variants
-grep -v '^#' cancer_variants.vcf | wc -l  # it should show 13
+grep -v '^#' cancer_variants.vcf | wc -l  # it should show 14
 
 # Run VEP ~< 5min
 vep -i cancer_variants.vcf \
@@ -249,9 +260,15 @@ rs28897686	chr17:41245466	A	ENSG00000241595	ENST00000334109	Transcript	upstream_
 ```rs28934574``` from this example is a TP53 stop gained mutation commonly found in cancer.
 
 **You can try to run without ```--pick``` and ```--everything``` see what happens.**
+
+Here you can see the html summary file generated:
+
+<a href="assets/variant_annotation/output.txt_summary.html" class="btn btn-red" role="button" target="_blank" rel="noopener noreferrer">
+  VEP report
+</a>
 :::
 
-After running the command you will also notice a ```output.txt_summary.html``` that will show some statistics on the annotation process. 
+After running the command you will also notice a ```output.txt_summary.html``` that will show some statistics on the annotation process and the results visually __(see solution above)__. 
 If you tried running ```--everything``` or  ```-e``` this is a shortcut for the following options:
 
 ::: {.callout-note collapse="true"}
@@ -294,16 +311,15 @@ You can have a look at the documentation to learn more about VEP's many options 
 
 ::: {.callout-note collapse="false"}
 ## **Damage prediction tools**
+SIFT (Sorting Intolerant From Tolerant) and PolyPhen (Polymorphism Phenotyping) are both prediction tools specifically designed to assess the functional impact of missense variants—those that result in amino acid substitutions
 
 - SIFT: Based on sequence homology and physical properties of amino acids
 - PolyPhen: Combines sequence-based features with structural information
 :::
 
-### Mutect2 results annotation
+## Mutect2 results annotation
 
-In the example above we used an example to undestand how to run VEP and some different arguments that can make a big difference in the output generated and the information provided.
-
-If we use the results coming from the somatic call from the WES of chr6 and chr17 we get a table of variants. These results can be enriched with annotations. Let's use VEP to annotate this file
+The previous section demonstrated how to run VEP and how different arguments significantly impact the output. Now, let's apply this to a real dataset. We will take the table of somatic variants identified from the WES of chr6 and chr17 and use VEP to enrich it with functional annotations.
 
 **Extract from the resulting Mutect2 somatic call**
 
@@ -333,7 +349,9 @@ chr6    3723708   .   C   G   .   PASS
 
 The somatic variant call can be annotated with this command
 ``` bash
-vep -i ~/project/course_data/resources/Mutect2_data/somatic.filtered.PASS.vcf.gz \
+VARIANTDIR="${HOME}/project/course_data/variants"
+
+vep -i "$VARIANTDIR"/somatic.filtered.PASS.vcf.gz \
 --cache /data/.vep \
 --species homo_sapiens \
 --assembly GRCh38 \
@@ -344,11 +362,15 @@ vep -i ~/project/course_data/resources/Mutect2_data/somatic.filtered.PASS.vcf.gz
 --everything \
 --output_file chr6ch17_mutect2_annotated.txt
 ```
+::: {.callout-note}
+We are using as input a vcf.gz file (which has been indexed), and we are provifing the `--format vcf` command, this will output by default a `tsv` file
+:::
 
+### Exercise 2
 ::: {.callout-important}
 ## Output to VCF
-What if the output of this file should be formatted as vcf instead? You can check VEP's documentation [here](https://www.ensembl.org/info/docs/tools/vep/vep_formats.html)
-
+What if the output of this file should be formatted as vcf instead? You can check VEP's documentation [here](https://www.ensembl.org/info/docs/tools/vep/vep_formats.html) <br>
+hint: use `--vcf`
 :::
 
 ::: {.callout-tip collapse="true"}
@@ -362,7 +384,10 @@ If you see VEP's documentation there is an option to skip `bgzip` and instead in
 **Interesting results:**
 We will obtain a file with many annotations.
 
->  ````chr6_1930220_GA/TT	chr6:1930220-1930221	TT	ENSG00000112699	ENST00000380815	Transcript	stop_gained	836-837	653-654	218	F/*	tTC/tAA	-	IMPACT=HIGH;STRAND=-1;SYMBOL=GMDS;SYMBOL_SOURCE=HGNC;HGNC_ID=HGNC:4369````
+```
+Uploaded_variation	Location	Allele	Gene	Feature	Feature_type	Consequence	cDNA_position	CDS_position	Protein_position	Amino_acids	Codons	Existing_variation	Extra
+chr6_1930220_GA/TT	chr6:1930220-1930221	TT	ENSG00000112699	ENST00000380815	Transcript	stop_gained	836-837	653-654	218	F/*	tTC/tAA	-	IMPACT=HIGH;STRAND=-1;SYMBOL=GMDS;SYMBOL_SOURCE=HGNC;HGNC_ID=HGNC:4369
+```
 
 | Impact | Gene | Location | Consequence | Change | Details |
 |--------|------|-----------|-------------|---------|----------|
@@ -386,7 +411,9 @@ We will obtain a file with many annotations.
 Can you run the same command as before adding `--fork 2`, do you note any difference?
 
 ``` bash
-vep -i ~/project/course_data/resources/Mutect2_data/somatic.filtered.PASS.vcf.gz \
+VARIANTDIR="${HOME}/project/course_data/variants"
+
+vep -i "$VARIANTDIR/somatic.filtered.PASS.vcf.gz" \
 --cache /data/.vep \
 --species homo_sapiens \
 --assembly GRCh38 \
@@ -396,7 +423,7 @@ vep -i ~/project/course_data/resources/Mutect2_data/somatic.filtered.PASS.vcf.gz
 --force_overwrite \
 --everything \
 --fork 2 \
---output_file chr6ch17_mutect2_annotated.txt
+--output_file "$VARIANTDIR/chr6ch17_mutect2_annotated.txt"
 ```
 :::
 
@@ -417,6 +444,8 @@ in this line `--filter "(IMPACT is HIGH or IMPACT is MODERATE) or (SIFT match de
 
 
 But what if we want more information on the cancer mutations, can we integrate other databases to VEP? Yes we can. This can be useful prior to filtering to find additional consensus on potential interesting targets.
+
+### Exercise 3
 
 ::: {.callout-important}
 ## Cancer-Specific Annotation
@@ -444,21 +473,24 @@ wget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz.tbi
 ``` bash
 # Download ClinVar VCF
 
+VARIANTDIR="${HOME}/project/course_data/variants"
+RESOURCEDIR="${HOME}/project/course_data/VEP_dbs"
+
 # Run VEP with cancer-specific annotations
-vep -i ~/project/course_data/resources/Mutect2_data/somatic.filtered.PASS.vcf.gz \
+vep -i "$VARIANTDIR/somatic.filtered.PASS.vcf.gz" \
     --cache /data/.vep \
     --assembly GRCh38 \
     --format vcf \
     --force_overwrite \
     --fork 2 \
     --everything \
-    --custom ~/project/course_data/resources/clinvar/clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN \
-    --output_file chr6ch17_mutect2_annotated_with_clinVar.txt
+    --custom "$RESOURCEDIR"/clinvar/clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN \
+    --output_file "$VARIANTDIR/chr6ch17_mutect2_annotated_with_clinVar.txt"
 
 # Filter results
 filter_vep \
--i chr6ch17_mutect2_annotated_with_clinVar.txt \
--o chr6ch17_mutect2_annotated_with_clinVar_filtered.txt \
+-i "$VARIANTDIR/chr6ch17_mutect2_annotated_with_clinVar.txt" \
+-o "$VARIANTDIR/chr6ch17_mutect2_annotated_with_clinVar_filtered.txt" \
 --force_overwrite \
 --filter "(IMPACT is HIGH or IMPACT is MODERATE) or \
 (SIFT match deleterious or PolyPhen match probably_damaging) or \
@@ -466,7 +498,7 @@ filter_vep \
 
 # Generate summary (using simple grep/awk commands)
 echo "Mutation Type Summary:" > summary.txt
-grep -v "#" chr6ch17_mutect2_annotated_with_clinVar_filtered.txt | cut -f7 | sort | uniq -c >> summary.txt
+grep -v "#" "$VARIANTDIR/chr6ch17_mutect2_annotated_with_clinVar_filtered.txt" | cut -f7 | sort | uniq -c >> "$VARIANTDIR/summary_chr6ch17_mutect2_annotated_with_clinVar_filtered.txt"
 ```
 
 The possible values for ClinVar_CLNSIG include:
@@ -483,8 +515,12 @@ The possible values for ClinVar_CLNSIG include:
 
 :::
 
-The clinvar data provided us with more information coming from curated databases, and for some variants we can have multiple levels of consensus (however this is not a garantee of pathogenicity), but there are many other additional databases that one can try. However not all the databases have the same licensing, therefore each of the integrated datasets should be checked. For example `COSMIC` databases can be accessed only after registration, `onkoKB` as well. <br>
-Please do not forget to cite the data that you use and it is important to keep note of the version used.
+The clinvar data provided us with more information coming from curated databases, and for some variants we can have multiple levels of consensus (however this is not a garantee of pathogenicity), but there are many other additional databases that one can try. However not all the databases have the same licensing, therefore each of the integrated datasets should be checked. For example `COSMIC` databases can be accessed only after registration, `onkoKB` as well.
+
+
+::: {.callout-note}
+  Please do not forget to cite the data that you use and it is important to keep note of the version used. This is also an essential information for your future you!
+:::
 
 ## Advanced Topics
 
@@ -529,6 +565,8 @@ Usage:
 
 > [AlphaMissense's Paper](https://www.science.org/doi/10.1126/science.adg7492): Accurate proteome-wide missense variant effect prediction with AlphaMissense
 
+**AlphaMissense was archived on GitHub around May 2025, but it is still a gold standard, with its 216 millions predicted variants effect** 
+
 ::: {.callout-tip collapse="true"}
 ## AlphaMissense
 
@@ -547,16 +585,79 @@ Run it with VEP
 ```
 :::
 
+3.  **ClinVar**
+ClinVar: A curated database with mutation->disease data
+
+>  [ClinVar Custom Annotation](https://www.ensembl.org/info/docs/tools/vep/script/vep_custom.html): ClinVar provides curated information about relationships between variants and human health.
+
+::: {.callout-tip collapse="true"}
+## Clinvar
+
+**Download ClinVar for GRCh38:**
+``` bash
+wget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz
+wget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz.tbi
+```
+
+**Usage with VEP:**
+``` bash
+--custom /path/to/clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN
+```
+
+**Key fields extracted:**
+
+- `CLNSIG`: Clinical significance (Pathogenic, Benign, VUS, etc.)
+- `CLNREVSTAT`: Review status (confidence level)
+- `CLNDN`: Condition/disease name
+
+**Clinical Significance Values:**
+
+- Pathogenic - Strong evidence the variant causes disease
+- Likely_pathogenic - Evidence suggests disease-causing
+- Uncertain_significance (VUS) - Insufficient evidence
+- Likely_benign - Evidence suggests not disease-causing
+- Benign - Strong evidence variant is not disease-causing
+:::
+
+::: {.callout-note}
+## Automated Download Script
+
+All three resources (REVEL, AlphaMissense, and ClinVar) can be downloaded and prepared automatically using our setup script:
+[Download the setup script](https://github.com/sib-swiss/cancer-variants-training/scripts/variant_annotation)
+```bash
+bash 02_download_all_VEP_dbs.sh
+```
+
+This will create the following structure:
+```
+~/project/course_data/VEP_dbs/
+├── clinvar/
+│   ├── clinvar.vcf.gz
+│   └── clinvar.vcf.gz.tbi
+├── alphamissense/
+│   ├── AlphaMissense_hg38.tsv.gz
+│   └── AlphaMissense_hg38.tsv.gz.tbi
+└── revel/
+    ├── new_tabbed_revel_grch38.tsv.gz
+    └── new_tabbed_revel_grch38.tsv.gz.tbi
+```
+:::
+
 We have seen how to run VEP and how to filter the output. Now we can make another call on the Mutect2 output to annotate the variants using a combination of some plugins and some custom databases.
 
 ::: {.callout-note collapse="false"}
 ## **Damage prediction tools**
 
-- REVEL: An ensemble method that integrates multiple prediction tools
-- AlphaMissense: Uses deep learning trained on evolutionary data
+- **REVEL**: An ensemble method that integrates multiple prediction tools
+- **AlphaMissense**: Uses deep learning trained on evolutionary data
+- **ClinVar**: Provides clinical interpretations from expert curation
+
 :::
 
-## Complex VEP run
+## Complex VEP annotation
+Here we learn how to use additional data to include additional information to the annotation
+
+### Exercise 4
 
 ::: {.callout-important}
 ## Complex VEP run
@@ -567,6 +668,7 @@ We have seen how to run VEP and how to filter the output. Now we can make anothe
 
 1. Adding [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) annotations
 2. Adding [REVEL](https://pubmed.ncbi.nlm.nih.gov/27666373/) annotations
+3. Adding [AlphaMissense](https://www.nature.com/articles/s41576-023-00668-9)
 3. Adding population frequencies `--af_gnomade` (gnomAD data is included in VEP cache)
 4. Adding plugins (`--plugin SpliceRegion`, `--plugin AlphaMissense`, `--plugin REVEL`)
 5. Filtering for HIGH/MODERATE impact variants
@@ -577,7 +679,10 @@ We have seen how to run VEP and how to filter the output. Now we can make anothe
 ## Solution
 
 ``` bash
-vep -i ~/project/course_data/resources/Mutect2_data/somatic.filtered.PASS.vcf.gz \
+VARIANTDIR="${HOME}/project/course_data/variants"
+RESOURCEDIR="${HOME}/project/course_data/VEP_dbs"
+
+vep -i "$VARIANTDIR/somatic.filtered.PASS.vcf.gz" \
     --cache /data/.vep \
     --assembly GRCh38 \
     --format vcf \
@@ -586,15 +691,15 @@ vep -i ~/project/course_data/resources/Mutect2_data/somatic.filtered.PASS.vcf.gz
     --af_gnomade \
     --force_overwrite \
     --plugin SpliceRegion \
-    --plugin REVEL,file=/config/project/course_data/resources/revel/new_tabbed_revel_grch38.tsv.gz \
-    --plugin AlphaMissense,file=/config/project/course_data/resources/alphamissense/AlphaMissense_hg38.tsv.gz \
-    --custom /config/project/course_data/resources/clinvar/clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN \
-    --output_file chr6ch17_mutect2_annotated_with_clinVar_and_plugins.txt
+    --plugin REVEL,file="$RESOURCEDIR/revel/new_tabbed_revel_grch38.tsv.gz" \
+    --plugin AlphaMissense,file="$RESOURCEDIR/alphamissense/AlphaMissense_hg38.tsv.gz" \
+    --custom "$RESOURCEDIR/clinvar/clinvar.vcf.gz",ClinVar,vcf,overlap,0,CLNSIG,CLNREVSTAT,CLNDN \
+    --output_file "$VARIANTDIR/chr6ch17_mutect2_annotated_with_clinVar_and_plugins.txt"
     
 # Filter the data -> Stringent
 filter_vep \
--i chr6ch17_mutect2_annotated_with_clinVar_and_plugins.txt \
--o stringent_filtered.txt \
+-i "$VARIANTDIR/chr6ch17_mutect2_annotated_with_clinVar_and_plugins.txt" \
+-o "$VARIANTDIR/stringent_filtered.txt" \
 --force_overwrite \
 --filter "(IMPACT is HIGH or IMPACT is MODERATE) and \
        (REVEL >= 0.75 or \
@@ -603,8 +708,8 @@ filter_vep \
           
 # Filter the data -> Moderate
 filter_vep \
--i chr6ch17_mutect2_annotated_with_clinVar_and_plugins.txt \
--o moderate_filtered.txt \
+-i "$VARIANTDIR/chr6ch17_mutect2_annotated_with_clinVar_and_plugins.txt" \
+-o "$VARIANTDIR/moderate_filtered.txt" \
 --force_overwrite \
 --filter "(IMPACT is HIGH or IMPACT is MODERATE) and \
          (REVEL >= 0.5 or \
@@ -691,167 +796,24 @@ At this point we obtained a good annotated set of somatic variants. This paves t
 - Consider possible drug-gene interactions
 - Check in the literature
 - Visualize the results
-:::
-
-<!-- 
-# Annotating CNVkit output
-The CNVkit is a software that is specifically tailered to call CNV (Copy number Variants) from WES data. It does that by using metrics based on proper targets and off-targets reads in WES data. CNVkit is a python-based tool, that by default outputs `*.call.cns` and `*.cnr`. <br>
-
-::: {.callout-important collapse=false}
-## In case you want to transform from `.cns` to `.vcf`
-
-1. Let's convert the *.cns (segmentation file) into a VCF file. ~5min
-``` bash
-# Extract the CNVkit annotation data
-tar -xvzf ~/project/course_data/resources/CNVkit_data/cnvkit.tar.gz
-
-# Move the files to the resources folder
-mv ~/project/cnvkit/* ~/project/course_data/resources/CNVkit_data/.
-
-# Convert from call.cns to vcf 
-cnvkit.py export vcf ~/project/course_data/resources/CNVkit_data/tumor.rg.md.call.cns -o tumor.rg.md.call.cns_cnv.vcf
-```
-2. We can gzip the output
-``` bash
-# bgzip the file
-bgzip tumor.rg.md.call.cns_cnv.vcf
-```
-3. Now let's index the file
-``` bash
-# Index
-tabix -p vcf tumor.rg.md.call.cns_cnv.vcf.gz
-```
-:::
-
-Now we have a nice VCF file and in the right format to call VEP
-
-::: {.callout-important}
-## Call VEP on CNVkit's VCF
-
-**Objective**: Perform comprehensive annotation of CNVkit's output VCF file using Ensembl Variant Effect Predictor (VEP).
-
-**Task**: Consider that those are not small regions: 
-
-1. Adding [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) annotations
-2. Adding [REVEL](https://pubmed.ncbi.nlm.nih.gov/27666373/) annotations
-3. Using `--max_sv_size 100000000` to increase the region size of annotation
-4. Using `--regulatory` as it could be interesting 
-5. Adding population frequencies `--af_gnomade` (gnomAD data is included in VEP cache)
-6. Adding plugins (`--plugin SpliceRegion`, `--plugin AlphaMissense`, `--plugin REVEL`)
-7. Filtering for HIGH/MODERATE impact variants
-
-**Option**: Consider that VEP will add annotation for each of the transcripts that is overlapping the CNV regions. Therefore the file might be very comprehensive, you can simplify with `--per_gene`, `--pick_allele_gene` or `--pick`. However this can also be excluding interesting data. Moreover for the call you can substitute in the custom clinvar annotation `exact` with `overlap`.
-
-**VEP version matter** We are using VEP v.113.
-:::
-
-::: {.callout-tip collapse="true"}
-## Solution
-
-``` bash
-# Call VEP with full calls ~5min (overlap)
-vep -i tumor.rg.md.call.cns_cnv.vcf.gz \
-    --cache /data/.vep \
-    --assembly GRCh38 \
-    --format vcf \
-    --fork 2 \
-    --max_sv_size 100000000 \
-    --everything \
-    --regulatory \
-    --af_gnomade \
-    --force_overwrite \
-    --plugin SpliceRegion \
-    --plugin REVEL,file=/config/project/course_data/resources/revel/new_tabbed_revel_grch38.tsv.gz \
-    --plugin AlphaMissense,file=/config/project/course_data/resources/alphamissense/AlphaMissense_hg38.tsv.gz \
-    --custom /config/project/course_data/resources/clinvar/clinvar.vcf.gz,ClinVar,vcf,overlap,0,CLNSIG,CLNREVSTAT,CLNDN \
-    --output_file chr6ch17_mtumor.rg.md.call.cns_cnv_annotated_with_clinVar_and_plugins_all.txt
-
-# Call VEP with per gene only annotation (overlap)
-vep -i tumor.rg.md.call.cns_cnv.vcf.gz \
-    --cache /data/.vep \
-    --assembly GRCh38 \
-    --format vcf \
-    --fork 2 \
-    --max_sv_size 100000000 \
-    --everything \
-    --regulatory \
-    --af_gnomade \
-    --per_gene \
-    --force_overwrite \
-    --plugin SpliceRegion \
-    --plugin REVEL,file=/config/project/course_data/resources/revel/new_tabbed_revel_grch38.tsv.gz \
-    --plugin AlphaMissense,file=/config/project/course_data/resources/alphamissense/AlphaMissense_hg38.tsv.gz \
-    --custom /config/project/course_data/resources/clinvar/clinvar.vcf.gz,ClinVar,vcf,overlap,0,CLNSIG,CLNREVSTAT,CLNDN \
-    --output_file chr6ch17_mtumor.rg.md.call.cns_cnv_annotated_with_clinVar_and_plugins_perGene.txt
-    
-# Call VEP with per gene only annotation (exact)
-vep -i tumor.rg.md.call.cns_cnv.vcf.gz \
-    --cache /data/.vep \
-    --assembly GRCh38 \
-    --format vcf \
-    --fork 2 \
-    --max_sv_size 100000000 \
-    --everything \
-    --regulatory \
-    --af_gnomade \
-    --per_gene \
-    --force_overwrite \
-    --plugin SpliceRegion \
-    --plugin REVEL,file=/config/project/course_data/resources/revel/new_tabbed_revel_grch38.tsv.gz \
-    --plugin AlphaMissense,file=/config/project/course_data/resources/alphamissense/AlphaMissense_hg38.tsv.gz \
-    --custom /config/project/course_data/resources/clinvar/clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN \
-    --output_file chr6ch17_mtumor.rg.md.call.cns_cnv_annotated_with_clinVar_and_plugins_perGene.txt
-    
-# Filter the data
-filter_vep \
--i chr6ch17_mtumor.rg.md.call.cns_cnv_annotated_with_clinVar_and_plugins_all.txt \
--o chr6ch17_mtumor.rg.md.call.cns_cnv_annotated_with_clinVar_and_plugins.stringent_filtered.txt \
---force_overwrite \
---filter "(IMPACT is HIGH or IMPACT is MODERATE) and \
-       (REVEL >= 0.75 or \
-        am_class = 'likely_pathogenic' or \
-        SIFT = 'deleterious' and PolyPhen = 'probably_damaging')"
-        
-```
-You can also simplify the output with vep filter
-``` bash
-filter_vep \
--i chr6ch17_mtumor.rg.md.call.cns_cnv_annotated_with_clinVar_and_plugins_all.txt \
--o chr6ch17_mtumor.rg.md.call.cns_cnv_annotated_with_clinVar_and_plugins_all.filtered_simplified.txt \
---filter "SYMBOL exists" \
---force_overwrite
-```
-
-We get for example a duplication of RANBP9 that is annotated having HIGH impact and it is part of the MAME selection (matched between NCBI and Esembl)
-```vcf
-#Uploaded_variation	Location	Allele	Gene	Feature	Feature_type	Consequence	cDNA_position	CDS_position	Protein_position	Amino_acids	Codons	Existing_variation	Extra
-chr6_123855_<DUP>	chr6:123855-28994479	duplication	ENSG00000010017	ENST00000011619	Transcript	transcript_amplification	-	-	-	-	-	-	IMPACT=HIGH;STRAND=-1;VARIANT_CLASS=duplication;SYMBOL=RANBP9;SYMBOL_SOURCE=HGNC;HGNC_ID=HGNC:13727;BIOTYPE=protein_coding;CANONICAL=YES;MANE=MANE_Select;MANE_SELECT=NM_005493.3;TSL=1;APPRIS=P1;CCDS=CCDS4529.1;ENSP=ENSP00000011619;SWISSPROT=Q96S59.191;UNIPARC=UPI000006ED83;UNIPROT_ISOFORM=Q96S59-1;OverlapBP=90338;OverlapPC=100.00
-```
-For CNV annotation we get no data from the plugins and some limited data for clinvar. This is happening because those tools add on SNV and not on CNVs (but in clinvar if you change `exact` to `overalp` you will see all the transcripts that are overalapping that region).
 
 :::
 
-From the previous exercise, you might have noticed that annotating CNVs is more challenging than annotating SNVs. This is because:
+::: {.callout-note collapse="true"}
+## Advanced Topic: Annotating CNVs with VEP
 
-- CNV breakpoints can be imprecise and variable
-- The same CNV event might be reported with slightly different coordinates in different databases
-- The functional impact of CNVs can be complex, affecting multiple genes and regulatory elements
-- Tools like REVEL and AlphaMissense are specifically designed for SNVs and cannot be applied to CNVs
+CNV annotation is more challenging than SNV annotation because:
 
-One could use more specific data such as the [COSMIC](https://cancer.sanger.ac.uk/cosmic/download/cosmic), that also contain data on CNVs. Or try [DECIPHER (DatabasE of genomiC varIation and Phenotype in Humans using Ensembl Resources)](https://www.deciphergenomics.org/) database
+- Tools like REVEL/AlphaMissense are designed for SNVs
+- CNV breakpoints can be imprecise
+- Functional impact affects multiple genes
 
-::: {.callout-tip collapse=false}
-## Additional useful options in VEP
-There are many other options available in VEP, and the documentation is very compherensive. Some common options are `--filter_common` (filters out variants with a minor allele frequency (MAF) ≥ 0.01 (1%)) in any of the populations within these databases) and `--total_length` (VEP sums up the lengths of all overlapping features, useful for structural variants (SV) annotation). `--coding_only` can reduce the amount of data to only the coding parts. `--check_existing` annotates variants with information from existing databases. <br> In addition there is a web interface to VEP from the ENSEMBL team [here](https://www.ensembl.org/Tools/VEP)
+For those interested in CNV annotation, expanded materials are available in the [advanced resources section](cnv_example_using_vep.html).
 :::
-
--->
 
 # Let's visualize some of the data from our somatic call annotation!
 
-At first we should load one of the vep annotated files from one of the exercises. Let's load the results from exercise 3 (feel free to load another one!), `chr6ch17_mutect2_annotated_with_clinVar.txt` from the exercise `Cancer-Specific Annotation`. 
-
-
+At first we should load one of the vep annotated files from one of the exercises. Let's load the results from **exercise 3** (feel free to load another one!), `chr6ch17_mutect2_annotated_with_clinVar.txt` from the exercise `Cancer-Specific Annotation`.
 
 ```{r}
 #| echo: true
@@ -861,21 +823,29 @@ At first we should load one of the vep annotated files from one of the exercises
 #| title: "Some data preprocessing"
 
 # get libraries
-library(tidyverse);library(magrittr)
+library(tidyverse)
+library(magrittr)
+library(readr)
 
 # VEP output in
-vep_data <- read.table("chr6ch17_mutect2_annotated_with_clinVar.txt", 
-                       header=F, 
-                       sep="\t", 
-                       comment.char="#")
+vep_data <- read_tsv(
+  "scripts/variant_annotation/chr6ch17_mutect2_annotated_with_clinVar.txt",
+  comment = "##"
+)
 
-# The standard VEP column names are:
-colNames <- c("#Uploaded_variation", "Location", "Allele", "Gene", "Feature", "Feature_type",
-"Consequence", "cDNA_position", "CDS_position", "Protein_position", "Amino_acids",
-"Codons", "Existing_variation", "Extra")
-
-# Set column names
-colnames(vep_data) <- colNames
+# better to set up a ggplot2 theme
+theme_course <- function() {
+  theme_minimal(base_size = 14) +  # Base size affects all text
+    theme(
+      plot.title = element_text(size = 16, face = "bold"),
+      axis.title = element_text(size = 14, face = "bold"),
+      axis.text = element_text(size = 12),
+      legend.title = element_text(size = 13, face = "bold"),
+      legend.text = element_text(size = 12),
+      strip.text = element_text(size = 13, face = "bold"),  # For facets
+      legend.position = "bottom"
+    )
+}
 
 # Split when it contains multiple values
 consequences_df <- vep_data %>%
@@ -905,6 +875,7 @@ vep_data <- vep_data %>%
   )
 ```
 
+### Exercise 5
 ::: {.callout-important}
 ## Visualize the data from VEP
 
@@ -918,7 +889,8 @@ vep_data <- vep_data %>%
 4. Can we see the consequence colored by impact by chromosome?
 5. What are the most common variant classes?
 6. What are the most common biotypes?
-7. Bonus: ClinVar, SIFT, ans PolyPhen
+7. Bonus: ClinVar, SIFT, and PolyPhen
+8. Bonus: Gene level damage
 
 :::
 
@@ -935,9 +907,10 @@ ggplot(vep_data, aes(x=reorder(Consequence, table(Consequence)[Consequence]))) +
   theme_minimal() +
   labs(title="Distribution of \n Variant Consequences",
        x="Consequence Type",
-       y="Count")
+       y="Count") +
+  theme_course()
 ```
-![](assets/variant_annotation/unnamed-chunk-2-1.png)
+![](assets/variant_annotation/a1.png)
 
 :::
 
@@ -957,9 +930,10 @@ ggplot(vep_data, aes(x=reorder(Consequence, table(Consequence)[Consequence]))) +
   facet_grid(~chr) +
   theme(
     legend.position = "bottom"
-  )
+  ) +
+  theme_course()
 ```
-![](assets/variant_annotation/unnamed-chunk-3-1.png)
+![](assets/variant_annotation/a2.png)
 :::
 
 
@@ -980,9 +954,10 @@ ggplot(vep_data, aes(x=reorder(Consequence, table(Consequence)[Consequence]), fi
        y="Count") +
   theme(
     legend.position = "bottom"
-  )
+  ) +
+  theme_course()
 ```
-![](assets/variant_annotation/unnamed-chunk-4-1.png)
+![](assets/variant_annotation/a3.png)
 :::
 
 
@@ -1003,9 +978,10 @@ ggplot(vep_data, aes(x=reorder(Consequence, table(Consequence)[Consequence]), fi
   facet_grid(~chr) +
   theme(
     legend.position = "bottom"
-  )
+  ) +
+  theme_course()
 ```
-![](assets/variant_annotation/unnamed-chunk-5-1.png)
+![](assets/variant_annotation/a4.png)
 :::
 
 
@@ -1024,9 +1000,11 @@ vep_data %>%
   theme_minimal() +
   labs(title = "Distribution of \n Variant Classes",
        x = "Variant Class",
-       y = "Count")
+       y = "Count"
+       ) +
+  theme_course()
 ```
-![](assets/variant_annotation/unnamed-chunk-6-1.png)
+![](assets/variant_annotation/a5.png)
 :::
 
 
@@ -1042,9 +1020,11 @@ ggplot(vep_data, aes(x=reorder(BIOTYPE, table(BIOTYPE)[BIOTYPE]))) +
   theme_minimal() +
   labs(title="Distribution of \n Biotypes",
        x="Biotype",
-       y="Count")
+       y="Count"
+       ) +
+  theme_course()
 ```
-![](assets/variant_annotation/unnamed-chunk-7-1.png)
+![](assets/variant_annotation/a6.png)
 :::
 
 ::: {.callout-tip collapse="true"}
@@ -1078,7 +1058,8 @@ ggplot(subset(vep_data, !is.na(sift)),
   labs(title = "Distribution of SIFT Predictions",
        x = "SIFT Prediction",
        y = "Count",
-       caption = "Only missense variants are scored by SIFT")
+       caption = "Only missense variants are scored by SIFT") +
+  theme_course()
 
 # Distribution of PolyPhen predictions 
 ggplot(subset(vep_data, !is.na(polyphen)), 
@@ -1089,10 +1070,11 @@ ggplot(subset(vep_data, !is.na(polyphen)),
   labs(title = "Distribution of PolyPhen Predictions",
        x = "PolyPhen Prediction",
        y = "Count",
-       caption = "Only missense variants are scored by PolyPhen")
+       caption = "Only missense variants are scored by PolyPhen") +
+  theme_course()
 ```
-![](assets/variant_annotation/unnamed-chunk-8-1.png)
-![](assets/variant_annotation/unnamed-chunk-8-2.png)
+![](assets/variant_annotation/a7.png)
+![](assets/variant_annotation/a8.png)
 
 ### Combined SIFT and PolyPhen predictions with Impact
 ```{r}
@@ -1107,7 +1089,8 @@ p3 <- subset(vep_data, !is.na(sift) & !is.na(polyphen)) %>%
   labs(title = "SIFT and PolyPhen Predictions by Impact",
        x = "SIFT Prediction",
        y = "Count") +
-  theme(legend.position = "bottom")
+  theme(legend.position = "bottom") +
+  theme_course()
 
 # 4. ClinVar significance with impact 
 p4 <- subset(vep_data, !is.na(clinvar)) %>%
@@ -1119,7 +1102,8 @@ p4 <- subset(vep_data, !is.na(clinvar)) %>%
   labs(title = "Clinical Significance by Impact",
        x = "ClinVar Clinical Significance",
        y = "Count") +
-  theme(legend.position = "bottom")
+  theme(legend.position = "bottom") +
+  theme_course()
 
 # 5. For missense variants only - comparison of predictions
 p5 <- subset(vep_data, Consequence == "missense_variant" & !is.na(sift) & !is.na(polyphen)) %>%
@@ -1131,24 +1115,77 @@ p5 <- subset(vep_data, Consequence == "missense_variant" & !is.na(sift) & !is.na
        x = "SIFT Prediction",
        y = "Count",
        fill = "PolyPhen Prediction") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme_course()
 ```
 
-### Plot
+### Plots
 ```{r}
 print(p3)
 ```
-![](assets/variant_annotation/unnamed-chunk-10-1.png)
+![](assets/variant_annotation/p3.png)
 
 ```{r}
 print(p4)
 ```
-![](assets/variant_annotation/unnamed-chunk-10-2.png)
+![](assets/variant_annotation/p4.png)
 
 ```{r}
 print(p5)
 ```
-![](assets/variant_annotation/unnamed-chunk-10-3.png)
+![](assets/variant_annotation/p5.png)
+
+:::
+
+::: {.callout-tip collapse="true"}
+## 8. Bonus: Gene level damage
+```{r}
+  
+# Gene-level summary - most frequently mutated genes
+p6 <- vep_data %>%
+  filter(!is.na(SYMBOL) & SYMBOL != "") %>%
+  count(SYMBOL, chr) %>%
+  arrange(desc(n)) %>%
+  slice_head(n = 20) %>%
+  ggplot(aes(x = reorder(SYMBOL, n), y = n, fill = chr)) +
+  geom_col() +
+  coord_flip() +
+  scale_fill_brewer(palette = "Set1") +
+  labs(title = "Top 20 Most Frequently Mutated Genes",
+       x = "Gene Symbol",
+       y = "Number of Variants",
+       fill = "Chromosome") +
+  theme_course()
+
+# High impact variants by gene
+p7 <- vep_data %>%
+  filter(IMPACT %in% c("HIGH", "MODERATE") & !is.na(SYMBOL) & SYMBOL != "") %>%
+  count(SYMBOL, IMPACT) %>%
+  arrange(desc(n)) %>%
+  slice_head(n = 30) %>%
+  ggplot(aes(x = reorder(SYMBOL, n), y = n, fill = IMPACT)) +
+  geom_col() +
+  coord_flip() +
+  scale_fill_manual(values = c("HIGH" = "#d62728", "MODERATE" = "#ff7f0e")) +
+  labs(title = "Genes with High/Moderate Impact Variants",
+       x = "Gene Symbol",
+       y = "Number of Variants",
+       fill = "Impact Level") +
+  theme_course()
+```
+
+### Plots
+```{r}
+print(p6)
+```
+![](assets/variant_annotation/p6.png)
+
+```{r}
+print(p7)
+```
+![](assets/variant_annotation/p7.png)
+
+
 :::
 
 ### VEP Performance Optimization
@@ -1197,6 +1234,7 @@ For large-scale analyses, consider these optimization strategies:
 -   COSMIC: <https://cancer.sanger.ac.uk/cosmic>
 -   ClinVar: <https://www.ncbi.nlm.nih.gov/clinvar/>
 -   gnomAD: <https://gnomad.broadinstitute.org/>
+-   ALFA 4: <https://www.ncbi.nlm.nih.gov/snp/docs/gsr/alfa/ALFA_20250407153717/>
 -   OncoKB: <https://www.oncokb.org/>
 
 ### Download data to COSMIC
@@ -1205,6 +1243,25 @@ For large-scale analyses, consider these optimization strategies:
 We cannot provide those files (they require licensing), you need to register and download the files.
 ```CosmicMutantExport.tsv.gz```
 You can register [here:](https://cancer.sanger.ac.uk/cosmic)
+
+## Best Practices from Literature
+
+::: {.callout-note}
+## Key Recommendations
+
+**From McLaren et al. (2016) - VEP Paper:**
+
+- Use `--pick` or `--per_gene` to manage transcript complexity
+- Combine multiple prediction algorithms for consensus
+- Always document VEP version and cache version for reproducibility
+
+**For Cancer Analysis:**
+
+- Filter common variants (gnomAD MAF < 0.01) for somatic analysis
+- Consider tissue-specific expression data when available
+- Use multiple evidence sources (ClinVar + COSMIC + literature)
+- Validate high-priority variants with orthogonal methods
+:::
 
 ### Tools and Documentation
 
@@ -1220,6 +1277,69 @@ You can register [here:](https://cancer.sanger.ac.uk/cosmic)
 4.  Consider computational resources when processing large datasets
 5.  Document any modifications to the pipeline
 
+## Quick Reference
+
+::: {.callout-tip collapse="True"}
+## VEP Command Cheatsheet
+
+**Basic annotation:**
+```bash
+vep -i input.vcf \
+    --cache /data/.vep \
+    --offline \
+    --assembly GRCh38 \
+    -o output.txt
+```
+
+**With common options:**
+```bash
+vep -i input.vcf \
+    --cache /data/.vep \
+    --offline \
+    --assembly GRCh38 \
+    --everything \
+    --fork 2 \
+    --vcf \
+    -o output.vcf
+```
+
+**Filter high-impact:**
+```bash
+filter_vep -i input.txt \
+    -o filtered.txt \
+    --filter "IMPACT is HIGH or IMPACT is MODERATE"
+```
+
+**Output format options:**
+```bash
+# Tab-separated (default, most flexible for downstream analysis)
+vep ... -o output.txt
+# OR explicitly specify tab format
+vep ... --tab -o output.txt
+
+# VCF output (standard variant format)
+vep ... --vcf -o output.vcf
+
+# Compressed VCF (saves space, ready for tabix)
+vep ... --vcf --compress_output bgzip -o output.vcf.gz
+
+# Custom tab-delimited fields (choose specific columns)
+vep ... --tab --fields "Location,Allele,Gene,SYMBOL,Consequence,IMPACT,SIFT,PolyPhen" \
+    -o custom_output.txt
+```
+
+**Common flags:**
+
+- `--pick`: One consequence per variant
+- `--per_gene`: One consequence per gene
+- `--fork N`: Use N CPU cores
+- `--no_stats`: Skip HTML summary (faster)
+- `--tab`: Tab-separated output (default)
+- `--vcf`: VCF format output
+- `--json`: Outputs to JSON format
+- `--fields`: Choose specific output columns
+:::
+
 ## References
 
 1.  McLaren W, et al. The Ensembl Variant Effect Predictor. Genome
@@ -1228,6 +1348,4 @@ You can register [here:](https://cancer.sanger.ac.uk/cosmic)
     of genome annotations. Genome Biology (2005)
 3.  Richards S, et al. Standards and guidelines for the interpretation
     of sequence variants. Genetics in Medicine (2015)
-    
-
-
+4.  Terry A. Brown, et al. Genomes 5 (2023)

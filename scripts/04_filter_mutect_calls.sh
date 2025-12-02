@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-REFDIR=~/project/course_data/reference
-VARIANTDIR=~/project/course_data/variants
+# Define directories
+REFDIR="${HOME}/project/course_data/reference"
+VARIANTDIR="${HOME}/project/course_data/variants"
 
 gatk FilterMutectCalls \
 -R "$REFDIR"/ref_genome.fa \

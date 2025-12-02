@@ -1,7 +1,8 @@
+#!/usr/bin/env bash
 
-mkdir -p data/resources
-
-cd data/resources
+BASE_DIR="${HOME}/project/course_data"
+mkdir -p "${BASE_DIR}/resources"
+cd "${BASE_DIR}/resources"
 
 # check out contents
 
@@ -25,7 +26,6 @@ s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/1000g_
 .
 
 # gnomad af-only
-
 aws s3 \
 --no-sign-request --region eu-west-1 \
 cp \
@@ -39,7 +39,6 @@ s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/af-onl
 .
 
 # known sites snp
-
 aws s3 \
 --no-sign-request --region eu-west-1 \
 cp \
@@ -53,7 +52,6 @@ s3://ngi-igenomes/igenomes/Homo_sapiens/GATK/GRCh38/Annotation/GATKBundle/1000G_
 .
 
 # known sites indel
-
 aws s3 \
 --no-sign-request --region eu-west-1 \
 cp \

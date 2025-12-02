@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
-ALIGNDIR=~/project/data/alignments
-RESOURCEDIR=~/project/data/resources
-VARIANTDIR=~/project/data/variants
+# Define directories
+ALIGNDIR="${HOME}/project/course_data/alignments"
+VARIANTDIR="$HOME/project/course_data/variants"
+RESOURCEDIR="${HOME}/project/course_data/resources"
 
 for sample in tumor normal
 do
