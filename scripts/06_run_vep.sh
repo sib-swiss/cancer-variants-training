@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 
-VARIANTDIR=~/project/course_data/variants
+# Define directories
+VARIANTDIR="${HOME}/project/course_data/variants"
 
 # Run VEP ~< 5min
-vep -i "$VARIANTDIR"/cancer_variants.vcf \
-    -cache \
-    --dir /data/.vep \
+vep -i "$VARIANTDIR"/somatic.filtered.PASS.vcf.gz \
+    --cache \
+    --dir "$HOME"/.vep \
     --species homo_sapiens \
     --offline \
     --force_overwrite \
@@ -17,4 +18,3 @@ vep -i "$VARIANTDIR"/cancer_variants.vcf \
     --pick \
     --domains \
     --output_file "$VARIANTDIR"/cancer_variants_output.txt
-

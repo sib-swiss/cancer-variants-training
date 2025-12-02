@@ -1,12 +1,25 @@
 ---
 title: "SIB course cancer variant analysis"
+format:
+  html:
+    css: styles.css
 ---
 
 
-## Teachers and authors
+## Course Team
 
+**Trainer**
 - Flavio Lombardo [ORCiD](https://orcid.org/0000-0002-4853-6838)
-- Geert van Geest [ORCiD](https://orcid.org/0000-0002-1561-078X)
+
+**Helper**
+- Deepak Tanwar [ORCID](https://orcid.org/0000-0001-8036-1989)
+
+**Contributors**
+- Geert van Geest [ORCiD](https://orcid.org/0000-0002-1561-078X) (original course materials)
+
+---
+
+*This course builds upon materials originally co-developed by Geert van Geest and Flavio Lombardo, with substantial updates and additions by Flavio Lombardo for the 2025 edition.*
 
 ## Attribution
 

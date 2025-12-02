@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-cd ~/project/course_data/alignments
+ALIGNMENT_DIR="${HOME}/project/course_data/alignments"
 
-for sample in tumor normal
-do
-    samtools flagstat "$sample".recal.bam > "$sample".recal.bam.flagstat
+# Process each sample
+for sample in tumor normal; do
+    samtools flagstat "${ALIGNMENT_DIR}/$sample.recal.bam" > "${ALIGNMENT_DIR}/$sample.recal.bam.flagstat"
 done
+
+echo "Flagstat analysis complete!"

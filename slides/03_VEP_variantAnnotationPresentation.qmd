@@ -2,21 +2,37 @@
 title: "Variant Effect Predictor (VEP)"
 subtitle: "A Practical Introduction"
 author: "Flavio Lombardo"
-format: 
+date: "2025-12-12"
+format:
   revealjs:
-    theme: sky
+    theme: default
+    slide-number: true
+    chalkboard: true
     scrollable: true
+    preview-links: auto
+    logo: "../assets/SIB_logo.svg"
+    footer: "Cancer Variant Analysis - SIB"
+    code-fold: true
+    highlight-style: github
+    fontsize: 27px
+    smaller: true
     css: |
-      .reveal h1 {
-        font-size: 1.6em !important;
+      .reveal .slides {
+        font-size: 1.5em;
       }
-      .title-slide h1 {
-        font-size: 1.8em !important;
+      .reveal h2 {
+        font-size: 2em;
       }
-transition: slide
-slide-number: true
+      .reveal .callout {
+        font-size: 1.5em;
+      }
+      .reveal table {
+        font-size: 1.2em;
+      }
+      .reveal code {
+        font-size: 1.2em;
+      }
 code-block-background: true
-highlight-style: github
 code-overflow: wrap
 ---
 
@@ -175,22 +191,20 @@ Interpretation: AI model predicts damaging effect
 
 Imagine thousands of variants to annotate manually to understand what each of them does, searching in different databases, searching in the literature. It would take weeks and it would be error prone. Automation of these tasks reduces the time-to- discovery
 
-::: {.incremental}
+
 -   Powerful tool for annotating genomic variants (both somatic and germline)
 -   Essential in cancer genomics and clinical applications
 -   Helps understand functional impact of mutations
-:::
 
 # What is VEP NOT doing for you?
 
 VEP is a great tool, but it does not remove the work from the scientists. Automation simplifies the process but it can give false positives and false negatives. 
 If the experimental setup is low quality, the results most likely will be low quality too.
 
-::: {.incremental}
+
 - Calling variants
 - Magic bullet
 - Knowing everything
-:::
 
 ::: {.notes}
 - Brainstorming, reiteration and analysis
@@ -242,7 +256,7 @@ source ~/miniconda3/bin/activate
 conda init --all
 
 # Using Conda
-conda create -n vep samtools python=3.10 ensembl-vep=113
+conda create -n vep samtools python=3.10 ensembl-vep=115
 # conda install -c bioconda ensembl-vep # if installing in current env
 
 # Activate VEP's env
@@ -426,121 +440,6 @@ Key points:
 - Complements SIFT predictions
 - Used in conjunction with other predictors
 - Important for missense variant interpretation
-:::
-
-# Practical Exercises {background-color="#2C3E50"}
-
-## Example 1: Basic Analysis
-
-
-Input VCF: 
-``` vcf 
-##fileformat=VCFv4.2 
-#CHROM  POS     ID      REF  ALT   QUAL  FILTER  INFO 
-chr7       55242465  rs121913529  A    T     .     PASS    . 
-chr17      7577121   rs28934578    C    T     .     PASS    . 
-chr13      32936646  rs28897743    C    T     .     PASS    .
-```
-
-Results: 
-
-Then we get something more informative like:
-
-- BRAF: p.Val600Glu (melanoma) 
-- TP53: p.Arg248Trp (multiple cancers) 
-- BRCA2: missense variant
-
-## VCF {visibility="hidden"}
-Header:
-
-- Metadata lines start with ##
-- Column header starts with #
-- Contains format version, reference genome info, tool info
-
-- Required Fields:
-
-  - CHROM - chromosome
-  - POS - position
-  - ID - variant identifier
-  - REF - reference allele
-  - ALT - alternate allele(s)
-  - QUAL - quality score
-  - FILTER - filter status
-  - INFO - additional annotations
-  
-## INFO field in a VCF file {visibility="hidden"}
-This is coming from Mutect2
-
-<br>
-
-> ````AS_FilterStatus=SITE;AS_SB_TABLE=70,82|1,2;DP=161;ECNT=1;GERMQ=93;MBQ=37,39;MFRL=267,318;MMQ=60,60;MPOS=12;NALOD=1.93;NLOD=24.63;POPAF=6;TLOD=6.11````
-
-| Parameter | Description | Value Example |
-|-----------|-------------|---------------|
-| AS_FilterStatus | Site-level filter status | SITE |
-| AS_SB_TABLE | Strand bias table | 70,82\|1,2 (ref fwd, ref rev\|alt fwd, alt rev) |
-| DP | Total depth | 161 reads |
-| ECNT | Number of events in this haplotype | 1 |
-| GERMQ | Germline variant quality | 93 |
-| MBQ | Median base quality | 37,39 (ref,alt) |
-| MFRL | Median fragment length | 267,318 (ref,alt) |
-| MMQ | Median mapping quality | 60,60 (ref,alt) |
-| MPOS | Median position in reads | 12 |
-| NALOD | Negative log odds of artifact | 1.93 |
-| NLOD | Normal likelihood for variant | 24.63 |
-| POPAF | Variant population allele frequency | 6 |
-| TLOD | Tumor LOD score | 6.11 |
-
-## Download databases' data
-
-For ClinVar
-``` bash
-# Download latest ClinVar VCF
-wget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz
-wget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz.tbi
-```
-
-For COSMIC <br>
-We cannot provide those files (a license is required), you need to register on the COSMIC's website and download the files. For example:
-```CosmicMutantExport.tsv.gz```.
-
-You can register [here](https://cancer.sanger.ac.uk/cosmic)
-
-## Example Command for Somatic Analysis
-
-``` bash
-vep -i somatic.vcf \
---cache \
---assembly GRCh38 \
---format vcf \
---symbol \
---check_existing \
---pick \
---output_file output.txt
-```
-
-instead of symbol one can select ```--hgvs``` or __both__ ```--hgvs \--symbol```
-
-## Exercise 2: Cancer Analysis
-
-Adding more specific annotations:
-
-``` bash
-vep -i input.vcf \
---cache \
---assembly GRCh38 \
---format vcf \
---symbol \
---pick \
---sift b \
---polyphen b \
---force_overwrite \
---output_file output.txt
-```
-
-::: {.smaller}
-- sift: SIFT is an algorithm for predicting whether a given change in a protein sequence will be deleterious to the function of that protein
-- polyphen: PolyPhen-2 predicts the effect of an amino acid substitution on the structure and function of a protein using sequence homology __only for human__
 :::
 
 # Advanced Topics {background-color="#2C3E50"}

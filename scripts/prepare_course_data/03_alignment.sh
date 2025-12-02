@@ -1,7 +1,10 @@
+#!/usr/bin/env bash
 
-REFDIR=~/project/data/reference/
-READDIR=~/project/data/reads
-ALIGNDIR=~/project/data/alignments
+# Define directories
+ALIGNDIR="${HOME}/project/course_data/alignments"
+REFDIR="${HOME}/project/course_data/reference"
+READDIR="${HOME}/project/course_data/reads"
+
 
 mkdir -p "$ALIGNDIR"
 
@@ -12,7 +15,5 @@ do
     "$READDIR"/"$sample"_R1.fastq.gz \
     "$READDIR"/"$sample"_R2.fastq.gz \
     2> "$ALIGNDIR"/$sample.bwa.log \
-    | samtools sort \
-    | samtools view -bh \
-    > "$ALIGNDIR"/"$sample".bam
+    | samtools sort -o "$ALIGNDIR"/"$sample".bam -
 done

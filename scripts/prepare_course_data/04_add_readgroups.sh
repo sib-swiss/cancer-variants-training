@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-ALIGNDIR=~/project/data/alignments
+# Define directories
+ALIGNDIR="${HOME}/project/course_data/alignments"
 
 for sample in tumor normal
 do

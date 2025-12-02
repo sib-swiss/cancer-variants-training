@@ -1,0 +1,201 @@
+---
+title: "CNVs with ENSEMBL VEP"
+execute:
+  eval: false
+format:
+  html:
+    toc: true
+    css: styles.css
+---
+
+# Annotating CNVkit output
+The CNVkit is a software that is specifically tailored to call CNV (Copy number Variants) from WES data. It does that by using metrics based on proper targets and off-targets reads in WES data. CNVkit is a python-based tool, that by default outputs `*.call.cns` and `*.cnr`. <br>
+
+::: {.callout-note}
+## Why annotate CNVs with VEP?
+
+**VEP is primarily designed for SNVs and small indels, not CNVs.** For dedicated CNV annotation, specialized tools are more appropriate:
+
+- **AnnotSV** - Specifically designed for structural variant annotation
+- **SVAnna** - Uses ontology-based phenotype matching
+- **SVAFOTATE** - Comprehensive SV annotation
+- **VarSome** - Clinical interpretation platform
+
+**So why are we using VEP for CNVs in this exercise?**
+
+1. **Practical reality**: Many pipelines already use VEP and it's convenient to get basic gene-level annotation
+2. **Understanding limitations**: Learning what VEP *can't* do well is as important as what it can
+3. **Integration**: VEP can provide consistent annotation format across SNVs and CNVs for downstream analysis
+4. **Population frequencies**: VEP can still add gnomAD population frequencies for common CNV regions
+
+**Summary**: Use VEP for basic CNV gene annotation, but consider specialized tools for clinical interpretation or detailed CNV analysis.
+:::
+
+::: {.callout-important collapse=false}
+## In case you want to transform from `.cns` to `.vcf`
+
+1. Let's convert the *.cns (segmentation file) into a VCF file. ~5min
+``` bash
+#!/usr/bin/env bash
+
+BASE_DIR="${HOME}/project/course_data"
+RES_DIR="${BASE_DIR}/resources"
+VAR_DIR="${BASE_DIR}/variants"
+CNV_DIR="${VAR_DIR}/cnvkit"
+
+# Convert from call.cns to vcf 
+cnvkit.py export vcf "${CNV_DIR}/tumor.call.cns" -o "${CNV_DIR}/tumor.call.vcf"
+```
+2. We can gzip the output
+``` bash
+# bgzip the file
+bgzip -f "${CNV_DIR}/tumor.call.vcf"
+```
+3. Now let's index the file
+``` bash
+# Index
+tabix -p vcf -f "${CNV_DIR}/tumor.call.vcf.gz"
+```
+:::
+
+Now we have a nice VCF file and in the right format to call VEP
+
+::: {.callout-important}
+## Call VEP on CNVkit's VCF
+
+**Objective**: Perform comprehensive annotation of CNVkit's output VCF file using Ensembl Variant Effect Predictor (VEP).
+
+**Task**: Consider that those are not small regions: 
+
+1. Adding [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/) annotations
+2. Adding [REVEL](https://pubmed.ncbi.nlm.nih.gov/27666373/) annotations
+3. Using `--max_sv_size 100000000` to increase the region size of annotation
+4. Using `--regulatory` as it could be interesting 
+5. Adding population frequencies `--af_gnomade` (gnomAD data is included in VEP cache)
+6. Adding plugins (`--plugin SpliceRegion`, `--plugin AlphaMissense`, `--plugin REVEL`)
+7. Filtering for HIGH/MODERATE impact variants
+
+**Option**: Consider that VEP will add annotation for each of the transcripts that is overlapping the CNV regions. Therefore the file might be very comprehensive, you can simplify with `--per_gene`, `--pick_allele_gene` or `--pick`. However this can also be excluding interesting data. Moreover for the call you can substitute in the custom clinvar annotation `exact` with `overlap`.
+
+**VEP version matters** We are using VEP v.115.
+
+**Note on `exact` vs `overlap` for ClinVar:**
+
+- `exact`: Only annotates if variant coordinates match exactly (strict, fewer results)
+- `overlap`: Annotates if variant overlaps with ClinVar entries (permissive, more results for CNVs)
+:::
+
+::: {.callout-tip collapse="true"}
+## Solution
+
+``` bash
+
+# Base directories
+BASE_DIR="${HOME}/project/course_data"
+RES_DIR="${BASE_DIR}/resources"
+DBS_DIR="${BASE_DIR}/VEP_dbs"
+VAR_DIR="${BASE_DIR}/variants"
+CNV_DIR="${VAR_DIR}/cnvkit"
+VEP_CACHE="${HOME}/.vep"
+
+# Input Files
+MUTECT_VCF="${VAR_DIR}/somatic.filtered.PASS.vcf.gz"
+CLINVAR="${DBS_DIR}/clinvar/clinvar.vcf.gz"
+REVEL="${DBS_DIR}/revel/new_tabbed_revel_grch38.tsv.gz"
+ALPHA="${DBS_DIR}/alphamissense/AlphaMissense_hg38.tsv.gz"
+
+# Call VEP with full calls ~5min (overlap)
+# Call VEP with full calls (overlap)
+vep -i "${CNV_DIR}/tumor.call.vcf.gz" \
+  --cache "${VEP_CACHE}" \
+  --assembly GRCh38 \
+  --format vcf \
+  --fork 2 \
+  --max_sv_size 100000000 \
+  --everything \
+  --regulatory \
+  --af_gnomade \
+  --force_overwrite \
+  --plugin SpliceRegion \
+  --plugin REVEL,file="${REVEL}" \
+  --plugin AlphaMissense,file="${ALPHA}" \
+  --custom "${CLINVAR},ClinVar,vcf,overlap,0,CLNSIG,CLNREVSTAT,CLNDN" \
+  --output_file "${CNV_DIR}/tumor.call_annotated_all_overlap.txt"
+
+# Call VEP per gene (exact)
+vep -i "$CNV_DIR"/tumor.call.vcf.gz \
+  --cache "${VEP_CACHE}" \
+  --assembly GRCh38 \
+  --format vcf \
+  --fork 2 \
+  --max_sv_size 100000000 \
+  --everything \
+  --regulatory \
+  --af_gnomade \
+  --force_overwrite \
+  --plugin SpliceRegion \
+  --plugin REVEL,file="${REVEL}" \
+  --plugin AlphaMissense,file="${ALPHA}" \
+  --custom "${CLINVAR}",ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN \
+  --output_file "${CNV_DIR}/tumor.call_annotated_all_exact.txt"
+
+## Exact
+# Filter the data CNV
+filter_vep \
+  -i "${CNV_DIR}/tumor.call_annotated_all_exact.txt" \
+  -o "${CNV_DIR}/tumor.call_annotated_all_IMPACT_filtered_exact.txt" \
+  --force_overwrite \
+  --filter "(IMPACT is HIGH or IMPACT is MODERATE) or (ClinVar_CLNSIG match pathogenic)"
+
+## Overlap
+# Filter the data CNV
+filter_vep \
+  -i "${CNV_DIR}/tumor.call_annotated_all_overlap.txt" \
+  -o "${CNV_DIR}/tumor.call_annotated_all_IMPACT_filtered_overlap.txt" \
+  --force_overwrite \
+  --filter "(IMPACT is HIGH or IMPACT is MODERATE) or (ClinVar_CLNSIG match pathogenic)"
+
+
+        
+```
+You can also simplify the output with vep filter
+``` bash
+## OVERALP
+# filtering by Symbol
+filter_vep \
+  -i "${CNV_DIR}/tumor.call_annotated_all_overlap.txt" \
+  -o "${CNV_DIR}/tumor.call_annotated_GENE_filtered_overlap.txt" \
+  --filter "SYMBOL exists" \
+  --force_overwrite
+  
+## EXACT
+# filtering by Symbol
+filter_vep \
+  -i "${CNV_DIR}/tumor.call_annotated_all_exact.txt" \
+  -o "${CNV_DIR}/tumor.call_annotated_GENE_filtered_exact.txt" \
+  --filter "SYMBOL exists" \
+  --force_overwrite
+```
+
+We get for example a duplication of RANBP9 that is annotated having HIGH impact and it is part of the MAME selection (matched between NCBI and Ensembl)
+```vcf
+#Uploaded_variation	Location	Allele	Gene	Feature	Feature_type	Consequence	cDNA_position	CDS_position	Protein_position	Amino_acids	Codons	Existing_variation	Extra
+chr6_123855_<DUP>	chr6:123855-28994479	duplication	ENSG00000010017	ENST00000011619	Transcript	transcript_amplification	-	-	-	-	-	-	IMPACT=HIGH;STRAND=-1;VARIANT_CLASS=duplication;SYMBOL=RANBP9;SYMBOL_SOURCE=HGNC;HGNC_ID=HGNC:13727;BIOTYPE=protein_coding;CANONICAL=YES;MANE=MANE_Select;MANE_SELECT=NM_005493.3;TSL=1;APPRIS=P1;CCDS=CCDS4529.1;ENSP=ENSP00000011619;SWISSPROT=Q96S59.191;UNIPARC=UPI000006ED83;UNIPROT_ISOFORM=Q96S59-1;OverlapBP=90338;OverlapPC=100.00
+```
+For CNV annotation we get no data from the plugins and some limited data for clinvar. This is happening because those tools add on SNV and not on CNVs (but in clinvar if you change `exact` to `overalp` you will see all the transcripts that are overalapping that region).
+
+:::
+
+From the previous exercise, you might have noticed that annotating CNVs is more challenging than annotating SNVs. This is because:
+
+- CNV breakpoints can be imprecise and variable
+- The same CNV event might be reported with slightly different coordinates in different databases
+- The functional impact of CNVs can be complex, affecting multiple genes and regulatory elements
+- Tools like REVEL and AlphaMissense are specifically designed for SNVs and cannot be applied to CNVs
+
+One could use more specific data such as the [COSMIC](https://cancer.sanger.ac.uk/cosmic/download/cosmic), that also contain data on CNVs. Or try [DECIPHER (DatabasE of genomiC varIation and Phenotype in Humans using Ensembl Resources)](https://www.deciphergenomics.org/) database
+
+::: {.callout-tip collapse=false}
+## Additional useful options in VEP
+There are many other options available in VEP, and the documentation is very comprehensive. Some common options are `--filter_common` (filters out variants with a minor allele frequency (MAF) ≥ 0.01 (1%)) in any of the populations within these databases) and `--total_length` (VEP sums up the lengths of all overlapping features, useful for structural variants (SV) annotation). `--coding_only` can reduce the amount of data to only the coding parts. `--check_existing` annotates variants with information from existing databases. <br> In addition there is a web interface to VEP from the ENSEMBL team [here](https://www.ensembl.org/Tools/VEP)
+:::

@@ -1,6 +1,8 @@
-VARIANTDIR=~/project/course_data/variants
+#!/usr/bin/env bash
 
-cnvkit.py export vcf "$VARIANTDIR"/cnvkit/tumor.call.cns -o "$VARIANTDIR"/cnvkit/tumor.call.vcf
+VARIANTDIR="${HOME}/project/course_data/variants/cnvkit"
 
-bgzip "$VARIANTDIR"/cnvkit/tumor.call.vcf 
-tabix -p vcf "$VARIANTDIR"/cnvkit/tumor.call.vcf.gz
+cnvkit.py export vcf "$VARIANTDIR"/tumor.call.cns -o "$VARIANTDIR"/tumor.call.vcf
+
+bgzip "$VARIANTDIR"/tumor.call.vcf 
+tabix -p vcf "$VARIANTDIR"/tumor.call.vcf.gz

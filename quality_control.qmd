@@ -1,12 +1,20 @@
 ---
 title: Setup & quality control
+format:
+  html:
+    css: styles.css
 ---
 
 ## Presentations
 
-{{< downloadthis assets/pdf/01_course_intro.pdf dname="01_introduction_course" label="Course introduction" icon="filetype-pdf" >}}
-
-{{< downloadthis assets/pdf/02_introduction_cancer_variants.pdf dname="02_introduction_cancer_variants" label="Introduction to cancer variant analysis" icon="filetype-pdf" >}}
+<a href="slides/01_course_intro.qmd" class="btn btn-red" role="button" target="_blank" rel="noopener noreferrer">
+  Course intro
+</a>
+<br>
+<br>
+<a href="slides/02_introduction_cancer_variants.qmd" class="btn btn-red" role="button" target="_blank" rel="noopener noreferrer">
+  Introduction to cancer variant analysis
+</a>
 
 ## Exercises 
 
@@ -32,7 +40,7 @@ For a.o. efficiency and reproducibility it makes sense to execute your commands 
 
 ### Setup
 
-We will start the exercises with pre-aligned bam files. To start, download and extract the course_data folder:
+We will start the exercises with pre-aligned bam files. To start, download and extract the `course_data` folder:
 
 ```sh
 wget https://cancer-variants-training.s3.eu-central-1.amazonaws.com/course_data.tar.gz
@@ -43,59 +51,68 @@ rm course_data.tar.gz
 Now, check out the directory `course_data` and see what's in there (e.g. with `tree`):
 
 ```
-course_data/
-├── alignments
-│   ├── normal.recal.bai
-│   ├── normal.recal.bam
-│   ├── tumor.recal.bai
-│   └── tumor.recal.bam
-├── reference
-│   ├── exome_regions.bed
-│   ├── exome_regions.bed.interval_list
-│   ├── ref_genome.dict
-│   └── ref_genome.fa
-└── resources
-    ├── 1000G_phase1.snps.high_confidence.hg38.subset.vcf.gz
-    ├── 1000G_phase1.snps.high_confidence.hg38.subset.vcf.gz.tbi
-    ├── 1000g_pon.hg38.subset.vcf.gz
-    ├── 1000g_pon.hg38.subset.vcf.gz.tbi
-    ├── af-only-gnomad.hg38.subset.vcf.gz
-    ├── af-only-gnomad.hg38.subset.vcf.gz.tbi
-    ├── alphamissense
-    │   ├── AlphaMissense_hg38.tsv.gz
-    │   └── AlphaMissense_hg38.tsv.gz.tbi
-    ├── clinvar
-    │   ├── clinvar.vcf.gz
-    │   └── clinvar.vcf.gz.tbi
-    ├── CNVkit_data
-    │   └── cnvkit.tar.gz
-    ├── exe1
-    │   ├── output.txt_summary_everything.html
-    │   └── output.txt_summary.html
-    ├── Mills_and_1000G_gold_standard.indels.hg38.subset.vcf.gz
-    ├── Mills_and_1000G_gold_standard.indels.hg38.subset.vcf.gz.tbi
-    ├── Mutect2_data
-    │   ├── somatic.filtered.PASS.vcf.gz
-    │   ├── somatic.filtered.PASS.vcf.gz.tbi
-    │   └── variants.tar.gz
-    ├── README.md.docx
-    ├── refFlat.txt
-    └── revel
-        ├── new_tabbed_revel_grch38.tsv.gz
-        └── new_tabbed_revel_grch38.tsv.gz.tbi
+└── course_data
+    ├── alignments
+    │   ├── normal.recal.bai
+    │   ├── normal.recal.bam
+    │   ├── tumor.recal.bai
+    │   └── tumor.recal.bam
+    ├── reads
+    │   ├── normal_R1.fastq.gz
+    │   ├── normal_R2.fastq.gz
+    │   ├── tumor_R1.fastq.gz
+    │   └── tumor_R2.fastq.gz
+    ├── reference
+    │   ├── exome_regions.bed.interval_list
+    │   ├── ref_genome.dict
+    │   ├── ref_genome.fa
+    │   ├── ref_genome.fa.fai
+    │   └── ref_genome.fa.gz
+    ├── resources
+    │   ├── 1000G_phase1.snps.high_confidence.hg38.subset.vcf.gz
+    │   ├── 1000G_phase1.snps.high_confidence.hg38.subset.vcf.gz.tbi
+    │   ├── 1000G_phase1.snps.high_confidence.hg38.vcf.gz
+    │   ├── 1000G_phase1.snps.high_confidence.hg38.vcf.gz.tbi
+    │   ├── 1000g_pon.hg38.subset.vcf.gz
+    │   ├── 1000g_pon.hg38.subset.vcf.gz.tbi
+    │   ├── 1000g_pon.hg38.vcf.gz
+    │   ├── 1000g_pon.hg38.vcf.gz.tbi
+    │   ├── af-only-gnomad.hg38.subset.vcf.gz
+    │   ├── af-only-gnomad.hg38.subset.vcf.gz.tbi
+    │   ├── af-only-gnomad.hg38.vcf.gz
+    │   ├── af-only-gnomad.hg38.vcf.gz.tbi
+    │   ├── Mills_and_1000G_gold_standard.indels.hg38.subset.vcf.gz
+    │   ├── Mills_and_1000G_gold_standard.indels.hg38.subset.vcf.gz.tbi
+    │   ├── Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
+    │   ├── Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi
+    │   ├── refFlat.txt
+    │   └── refFlat.txt.gz.1
+    └── VEP_dbs
+        ├── alphamissense
+        │   ├── AlphaMissense_hg38.tsv.gz
+        │   └── AlphaMissense_hg38.tsv.gz.tbi
+        ├── clinvar
+        │   ├── clinvar.vcf.gz
+        │   └── clinvar.vcf.gz.tbi
+        └── revel
+            ├── new_tabbed_revel_grch38.tsv.gz
+            ├── new_tabbed_revel_grch38.tsv.gz.tbi
+            └── new_tabbed_revel.tsv.gz
 
-10 directories, 30 files
+10 directories, 38 files
 ```
 
 Showing us that we have three directories:
 
 - `alignments`: containing bam files of tumor and normal
 - `reference`: containing the genome fasta file and target intervals
-- `resources`: containing amongst other variant files (`vcf`) from amongst other the [1000 genomes](https://www.internationalgenome.org/) project and [gnomAD](https://gnomad.broadinstitute.org/), and subsets of the clinvar and alphamissense databases. 
+- `resources`: containing amongst other variant files (`vcf`) from among other the [1000 genomes](https://www.internationalgenome.org/) project and [gnomAD](https://gnomad.broadinstitute.org/)
+- `VEP_dbs`: Clinvar and alphamissense and revel databases for usage with VEP. 
 
-The dataset we're working with is prepared by the developers of the [Precision medicine bioinformatics course]() by the Griffith lab. It is whole exome sequencing data of cell lines derived from a tumor of triple negative breast cancer ([HCC1395](https://www.cellosaurus.org/CVCL_1249)) and derived from normal tissue ([HCC1395 BL](https://www.cellosaurus.org/CVCL_1250)). 
+The dataset we're working with is prepared by the developers of the [Precision medicine bioinformatics course]() by the Griffith lab. It is whole exome sequencing (WES) data of cell lines derived from a tumor of triple negative breast cancer (TNBC) ([HCC1395](https://www.cellosaurus.org/CVCL_1249)) and derived from normal tissue ([HCC1395 BL](https://www.cellosaurus.org/CVCL_1250)). 
 
-You are strongly encouraged to your work with scripts during the course, which you store in the directory `scripts`. Therefore create a scripts directory:
+You are strongly encouraged to your work with scripts during the course, which you store in the directory `scripts`. 
+Therefore create a scripts directory:
 
 ```sh
 cd ~/project/
@@ -110,8 +127,20 @@ First we use the information in the header to get information about the contents
 mamba activate ngs-tools 
 ```
 
+::: {.callout-note}
+## Why QC matters for cancer variant calling
+
+In somatic variant analysis, we're looking for variants present in tumor but not normal tissue. These are often present at low allele frequencies (especially in heterogeneous tumors or with contamination). Therefore:
+
+- **Coverage depth matters**: Low-frequency variants (5-10% VAF) need >100x coverage for reliable detection
+- **Duplicate marking is critical**: PCR duplicates can create false variants or inflate allele frequencies
+- **On-target rates**: Poor capture efficiency means lower power to detect somatic mutations in genes of interest
+- **Contamination**: Normal cell contamination in tumor samples dilutes somatic variants
+
+:::
+
 ::: {.callout-important}
-## Exercise
+## Exercise 1
 
 Check out the contents of the headers of the bam files with `samtools view -H`, and answer the following questions:
 
@@ -161,7 +190,7 @@ f. To sort and compress `samtools sort` and `samtools view` were used. For base 
 Now we extract information from the alignments themselves. We first have a look at few alignments and then get a summary of the alignments with `samtools flagstat`. 
 
 ::: {.callout-important}
-## Exercise
+## Exercise 2
 
 Check out the first few alignments with `samtools view`  and `head`. 
 
@@ -189,12 +218,12 @@ HWI-ST466:135068617:C1TD1ACXX:7:2304:7514:30978 113     chr6    60001   60      
 ```
 
 a. At the CIGAR strings we see `100M` and `2S98M`, meaning that the original read had 100 base pairs. So it's likely a read length of 100 bp has been used. 
-b. This question might be a bit more challenging. In the 5th column we see an equal sign (`=`). This shows that the mate is mapped to same chromsome, so suggesting we are working with paired-end reads. Secondly, at the `@PG` header tag, we saw that `bwa mem` took two fastq files (`normal_R1.fastq.gz` and `normal_R2.fastq.gz`) as input. Lastly, we can use the sam flags in the second column to figure that out. If you paste the first flag, `163`, in the [explain sam flags website](https://broadinstitute.github.io/picard/explain-flags.html), we can see that the read is paired.
+b. This question might be a bit more challenging. In the 5th column we see an equal sign (`=`). This shows that the mate is mapped to same chromosome, so suggesting we are working with paired-end reads. Secondly, at the `@PG` header tag, we saw that `bwa mem` took two fastq files (`normal_R1.fastq.gz` and `normal_R2.fastq.gz`) as input. Lastly, we can use the sam flags in the second column to figure that out. If you paste the first flag, `163`, in the [explain sam flags website](https://broadinstitute.github.io/picard/explain-flags.html), we can see that the read is paired.
 c. Yes, the read group tag starts with `RG`, and is specified for all three alignments. 
 :::
 
 ::: {.callout-important}
-## Exercise
+## Exercise 3
 
 Create a script called `01_samtools_flagstat.sh` and store it in `~/project/scripts`. Use `samtools flagstat` to summarize the alignments in both bam files. How many reads are in the bam files? And how many alignments are marked as duplicate? 
 
@@ -240,7 +269,7 @@ Showing us that we have 12,744,793 reads, and all those were paired. Of the alig
 So, all looks good until now. We have many reads and high alignment rates. The bam files seem to be ready for variant analysis, because they have read groups, duplicates are marked and they are sorted by coordinate. However, since we are working with whole exome sequencing (WES) data, we would like to know whether the reads align to the target regions and what kind of coverage we have. For this, we use `gatk CollectHsMetrics`. 
 
 ::: {.callout-important}
-## Exercise
+## Exercise 4
 
 Create a script called `02_gatk_collecthsmetrics.sh` in `~/project/scripts` to run `gatk CollectHsMetrics` on the two bam files. Here's an example:
 
@@ -266,7 +295,11 @@ cd ~/project/course_data/alignments
 multiqc .
 ```
 
-Download the multiqc report (`multiqc_report.html`) by right-clicking on the file and select 'Download'. Check out the hybrid-selection metrics. How did the hybrid capture go? Are most bases on-target? What kind of coverages can we expect in the target regions?
+Download the multiqc report (`multiqc_report.html`) by right-clicking on the file and select 'Download'. Check out the hybrid-selection metrics or by clicking here:
+<a href="assets/quality_control/multiqc_report.html" target="_blank" rel="noopener noreferrer">
+  multiqc report
+</a>
+. How did the hybrid capture go? Are most bases on-target? What kind of coverages can we expect in the target regions?
 
 :::
 
@@ -277,5 +310,13 @@ You can find the documentation on the different metrics [here](https://broadinst
 ::: {.callout-tip collapse="true"}
 ## Answer
 
-We see that we have a fold enrichment of around 22 and about 45% usable bases on-target. About 90% were 'selected bases', which means bases aligning within 250 bp of the target region. We're looking at a de-duplicated coverage of 84x for the normal sample and 114.3x for the tumor sample. So, on average, we seem to have acceptable coverages for both samples. 
+We see that we have a fold enrichment of around 22 and about 45% usable bases on-target. About 90% were 'selected bases', which means bases aligning within 250 bp of the target region. We're looking at a de-duplicated coverage of 84x for the normal sample and 114.3x for the tumor sample. So, on average, we seem to have acceptable coverages for both samples.
+
+
+
+Notice that tumor coverage (114x) is higher than normal (84x). This is intentional in cancer studies because:
+
+- Tumor samples may have subclonal populations with low-frequency variants
+- Tumor purity varies: A deeper coverage is needed to detect variants in impure samples
+- Generally aim for 2-3x higher coverage in tumor than matched normal
 ::: 

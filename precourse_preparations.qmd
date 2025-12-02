@@ -1,5 +1,8 @@
 ---
 title: "Precourse preparations"
+format:
+  html:
+    css: styles.css
 ---
 
 ## Prerequisites
@@ -13,3 +16,6 @@ Participants should have a basic understanding of working with command line tool
 
 ### Technical
 Participants should have their own computer with a browser installed (e.g. chrome, firefox, edge), and can access http websites. Test it here: [http://httpforever.com/](http://httpforever.com/).  
+
+### Communication platform
+This course will use **Zulip** for communication and questions during the course. You will receive an invitation to join our Zulip workspace before the course starts. Zulip is a chat platform that organizes discussions by topics - no prior experience needed, and it works in any web browser. Zulip can be accessed also via desktop/mobile apps.

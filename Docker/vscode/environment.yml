@@ -1,14 +1,15 @@
+name: ngs-tools
 channels:
   - conda-forge
   - bioconda
 dependencies:
-  - python>=3.8
-  - samtools>=1.12
-  - bwa=0.7.17
-  - snpeff>=5.0
-  - gatk4=4.5
-  - r-base
-  - cnvkit>=0.9.10
+  - python=3.10
+  - samtools
+  - bwa=0.7.19
+  - snpeff>=5.2
+  - gatk4=4.6.*
+  - r-base>=4.4
+  - cnvkit>=0.9.12
   - bcftools
-  - multiqc
-  - ensembl-vep=113
+  - multiqc>=1.25
+  - ensembl-vep=115

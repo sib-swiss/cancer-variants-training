@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-VARIANTDIR=~/project/course_data/variants
+# Define directories
+VARIANTDIR="${HOME}/project/course_data/variants"
 
 filter_vep \
 -i "$VARIANTDIR"/somatic.filtered.PASS2_annotated.txt \

@@ -17,4 +17,9 @@ extensions/
 /.quarto/
 /_site/
 /_freeze/
+<<<<<<< HEAD
 *_cache/.Rhistory
+=======
+*_cache/
+**/*.quarto_ipynb
+>>>>>>> 2025_update

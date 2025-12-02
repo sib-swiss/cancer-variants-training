@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
 
-ALIGNDIR=~/project/data/alignments
-REFDIR=~/project/data/reference
-RESOURCEDIR=~/project/data/resources
-VARIANTDIR=~/project/data/variants
+# Define directories
+ALIGNDIR="${HOME}/project/course_data/alignments"
+REFDIR="${HOME}/project/course_data/reference"
+VARIANTDIR="$HOME/project/course_data/variants"
+RESOURCEDIR="${HOME}/project/course_data/resources"
+
+# decompress first
+if [ ! -f "$RESOURCEDIR"/refFlat.txt ]; then
+    gunzip -c "$RESOURCEDIR"/refFlat.txt.gz > "$RESOURCEDIR"/refFlat.txt
+fi
 
 cnvkit.py batch "$ALIGNDIR"/tumor.recal.bam \
 --normal "$ALIGNDIR"/normal.recal.bam \

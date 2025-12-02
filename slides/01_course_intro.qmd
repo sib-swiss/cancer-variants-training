@@ -1,0 +1,136 @@
+---
+title: "Cancer variant analysis"
+subtitle: "COURSE INTRODUCTION"
+author: "Flavio Lombardo"
+date: "12.12.2025"
+format:
+  revealjs:
+    theme: default
+    logo: "../assets/SIB_logo.svg"
+    footer: "SIB Swiss Institute of Bioinformatics"
+    slide-number: false
+    transition: slide
+    background-transition: fade
+    width: 1600
+    height: 900
+---
+
+## Course etiquette {.columns-2}
+
+::: {.column width="45%"}
+
+![Etiquette](../assets/presentations/slidedeck_1/01_etiquette.png){fig-align="center" fig-alt="Etiquette"}
+
+:::
+
+::: {.column width="55%"}
+
+::: {.gray-box}
+
+### Video on when possible
+
+**Use your first and last name as your Zoom ID**
+
+  - Right-click on yourself > Rename..
+
+### Mute when not speaking
+
+:::
+:::
+
+## Code of conduct {.columns-2}
+
+::: {.column width="45%"}
+- Learning can only be done in a **safe environment**
+
+- We abide to the ELIXIR **code of conduct** during the course
+
+- If you witness unacceptable behaviour that can't be dealt with with the people involved in this course, contact the [COC oversight group](mailto:coc.oversight@elixir-europe.org)
+
+- More info: [here](https://elixir-europe.org/events/code-of-conduct)
+:::
+
+::: {.column width="55%"}
+<figure style="text-align: center;">
+  <img src="../assets/presentations/slidedeck_1/02_boxes.png" alt="Etiquette" style="max-width: 100%;">
+  <figcaption>ELIXIR Code of Conduct Principles</figcaption>
+</figure>
+:::
+
+## Trainers/organizers/Helpers
+
+- **Gregoire Rossier:** Training coordinator at SIB
+- **Diana Marek:** Training coordinator at SIB
+- **Geert Van Geest:** Training Project Manager at SIB
+- **Flavio Lombardo:** Computational Biologist at the University Hospital Basel
+- **Deepak Tanwar:** Bioinformaticis Specialist and Trainer at SIB
+
+
+::: {.center-logos}
+![](../assets/SIB_LogoQ_GBv.svg){width=350}
+![](../assets/logos/university_hospital_basel_logo.png){width=350}
+![](../assets/logos/university_of_basel_logo.png){width=350}
+:::
+
+## Learning outcomes
+
+- Understand the difference between **germline** and **somatic** variants and the implication of computational analysis
+
+- **Perform** a somatic **variant analysis** on a **paired** sample (tumor – normal) with GATK4
+
+- Perform a somatic **variant annotation** with VEP and use the results to filter possible **high-impact mutations** in the cancer genome
+
+## Learning experiences {.columns-2}
+
+::: {.column width="45%"}
+- Lectures
+
+- Polls + quiz questions
+
+- Exercises
+:::
+
+::: {.column width="55%"}
+![](https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=800){width=600}
+:::
+
+## Communication
+
+- Course website: [https://sib-swiss.github.io/cancer-variants-training/](https://sib-swiss.github.io/cancer-variants-training/)
+
+- Shared document
+
+- Zulip
+
+::: {.center}
+![](../assets/presentations/slidedeck_1/03_show_course.png){width=800}
+:::
+
+## Asking questions {.columns-2}
+
+::: {.column width="50%"}
+- During lectures: zoom functionality – **but the chat will be ignored**
+
+![](../assets/presentations/slidedeck_1/05_zoom.png){width=300}
+
+:::
+
+::: {.column width="50%"}
+
+- During exercises: **#q_and_a channel on Zulip**
+  - You can add a topic for your question, this will open a new conversation-topic.
+  
+![Zulip thread](../assets/presentations/slidedeck_1/04_zulip_1.png){width=700}
+<br>
+![Zulip channels](../assets/presentations/slidedeck_1/04_zulip_2.png){width=400}
+
+:::
+
+## Tell us about yourself:
+
+- **Name** and affiliation
+- **Research area** / current project
+- **Experience** with variant analysis
+- **What you hope to learn** from this course
+
+...And consider the social channel in Zulip!

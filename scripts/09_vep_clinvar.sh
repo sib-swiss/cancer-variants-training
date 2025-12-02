@@ -1,14 +1,13 @@
 #!/usr/bin/env bash
 
-# Download ClinVar VCF
-
-VARIANTDIR=~/project/course_data/variants
-RESOURCEDIR=/config/project/course_data/resources
+# Define directories
+RESOURCEDIR="${HOME}/project/course_data/VEP_dbs"
+VARIANTDIR="${HOME}/project/course_data/variants"
 
 # Run VEP with cancer-specific annotations
 vep -i "$VARIANTDIR"/somatic.filtered.PASS.vcf.gz \
     --cache \
-    --dir /data/.vep \
+    --dir $HOME/.vep \
     --assembly GRCh38 \
     --format vcf \
     --force_overwrite \
@@ -26,6 +25,6 @@ filter_vep \
 (SIFT match deleterious or PolyPhen match probably_damaging) or \
 (ClinVar_CLNSIG match pathogenic)"
 
-# Generate summary (using simple grep/awk commands)
-echo "Mutation Type Summary:" > summary.txt
-grep -v "#" "$VARIANTDIR"/somatic.filtered.PASS2_annotated_clinvar_filtered.txt | cut -f7 | sort | uniq -c >> summary.txt
+# Generate summary (using simple grep commands)
+echo "Mutation Type Summary:" > "$VARIANTDIR"/summary.txt
+grep -v "#" "$VARIANTDIR"/somatic.filtered.PASS2_annotated_clinvar_filtered.txt | cut -f7 | sort | uniq -c >> "$VARIANTDIR"/summary.txt
