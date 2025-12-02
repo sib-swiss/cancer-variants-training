@@ -1,0 +1,1260 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<link href="../assets/SIB_logo.svg" rel="icon" type="image/svg+xml">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-597958c53c93a607afca12fd375c57ed.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.8.26">
+
+  <meta name="author" content="Flavio Lombardo">
+  <meta name="dcterms.date" content="2025-12-12">
+  <title>Cancer variant analysis – Variant Effect Predictor (VEP)</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+      }
+    pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+    div.sourceCode
+      { color: #24292e;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #24292e; } /* Normal */
+    code span.al { color: #ff5555; font-weight: bold; } /* Alert */
+    code span.an { color: #6a737d; } /* Annotation */
+    code span.at { color: #d73a49; } /* Attribute */
+    code span.bn { color: #005cc5; } /* BaseN */
+    code span.bu { color: #d73a49; } /* BuiltIn */
+    code span.cf { color: #d73a49; } /* ControlFlow */
+    code span.ch { color: #032f62; } /* Char */
+    code span.cn { color: #005cc5; } /* Constant */
+    code span.co { color: #6a737d; } /* Comment */
+    code span.cv { color: #6a737d; } /* CommentVar */
+    code span.do { color: #6a737d; } /* Documentation */
+    code span.dt { color: #d73a49; } /* DataType */
+    code span.dv { color: #005cc5; } /* DecVal */
+    code span.er { color: #ff5555; text-decoration: underline; } /* Error */
+    code span.ex { color: #d73a49; font-weight: bold; } /* Extension */
+    code span.fl { color: #005cc5; } /* Float */
+    code span.fu { color: #6f42c1; } /* Function */
+    code span.im { color: #032f62; } /* Import */
+    code span.in { color: #6a737d; } /* Information */
+    code span.kw { color: #d73a49; } /* Keyword */
+    code span.op { color: #24292e; } /* Operator */
+    code span.ot { color: #6f42c1; } /* Other */
+    code span.pp { color: #d73a49; } /* Preprocessor */
+    code span.re { color: #6a737d; } /* RegionMarker */
+    code span.sc { color: #005cc5; } /* SpecialChar */
+    code span.ss { color: #032f62; } /* SpecialString */
+    code span.st { color: #032f62; } /* String */
+    code span.va { color: #e36209; } /* Variable */
+    code span.vs { color: #032f62; } /* VerbatimString */
+    code span.wa { color: #ff5555; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-4e99cfa5a9a8fd3d06659d5277091445.css">
+  <link rel="stylesheet" href=".reveal .slides {
+  font-size: 1.5em;
+}
+.reveal h2 {
+  font-size: 2em;
+}
+.reveal .callout {
+  font-size: 1.5em;
+}
+.reveal table {
+  font-size: 1.2em;
+}
+.reveal code {
+  font-size: 1.2em;
+}">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Variant Effect Predictor (VEP)</h1>
+  <p class="subtitle">A Practical Introduction</p>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Flavio Lombardo 
+</div>
+</div>
+</div>
+
+  <p class="date">2025-12-12</p>
+</section>
+<section>
+<section id="introduction" class="title-slide slide level1 center">
+<h1>Introduction</h1>
+
+</section>
+<section id="somatic-vs-germline" class="slide level2">
+<h2>Somatic vs Germline</h2>
+<div class="fragment fade-in">
+<ul>
+<li>A germline mutation is inherited by the individual from birth. They can be oncogenic (ie Rb = retinoblastoma)</li>
+<li>A somatic mutation, or acquired mutation, happens in somatic cells instead of germ cells and will not pass to offspring (ie TP53).</li>
+</ul>
+</div>
+<div class="fragment fade-in">
+<div id="fig-germliine" class="quarto-float quarto-figure quarto-figure-center" data-fig-align="center" data-fig-caption="Germline vs somatic mutations">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-germliine-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="https://www.codexgenetics.com/blog/images/30-somatic-mutation-and-germline-mutation%20(eng).png" class="quarto-figure quarto-figure-center" data-fig-caption="Germline vs somatic mutations" width="350" height="300">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-germliine-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Germline vs somatic
+</figcaption>
+</figure>
+</div>
+</div>
+</section>
+<section id="how-do-mutations-appear" class="slide level2">
+<h2>How do mutations appear?</h2>
+<ul>
+<li>Mutations occur due to replication errors (1 nucleotide per ~10^4) but with reparation mechanisms (1 error per 10^7 - 10^9)</li>
+<li>As a consequence of DNA damage (~70,000 nucleotide lesions or modifications per day)</li>
+<li>Exposure to mutagens such as UV, smoking increases the mutations’ frequency</li>
+</ul>
+<div class="fragment fade-in">
+<div id="fig_uv_damage" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://knowgenetics.org/wp-content/uploads/2012/12/amanda1.png" width="250" height="200"></p>
+<figcaption>Example UV damage</figcaption>
+</figure>
+</div>
+</div>
+<aside class="notes">
+<p>Key points: - https://www.nature.com/articles/s41576-021-00376-2</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="can-the-cell-repair-them" class="slide level2">
+<h2>Can the cell repair them?</h2>
+<p>Yes, there are many mechanisms of DNA repair. Some of the most common are:</p>
+<ul>
+<li><p><strong>NER (Nucleotide Excision Repair)</strong>: Repairs bulky lesions such as thymine dimers caused by UV radiation. This mechanism involves the removal of a short single-stranded DNA segment containing the damage, followed by DNA synthesis using the complementary strand as a template.</p></li>
+<li><p><strong>MMR (Mismatch Repair)</strong>: Fixes replication errors such as base mismatches or insertion/deletion loops. MMR recognizes the newly synthesized strand and corrects errors by removing the incorrect nucleotides and replacing them.</p></li>
+<li><p><strong>BER (Base Excision Repair)</strong>: Repairs single-base lesions such as oxidative damage, alkylation, or deamination. This involves the removal of damaged bases by specific glycosylases, followed by the excision of the resulting abasic site.</p></li>
+<li><p><strong>HR (Homologous Recombination)</strong>: Repairs double-strand breaks using a homologous sequence as a template, typically from a sister chromatid. This is an error-free repair mechanism.</p></li>
+<li><p><strong>NHEJ (Non-Homologous End Joining)</strong>: Repairs double-strand breaks without the need for a homologous template. While quicker, this method is error-prone and can lead to insertions or deletions.</p></li>
+</ul>
+<h3 id="visualizing-dna-repair-mechanisms">Visualizing DNA Repair Mechanisms</h3>
+<div class="fragment fade-in">
+<div id="fig-repair-system" class="quarto-float quarto-figure quarto-figure-center" data-fig-caption="Overview of major DNA repair mechanisms in the cell">
+<figure class="quarto-float quarto-float-fig">
+<div aria-describedby="fig-repair-system-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img data-src="../assets/variant_annotation/variant_types.jpg" data-fig-caption="Overview of major DNA repair mechanisms in the cell">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-repair-system-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: DNA Repair Mechanisms
+</figcaption>
+</figure>
+</div>
+<aside class="notes">
+<p>Key points: - https://www.nature.com/articles/nrclinonc.2012.3/figures/1</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="acquisition-of-mutation-in-cancer" class="slide level2">
+<h2>Acquisition of mutation in cancer</h2>
+
+<img data-src="../assets/variant_annotation/cancer_somatic_mut.jpg" data-fig-caption="https://www.nature.com/articles/nature07943" class="r-stretch quarto-figure-center" id="fig-progression_to_cancer"><p class="caption">
+Figure&nbsp;3: Cancer somatic mut
+</p><aside class="notes">
+<p>Key points: - https://www.nature.com/articles/nature07943</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="concept-of-driver-mutation" class="slide level2">
+<h2>Concept of driver mutation</h2>
+<p>Some mutations are more important than others for tumor progression. Perhaps they are more disruptive and detrimental for the cell to harbor. Those can be observed in multiple cancer types (think of TP53 or BRCA1/2).</p>
+<blockquote>
+<p>Not all the driver mutations are known and not all the driver mutations are really always drivers.</p>
+</blockquote>
+</section>
+<section id="what-defines-a-driver-mutation" class="slide level2 incremental">
+<h2>What Defines a Driver Mutation?</h2>
+<blockquote>
+<p>Not all mutations are driving the tumorigenesis!</p>
+</blockquote>
+<ul>
+<li><p>Functional Impact:</p>
+<ul>
+<li>Driver mutations confer a selective growth advantage to cells, promoting tumor development and progression. These mutations often affect genes regulating cell cycle, apoptosis, DNA repair, and immune evasion.</li>
+<li>Example pathways: MAPK, PI3K/AKT, and WNT signaling.</li>
+</ul></li>
+<li><p>Recurrent Patterns Across Tumors:</p>
+<ul>
+<li>Frequently observed across different cancer types (e.g., TP53 in over 50% of cancers).</li>
+<li>Some drivers are specific to tissue types (e.g., EGFR in lung cancer, KIT in gastrointestinal stromal tumors, IDH1 in gliomas).</li>
+</ul></li>
+</ul>
+</section>
+<aside class="notes">
+<p>Key points: - Not all HIGH impact variants from VEP are driver mutations, integration of evidence-based databases such as COSMIC, ClinVar and OncoKB (and literature) is required. However HIGH and MODERATE impact mutations can be driver mutations</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<section id="types-of-driver-mutations" class="slide level2">
+<h2>Types of Driver Mutations</h2>
+<ul>
+<li class="fragment">Oncogenes:
+<ul>
+<li class="fragment">Gain-of-function mutations in genes like KRAS, BRAF, and EGFR drive tumor growth by promoting uncontrolled cell division or survival.</li>
+</ul></li>
+<li class="fragment">Tumor Suppressors:
+<ul>
+<li class="fragment">Loss-of-function mutations in genes like TP53, RB1, and PTEN impair cellular mechanisms that prevent tumor formation.</li>
+</ul></li>
+<li class="fragment">Mutator Genes:
+<ul>
+<li class="fragment">Mutations in genes like MLH1 or MSH2 lead to genomic instability, enabling the accumulation of additional mutations.</li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="how-can-we-identify-whats-a-mutations-role" class="title-slide slide level1 center">
+<h1>How can we identify what’s a mutation’s role?</h1>
+<ul>
+<li>Can we somehow quantify its importance?</li>
+</ul>
+</section>
+<section id="vep-variant-effect-predictor" class="slide level2">
+<h2>VEP (Variant Effect Predictor)</h2>
+
+<img data-src="http://www.ensembl.org/img/ensembl_logo.png" data-ref-parent="fig-vep" class="r-stretch quarto-figure-center" id="fig-vep"><p class="caption">
+(a) Ensembl-VEP
+</p></section>
+<section id="what-is-vep" class="slide level2">
+<h2>What is <a href="https://www.ensembl.org/info/docs/tools/vep/script/index.html">VEP</a>?</h2>
+<ul>
+<li class="fragment">2010: The first version of VEP was introduced as part of the Ensembl project.</li>
+<li class="fragment">2012-2015 Functional prediction scores were introduced.</li>
+<li class="fragment">2017 Other databases are now part of the VEP, such as COSMIC, ClinVar, gnomAD. The tool was made more generalizable and personalizable with the addition of VEP’s plugin feature.</li>
+<li class="fragment">VEP is 100% written in perl <a href="https://github.com/Ensembl/ensembl-vep">VEP Github</a></li>
+</ul>
+<aside class="notes">
+<p>Key points: - VEP is widely used in research and clinical settings - Provides comprehensive variant annotation - Especially useful for large-scale analysis</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="important-databases" class="slide level2">
+<h2>Important databases</h2>
+<div class="fragment fade-down">
+<ul>
+<li class="fragment"><p>COSMIC <br> What it tells us: Somatic mutations found in cancer Example output: COSV59384583; OCCURENCE=1(skin) Interpretation: Mutation seen in skin cancer; frequency helps assess if likely driver</p></li>
+<li class="fragment"><p>ClinVar <br> What it tells us: Clinical significance of variants <br> Example output: Pathogenic/Likely_pathogenic <br> Interpretation: Strong evidence for disease causation</p></li>
+<li class="fragment"><p>gnomAD <br> What it tells us: Population frequency <br> Example output: AF=0.00001 <br> Interpretation: Very rare variant (&lt;0.01% frequency)</p></li>
+<li class="fragment"><p>AlphaMissense <br> What it tells us: Predicted functional impact <br> Example output: likely_pathogenic <br> Interpretation: AI model predicts damaging effect</p></li>
+</ul>
+</div>
+</section></section>
+<section id="what-does-vep-do" class="title-slide slide level1 center">
+<h1>What does VEP do?</h1>
+<p>Imagine thousands of variants to annotate manually to understand what each of them does, searching in different databases, searching in the literature. It would take weeks and it would be error prone. Automation of these tasks reduces the time-to- discovery</p>
+<ul>
+<li>Powerful tool for annotating genomic variants (both somatic and germline)</li>
+<li>Essential in cancer genomics and clinical applications</li>
+<li>Helps understand functional impact of mutations</li>
+</ul>
+</section>
+
+<section>
+<section id="what-is-vep-not-doing-for-you" class="title-slide slide level1 center">
+<h1>What is VEP NOT doing for you?</h1>
+<p>VEP is a great tool, but it does not remove the work from the scientists. Automation simplifies the process but it can give false positives and false negatives. If the experimental setup is low quality, the results most likely will be low quality too.</p>
+<ul>
+<li>Calling variants</li>
+<li>Magic bullet</li>
+<li>Knowing everything</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>Brainstorming, reiteration and analysis</li>
+<li>Discovery phase</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="what-is-not-well-understood" class="slide level2">
+<h2>What is not well understood?</h2>
+<p>There are no databases investigating those aspects of biology that might play an important role in the cancer development. After all it is estimated that &gt;97% of all the mutations are “passenger events” and they do not have direct impact on the tumor growth.</p>
+<ul>
+<li>The effects of epigenetic changes</li>
+<li>Glycosilations</li>
+<li>Transposomes (like LINE-1)</li>
+<li>SV (inversion for example)</li>
+<li>Alternative splicing impacts</li>
+<li>Non-coding RNAs and their alterations</li>
+<li>Tumor Microenvironment</li>
+<li>Microbiome</li>
+<li>Etc.</li>
+</ul>
+</section>
+<section id="in-summary-why-do-we-use-vep" class="slide level2">
+<h2>In summary: Why do we use VEP?</h2>
+<p>We can answer questions like:</p>
+<ul>
+<li>How damaging is a certain somatic mutation?</li>
+<li>What is the impact in a particular cancer type?</li>
+<li>Is the mutation known for that cancer?</li>
+<li>Are there therapeutic implications?</li>
+</ul>
+</section></section>
+<section>
+<section id="installation-setup" class="title-slide slide level1 center scrollable" data-background-color="#2C3E50">
+<h1>Installation &amp; Setup</h1>
+<ol type="1">
+<li><a href="https://www.ensembl.org/info/docs/tools/vep/script/vep_tutorial.html">Installer Script</a></li>
+<li>Manual Installation</li>
+<li>Docker</li>
+<li><a href="https://docs.conda.io/projects/conda/en/stable/user-guide/getting-started.html">Conda/Bioconda</a></li>
+</ol>
+</section>
+<section id="installation-using-conda" class="slide level2">
+<h2>Installation using conda</h2>
+<ul>
+<li><a href="https://docs.conda.io/projects/conda/en/stable/user-guide/getting-started.html">Conda/Bioconda</a></li>
+</ul>
+<div class="fragment">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="co"># Installing Conda #https://docs.anaconda.com/miniconda/</span></span>
+<span id="cb1-2"><a></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/miniconda3</span>
+<span id="cb1-3"><a></a><span class="fu">wget</span> https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh <span class="at">-O</span> ~/miniconda3/miniconda.sh</span>
+<span id="cb1-4"><a></a><span class="fu">bash</span> ~/miniconda3/miniconda.sh <span class="at">-b</span> <span class="at">-u</span> <span class="at">-p</span> ~/miniconda3</span>
+<span id="cb1-5"><a></a><span class="fu">rm</span> ~/miniconda3/miniconda.sh</span>
+<span id="cb1-6"><a></a><span class="bu">source</span> ~/miniconda3/bin/activate</span>
+<span id="cb1-7"><a></a><span class="ex">conda</span> init <span class="at">--all</span></span>
+<span id="cb1-8"><a></a></span>
+<span id="cb1-9"><a></a><span class="co"># Using Conda</span></span>
+<span id="cb1-10"><a></a><span class="ex">conda</span> create <span class="at">-n</span> vep samtools python=3.10 ensembl-vep=115</span>
+<span id="cb1-11"><a></a><span class="co"># conda install -c bioconda ensembl-vep # if installing in current env</span></span>
+<span id="cb1-12"><a></a></span>
+<span id="cb1-13"><a></a><span class="co"># Activate VEP's env</span></span>
+<span id="cb1-14"><a></a><span class="ex">conda</span> activate vep</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<aside class="notes">
+<p><code>mamba create -n vep samtools python=3.10 ensembl-vep=113 -c bioconda -c conda-forge</code></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="veps-basic-configuration" class="slide level2">
+<h2>VEP’s Basic Configuration</h2>
+<p><br></p>
+<div class="fragment">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="co"># Test installation</span></span>
+<span id="cb2-2"><a></a><span class="ex">vep</span> <span class="at">--help</span></span>
+<span id="cb2-3"><a></a></span>
+<span id="cb2-4"><a></a><span class="co"># Download cache files, it takes a long time and ~/.vep (~25GB)</span></span>
+<span id="cb2-5"><a></a><span class="ex">vep_install</span> <span class="at">-a</span> cf <span class="at">-s</span> homo_sapiens <span class="at">-y</span> GRCh38 <span class="co"># download precomputed human data</span></span>
+<span id="cb2-6"><a></a></span>
+<span id="cb2-7"><a></a><span class="co"># if install official plugins</span></span>
+<span id="cb2-8"><a></a><span class="ex">vep_install</span> <span class="at">-a</span> p <span class="at">--PLUGINS</span> list <span class="co"># a for action LIST akk plugins</span></span>
+<span id="cb2-9"><a></a><span class="co"># vep_install -a p --PLUGINS all # install all plugins</span></span>
+<span id="cb2-10"><a></a><span class="co"># vep_install -a p --PLUGINS dbNSFP,... # install specific plugins</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><br> if you want to specify a specific folder to store the VEP’s cache: <code>-c ~/vep_cache</code></p>
+</div>
+</section>
+<section id="example-plugin-installation" class="slide level2">
+<h2>Example plugin installation</h2>
+<p>SubsetVCF for example does not need additional data, it works directly on the VEP’s output</p>
+<pre><code>  - installing "SubsetVCF"
+  - add "--plugin SubsetVCF" to your VEP command to use this plugin
+  - OK</code></pre>
+<p>And others like REVEL need additional data to work properly</p>
+<pre><code> - installing "REVEL"
+ - This plugin requires data
+ - See Plugins/REVEL.pm for details
+ - OK</code></pre>
+</section>
+<section id="vep-plugins-manual-install" class="slide level2">
+<h2>VEP Plugins: Manual install</h2>
+<p>Plugins can enhance VEP’s capabilities and can add additional depth of information to the annotations <strong>(with the price of more complexity)</strong>.</p>
+<p>If this command does not work</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a></a><span class="co"># if installing the official plugins</span></span>
+<span id="cb5-2"><a></a><span class="ex">vep_install</span> <span class="at">-a</span> p <span class="at">--PLUGINS</span> all <span class="co"># a for action</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="fragment">
+<p>Please use this manual option</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a></a><span class="co"># clone repository</span></span>
+<span id="cb6-2"><a></a><span class="fu">git</span> clone https://github.com/Ensembl/VEP_plugins.git</span>
+<span id="cb6-3"><a></a></span>
+<span id="cb6-4"><a></a><span class="co"># make a folder in the ~/.vep folder</span></span>
+<span id="cb6-5"><a></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/.vep/Plugins/ <span class="co"># Assuming your cache folder is in your $HOME</span></span>
+<span id="cb6-6"><a></a></span>
+<span id="cb6-7"><a></a><span class="co"># Copy all the files with extension *.pm to the Plugins folder </span></span>
+<span id="cb6-8"><a></a><span class="fu">cp</span> VEP_plugins/<span class="pp">*</span>.pm ~/.vep/Plugins/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section></section>
+<section>
+<section id="core-concepts" class="title-slide slide level1 center" data-background-color="#2C3E50">
+<h1>Core Concepts</h1>
+
+</section>
+<section id="transcript-selection" class="slide level2">
+<h2>Transcript Selection</h2>
+<p>VEP options for handling multiple transcripts:</p>
+<ul>
+<li><code>--pick</code>: One consequence per variant</li>
+<li><code>--pick_allele</code>: One per variant allele</li>
+<li><code>--pick_allele_gene</code>: One per variant allele per gene</li>
+<li><code>--per_gene</code>: One per gene</li>
+<li><code>--flag_pick</code>: Flags selected while keeping others</li>
+</ul>
+</section>
+<section id="consequence-priority" class="slide level2 scrollable">
+<h2>Consequence Priority</h2>
+<p>Top 10 most severe consequences:</p>
+<ol type="1">
+<li>Transcript ablation</li>
+<li>Splice acceptor/donor variant</li>
+<li>Stop gained</li>
+<li>Frameshift variant</li>
+<li>Stop lost</li>
+<li>Start lost</li>
+<li>Transcript amplification</li>
+<li>Inframe insertion/deletion</li>
+<li>Missense variant</li>
+<li>Protein altering variant</li>
+</ol>
+</section>
+<section id="vep-consequences-prediction" class="slide level2">
+<h2>VEP consequences prediction</h2>
+
+<img data-src="../assets/variant_annotation/VEP_consequences.png" class="r-stretch quarto-figure-center" id="fig_vep_effects"><p class="caption">VEP’s consequences</p></section>
+<section id="sif-sequence-ontology-impact-factors-categories" class="slide level2">
+<h2>SIF (Sequence Ontology Impact Factors) Categories</h2>
+</section>
+<section id="high-impact" class="slide level2">
+<h2>HIGH Impact:</h2>
+<p>Likely to cause a severe effect on protein structure/function.</p>
+<ul>
+<li>Examples:
+<ul>
+<li>Frameshift variants</li>
+<li>Nonsense mutations (e.g.&nbsp;stop codon gained)</li>
+<li>Essential splice-site mutations (e.g.&nbsp;disruption of canonical splice sites).</li>
+</ul></li>
+</ul>
+</section>
+<section id="moderate-impact" class="slide level2">
+<h2>MODERATE Impact:</h2>
+<p>Non-disruptive changes that might affect protein structure or function.</p>
+<ul>
+<li>Examples:
+<ul>
+<li>Missense variants (amino acid substitutions).</li>
+<li>In-frame insertions or deletions.</li>
+</ul></li>
+</ul>
+</section>
+<section id="low-impact" class="slide level2">
+<h2>LOW Impact:</h2>
+<p>Variants that are less likely to have a significant effect on protein function.</p>
+<ul>
+<li>Examples:
+<ul>
+<li>Synonymous changes (no amino acid alteration, [Redundancy]).</li>
+<li>Changes in non-coding regions (outside essential regulatory domains).</li>
+</ul></li>
+</ul>
+</section>
+<section id="modifier-impact" class="slide level2">
+<h2>MODIFIER Impact:</h2>
+<p>Usually non-coding or intergenic variants with no expected impact on the protein but might influence gene regulation.</p>
+<ul>
+<li>Examples:
+<ul>
+<li>Intronic variants (non-coding).</li>
+<li>Variants in 5’ or 3’ UTR regions.</li>
+</ul></li>
+</ul>
+</section>
+<section id="interpretation-of-high-vs.-moderate-impact" class="slide level2">
+<h2>Interpretation of HIGH vs.&nbsp;MODERATE Impact</h2>
+<ul>
+<li>HIGH: Typically results in loss of protein function or dominant-negative effects. These mutations are often more critical for cancer development and progression (e.g., TP53 inactivation).</li>
+<li>MODERATE: Produces proteins with altered but functional activity, often conferring selective growth advantages under specific contexts (e.g., KRAS or PIK3CA oncogenic activation).</li>
+</ul>
+</section>
+
+<section id="polyphen-2-another-predictor-included-in-vep" class="slide level2">
+<h2>PolyPhen-2 (another predictor included in VEP):</h2>
+<ul>
+<li class="fragment">Predicts impact of amino acid substitutions</li>
+<li class="fragment">Analyzes both structure and evolutionary conservation</li>
+<li class="fragment">Specific to human proteins</li>
+<li class="fragment">Scores range from 0.0 (benign) to 1.0 (damaging)</li>
+</ul>
+</section>
+<section id="categories" class="slide level2">
+<h2>Categories:</h2>
+<div class="fragment fade-in">
+<ul>
+<li><strong>Probably Damaging</strong> (score &gt; 0.85)
+<ul>
+<li>High confidence prediction of affecting protein function</li>
+</ul></li>
+<li><strong>Possibly Damaging</strong> (score 0.15-0.85)
+<ul>
+<li>Moderate prediction of damaging effects</li>
+</ul></li>
+<li><strong>Benign</strong> (score &lt; 0.15)
+<ul>
+<li>Likely to lack phenotypic effect</li>
+</ul></li>
+</ul>
+</div>
+<aside class="notes">
+<p>Key points: - Complements SIFT predictions - Used in conjunction with other predictors - Important for missense variant interpretation</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="advanced-topics" class="title-slide slide level1 center" data-background-color="#2C3E50">
+<h1>Advanced Topics</h1>
+
+</section>
+<section id="vep-plugins" class="slide level2">
+<h2>VEP Plugins</h2>
+<p>Essential plugins for cancer analysis:</p>
+</section>
+<section id="revel" class="slide level2">
+<h2><a href="http://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#revel">REVEL</a></h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a></a><span class="ex">--plugin</span> REVEL,/path/to/revel/revel_all_chromosomes.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<blockquote>
+<p><a href="https://pubmed.ncbi.nlm.nih.gov/27666373/">REVEL paper</a>: An Ensemble Method for Predicting the Pathogenicity of Rare Missense Variants</p>
+</blockquote>
+<p>You can download here the data (~6.5GB): https://sites.google.com/site/revelgenomics/downloads or https://zenodo.org/records/7072866</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a></a><span class="fu">unzip</span> revel-v1.3_all_chromosomes.zip</span>
+<span id="cb8-2"><a></a><span class="fu">cat</span> revel_with_transcript_ids <span class="kw">|</span> <span class="fu">tr</span> <span class="st">","</span> <span class="st">"\t"</span> <span class="op">&gt;</span> tabbed_revel.tsv</span>
+<span id="cb8-3"><a></a><span class="fu">sed</span> <span class="st">'1s/.*/#&amp;/'</span> tabbed_revel.tsv <span class="op">&gt;</span> new_tabbed_revel.tsv</span>
+<span id="cb8-4"><a></a><span class="ex">bgzip</span> new_tabbed_revel.tsv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Prepare for GRCh38</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a></a><span class="fu">zcat</span> new_tabbed_revel.tsv.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n1</span> <span class="op">&gt;</span> h</span>
+<span id="cb9-2"><a></a><span class="fu">zgrep</span> <span class="at">-h</span> <span class="at">-v</span> ^#chr new_tabbed_revel.tsv.gz <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'$3 != "." '</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-k1,1</span> <span class="at">-k3,3n</span> <span class="at">-</span> <span class="kw">|</span> <span class="fu">cat</span> h <span class="at">-</span> <span class="kw">|</span> <span class="ex">bgzip</span> <span class="at">-c</span> <span class="op">&gt;</span> new_tabbed_revel_grch38.tsv.gz</span>
+<span id="cb9-3"><a></a><span class="ex">tabix</span> <span class="at">-f</span> <span class="at">-s</span> 1 <span class="at">-b</span> 3 <span class="at">-e</span> 3 new_tabbed_revel_grch38.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Usage:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a></a><span class="ex">--plugin</span> REVEL,file=/path/to/revel/data.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="alphamissense" class="slide level2">
+<h2><a href="http://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#alphamissense">AlphaMissense</a></h2>
+<blockquote>
+<p><a href="https://www.science.org/doi/10.1126/science.adg7492">AlphaMissense’s Paper</a>: Accurate proteome-wide missense variant effect prediction with AlphaMissense</p>
+</blockquote>
+<p><a href="https://console.cloud.google.com/storage/browser/dm_alphamissense;tab=objects?pli=1&amp;prefix=&amp;forceOnObjectsSortingFiltering=false"><strong>Download link</strong></a></p>
+<p>Prepare for GRCh38</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a></a><span class="fu">wget</span> https://storage.googleapis.com/dm_alphamissense/AlphaMissense_hg38.tsv.gz</span>
+<span id="cb11-2"><a></a><span class="ex">tabix</span> <span class="at">-s</span> 1 <span class="at">-b</span> 2 <span class="at">-e</span> 2 <span class="at">-f</span> <span class="at">-S</span> 1 AlphaMissense_hg38.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Run it with VEP</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a></a><span class="ex">--plugin</span> AlphaMissense,file=/full/path/to/file.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="dbnsfp" class="slide level2">
+<h2><a href="http://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#dbnsfp">dbNSFP</a></h2>
+<blockquote>
+<p><a href="https://pubmed.ncbi.nlm.nih.gov/33261662/">dbNSFP v4 paper</a>: a comprehensive database of transcript-specific functional predictions and annotations for human nonsynonymous and splice-site SNVs</p>
+</blockquote>
+<p>A VEP plugin that retrieves data for missense variants from a tabix-indexed dbNSFP file.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a></a><span class="ex">--plugin</span> dbNSFP,/path/to/dbNSFP.gz,SIFT_score,HDIV_score</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Prepare the data</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a></a><span class="va">version</span><span class="op">=</span>4.7c</span>
+<span id="cb14-2"><a></a><span class="fu">wget</span> ftp://dbnsfp:dbnsfp@dbnsfp.softgenetics.com/dbNSFP<span class="va">${version}</span>.zip</span>
+<span id="cb14-3"><a></a><span class="fu">unzip</span> dbNSFP<span class="va">${version}</span>.zip</span>
+<span id="cb14-4"><a></a><span class="fu">zcat</span> dbNSFP<span class="va">${version}</span>_variant.chr1.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n1</span> <span class="op">&gt;</span> h</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Prepare for GRCh38</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a></a><span class="fu">zgrep</span> <span class="at">-h</span> <span class="at">-v</span> ^#chr dbNSFP<span class="va">${version}</span>_variant.chr<span class="pp">*</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-k1,1</span> <span class="at">-k2,2n</span> <span class="at">-</span> <span class="kw">|</span> <span class="fu">cat</span> h <span class="at">-</span> <span class="kw">|</span> <span class="ex">bgzip</span> <span class="at">-c</span> <span class="op">&gt;</span> dbNSFP<span class="va">${version}</span>_grch38.gz</span>
+<span id="cb15-2"><a></a>  <span class="ex">tabix</span> <span class="at">-s</span> 1 <span class="at">-b</span> 2 <span class="at">-e</span> 2 dbNSFP<span class="va">${version}</span>_grch38.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Run it with VEP</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a></a><span class="ex">--plugin</span> dbNSFP,/path/to/dbNSFP.gz,LRT_score,GERP++_RS</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="filter-variants-with-vep" class="slide level2">
+<h2>Filter Variants with VEP</h2>
+<p>You can use the tool that is included in the VEP’s suite of tools. This tool generally works very well with data that have been VEP-annotated</p>
+<p>Filter SIFT deleterious events `<code>filter_vep -i variant_effect_output.txt -filter "SIFT is deleterious" | grep -v "##" | head -n5</code> <br> Can be used with pipes, for example (might save memory)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a></a><span class="ex">vep</span> <span class="at">-i</span> examples/homo_sapiens_GRCh38.vcf <span class="at">--cache</span> <span class="at">--force_overwrite</span> <span class="at">--sift</span> b <span class="at">--canonical</span> <span class="at">--symbol</span> <span class="at">--tab</span> <span class="at">--fields</span> Uploaded_variation,SYMBOL,CANONICAL,SIFT <span class="at">-o</span> STDOUT <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb17-2"><a></a><span class="ex">filter_vep</span> <span class="at">--filter</span> <span class="st">"CANONICAL is YES and SIFT is deleterious"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="notes" class="slide level2">
+<h2>Notes</h2>
+<ul>
+<li><p>There are many other plugins that can be used depending on the context and the specific biological question at hand. You can have a look here: <a href="https://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html">Plugins for VEP</a></p></li>
+<li><p>You can run multiple plugins at the same time</p></li>
+<li><p>The more plugins the more computationally expensive it could become</p></li>
+<li><p>There is a nice <code>help</code> included in VEP that can be useful for consultation</p></li>
+</ul>
+</section></section>
+<section>
+<section id="best-practices" class="title-slide slide level1 center" data-background-color="#2C3E50">
+<h1>Best Practices</h1>
+
+</section>
+<section id="quality-control" class="slide level2">
+<h2>Quality Control</h2>
+<ul>
+<li>Filter low-quality variants before annotation</li>
+<li>Use matched normal samples when available</li>
+<li>Consider sequencing artifacts</li>
+<li>Document filtering criteria</li>
+<li>Use IGV for confirmation</li>
+</ul>
+</section>
+<section id="annotation-strategy" class="slide level2 scrollable">
+<h2>Annotation Strategy</h2>
+<ol type="1">
+<li>Use multiple prediction algorithms</li>
+<li>Consider tissue-specific expression</li>
+<li>Include population frequencies</li>
+<li>Add clinical annotations</li>
+<li>Follow standardized guidelines</li>
+</ol>
+</section>
+<section id="points-to-keep-in-mind" class="slide level2">
+<h2>Points to keep in mind</h2>
+<ul>
+<li>Using not only the HIGH impact somatic mutations but also the MODERATE</li>
+<li>Remembering that the “driver” mutation is not necessarily fully representative, we simply do not know many of them</li>
+<li>CNVs (Copy number variants) calling is hard, especially for WES data (WES is only 2% of a genome)</li>
+<li>No tool is perfect! This is especially true for CNV calling
+<ul>
+<li>If samples’ tumor purity is too low, or the quality is too low one should be especially careful with the results</li>
+<li>Experimental design is very important</li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="resources" class="title-slide slide level1 center" data-background-color="#2C3E50">
+<h1>Resources</h1>
+
+</section>
+<section id="useful-links" class="slide level2">
+<h2>Useful Links</h2>
+<ul>
+<li><a href="http://www.ensembl.org/info/docs/tools/vep/">VEP Documentation</a></li>
+<li><a href="https://gnomad.broadinstitute.org/">gnomAD Browser</a></li>
+<li><a href="https://cancer.sanger.ac.uk/cosmic">COSMIC Database</a></li>
+<li><a href="https://www.ncbi.nlm.nih.gov/clinvar/">ClinVar</a></li>
+<li><a href="https://www.oncokb.org/">OncoKB</a></li>
+</ul>
+</section></section>
+<section>
+<section id="questions" class="title-slide slide level1 center" data-background-color="#2C3E50">
+<h1>Questions?</h1>
+<p>Feel free to drop a line in the chat or to contact us.</p>
+</section>
+<section id="contact-information" class="slide level2">
+<h2>Contact Information</h2>
+<ul>
+<li>VEP Support: <a href="https://www.ensembl.org/Help/Contact" class="uri">https://www.ensembl.org/Help/Contact</a></li>
+<li>Documentation: <a href="http://www.ensembl.org/info/docs/tools/vep/" class="uri">http://www.ensembl.org/info/docs/tools/vep/</a></li>
+<li>GitHub: <a href="https://github.com/Ensembl/ensembl-vep" class="uri">https://github.com/Ensembl/ensembl-vep</a></li>
+<li>Bioconductor: <a href="https://bioconductor.org/" class="uri">https://bioconductor.org/</a></li>
+</ul>
+</section></section>
+<section id="practical-part" class="title-slide slide level1 center">
+<h1>Practical part!</h1>
+
+
+</section>
+    </div>
+  <div class="quarto-auto-generated-content" style="display: none;">
+<p><img src="../assets/SIB_logo.svg" class="slide-logo"></p>
+<div class="footer footer-default">
+<p>Cancer Variant Analysis - SIB</p>
+</div>
+</div></div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': true,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'jumpToSlide': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleScrollView(event)\"><kbd>r</kbd> Scroll View Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"8\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': true,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
+          }
+          return false;
+        }
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
+          }
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp("https:\/\/sib-swiss\.github\.io\/cancer-variants-training\/");
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
+            }
+          }
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
+          }
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
+          }
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
+        }
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
+          });
+        }
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
+    
+
+</body></html>

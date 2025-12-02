@@ -1,0 +1,31 @@
+/* css styles */
+/* .important {
+    color: maroon;
+} */
+
+.illustration {
+    border: 1px solid rgb(230, 230, 230);
+}
+
+body {
+    font-family: 'Source Sans Pro';
+    text-align: justify;
+}
+
+p {
+    font-family: 'Source Sans Pro';
+    text-align: justify;
+}
+
+.btn-red {
+  background-color: #ae191a;
+  border-color: #ae191a;
+  color: white;
+}
+
+.btn-red:hover {
+  background-color: #8c1515; /* A slightly darker red */
+  border-color: #8c1515;
+  color: white;
+}
+
