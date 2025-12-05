@@ -382,11 +382,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#presentation" id="toc-presentation" class="nav-link active" data-scroll-target="#presentation">Presentation</a>
-  <ul class="collapse">
+  <li><a href="#presentation" id="toc-presentation" class="nav-link active" data-scroll-target="#presentation">Presentation</a></li>
   <li><a href="#ensembl-vep" id="toc-ensembl-vep" class="nav-link" data-scroll-target="#ensembl-vep">Ensembl VEP</a></li>
   <li><a href="#why-do-we-need-a-tool-like-vep" id="toc-why-do-we-need-a-tool-like-vep" class="nav-link" data-scroll-target="#why-do-we-need-a-tool-like-vep">Why do we need a tool like VEP?</a></li>
-  </ul></li>
   <li><a href="#key-concepts" id="toc-key-concepts" class="nav-link" data-scroll-target="#key-concepts">Key Concepts</a>
   <ul class="collapse">
   <li><a href="#install-vep" id="toc-install-vep" class="nav-link" data-scroll-target="#install-vep">Install VEP</a></li>
@@ -409,7 +407,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#complex-vep-annotation" id="toc-complex-vep-annotation" class="nav-link" data-scroll-target="#complex-vep-annotation">Complex VEP annotation</a>
   <ul class="collapse">
-  <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4">Exercise 4</a></li>
+  <li><a href="#extra-exercise-4" id="toc-extra-exercise-4" class="nav-link" data-scroll-target="#extra-exercise-4">EXTRA: Exercise 4</a></li>
   </ul></li>
   <li><a href="#lets-visualize-some-of-the-data-from-our-somatic-call-annotation" id="toc-lets-visualize-some-of-the-data-from-our-somatic-call-annotation" class="nav-link" data-scroll-target="#lets-visualize-some-of-the-data-from-our-somatic-call-annotation">Let’s visualize some of the data from our somatic call annotation!</a>
   <ul class="collapse">
@@ -456,20 +454,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="presentation" class="level2">
 <h2 class="anchored" data-anchor-id="presentation">Presentation</h2>
 <p><a href="./slides/03_VEP_variantAnnotationPresentation.html" class="btn btn-red" role="button" target="_blank" rel="noopener noreferrer"> Variants annotation </a></p>
-<section id="ensembl-vep" class="level3">
-<h3 class="anchored" data-anchor-id="ensembl-vep">Ensembl VEP</h3>
-<p>VEP is a powerful and flexible tool for annotating, analyzing, and prioritizing genomic variants. It is particularly useful in cancer genomics, where understanding the functional impact of somatic mutations is crucial for research and clinical applications. We can answer questions like:</p>
+</section>
+<section id="ensembl-vep" class="level2">
+<h2 class="anchored" data-anchor-id="ensembl-vep">Ensembl VEP</h2>
+<p>VEP is a powerful and flexible tool for annotating, analyzing, and prioritizing genomic variants. It is particularly useful in cancer genomics, where we need to understand the potential functional impact of somatic mutations for research and clinical decisions.</p>
+<p>With VEP we can start to address questions such as:</p>
 <ul>
-<li>How damaging is a certain somatic mutation (according to reference databases)</li>
-<li>What is the impact of this mutation in the particular cancer type of study</li>
-<li>Is the mutation known for that cancer?</li>
-<li>Is there a relation with a certain mutation and a chemotherapeutic (or a class of them)</li>
+<li>How damaging is a specific somatic mutation according to reference databases?</li>
+<li>Is the mutation already known in this particular cancer type?</li>
+<li>What is the predicted functional impact of this mutation in the tumour context?</li>
+<li>Are there known associations between this mutation and specific drugs or drug classes?</li>
+<li>How common the mutation is in various populations?</li>
 </ul>
 </section>
-<section id="why-do-we-need-a-tool-like-vep" class="level3">
-<h3 class="anchored" data-anchor-id="why-do-we-need-a-tool-like-vep">Why do we need a tool like VEP?</h3>
-<p>In the genomic era we can get thousands of somatic mutations and those are rarely analyzed one by one. We need a way to summarize those SNVs consistently and to understand which are the variants to focus on. In this context a tool like VEP becomes very useful.</p>
-</section>
+<section id="why-do-we-need-a-tool-like-vep" class="level2">
+<h2 class="anchored" data-anchor-id="why-do-we-need-a-tool-like-vep">Why do we need a tool like VEP?</h2>
+<p>In a typical cancer exome or panel we may obtain <strong>thousands of somatic SNVs and indels</strong> per sample. These variants:</p>
+<ul>
+<li>Are not analyzed one by one by hand.</li>
+<li>Need to be <strong>standardized</strong> (same genome build, same transcript model, consistent consequence terms).</li>
+<li>Need to be <strong>prioritized</strong> so that we can focus on potentially actionable or biologically relevant changes.</li>
+</ul>
+<p>A tool like VEP allows us to:</p>
+<ul>
+<li>Run <strong>high‑throughput annotation</strong> of all variants in a VCF.</li>
+<li>Attach consistent functional predictions and database links (ClinVar, COSMIC, etc.).</li>
+<li>Reduce a long list of raw calls to a <strong>shorter list of interpretable candidate variants</strong> for downstream review.</li>
+</ul>
 </section>
 <section id="key-concepts" class="level2">
 <h2 class="anchored" data-anchor-id="key-concepts">Key Concepts</h2>
@@ -1447,8 +1458,8 @@ Note
 <section id="complex-vep-annotation" class="level2">
 <h2 class="anchored" data-anchor-id="complex-vep-annotation">Complex VEP annotation</h2>
 <p>Here we learn how to use additional data to include additional information to the annotation</p>
-<section id="exercise-4" class="level3">
-<h3 class="anchored">Exercise 4</h3>
+<section id="extra-exercise-4" class="level3">
+<h3 class="anchored">EXTRA: Exercise 4</h3>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1746,7 +1757,7 @@ Note
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Advanced Topic: Annotating CNVs with VEP
+<span class="screen-reader-only">Note</span>EXTRA: Advanced Topic: Annotating CNVs with VEP
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
