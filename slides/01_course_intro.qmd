@@ -64,6 +64,7 @@ format:
 - **Geert Van Geest:** Training Project Manager at SIB
 - **Flavio Lombardo:** Computational Biologist at the University Hospital Basel
 - **Deepak Tanwar:** Bioinformaticis Specialist and Trainer at SIB
+- **Aparna Pandey:** Bioinformatic Analyst at Interfaculty Bioinformatics Unit, University of Bern
 
 
 ::: {.center-logos}
@@ -80,6 +81,11 @@ format:
 
 - Perform a somatic **variant annotation** with VEP and use the results to filter possible **high-impact mutations** in the cancer genome
 
+
+::: {.notes}
+We will work with WES data from a tumor of triple negative breast cancer (TNBC) cell line and matched control
+:::
+---
 ## Learning experiences {.columns-2}
 
 ::: {.column width="45%"}

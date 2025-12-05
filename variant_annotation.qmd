@@ -14,28 +14,31 @@ format:
   Variants annotation
 </a>
 
-### Ensembl VEP
-VEP is a powerful and flexible tool for annotating, analyzing, and
-prioritizing genomic variants. It is particularly useful in cancer
-genomics, where understanding the functional impact of somatic mutations
-is crucial for research and clinical applications. We can answer
-questions like: 
+## Ensembl VEP
 
-- How damaging is a certain somatic mutation (according
-to reference databases) 
-- What is the impact of this mutation in the
-particular cancer type of study 
-- Is the mutation known for that
-cancer? 
-- Is there a relation with a certain mutation and a
-chemotherapeutic (or a class of them)
+VEP is a powerful and flexible tool for annotating, analyzing, and prioritizing genomic variants. It is particularly useful in cancer genomics, where we need to understand the potential functional impact of somatic mutations for research and clinical decisions.
 
-### Why do we need a tool like VEP?
+With VEP we can start to address questions such as:
 
-In the genomic era we can get thousands of somatic mutations and those
-are rarely analyzed one by one. We need a way to summarize those SNVs
-consistently and to understand which are the variants to focus on. In this
-context a tool like VEP becomes very useful.
+- How damaging is a specific somatic mutation according to reference databases?
+- Is the mutation already known in this particular cancer type?
+- What is the predicted functional impact of this mutation in the tumour context?
+- Are there known associations between this mutation and specific drugs or drug classes?
+- How common the mutation is in various populations?
+
+## Why do we need a tool like VEP?
+
+In a typical cancer exome or panel we may obtain **thousands of somatic SNVs and indels** per sample. These variants:
+
+- Are not analyzed one by one by hand.
+- Need to be **standardized** (same genome build, same transcript model, consistent consequence terms).
+- Need to be **prioritized** so that we can focus on potentially actionable or biologically relevant changes.
+
+A tool like VEP allows us to:
+
+- Run **high‑throughput annotation** of all variants in a VCF.
+- Attach consistent functional predictions and database links (ClinVar, COSMIC, etc.).
+- Reduce a long list of raw calls to a **shorter list of interpretable candidate variants** for downstream review.
 
 ## Key Concepts
 
@@ -657,7 +660,7 @@ We have seen how to run VEP and how to filter the output. Now we can make anothe
 ## Complex VEP annotation
 Here we learn how to use additional data to include additional information to the annotation
 
-### Exercise 4
+### EXTRA: Exercise 4
 
 ::: {.callout-important}
 ## Complex VEP run
@@ -800,7 +803,7 @@ At this point we obtained a good annotated set of somatic variants. This paves t
 :::
 
 ::: {.callout-note collapse="true"}
-## Advanced Topic: Annotating CNVs with VEP
+## EXTRA: Advanced Topic: Annotating CNVs with VEP
 
 CNV annotation is more challenging than SNV annotation because:
 

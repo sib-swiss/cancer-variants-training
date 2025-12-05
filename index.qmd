@@ -5,7 +5,6 @@ format:
     css: styles.css
 ---
 
-
 ## Course Team
 
 **Trainer**
@@ -13,6 +12,9 @@ format:
 
 **Helper**
 - Deepak Tanwar [ORCID](https://orcid.org/0000-0001-8036-1989)
+
+**Helper**
+- Aparna Pandey [ORCID](https://orcid.org/0000-0003-2036-4250)
 
 **Contributors**
 - Geert van Geest [ORCiD](https://orcid.org/0000-0002-1561-078X) (original course materials)
