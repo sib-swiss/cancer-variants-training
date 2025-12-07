@@ -36,18 +36,16 @@ code-block-background: true
 code-overflow: wrap
 ---
 
-# Introduction
-
 ## Somatic vs Germline
 
-::: {.fragment .fade-in}
+
 - A germline mutation is inherited by the individual from birth. They can be oncogenic (ie Rb = retinoblastoma)
 - A somatic mutation, or acquired mutation, happens in somatic cells instead of germ cells and will not pass to offspring (ie TP53).
-:::
 
-::: {.fragment .fade-in}
+
+
 ![Germline vs somatic](https://www.codexgenetics.com/blog/images/30-somatic-mutation-and-germline-mutation%20(eng).png){#fig-germliine fig-align="center" fig-caption="Germline vs somatic mutations" width="350" height="300"}
-:::
+
 
 ## How do mutations appear?
 
@@ -55,9 +53,7 @@ code-overflow: wrap
 - As a consequence of DNA damage (~70,000 nucleotide lesions or modifications per day)
 - Exposure to mutagens such as UV, smoking increases the mutations' frequency
 
-::: {.fragment .fade-in}
-![Example UV damage](https://knowgenetics.org/wp-content/uploads/2012/12/amanda1.png){#fig_uv_damage fig-caption="Germline vs somatic mutations" width="250" height="200"}
-:::
+![Example UV damage,knowgenetics.org](https://knowgenetics.org/wp-content/uploads/2012/12/amanda1.png){#fig_uv_damage fig-caption="Germline vs somatic mutations" width="250" height="200"}
 
 ::: notes
 Key points: - https://www.nature.com/articles/s41576-021-00376-2
@@ -81,7 +77,7 @@ Yes, there are many mechanisms of DNA repair. Some of the most common are:
 
 ::: {.fragment .fade-in}
 
-![DNA Repair Mechanisms](../assets/variant_annotation/variant_types.jpg){fig-caption="Overview of major DNA repair mechanisms in the cell" #fig-repair-system}
+![DNA Repair Mechanisms, The origin of human mutation in light of genomic data, Seplyarskiy et al, 2021](../assets/variant_annotation/variant_types.jpg){fig-caption="Overview of major DNA repair mechanisms in the cell" #fig-repair-system}
 
 ::: notes
 Key points: - https://www.nature.com/articles/nrclinonc.2012.3/figures/1
@@ -91,7 +87,7 @@ Key points: - https://www.nature.com/articles/nrclinonc.2012.3/figures/1
 
 ## Acquisition of mutation in cancer
 
-![Cancer somatic mut](../assets/variant_annotation/cancer_somatic_mut.jpg){fig-caption="https://www.nature.com/articles/nature07943" #fig-progression_to_cancer}
+![Cancer somatic mutations, The cancer genome, Stratton et al,  2009](../assets/variant_annotation/cancer_somatic_mut.jpg){fig-caption="https://www.nature.com/articles/nature07943" #fig-progression_to_cancer}
 
 ::: notes
 Key points: - https://www.nature.com/articles/nature07943
@@ -127,8 +123,6 @@ Key points: - Not all HIGH impact variants from VEP are driver mutations, integr
 
 ## Types of Driver Mutations
 
-::: {.incremental}
-
 - Oncogenes:
   - Gain-of-function mutations in genes like KRAS, BRAF, and EGFR drive tumor growth by promoting uncontrolled cell division or survival.
 
@@ -137,8 +131,7 @@ Key points: - Not all HIGH impact variants from VEP are driver mutations, integr
 
 - Mutator Genes:
   - Mutations in genes like MLH1 or MSH2 lead to genomic instability, enabling the accumulation of additional mutations.
-  
-:::
+
 
 # How can we identify what's a mutation's role?
 - Can we somehow quantify its importance?
@@ -150,67 +143,102 @@ Key points: - Not all HIGH impact variants from VEP are driver mutations, integr
 :::
 
 ## What is [VEP](https://www.ensembl.org/info/docs/tools/vep/script/index.html)?
-::: {.incremental}
+
 - 2010: The first version of VEP was introduced as part of the Ensembl project. 
 - 2012-2015 Functional prediction scores were introduced.
 - 2017 Other databases are now part of the VEP, such as COSMIC, ClinVar, gnomAD. The tool was made more generalizable and personalizable with the addition of VEP's plugin feature. 
 - VEP is 100% written in perl [VEP Github](https://github.com/Ensembl/ensembl-vep)
-:::
 
 ::: notes
 Key points: - VEP is widely used in research and clinical settings - Provides comprehensive variant annotation - Especially useful for large-scale analysis
 :::
 
-## Important databases
+## Important Annotation Databases
 
-::: {.fragment .fade-down}
-::: {.incremental}
-- COSMIC <br>
-What it tells us: Somatic mutations found in cancer
-Example output: COSV59384583; OCCURENCE=1(skin)
-Interpretation: Mutation seen in skin cancer; frequency helps assess if likely driver
+:::: {.columns}
+::: {.column width="50%"}
+### Cancer-Specific Resources
 
-- ClinVar <br>
-What it tells us: Clinical significance of variants <br>
-Example output: Pathogenic/Likely_pathogenic <br>
-Interpretation: Strong evidence for disease causation
+**COSMIC** (Catalogue of Somatic Mutations in Cancer)
 
-- gnomAD <br>
-What it tells us: Population frequency <br>
-Example output: AF=0.00001 <br>
-Interpretation: Very rare variant (<0.01% frequency)
+| Field | Content |
+|:---|:---|
+| **Purpose** | Somatic mutations in cancer |
+| **Example** | `COSV59384583; OCCURENCE=1(skin)` |
+| **Interpretation** | Mutation seen in skin cancer; frequency indicates driver likelihood |
 
-- AlphaMissense <br>
-What it tells us: Predicted functional impact <br>
-Example output: likely_pathogenic <br>
-Interpretation: AI model predicts damaging effect
-:::
+**ClinVar** (Clinical Variant Database)
+
+| Field | Content |
+|:---|:---|
+| **Purpose** | Clinical significance assessment |
+| **Example** | `Pathogenic/Likely_pathogenic` |
+| **Interpretation** | Strong evidence for disease causation |
+
 :::
 
-# What does VEP do?
+::: {.column width="50%"}
+### Population & Prediction Resources
 
-Imagine thousands of variants to annotate manually to understand what each of them does, searching in different databases, searching in the literature. It would take weeks and it would be error prone. Automation of these tasks reduces the time-to- discovery
+**gnomAD** (Genome Aggregation Database)
 
+| Field | Content |
+|:---|:---|
+| **Purpose** | Population allele frequency |
+| **Example** | `AF=0.00001` |
+| **Interpretation** | Very rare (<0.01% frequency) |
 
--   Powerful tool for annotating genomic variants (both somatic and germline)
--   Essential in cancer genomics and clinical applications
--   Helps understand functional impact of mutations
+**AlphaMissense**
 
-# What is VEP NOT doing for you?
+| Field | Content |
+|:---|:---|
+| **Purpose** | AI-predicted functional impact |
+| **Example** | `likely_pathogenic` |
+| **Interpretation** | Model predicts damaging effect |
 
-VEP is a great tool, but it does not remove the work from the scientists. Automation simplifies the process but it can give false positives and false negatives. 
-If the experimental setup is low quality, the results most likely will be low quality too.
+:::
+::::
 
+::: {.callout-tip}
+## Filtering Strategy
+Combine databases for variant prioritization:
 
-- Calling variants
-- Magic bullet
-- Knowing everything
+- **gnomAD AF < 0.01** → Filters common variants
+- **COSMIC presence** → Supports somatic driver role
+- **ClinVar pathogenic** → Clinical validation
+- **AlphaMissense** → Functional prediction for novel variants
+:::
+
+---
+## What Does VEP Do?
+
+**The Challenge:**
+Imagine annotating thousands of variants manually - searching databases, reviewing literature, interpreting functional impact. This would take **weeks** and be highly **error-prone**.
+
+**VEP automates annotation to accelerate discovery:**
+
+- Annotates genomic variants (somatic and germline)
+- Predicts functional consequences
+- Integrates multiple databases (COSMIC, ClinVar, gnomAD, etc.)
+- Essential for cancer genomics and clinical applications
+
+::: {.callout-warning}
+## What VEP Does NOT Do
+
+VEP is powerful, but **it's not magic:**
+
+- **Does NOT call variants** - requires pre-called VCF input
+- **Does NOT guarantee accuracy** - annotation quality depends on input quality
+- **Does NOT replace human judgment** - false positives/negatives require expert review
+
+**Remember:** Automation simplifies the process, but critical thinking and validation remain essential!
+:::
 
 ::: {.notes}
-- Brainstorming, reiteration and analysis
-- Discovery phase
+- VEP accelerates but doesn't replace analysis
+- Brainstorming and iteration still required
+- Quality in = quality out
 :::
-
 
 ## What is not well understood?
 
@@ -235,216 +263,163 @@ We can answer questions like:
 -   Is the mutation known for that cancer?
 -   Are there therapeutic implications?
 
-# Installation & Setup {background-color="#2C3E50"}
+# Variant Annotation with VEP
 
-1.  [Installer Script](https://www.ensembl.org/info/docs/tools/vep/script/vep_tutorial.html)
-2.  Manual Installation
-3.  Docker
-4.  [Conda/Bioconda](https://docs.conda.io/projects/conda/en/stable/user-guide/getting-started.html)
+## VEP: Transcript Selection & Priority
 
-## Installation using conda
-- [Conda/Bioconda](https://docs.conda.io/projects/conda/en/stable/user-guide/getting-started.html)
+**The Challenge:** A single variant can have 4-12+ annotations due to multiple transcript isoforms. Which one matters?
 
-::: fragment
-``` bash
-# Installing Conda #https://docs.anaconda.com/miniconda/
-mkdir -p ~/miniconda3
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
-bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
-rm ~/miniconda3/miniconda.sh
-source ~/miniconda3/bin/activate
-conda init --all
+:::: {.columns}
+::: {.column width="50%"}
+### 1. Handling Transcripts
+VEP options to simplify output when a gene has multiple transcripts:
 
-# Using Conda
-conda create -n vep samtools python=3.10 ensembl-vep=115
-# conda install -c bioconda ensembl-vep # if installing in current env
+- `--pick`: One consequence per variant (Best for simple filtering)
+- `--pick_allele`: One per variant allele
+- `--per_gene`: One per gene
+- `--flag_pick`: Flags the "chosen" one but keeps others
+- `--pick_allele_gene`: Most comprehensive filtering
 
-# Activate VEP's env
-conda activate vep
-```
+**Selection hierarchy:**
+
+1. Canonical transcript (MANE Select for human)
+2. Protein coding biotype
+3. Most severe consequence
+4. Longest transcript
 :::
 
-::: notes
-````mamba create -n vep samtools python=3.10 ensembl-vep=113 -c bioconda -c conda-forge````
-:::
+::: {.column width="50%"}
+### 2. Consequence Severity
+**Top 10 Most Severe:**
 
-## VEP's Basic Configuration
-<br>
-
-::: fragment
-
-``` bash
-# Test installation
-vep --help
-
-# Download cache files, it takes a long time and ~/.vep (~25GB)
-vep_install -a cf -s homo_sapiens -y GRCh38 # download precomputed human data
-
-# if install official plugins
-vep_install -a p --PLUGINS list # a for action LIST akk plugins
-# vep_install -a p --PLUGINS all # install all plugins
-# vep_install -a p --PLUGINS dbNSFP,... # install specific plugins
-```
-<br>
-if you want to specify a specific folder to store the VEP's cache:
-```-c ~/vep_cache```
-
-:::
-
-## Example plugin installation
-SubsetVCF for example does not need additional data, it works directly on the VEP's output 
-```
-  - installing "SubsetVCF"
-  - add "--plugin SubsetVCF" to your VEP command to use this plugin
-  - OK
-```
-And others like REVEL need additional data to work properly
-```
- - installing "REVEL"
- - This plugin requires data
- - See Plugins/REVEL.pm for details
- - OK
-```
-
-
-## VEP Plugins: Manual install 
-
-Plugins can enhance VEP's capabilities and can add additional depth of information to the annotations __(with the price of more complexity)__.
-
-If this command does not work
-``` bash
-# if installing the official plugins
-vep_install -a p --PLUGINS all # a for action
-```
-::: fragment
-Please use this manual option
-``` bash
-# clone repository
-git clone https://github.com/Ensembl/VEP_plugins.git
-
-# make a folder in the ~/.vep folder
-mkdir -p ~/.vep/Plugins/ # Assuming your cache folder is in your $HOME
-
-# Copy all the files with extension *.pm to the Plugins folder 
-cp VEP_plugins/*.pm ~/.vep/Plugins/
-
-```
-
-:::
-
-# Core Concepts {background-color="#2C3E50"}
-
-## Transcript Selection
-
-VEP options for handling multiple transcripts:
-
--   `--pick`: One consequence per variant
--   `--pick_allele`: One per variant allele
--   `--pick_allele_gene`: One per variant allele per gene
--   `--per_gene`: One per gene
--   `--flag_pick`: Flags selected while keeping others
-
-## Consequence Priority
-
-Top 10 most severe consequences:
-
-1.  Transcript ablation
-2.  Splice acceptor/donor variant
-3.  Stop gained
-4.  Frameshift variant
+1.  **Transcript ablation**
+2.  **Splice acceptor/donor variant**
+3.  **Stop gained** (Nonsense)
+4.  **Frameshift variant**
 5.  Stop lost
 6.  Start lost
 7.  Transcript amplification
 8.  Inframe insertion/deletion
-9.  Missense variant
+9.  **Missense variant**
 10. Protein altering variant
 
-## VEP consequences prediction
+**Cancer examples:**
 
-![VEP's consequences](../assets/variant_annotation/VEP_consequences.png){#fig_vep_effects}
+- HIGH impact: *TP53* frameshift → TSG loss
+- MODERATE impact: *KRAS* p.G12D → oncogene gain
+:::
+::::
 
-
-## SIF (Sequence Ontology Impact Factors) Categories
-
-## HIGH Impact:
-
-Likely to cause a severe effect on protein structure/function.
-
-- Examples:
-  - Frameshift variants
-  - Nonsense mutations (e.g. stop codon gained)
-  - Essential splice-site mutations (e.g. disruption of canonical splice sites).
-
-## MODERATE Impact:
-
-Non-disruptive changes that might affect protein structure or function.
-
-- Examples:
-  - Missense variants (amino acid substitutions).
-  - In-frame insertions or deletions.
-
-## LOW Impact:
-
-Variants that are less likely to have a significant effect on protein function.
-
-- Examples:
-  - Synonymous changes (no amino acid alteration, [Redundancy]).
-  - Changes in non-coding regions (outside essential regulatory domains).
-
-## MODIFIER Impact:
-
-Usually non-coding or intergenic variants with no expected impact on the protein but might influence gene regulation.
-
-- Examples:
-  - Intronic variants (non-coding).
-  - Variants in 5' or 3' UTR regions.
-
-## Interpretation of HIGH vs. MODERATE Impact
-- HIGH: Typically results in loss of protein function or dominant-negative effects. These mutations are often more critical for cancer development and progression (e.g., TP53 inactivation).
-- MODERATE: Produces proteins with altered but functional activity, often conferring selective growth advantages under specific contexts (e.g., KRAS or PIK3CA oncogenic activation).
-
-## LOW effects {visibility="hidden"}
-- splice_donor_5th_base_variant	A sequence variant that causes a change at the 5th base pair after the start of the intron in the orientation of the transcript	SO:0001787	Splice donor 5th base variant	LOW
-- splice_region_variant	A sequence variant in which a change has occurred within the region of the splice site, either within 1-3 bases of the exon or 3-8 bases of the intron	SO:0001630	Splice region variant	LOW
-- splice_donor_region_variant	A sequence variant that falls in the region between the 3rd and 6th base after splice junction (5' end of intron)	SO:0002170	Splice donor region variant	LOW
-- splice_polypyrimidine_tract_variant	A sequence variant that falls in the polypyrimidine tract at 3' end of intron between 17 and 3 bases from the end (acceptor -3 to acceptor -17)	SO:0002169	Splice polypyrimidine tract variant	LOW
-- incomplete_terminal_codon_variant	A sequence variant where at least one base of the final codon of an incompletely annotated transcript is changed	SO:0001626	Incomplete terminal codon variant	LOW
-- start_retained_variant	A sequence variant where at least one base in the start codon is changed, but the start remains	SO:0002019	Start retained variant	LOW
-- stop_retained_variant	A sequence variant where at least one base in the terminator codon is changed, but the terminator remains	SO:0001567	Stop retained variant	LOW
-- synonymous_variant	A sequence variant where there is no resulting change to the encoded amino acid	SO:0001819	Synonymous variant	LOW
-	
-## PolyPhen-2 (another predictor included in VEP):
-
-::: {.incremental}
-- Predicts impact of amino acid substitutions
-- Analyzes both structure and evolutionary conservation
-- Specific to human proteins
-- Scores range from 0.0 (benign) to 1.0 (damaging)
+::: {.callout-tip}
+## Practical Tip
+For clinical reporting, use `--pick` with `--transcript_version` to ensure reproducibility. Always document which transcript was used.
 :::
 
-## Categories:
+## VEP Impact Categories
 
-::: {.fragment .fade-in}
-- **Probably Damaging** (score > 0.85)
-  - High confidence prediction of affecting protein function
-  
-- **Possibly Damaging** (score 0.15-0.85)
-  - Moderate prediction of damaging effects
-  
-- **Benign** (score < 0.15)
-  - Likely to lack phenotypic effect
+![VEP's consequences](../assets/variant_annotation/VEP_consequences.png){#fig_vep_effects height="300px"}
+
+| Impact | Description | Examples |
+|:---|:---|:---|
+| **HIGH** | **Disruptive.** Likely loss of function. | Frameshift, Stop Gained, Splice acceptor/donor. |
+| **MODERATE** | **Non-disruptive** change to protein. | Missense, In-frame indel. |
+| **LOW** | Unlikely to change function. | Synonymous, Splice region (non-canonical). |
+| **MODIFIER** | Non-coding / Regulatory. | Intronic, UTRs, Intergenic. |
+
+::: {.callout-warning}
+## Important Exceptions
+
+Not all HIGH impact = pathogenic
+
+Not all MODERATE impact = benign (e.g., *IDH1* p.R132H is LOW but a critical driver mutation)
+
+**Always consider biological context!**
 :::
 
-::: {.notes}
-Key points: 
-- Complements SIFT predictions
-- Used in conjunction with other predictors
-- Important for missense variant interpretation
+## Detailed Low Effects {visibility="hidden"}
+
+**Reference Table for Low Impact Variants**
+
+| Variant Type | Description | SO Term | Impact |
+|:---|:---|:---|:---|
+| **splice_donor_5th_base** | Change at 5th base after intron start | SO:0001787 | LOW |
+| **splice_region** | Change within 1-3 bases of exon or 3-8 of intron | SO:0001630 | LOW |
+| **splice_donor_region** | Region between 3rd and 6th base after splice junction | SO:0002170 | LOW |
+| **incomplete_terminal_codon** | Change in final codon of incomplete transcript | SO:0001626 | LOW |
+| **start_retained** | Change in start codon, but start remains | SO:0002019 | LOW |
+| **stop_retained** | Change in stop codon, but stop remains | SO:0001567 | LOW |
+| **synonymous** | No amino acid change | SO:0001819 | LOW |
+
+## PolyPhen-2 Score
+
+**Purpose:** Predicts if a missense mutation is damaging based on protein structure and evolutionary conservation.
+
+:::: {.columns}
+::: {.column width="60%"}
+**Scoring Categories:**
+
+1.  **Probably Damaging** (> 0.85)
+    * *High confidence* functional effect.
+2.  **Possibly Damaging** (0.15 - 0.85)
+    * *Moderate confidence* effect.
+3.  **Benign** (< 0.15)
+    * Likely no phenotypic effect.
 :::
 
-# Advanced Topics {background-color="#2C3E50"}
+::: {.column width="40%"}
+::: {.callout-note}
+## Usage
+PolyPhen-2 is specific to **human proteins**.
 
-## VEP Plugins
+It should be used in conjunction with other tools (like SIFT) to build a consensus on missense variant interpretation.
+:::
+:::
+::::
+
+## SIFT Score
+
+**Purpose:** Predicts if an amino acid substitution is deleterious based on sequence conservation across species.
+
+:::: {.columns}
+::: {.column width="60%"}
+**Scoring Categories:**
+
+1.  **Deleterious** (≤ 0.05)
+    * Substitution at highly conserved position
+    * *High confidence* damaging effect
+
+2.  **Tolerated** (> 0.05)
+    * Substitution at variable position
+    * Likely benign or neutral effect
+
+**Note:** Lower scores = More damaging (opposite to PolyPhen-2!)
+:::
+
+::: {.column width="40%"}
+::: {.callout-note}
+## Usage
+
+SIFT is available for **10 species** in Ensembl (including human, mouse, zebrafish).
+
+All possible amino acid substitutions are **pre-calculated**, making annotation very fast.
+
+Use in combination with PolyPhen-2 for consensus prediction.
+:::
+:::
+::::
+
+::: {.callout-tip}
+## Interpretation Guide
+
+| SIFT | PolyPhen-2 | Confidence |
+|:---|:---|:---|
+| Deleterious | Probably Damaging | **High** - prioritize |
+| Tolerated | Benign | **High** - likely benign |
+| Deleterious | Benign | Mixed - manual review |
+| Tolerated | Damaging | Mixed - manual review |
+:::
+
+# VEP Plugins
 
 Essential plugins for cancer analysis:
 
@@ -525,7 +500,7 @@ Run it with VEP
 You can use the tool that is included in the VEP's suite of tools. This tool generally works very well with data that have been VEP-annotated
 
 Filter SIFT deleterious events
-````
+```bash
 filter_vep -i variant_effect_output.txt -filter "SIFT is deleterious" | grep -v "##" | head -n5
 ```
 <br>
@@ -533,6 +508,21 @@ Can be used with pipes, for example (might save memory)
 ``` bash
 vep -i examples/homo_sapiens_GRCh38.vcf --cache --force_overwrite --sift b --canonical --symbol --tab --fields Uploaded_variation,SYMBOL,CANONICAL,SIFT -o STDOUT | \
 filter_vep --filter "CANONICAL is YES and SIFT is deleterious"
+```
+
+**Operators:**
+
+- `is`: Exact match
+- `match`: Regex pattern
+- `<`, `>`, `<=`, `>=`: Numeric comparison
+- `in`: List membership
+- `and`, `or`: Combine conditions
+
+**Example 1: High-confidence damaging**
+```bash
+filter_vep -i vep_output.txt \
+  -filter "SIFT is deleterious and \
+           PolyPhen is probably_damaging"
 ```
 
 ## Notes
@@ -568,12 +558,28 @@ You can have a look here:
 
 ## Points to keep in mind
 
-- Using not only the HIGH impact somatic mutations but also the MODERATE
-- Remembering that the "driver" mutation is not necessarily fully representative, we simply do not know many of them
-- CNVs (Copy number variants) calling is hard, especially for WES data (WES is only 2% of a genome)
-- No tool is perfect! This is especially true for CNV calling
-  - If samples' tumor purity is too low, or the quality is too low one should be especially careful with the results
-  - Experimental design is very important
+**Include MODERATE impact variants**
+
+- HIGH impact often affects tumor suppressors (*TP53*, *PTEN*, *RB1*)
+- MODERATE impact often affects oncogenes (*KRAS*, *BRAF*, *PIK3CA*)
+- Examples: *KRAS* p.G12D, *BRAF* p.V600E are MODERATE but critical drivers
+
+**Many drivers remain unknown**
+
+- Only ~500-600 cancer genes well-characterized
+- Absence from databases ≠ passenger mutation
+- Look for recurrent mutations across samples
+
+**CNV calling limitations**
+
+- Particularly challenging in WES (only 2% of genome covered)
+- Requires adequate tumor purity (>40% ideal) and coverage
+- VEP is not specialized for CNV annotation (CNVannotator, ClassifyCNV)
+
+::: {.callout-warning}
+## No Tool is Perfect
+Always validate important findings visually (IGV) and consider orthogonal methods for clinical decisions.
+:::
 
 # Resources {background-color="#2C3E50"}
 
@@ -595,4 +601,7 @@ Feel free to drop a line in the chat or to contact us.
 -   GitHub: <https://github.com/Ensembl/ensembl-vep>
 -   Bioconductor: <https://bioconductor.org/>
 
-# Practical part!
+
+## Exercises {style="text-align: center"}
+
+![Giphy](https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExOWdxc2J1OHY3eGs3c2ZycGhiNGt1dzQ4dmVlZXQxNjM2NDQxOWQybCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/zIOdLMZDcBDc2gk6vV/giphy.gif)
