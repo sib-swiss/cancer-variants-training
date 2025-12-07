@@ -97,9 +97,9 @@ Cancer genomes typically harbor **2-8 driver mutations** (Vogelstein et al., 201
 :::
 
 ::: {.column width="50%"}
-![Knudson hypothesis: Tumor Suppressor Gene, [Source](https://josefelixrodriguezantonweb.com/tag/two-hit-hypothesis/)](../assets/presentations/slidedeck_2/02_two_hits_hypot.jpg){fig-alt="Knudson hypothesis"}
+![Knudson hypothesis: Tumor Suppressor Gene (Knudson, 1971), [Source](https://josefelixrodriguezantonweb.com/tag/two-hit-hypothesis/)](../assets/presentations/slidedeck_2/02_two_hits_hypot.jpg){fig-alt="Knudson hypothesis"}
 
-![Somatic mutations, [Source](https://doi.org/10.1016/j.ymeth.2019.11.002)](../assets/presentations/slidedeck_2/02b_germline_vs_somatic.jpg){fig-alt="Somatic mutations create masaicism"}
+![Timing of Mutation Events: An earlier mutation (a) produces a larger population of mutant cells, than a later event (b), (Oota, 2020) [Source](https://doi.org/10.1016/j.ymeth.2019.11.002)](../assets/presentations/slidedeck_2/02b_germline_vs_somatic.jpg){fig-alt="Somatic mutations create masaicism"}
 :::
 ::::
 
@@ -139,9 +139,9 @@ Hanahan & Weinberg (2011) "Hallmarks of Cancer: The Next Generation" - Cell
 :::: {.columns}
 ::: {.column width="55%"}
 
-**Variant**: A difference in DNA sequence compared to a reference
-
 **Mutation**: The *process* of change in DNA
+
+**Variant**: A difference in DNA sequence compared to a reference (the **outcome**)
 
 **Somatic variant**: Occurs only in specific cells/tissues
   - Not inherited
@@ -156,7 +156,7 @@ Hanahan & Weinberg (2011) "Hallmarks of Cancer: The Next Generation" - Cell
 :::
 
 ::: {.column width="45%"}
-![PTC example: pedigree charts, [Source](https://www.bbc.co.uk/bitesize/guides/z2xbh39/revision/5)](../assets/presentations/slidedeck_2/03_PTC_hereditability.png){fig-alt="Pedigree showing inheritance pattern"}
+![PTC (Phenylthiocarbamide): A chemical that tastes **bitter** only to those with a specific inherited dominant variant. This pedigree shows its germline inheritance pattern. [Source](https://www.bbc.co.uk/bitesize/guides/z2xbh39/revision/5)](../assets/presentations/slidedeck_2/03_PTC_hereditability.png){fig-alt="Pedigree showing inheritance pattern"}
 :::
 ::::
 
@@ -214,19 +214,20 @@ Different mutation types require different detection methods and have distinct c
 
 Each mutational process leaves a characteristic pattern:
 
-**Signature 1**: Aging (C>T at CpG)
+- **Signature 1**: Aging, C>T at CpG sites, **Transition** (Py $\leftrightarrow$ Py)
 
-**Signature 4**: Tobacco smoking (C>A)
+- **Signature 4**: Tobacco smoking, C>A, **Transversion** (Py $\leftrightarrow$ Pu)
 
-**Signature 7**: UV light (C>T at dipyrimidines)
+- **Signature 6**: Mismatch repair (MMR) deficiency
 
-**Signature 6**: Mismatch repair deficiency
+- **Signature 7**: UV light, C>T at dipyrimidines, **Transition**
+
 
 **Clinical applications:**
 
-- Understanding tumor etiology
-- Treatment selection (e.g., PARP inhibitors for HRD)
-- Immunotherapy response prediction
+- Understanding tumor etiology (e.g. Signature 4, 7)
+- Treatment selection (e.g., PARP inhibitors for HRD) (Signature 3)
+- Immunotherapy response prediction (Signature 6)
 
 :::
 
@@ -235,6 +236,10 @@ Each mutational process leaves a characteristic pattern:
 
 ![Mutational signature SBS4: Smoking signature. [Source](https://cancer.sanger.ac.uk/signatures/sbs/sbs1/)](../assets/presentations/slidedeck_2/05_SBS4_GRCh38.jpg){fig-alt="Mutational signature spectrum plot, SBS4, associated with smoking"}
 
+::: {.callout-note appearance="minimal"}
+**Transition:** Swapping similar shapes (Purine $\leftrightarrow$ Purine or Pyrimidine $\leftrightarrow$ Pyrimidine).
+**Transversion:** Swapping different shapes (Purine $\leftrightarrow$ Pyrimidine).
+:::
 
 :::
 
@@ -347,11 +352,26 @@ flowchart LR
     G --> H[Mutect2]
     H --> I[Filter<br/>Calls]
     I --> J[Annotation<br/>VEP]
+
+    %% Define the yellow style class
+    classDef covered fill:#ffeb3b,stroke:#333,stroke-width:2px;
+
+    %% Apply the class to specific nodes
+    class B,H,I,J covered;
 ```
 
 ::: {.callout-important}
 ## Critical Note
 Variant **annotation** is essential but often overlooked! Without functional annotation and clinical database lookup, variants have limited utility.
+:::
+
+::: {.callout-note}
+**Course Scope**
+
+The steps highlighted in yellow are directly discussed in this course.
+
+The remaining steps are not mentioned here but are covered in other courses (e.g., [NGS - Variant Analysis](https://sib-swiss.github.io/NGS-variants-training/2024.9/) and [NGS - Quality Control, Alignment, Visualisation](https://sib-swiss.github.io/NGS-introduction-training/latest/)). 
+However, we provide the scripts for the analysis in the course GitHub repo. 
 :::
 
 ---
@@ -376,7 +396,8 @@ Variant **annotation** is essential but often overlooked! Without functional ann
 :::
 
 ::: {.column width="60%"}
-Example of `header` lines from a bam file
+
+**1. Header** (`@` lines)
 
 ```
 @HD	VN:1.6	SO:coordinate
@@ -388,22 +409,37 @@ Example of `header` lines from a bam file
 @PG	ID:samtools.1	PN:samtools	PP:samtools	VN:1.21	CL:samtools view -bh
 ```
 
-| Field  | Meaning                                                                 |
-|--------|-------------------------------------------------------------------------|
-| QNAME  | Query (read) name. Identifies each sequencing read.                    |
-| FLAG   | Bitwise flags describing read state (paired, mapped, strand, etc.).    |
-| RNAME  | Reference sequence (chromosome) the read is aligned to.                |
-| POS    | 1-based leftmost mapping position on the reference.                    |
-| MAPQ   | Mapping quality score indicating confidence of alignment.              |
-| CIGAR  | Encodes how the read aligns (matches, insertions, deletions, splicing).|
-| SEQ    | The nucleotide sequence of the read.                                   |
-| QUAL   | Phred-scaled base quality scores for the read sequence.                |
+**2. Alignment Record** (The actual reads)
+```bash
+read1  99  chr6  1000  60  76M  =  1150  226  ATGC...  ####
+```
+
+| Field | Meaning |
+|:---|:---|
+| **QNAME** | Query / Read Name (`read1`) |
+| **FLAG** | Bitwise flags describing state (`99`) |
+| **RNAME** | Reference sequence / Chromosome (`chr6`) |
+| **POS** | 1-based mapping position (`1000`) |
+| **MAPQ** | Mapping quality / Confidence (`60`) |
+| **CIGAR** | Alignment String (`76M`) |
+| **SEQ** | Nucleotide sequence (`ATGC...`) |
+| **QUAL** | Base quality scores (`####`) |
+
+::: {.callout-note collapse="true"}
+## Additional SAM fields in this example
+- **RNEXT** = `=` (mate maps to same chromosome)
+- **PNEXT** = `1150` (mate's mapping position)  
+- **TLEN** = `226` (template/insert length in bp)
+:::
 :::
 ::::
 
 ::: {.callout-tip}
 ## Resource
-Learn more at the SIB course: [NGS - Quality Control, Alignment, Visualization](https://sib-swiss.github.io/NGS-introduction-training/latest/day2/file_types/)
+Learn more at the SIB course: 
+
+- [NGS - Quality Control, Alignment, Visualization](https://sib-swiss.github.io/NGS-introduction-training/latest/day2/file_types/)
+- [https://broadinstitute.github.io/picard/explain-flags.html](https://broadinstitute.github.io/picard/explain-flags.html)
 :::
 
 ---
@@ -440,27 +476,68 @@ Learn more at the SIB course: [NGS - Quality Control, Alignment, Visualization](
 
 **Purpose:** Track metadata for groups of reads within BAM files
 
-```
-@RG ID:rg1 LB:lib1 SM:sampleA PL:ILLUMINA PU:flowcell1.lane1
-@RG ID:rg2 LB:lib2 SM:sampleA PL:ILLUMINA PU:flowcell1.lane2
+:::: {.columns}
+::: {.column width="40%"}
+**Key Read Group Tags:**
 
-read1  456345 chr20 ... RG:Z:rg1
-read2  456348 chr20 ... RG:Z:rg2
-```
+- **ID**: Unique read group identifier
+- **SM**: **Sample name** (patient/specimen)
+  - *Critical for multi-sample calling*
+  - *Tumor vs. Normal distinction*
+- **LB**: Library prep identifier
+  - *Used for duplicate marking*
+- **PL**: Sequencing platform
+- **PU**: Platform unit (flowcell.lane)
+  - *For tracking batch effects*
 
 **Why read groups matter:**
 
-- **BQSR** models are built per-read-group
-- **Merging Lanes** Allows combining multiple lanes into one patient file (SM)
-- **Duplicate marking** identifies duplicates within same library
-- Essential for **QC and troubleshooting**
-- Required for **multi-sample variant calling**
-
-::: {.callout-note}
-## Best Practice
-Add read groups during alignment (`bwa mem -R`) rather than post-hoc (GATK AddOrReplaceReadGroups), for efficiency.
+- **BQSR**: Models built per-read-group
+- **Merging**: Combine multiple lanes/runs per sample
+- **Duplicate marking**: Per-library detection
+- **Somatic calling**: Required to distinguish tumor/normal
+- **QC & troubleshooting**: Track technical artifacts
 :::
 
+::: {.column width="60%"}
+**Header Example (Tumor-Normal Pair):**
+
+**Normal:**
+```bash
+@RG ID:normal.lane1  SM:patient001_normal  LB:lib_n  PL:ILLUMINA  PU:HWI.lane1
+@RG ID:normal.lane2  SM:patient001_normal  LB:lib_n  PL:ILLUMINA  PU:HWI.lane2
+```
+**Tumor:**
+```bash
+@RG ID:tumor.lane1   SM:patient001_tumor   LB:lib_t  PL:ILLUMINA  PU:HWI.lane1
+@RG ID:tumor.lane2   SM:patient001_tumor   LB:lib_t  PL:ILLUMINA  PU:HWI.lane2
+```
+
+**Alignment Record with Read Group:**
+```bash
+read1  99  chr20  1000  60  76M  =  1150  226  ATGC...  ####  RG:Z:tumor.lane1
+```
+
+| Tag | Value | Meaning |
+|:---|:---|:---|
+| **RG:Z:** | `tumor.lane1` | Links read to `@RG ID:tumor.lane1` |
+
+:::
+::::
+
+::: {.callout-note}
+## Somatic Variant Calling Context
+Mutect2 uses the `SM:` field to identify tumor and normal samples. Without proper read groups, somatic callers cannot distinguish between samples!
+:::
+
+::: {.callout-tip}
+## Best Practice
+Add read groups **during alignment** for efficiency:
+```bash
+bwa mem -R '@RG\tID:tumor.lane1\tSM:patient001_tumor\tLB:lib_t\tPL:ILLUMINA' ref.fa reads.fq
+```
+Avoid post-hoc addition (e.g., GATK `AddOrReplaceReadGroups`) when possible.
+:::
 ---
 
 ## Somatic Variant Calling Challenges
@@ -487,7 +564,7 @@ Add read groups during alignment (`bwa mem -R`) rather than post-hoc (GATK AddOr
 - Sample contamination
 
 <br>
-![VAF distribution comparison](../assets/presentations/slidedeck_2/11_plot_VAF_distributions.png){fig-alt="VAF distribution comparison" position="center"}
+![VAF distribution comparison](../assets/presentations/slidedeck_2/11_plot_VAF_distributions.png){fig-alt="VAF distribution comparison" position="center" width="95%"}
 :::
 
 ::: {.column width="45%"}
@@ -500,12 +577,22 @@ $$\text{VAF} = \frac{1}{2} = \mathbf{50\%}$$
 
 *To a caller, this looks like a clear, standard germline variant.*
 
-**2. The Real World**<br>
+**2. Closer to reality**<br>
 **Sample is 40% Tumor** (60% Normal)
 
 The normal cells (wild type) dilute the signal.
 $$\text{VAF} = \frac{\text{Purity}}{2}$$
 $$\text{VAF} = \frac{0.40}{2} = \mathbf{20\%}$$
+
+::: {.callout-warning}
+## Real-world complications
+
+**Aneuploidy complicates this further**:
+In real cases, copy number alterations can dramatically change expected VAF. For example, if the mutation is on a region with CN=4, the math becomes more complex.
+
+**Tumor-infiltrated controls**:
+Matched control samples can also be tumor-infiltrated, making it sometimes impossible to distinguish true somatic variants from germline or contamination.
+:::
 
 :::
 ::::
@@ -603,12 +690,6 @@ flowchart TD
     C --> H[FilterMutectCalls]
     H --> I[Filtered VCF]
     I --> J[VEP Annotation]
-    
-    classDef resource fill:#e1f5ff,stroke:#0288d1,stroke-width:2px
-    classDef process fill:#fff9c4,stroke:#f57f17,stroke-width:2px
-    
-    class D,E resource
-    class C,F,G,H,J process
 ```
 
 **Key features:**
@@ -835,11 +916,6 @@ today we can do this computationally.
 | GC bias | Flat across 30-70% GC | Strong bias = PCR or coverage issues |
 
 **Tools:** fastQC, MultiQC, mosdepth, GATK CollectHsMetrics
-
-::: {.callout-important}
-## Common Pitfall
-Always check for cross-sample contamination - rampant in shared facilities and has caused retractions!
-:::
 
 ---
 
