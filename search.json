@@ -32,28 +32,28 @@
     "href": "slides/03_VEP_variantAnnotationPresentation.html#somatic-vs-germline",
     "title": "Variant Effect Predictor (VEP)",
     "section": "Somatic vs Germline",
-    "text": "Somatic vs Germline\n\n\nA germline mutation is inherited by the individual from birth. They can be oncogenic (ie Rb = retinoblastoma)\nA somatic mutation, or acquired mutation, happens in somatic cells instead of germ cells and will not pass to offspring (ie TP53).\n\n\n\n\n\n\n\n\n\nFigure 1: Germline vs somatic"
+    "text": "Somatic vs Germline\n\nA germline mutation is inherited by the individual from birth. They can be oncogenic (ie Rb = retinoblastoma)\nA somatic mutation, or acquired mutation, happens in somatic cells instead of germ cells and will not pass to offspring (ie TP53).\n\n\n\n\n\n\n\nFigure 1: Germline vs somatic"
   },
   {
     "objectID": "slides/03_VEP_variantAnnotationPresentation.html#how-do-mutations-appear",
     "href": "slides/03_VEP_variantAnnotationPresentation.html#how-do-mutations-appear",
     "title": "Variant Effect Predictor (VEP)",
     "section": "How do mutations appear?",
-    "text": "How do mutations appear?\n\nMutations occur due to replication errors (1 nucleotide per ~10^4) but with reparation mechanisms (1 error per 10^7 - 10^9)\nAs a consequence of DNA damage (~70,000 nucleotide lesions or modifications per day)\nExposure to mutagens such as UV, smoking increases the mutations’ frequency\n\n\n\n\n\nExample UV damage\n\n\n\n\nKey points: - https://www.nature.com/articles/s41576-021-00376-2"
+    "text": "How do mutations appear?\n\nMutations occur due to replication errors (1 nucleotide per ~10^4) but with reparation mechanisms (1 error per 10^7 - 10^9)\nAs a consequence of DNA damage (~70,000 nucleotide lesions or modifications per day)\nExposure to mutagens such as UV, smoking increases the mutations’ frequency\n\n\n\n\nExample UV damage,knowgenetics.org\n\n\n\nKey points: - https://www.nature.com/articles/s41576-021-00376-2"
   },
   {
     "objectID": "slides/03_VEP_variantAnnotationPresentation.html#can-the-cell-repair-them",
     "href": "slides/03_VEP_variantAnnotationPresentation.html#can-the-cell-repair-them",
     "title": "Variant Effect Predictor (VEP)",
     "section": "Can the cell repair them?",
-    "text": "Can the cell repair them?\nYes, there are many mechanisms of DNA repair. Some of the most common are:\n\nNER (Nucleotide Excision Repair): Repairs bulky lesions such as thymine dimers caused by UV radiation. This mechanism involves the removal of a short single-stranded DNA segment containing the damage, followed by DNA synthesis using the complementary strand as a template.\nMMR (Mismatch Repair): Fixes replication errors such as base mismatches or insertion/deletion loops. MMR recognizes the newly synthesized strand and corrects errors by removing the incorrect nucleotides and replacing them.\nBER (Base Excision Repair): Repairs single-base lesions such as oxidative damage, alkylation, or deamination. This involves the removal of damaged bases by specific glycosylases, followed by the excision of the resulting abasic site.\nHR (Homologous Recombination): Repairs double-strand breaks using a homologous sequence as a template, typically from a sister chromatid. This is an error-free repair mechanism.\nNHEJ (Non-Homologous End Joining): Repairs double-strand breaks without the need for a homologous template. While quicker, this method is error-prone and can lead to insertions or deletions.\n\nVisualizing DNA Repair Mechanisms\n\n\n\n\n\n\n\nFigure 2: DNA Repair Mechanisms\n\n\n\n\nKey points: - https://www.nature.com/articles/nrclinonc.2012.3/figures/1"
+    "text": "Can the cell repair them?\nYes, there are many mechanisms of DNA repair. Some of the most common are:\n\nNER (Nucleotide Excision Repair): Repairs bulky lesions such as thymine dimers caused by UV radiation. This mechanism involves the removal of a short single-stranded DNA segment containing the damage, followed by DNA synthesis using the complementary strand as a template.\nMMR (Mismatch Repair): Fixes replication errors such as base mismatches or insertion/deletion loops. MMR recognizes the newly synthesized strand and corrects errors by removing the incorrect nucleotides and replacing them.\nBER (Base Excision Repair): Repairs single-base lesions such as oxidative damage, alkylation, or deamination. This involves the removal of damaged bases by specific glycosylases, followed by the excision of the resulting abasic site.\nHR (Homologous Recombination): Repairs double-strand breaks using a homologous sequence as a template, typically from a sister chromatid. This is an error-free repair mechanism.\nNHEJ (Non-Homologous End Joining): Repairs double-strand breaks without the need for a homologous template. While quicker, this method is error-prone and can lead to insertions or deletions.\n\nVisualizing DNA Repair Mechanisms\n\n\n\n\n\n\n\nFigure 2: DNA Repair Mechanisms, The origin of human mutation in light of genomic data, Seplyarskiy et al, 2021\n\n\n\n\nKey points: - https://www.nature.com/articles/nrclinonc.2012.3/figures/1"
   },
   {
     "objectID": "slides/03_VEP_variantAnnotationPresentation.html#acquisition-of-mutation-in-cancer",
     "href": "slides/03_VEP_variantAnnotationPresentation.html#acquisition-of-mutation-in-cancer",
     "title": "Variant Effect Predictor (VEP)",
     "section": "Acquisition of mutation in cancer",
-    "text": "Acquisition of mutation in cancer\n\n\nFigure 3: Cancer somatic mut\n\nKey points: - https://www.nature.com/articles/nature07943"
+    "text": "Acquisition of mutation in cancer\n\n\nFigure 3: Cancer somatic mutations, The cancer genome, Stratton et al, 2009\n\nKey points: - https://www.nature.com/articles/nature07943"
   },
   {
     "objectID": "slides/03_VEP_variantAnnotationPresentation.html#concept-of-driver-mutation",
@@ -91,11 +91,18 @@
     "text": "What is VEP?\n\n2010: The first version of VEP was introduced as part of the Ensembl project.\n2012-2015 Functional prediction scores were introduced.\n2017 Other databases are now part of the VEP, such as COSMIC, ClinVar, gnomAD. The tool was made more generalizable and personalizable with the addition of VEP’s plugin feature.\nVEP is 100% written in perl VEP Github\n\n\nKey points: - VEP is widely used in research and clinical settings - Provides comprehensive variant annotation - Especially useful for large-scale analysis"
   },
   {
-    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#important-databases",
-    "href": "slides/03_VEP_variantAnnotationPresentation.html#important-databases",
+    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#important-annotation-databases",
+    "href": "slides/03_VEP_variantAnnotationPresentation.html#important-annotation-databases",
     "title": "Variant Effect Predictor (VEP)",
-    "section": "Important databases",
-    "text": "Important databases\n\n\nCOSMIC  What it tells us: Somatic mutations found in cancer Example output: COSV59384583; OCCURENCE=1(skin) Interpretation: Mutation seen in skin cancer; frequency helps assess if likely driver\nClinVar  What it tells us: Clinical significance of variants  Example output: Pathogenic/Likely_pathogenic  Interpretation: Strong evidence for disease causation\ngnomAD  What it tells us: Population frequency  Example output: AF=0.00001  Interpretation: Very rare variant (&lt;0.01% frequency)\nAlphaMissense  What it tells us: Predicted functional impact  Example output: likely_pathogenic  Interpretation: AI model predicts damaging effect"
+    "section": "Important Annotation Databases",
+    "text": "Important Annotation Databases\n\n\nCancer-Specific Resources\nCOSMIC (Catalogue of Somatic Mutations in Cancer)\n\n\n\n\n\n\n\nField\nContent\n\n\n\n\nPurpose\nSomatic mutations in cancer\n\n\nExample\nCOSV59384583; OCCURENCE=1(skin)\n\n\nInterpretation\nMutation seen in skin cancer; frequency indicates driver likelihood\n\n\n\nClinVar (Clinical Variant Database)\n\n\n\nField\nContent\n\n\n\n\nPurpose\nClinical significance assessment\n\n\nExample\nPathogenic/Likely_pathogenic\n\n\nInterpretation\nStrong evidence for disease causation\n\n\n\n\nPopulation & Prediction Resources\ngnomAD (Genome Aggregation Database)\n\n\n\nField\nContent\n\n\n\n\nPurpose\nPopulation allele frequency\n\n\nExample\nAF=0.00001\n\n\nInterpretation\nVery rare (&lt;0.01% frequency)\n\n\n\nAlphaMissense\n\n\n\nField\nContent\n\n\n\n\nPurpose\nAI-predicted functional impact\n\n\nExample\nlikely_pathogenic\n\n\nInterpretation\nModel predicts damaging effect\n\n\n\n\n\n\n\n\n\n\nFiltering Strategy\n\n\nCombine databases for variant prioritization:\n\ngnomAD AF &lt; 0.01 → Filters common variants\nCOSMIC presence → Supports somatic driver role\nClinVar pathogenic → Clinical validation\nAlphaMissense → Functional prediction for novel variants"
+  },
+  {
+    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#what-does-vep-do",
+    "href": "slides/03_VEP_variantAnnotationPresentation.html#what-does-vep-do",
+    "title": "Variant Effect Predictor (VEP)",
+    "section": "What Does VEP Do?",
+    "text": "What Does VEP Do?\nThe Challenge: Imagine annotating thousands of variants manually - searching databases, reviewing literature, interpreting functional impact. This would take weeks and be highly error-prone.\nVEP automates annotation to accelerate discovery:\n\nAnnotates genomic variants (somatic and germline)\nPredicts functional consequences\nIntegrates multiple databases (COSMIC, ClinVar, gnomAD, etc.)\nEssential for cancer genomics and clinical applications\n\n\n\n\n\n\n\nWhat VEP Does NOT Do\n\n\nVEP is powerful, but it’s not magic:\n\nDoes NOT call variants - requires pre-called VCF input\nDoes NOT guarantee accuracy - annotation quality depends on input quality\nDoes NOT replace human judgment - false positives/negatives require expert review\n\nRemember: Automation simplifies the process, but critical thinking and validation remain essential!\n\n\n\n\n\nVEP accelerates but doesn’t replace analysis\nBrainstorming and iteration still required\nQuality in = quality out"
   },
   {
     "objectID": "slides/03_VEP_variantAnnotationPresentation.html#what-is-not-well-understood",
@@ -112,116 +119,32 @@
     "text": "In summary: Why do we use VEP?\nWe can answer questions like:\n\nHow damaging is a certain somatic mutation?\nWhat is the impact in a particular cancer type?\nIs the mutation known for that cancer?\nAre there therapeutic implications?"
   },
   {
-    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#installation-using-conda",
-    "href": "slides/03_VEP_variantAnnotationPresentation.html#installation-using-conda",
+    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#vep-transcript-selection-priority",
+    "href": "slides/03_VEP_variantAnnotationPresentation.html#vep-transcript-selection-priority",
     "title": "Variant Effect Predictor (VEP)",
-    "section": "Installation using conda",
-    "text": "Installation using conda\n\nConda/Bioconda\n\n\n# Installing Conda #https://docs.anaconda.com/miniconda/\nmkdir -p ~/miniconda3\nwget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh\nbash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3\nrm ~/miniconda3/miniconda.sh\nsource ~/miniconda3/bin/activate\nconda init --all\n\n# Using Conda\nconda create -n vep samtools python=3.10 ensembl-vep=115\n# conda install -c bioconda ensembl-vep # if installing in current env\n\n# Activate VEP's env\nconda activate vep\n\n\nmamba create -n vep samtools python=3.10 ensembl-vep=113 -c bioconda -c conda-forge"
+    "section": "VEP: Transcript Selection & Priority",
+    "text": "VEP: Transcript Selection & Priority\nThe Challenge: A single variant can have 4-12+ annotations due to multiple transcript isoforms. Which one matters?\n\n\n1. Handling Transcripts\nVEP options to simplify output when a gene has multiple transcripts:\n\n--pick: One consequence per variant (Best for simple filtering)\n--pick_allele: One per variant allele\n--per_gene: One per gene\n--flag_pick: Flags the “chosen” one but keeps others\n--pick_allele_gene: Most comprehensive filtering\n\nSelection hierarchy:\n\nCanonical transcript (MANE Select for human)\nProtein coding biotype\nMost severe consequence\nLongest transcript\n\n\n2. Consequence Severity\nTop 10 Most Severe:\n\nTranscript ablation\nSplice acceptor/donor variant\nStop gained (Nonsense)\nFrameshift variant\nStop lost\nStart lost\nTranscript amplification\nInframe insertion/deletion\nMissense variant\nProtein altering variant\n\nCancer examples:\n\nHIGH impact: TP53 frameshift → TSG loss\nMODERATE impact: KRAS p.G12D → oncogene gain\n\n\n\n\n\n\n\n\nPractical Tip\n\n\nFor clinical reporting, use --pick with --transcript_version to ensure reproducibility. Always document which transcript was used."
   },
   {
-    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#veps-basic-configuration",
-    "href": "slides/03_VEP_variantAnnotationPresentation.html#veps-basic-configuration",
+    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#vep-impact-categories",
+    "href": "slides/03_VEP_variantAnnotationPresentation.html#vep-impact-categories",
     "title": "Variant Effect Predictor (VEP)",
-    "section": "VEP’s Basic Configuration",
-    "text": "VEP’s Basic Configuration\n\n\n# Test installation\nvep --help\n\n# Download cache files, it takes a long time and ~/.vep (~25GB)\nvep_install -a cf -s homo_sapiens -y GRCh38 # download precomputed human data\n\n# if install official plugins\nvep_install -a p --PLUGINS list # a for action LIST akk plugins\n# vep_install -a p --PLUGINS all # install all plugins\n# vep_install -a p --PLUGINS dbNSFP,... # install specific plugins\n if you want to specify a specific folder to store the VEP’s cache: -c ~/vep_cache"
+    "section": "VEP Impact Categories",
+    "text": "VEP Impact Categories\n\n\n\nVEP’s consequences\n\n\n\n\n\n\n\n\n\n\nImpact\nDescription\nExamples\n\n\n\n\nHIGH\nDisruptive. Likely loss of function.\nFrameshift, Stop Gained, Splice acceptor/donor.\n\n\nMODERATE\nNon-disruptive change to protein.\nMissense, In-frame indel.\n\n\nLOW\nUnlikely to change function.\nSynonymous, Splice region (non-canonical).\n\n\nMODIFIER\nNon-coding / Regulatory.\nIntronic, UTRs, Intergenic.\n\n\n\n\n\n\n\n\n\nImportant Exceptions\n\n\nNot all HIGH impact = pathogenic\nNot all MODERATE impact = benign (e.g., IDH1 p.R132H is LOW but a critical driver mutation)\nAlways consider biological context!"
   },
   {
-    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#example-plugin-installation",
-    "href": "slides/03_VEP_variantAnnotationPresentation.html#example-plugin-installation",
+    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#polyphen-2-score",
+    "href": "slides/03_VEP_variantAnnotationPresentation.html#polyphen-2-score",
     "title": "Variant Effect Predictor (VEP)",
-    "section": "Example plugin installation",
-    "text": "Example plugin installation\nSubsetVCF for example does not need additional data, it works directly on the VEP’s output\n  - installing \"SubsetVCF\"\n  - add \"--plugin SubsetVCF\" to your VEP command to use this plugin\n  - OK\nAnd others like REVEL need additional data to work properly\n - installing \"REVEL\"\n - This plugin requires data\n - See Plugins/REVEL.pm for details\n - OK"
+    "section": "PolyPhen-2 Score",
+    "text": "PolyPhen-2 Score\nPurpose: Predicts if a missense mutation is damaging based on protein structure and evolutionary conservation.\n\n\nScoring Categories:\n\nProbably Damaging (&gt; 0.85)\n\nHigh confidence functional effect.\n\nPossibly Damaging (0.15 - 0.85)\n\nModerate confidence effect.\n\nBenign (&lt; 0.15)\n\nLikely no phenotypic effect.\n\n\n\n\n\n\n\n\n\nUsage\n\n\nPolyPhen-2 is specific to human proteins.\nIt should be used in conjunction with other tools (like SIFT) to build a consensus on missense variant interpretation."
   },
   {
-    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#vep-plugins-manual-install",
-    "href": "slides/03_VEP_variantAnnotationPresentation.html#vep-plugins-manual-install",
+    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#sift-score",
+    "href": "slides/03_VEP_variantAnnotationPresentation.html#sift-score",
     "title": "Variant Effect Predictor (VEP)",
-    "section": "VEP Plugins: Manual install",
-    "text": "VEP Plugins: Manual install\nPlugins can enhance VEP’s capabilities and can add additional depth of information to the annotations (with the price of more complexity).\nIf this command does not work\n# if installing the official plugins\nvep_install -a p --PLUGINS all # a for action\n\nPlease use this manual option\n# clone repository\ngit clone https://github.com/Ensembl/VEP_plugins.git\n\n# make a folder in the ~/.vep folder\nmkdir -p ~/.vep/Plugins/ # Assuming your cache folder is in your $HOME\n\n# Copy all the files with extension *.pm to the Plugins folder \ncp VEP_plugins/*.pm ~/.vep/Plugins/"
-  },
-  {
-    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#transcript-selection",
-    "href": "slides/03_VEP_variantAnnotationPresentation.html#transcript-selection",
-    "title": "Variant Effect Predictor (VEP)",
-    "section": "Transcript Selection",
-    "text": "Transcript Selection\nVEP options for handling multiple transcripts:\n\n--pick: One consequence per variant\n--pick_allele: One per variant allele\n--pick_allele_gene: One per variant allele per gene\n--per_gene: One per gene\n--flag_pick: Flags selected while keeping others"
-  },
-  {
-    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#consequence-priority",
-    "href": "slides/03_VEP_variantAnnotationPresentation.html#consequence-priority",
-    "title": "Variant Effect Predictor (VEP)",
-    "section": "Consequence Priority",
-    "text": "Consequence Priority\nTop 10 most severe consequences:\n\nTranscript ablation\nSplice acceptor/donor variant\nStop gained\nFrameshift variant\nStop lost\nStart lost\nTranscript amplification\nInframe insertion/deletion\nMissense variant\nProtein altering variant"
-  },
-  {
-    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#vep-consequences-prediction",
-    "href": "slides/03_VEP_variantAnnotationPresentation.html#vep-consequences-prediction",
-    "title": "Variant Effect Predictor (VEP)",
-    "section": "VEP consequences prediction",
-    "text": "VEP consequences prediction\n\nVEP’s consequences"
-  },
-  {
-    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#sif-sequence-ontology-impact-factors-categories",
-    "href": "slides/03_VEP_variantAnnotationPresentation.html#sif-sequence-ontology-impact-factors-categories",
-    "title": "Variant Effect Predictor (VEP)",
-    "section": "SIF (Sequence Ontology Impact Factors) Categories",
-    "text": "SIF (Sequence Ontology Impact Factors) Categories"
-  },
-  {
-    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#high-impact",
-    "href": "slides/03_VEP_variantAnnotationPresentation.html#high-impact",
-    "title": "Variant Effect Predictor (VEP)",
-    "section": "HIGH Impact:",
-    "text": "HIGH Impact:\nLikely to cause a severe effect on protein structure/function.\n\nExamples:\n\nFrameshift variants\nNonsense mutations (e.g. stop codon gained)\nEssential splice-site mutations (e.g. disruption of canonical splice sites)."
-  },
-  {
-    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#moderate-impact",
-    "href": "slides/03_VEP_variantAnnotationPresentation.html#moderate-impact",
-    "title": "Variant Effect Predictor (VEP)",
-    "section": "MODERATE Impact:",
-    "text": "MODERATE Impact:\nNon-disruptive changes that might affect protein structure or function.\n\nExamples:\n\nMissense variants (amino acid substitutions).\nIn-frame insertions or deletions."
-  },
-  {
-    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#low-impact",
-    "href": "slides/03_VEP_variantAnnotationPresentation.html#low-impact",
-    "title": "Variant Effect Predictor (VEP)",
-    "section": "LOW Impact:",
-    "text": "LOW Impact:\nVariants that are less likely to have a significant effect on protein function.\n\nExamples:\n\nSynonymous changes (no amino acid alteration, [Redundancy]).\nChanges in non-coding regions (outside essential regulatory domains)."
-  },
-  {
-    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#modifier-impact",
-    "href": "slides/03_VEP_variantAnnotationPresentation.html#modifier-impact",
-    "title": "Variant Effect Predictor (VEP)",
-    "section": "MODIFIER Impact:",
-    "text": "MODIFIER Impact:\nUsually non-coding or intergenic variants with no expected impact on the protein but might influence gene regulation.\n\nExamples:\n\nIntronic variants (non-coding).\nVariants in 5’ or 3’ UTR regions."
-  },
-  {
-    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#interpretation-of-high-vs.-moderate-impact",
-    "href": "slides/03_VEP_variantAnnotationPresentation.html#interpretation-of-high-vs.-moderate-impact",
-    "title": "Variant Effect Predictor (VEP)",
-    "section": "Interpretation of HIGH vs. MODERATE Impact",
-    "text": "Interpretation of HIGH vs. MODERATE Impact\n\nHIGH: Typically results in loss of protein function or dominant-negative effects. These mutations are often more critical for cancer development and progression (e.g., TP53 inactivation).\nMODERATE: Produces proteins with altered but functional activity, often conferring selective growth advantages under specific contexts (e.g., KRAS or PIK3CA oncogenic activation)."
-  },
-  {
-    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#polyphen-2-another-predictor-included-in-vep",
-    "href": "slides/03_VEP_variantAnnotationPresentation.html#polyphen-2-another-predictor-included-in-vep",
-    "title": "Variant Effect Predictor (VEP)",
-    "section": "PolyPhen-2 (another predictor included in VEP):",
-    "text": "PolyPhen-2 (another predictor included in VEP):\n\nPredicts impact of amino acid substitutions\nAnalyzes both structure and evolutionary conservation\nSpecific to human proteins\nScores range from 0.0 (benign) to 1.0 (damaging)"
-  },
-  {
-    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#categories",
-    "href": "slides/03_VEP_variantAnnotationPresentation.html#categories",
-    "title": "Variant Effect Predictor (VEP)",
-    "section": "Categories:",
-    "text": "Categories:\n\n\nProbably Damaging (score &gt; 0.85)\n\nHigh confidence prediction of affecting protein function\n\nPossibly Damaging (score 0.15-0.85)\n\nModerate prediction of damaging effects\n\nBenign (score &lt; 0.15)\n\nLikely to lack phenotypic effect\n\n\n\n\nKey points: - Complements SIFT predictions - Used in conjunction with other predictors - Important for missense variant interpretation"
-  },
-  {
-    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#vep-plugins",
-    "href": "slides/03_VEP_variantAnnotationPresentation.html#vep-plugins",
-    "title": "Variant Effect Predictor (VEP)",
-    "section": "VEP Plugins",
-    "text": "VEP Plugins\nEssential plugins for cancer analysis:"
+    "section": "SIFT Score",
+    "text": "SIFT Score\nPurpose: Predicts if an amino acid substitution is deleterious based on sequence conservation across species.\n\n\nScoring Categories:\n\nDeleterious (≤ 0.05)\n\nSubstitution at highly conserved position\nHigh confidence damaging effect\n\nTolerated (&gt; 0.05)\n\nSubstitution at variable position\nLikely benign or neutral effect\n\n\nNote: Lower scores = More damaging (opposite to PolyPhen-2!)\n\n\n\n\n\n\n\nUsage\n\n\nSIFT is available for 10 species in Ensembl (including human, mouse, zebrafish).\nAll possible amino acid substitutions are pre-calculated, making annotation very fast.\nUse in combination with PolyPhen-2 for consensus prediction.\n\n\n\n\n\n\n\n\n\n\nInterpretation Guide\n\n\n\n\n\nSIFT\nPolyPhen-2\nConfidence\n\n\n\n\nDeleterious\nProbably Damaging\nHigh - prioritize\n\n\nTolerated\nBenign\nHigh - likely benign\n\n\nDeleterious\nBenign\nMixed - manual review\n\n\nTolerated\nDamaging\nMixed - manual review"
   },
   {
     "objectID": "slides/03_VEP_variantAnnotationPresentation.html#revel",
@@ -249,7 +172,7 @@
     "href": "slides/03_VEP_variantAnnotationPresentation.html#filter-variants-with-vep",
     "title": "Variant Effect Predictor (VEP)",
     "section": "Filter Variants with VEP",
-    "text": "Filter Variants with VEP\nYou can use the tool that is included in the VEP’s suite of tools. This tool generally works very well with data that have been VEP-annotated\nFilter SIFT deleterious events `filter_vep -i variant_effect_output.txt -filter \"SIFT is deleterious\" | grep -v \"##\" | head -n5  Can be used with pipes, for example (might save memory)\nvep -i examples/homo_sapiens_GRCh38.vcf --cache --force_overwrite --sift b --canonical --symbol --tab --fields Uploaded_variation,SYMBOL,CANONICAL,SIFT -o STDOUT | \\\nfilter_vep --filter \"CANONICAL is YES and SIFT is deleterious\""
+    "text": "Filter Variants with VEP\nYou can use the tool that is included in the VEP’s suite of tools. This tool generally works very well with data that have been VEP-annotated\nFilter SIFT deleterious events\nfilter_vep -i variant_effect_output.txt -filter \"SIFT is deleterious\" | grep -v \"##\" | head -n5\n Can be used with pipes, for example (might save memory)\nvep -i examples/homo_sapiens_GRCh38.vcf --cache --force_overwrite --sift b --canonical --symbol --tab --fields Uploaded_variation,SYMBOL,CANONICAL,SIFT -o STDOUT | \\\nfilter_vep --filter \"CANONICAL is YES and SIFT is deleterious\"\nOperators:\n\nis: Exact match\nmatch: Regex pattern\n&lt;, &gt;, &lt;=, &gt;=: Numeric comparison\nin: List membership\nand, or: Combine conditions\n\nExample 1: High-confidence damaging\nfilter_vep -i vep_output.txt \\\n  -filter \"SIFT is deleterious and \\\n           PolyPhen is probably_damaging\""
   },
   {
     "objectID": "slides/03_VEP_variantAnnotationPresentation.html#notes",
@@ -277,7 +200,7 @@
     "href": "slides/03_VEP_variantAnnotationPresentation.html#points-to-keep-in-mind",
     "title": "Variant Effect Predictor (VEP)",
     "section": "Points to keep in mind",
-    "text": "Points to keep in mind\n\nUsing not only the HIGH impact somatic mutations but also the MODERATE\nRemembering that the “driver” mutation is not necessarily fully representative, we simply do not know many of them\nCNVs (Copy number variants) calling is hard, especially for WES data (WES is only 2% of a genome)\nNo tool is perfect! This is especially true for CNV calling\n\nIf samples’ tumor purity is too low, or the quality is too low one should be especially careful with the results\nExperimental design is very important"
+    "text": "Points to keep in mind\nInclude MODERATE impact variants\n\nHIGH impact often affects tumor suppressors (TP53, PTEN, RB1)\nMODERATE impact often affects oncogenes (KRAS, BRAF, PIK3CA)\nExamples: KRAS p.G12D, BRAF p.V600E are MODERATE but critical drivers\n\nMany drivers remain unknown\n\nOnly ~500-600 cancer genes well-characterized\nAbsence from databases ≠ passenger mutation\nLook for recurrent mutations across samples\n\nCNV calling limitations\n\nParticularly challenging in WES (only 2% of genome covered)\nRequires adequate tumor purity (&gt;40% ideal) and coverage\nVEP is not specialized for CNV annotation (CNVannotator, ClassifyCNV)\n\n\n\n\n\n\n\nNo Tool is Perfect\n\n\nAlways validate important findings visually (IGV) and consider orthogonal methods for clinical decisions."
   },
   {
     "objectID": "slides/03_VEP_variantAnnotationPresentation.html#useful-links",
@@ -292,6 +215,13 @@
     "title": "Variant Effect Predictor (VEP)",
     "section": "Contact Information",
     "text": "Contact Information\n\nVEP Support: https://www.ensembl.org/Help/Contact\nDocumentation: http://www.ensembl.org/info/docs/tools/vep/\nGitHub: https://github.com/Ensembl/ensembl-vep\nBioconductor: https://bioconductor.org/"
+  },
+  {
+    "objectID": "slides/03_VEP_variantAnnotationPresentation.html#exercises",
+    "href": "slides/03_VEP_variantAnnotationPresentation.html#exercises",
+    "title": "Variant Effect Predictor (VEP)",
+    "section": "Exercises",
+    "text": "Exercises\n\n\n\nGiphy"
   },
   {
     "objectID": "slides/01_course_intro.html#course-etiquette",
@@ -473,7 +403,7 @@
     "href": "slides/02_introduction_cancer_variants.html#hereditary-vs-sporadic-cancer",
     "title": "Cancer Variant Analysis",
     "section": "Hereditary vs Sporadic Cancer",
-    "text": "Hereditary vs Sporadic Cancer\n\n\nSporadic (~90-95%)\n\nAcquired somatic mutations\nAccumulate during lifetime\nEnvironmental factors contribute\n\nHereditary (~5-10%)\n\nInherited predisposition alleles\nBRCA1/2 (breast, ovarian)\nLynch syndrome genes (colorectal)\nStill require somatic “second hits”\n\n\n\n\n\nKnudson hypothesis: Tumor Suppressor Gene, Source\n\n\n\n\n\nSomatic mutations, Source\n\n\n\n\n\n\n\n\n\nClinical Relevance\n\n\nHereditary cancer syndromes have implications for family screening, risk reduction, and treatment options (e.g., PARP inhibitors for BRCA carriers)."
+    "text": "Hereditary vs Sporadic Cancer\n\n\nSporadic (~90-95%)\n\nAcquired somatic mutations\nAccumulate during lifetime\nEnvironmental factors contribute\n\nHereditary (~5-10%)\n\nInherited predisposition alleles\nBRCA1/2 (breast, ovarian)\nLynch syndrome genes (colorectal)\nStill require somatic “second hits”\n\n\n\n\n\nKnudson hypothesis: Tumor Suppressor Gene (Knudson, 1971), Source\n\n\n\n\n\nTiming of Mutation Events: An earlier mutation (a) produces a larger population of mutant cells, than a later event (b), (Oota, 2020) Source\n\n\n\n\n\n\n\n\n\nClinical Relevance\n\n\nHereditary cancer syndromes have implications for family screening, risk reduction, and treatment options (e.g., PARP inhibitors for BRCA carriers)."
   },
   {
     "objectID": "slides/02_introduction_cancer_variants.html#the-hallmarks-of-cancer",
@@ -487,7 +417,7 @@
     "href": "slides/02_introduction_cancer_variants.html#variant-terminology-essential-definitions",
     "title": "Cancer Variant Analysis",
     "section": "Variant Terminology: Essential Definitions",
-    "text": "Variant Terminology: Essential Definitions\n\n\nVariant: A difference in DNA sequence compared to a reference\nMutation: The process of change in DNA\nSomatic variant: Occurs only in specific cells/tissues - Not inherited - Arises during lifetime\nGermline variant: Present in all cells - Can be passed to offspring - Present from conception\nPolymorphism: Traditionally defined as variant &gt;1% frequency in population (though “variant” is now preferred terminology)\n\n\n\n\nPTC example: pedigree charts, Source"
+    "text": "Variant Terminology: Essential Definitions\n\n\nMutation: The process of change in DNA\nVariant: A difference in DNA sequence compared to a reference (the outcome)\nSomatic variant: Occurs only in specific cells/tissues - Not inherited - Arises during lifetime\nGermline variant: Present in all cells - Can be passed to offspring - Present from conception\nPolymorphism: Traditionally defined as variant &gt;1% frequency in population (though “variant” is now preferred terminology)\n\n\n\n\nPTC (Phenylthiocarbamide): A chemical that tastes bitter only to those with a specific inherited dominant variant. This pedigree shows its germline inheritance pattern. Source"
   },
   {
     "objectID": "slides/02_introduction_cancer_variants.html#mutation-vs-variant-a-practical-example",
@@ -508,7 +438,7 @@
     "href": "slides/02_introduction_cancer_variants.html#mutational-signatures-fingerprints-of-mutagenesis",
     "title": "Cancer Variant Analysis",
     "section": "Mutational Signatures: Fingerprints of Mutagenesis",
-    "text": "Mutational Signatures: Fingerprints of Mutagenesis\n\n\nEach mutational process leaves a characteristic pattern:\nSignature 1: Aging (C&gt;T at CpG)\nSignature 4: Tobacco smoking (C&gt;A)\nSignature 7: UV light (C&gt;T at dipyrimidines)\nSignature 6: Mismatch repair deficiency\nClinical applications:\n\nUnderstanding tumor etiology\nTreatment selection (e.g., PARP inhibitors for HRD)\nImmunotherapy response prediction\n\n\n\n\n\nMutational signature SBS1: Ageing signature. Source\n\n\n\n\n\nMutational signature SBS4: Smoking signature. Source\n\n\n\n\n\n\n\n\n\nReference\n\n\nAlexandrov et al. (2020) “The repertoire of mutational signatures in human cancer” - Nature"
+    "text": "Mutational Signatures: Fingerprints of Mutagenesis\n\n\nEach mutational process leaves a characteristic pattern:\n\nSignature 1: Aging, C&gt;T at CpG sites, Transition (Py \\(\\leftrightarrow\\) Py)\nSignature 4: Tobacco smoking, C&gt;A, Transversion (Py \\(\\leftrightarrow\\) Pu)\nSignature 6: Mismatch repair (MMR) deficiency\nSignature 7: UV light, C&gt;T at dipyrimidines, Transition\n\nClinical applications:\n\nUnderstanding tumor etiology (e.g. Signature 4, 7)\nTreatment selection (e.g., PARP inhibitors for HRD) (Signature 3)\nImmunotherapy response prediction (Signature 6)\n\n\n\n\n\nMutational signature SBS1: Ageing signature. Source\n\n\n\n\n\nMutational signature SBS4: Smoking signature. Source\n\n\n\n\n\nTransition: Swapping similar shapes (Purine \\(\\leftrightarrow\\) Purine or Pyrimidine \\(\\leftrightarrow\\) Pyrimidine). Transversion: Swapping different shapes (Purine \\(\\leftrightarrow\\) Pyrimidine).\n\n\n\n\n\n\n\n\n\n\nReference\n\n\nAlexandrov et al. (2020) “The repertoire of mutational signatures in human cancer” - Nature"
   },
   {
     "objectID": "slides/02_introduction_cancer_variants.html#sequencing-strategies-for-cancer-genomics",
@@ -529,14 +459,14 @@
     "href": "slides/02_introduction_cancer_variants.html#bioinformatics-workflow-overview",
     "title": "Cancer Variant Analysis",
     "section": "Bioinformatics Workflow Overview",
-    "text": "Bioinformatics Workflow Overview\n\n\n\n\n\nflowchart LR\n    A[Raw FASTQ] --&gt; B[QC + Adapter&lt;br/&gt;fastp/MultiQC]\n    B --&gt; C[Alignment&lt;br/&gt;bwa-mem2]\n    C --&gt; D[Add Read Groups]\n    D --&gt; E[Mark Duplicates&lt;br/&gt;GATK]\n    E --&gt; F[BQSR]\n    F --&gt; G[Contamination&lt;br/&gt;Check]\n    G --&gt; H[Mutect2]\n    H --&gt; I[Filter&lt;br/&gt;Calls]\n    I --&gt; J[Annotation&lt;br/&gt;VEP]\n\n\n\n\n\n\n\n\n\n\n\n\nCritical Note\n\n\nVariant annotation is essential but often overlooked! Without functional annotation and clinical database lookup, variants have limited utility."
+    "text": "Bioinformatics Workflow Overview\n\n\n\n\n\nflowchart LR\n    A[Raw FASTQ] --&gt; B[QC + Adapter&lt;br/&gt;fastp/MultiQC]\n    B --&gt; C[Alignment&lt;br/&gt;bwa-mem2]\n    C --&gt; D[Add Read Groups]\n    D --&gt; E[Mark Duplicates&lt;br/&gt;GATK]\n    E --&gt; F[BQSR]\n    F --&gt; G[Contamination&lt;br/&gt;Check]\n    G --&gt; H[Mutect2]\n    H --&gt; I[Filter&lt;br/&gt;Calls]\n    I --&gt; J[Annotation&lt;br/&gt;VEP]\n\n    %% Define the yellow style class\n    classDef covered fill:#ffeb3b,stroke:#333,stroke-width:2px;\n\n    %% Apply the class to specific nodes\n    class B,H,I,J covered;\n\n\n\n\n\n\n\n\n\n\n\n\nCritical Note\n\n\nVariant annotation is essential but often overlooked! Without functional annotation and clinical database lookup, variants have limited utility.\n\n\n\n\n\n\n\n\n\nNote\n\n\nCourse Scope\nThe steps highlighted in yellow are directly discussed in this course.\nThe remaining steps are not mentioned here but are covered in other courses (e.g., NGS - Variant Analysis and NGS - Quality Control, Alignment, Visualisation). However, we provide the scripts for the analysis in the course GitHub repo."
   },
   {
     "objectID": "slides/02_introduction_cancer_variants.html#the-sambamcram-file-formats",
     "href": "slides/02_introduction_cancer_variants.html#the-sambamcram-file-formats",
     "title": "Cancer Variant Analysis",
     "section": "The SAM/BAM/CRAM File Formats",
-    "text": "The SAM/BAM/CRAM File Formats\nPurpose: Store sequence alignments\n\n\nKey points:\n\nSAM: Text-based (Human readable)\nBAM: Lossless binary compressed SAM\n\nIndexable (Fast random access)\n\nCRAM: Ref-based compression\n\nLossless or Lossy modes\n~30-60% smaller than BAM\nRequires access to the reference genome for decoding\n\n\n\nExample of header lines from a bam file\n@HD VN:1.6  SO:coordinate\n@SQ SN:chr6 LN:170805979\n@SQ SN:chr17    LN:83257441\n@RG ID:HWI-ST466.C1TD1ACXX.normal   LB:normal   PL:ILLUMINA SM:normal   PU:HWI-ST466.C1TD1ACXX\n@PG ID:bwa  PN:bwa  VN:0.7.17-r1188 CL:bwa mem /config/data/reference//ref_genome.fa /config/data/reads/normal_R1.fastq.gz /config/data/reads/normal_R2.fastq.gz\n@PG ID:samtools PN:samtools PP:bwa  VN:1.21 CL:samtools sort\n@PG ID:samtools.1   PN:samtools PP:samtools VN:1.21 CL:samtools view -bh\n\n\n\n\n\n\n\nField\nMeaning\n\n\n\n\nQNAME\nQuery (read) name. Identifies each sequencing read.\n\n\nFLAG\nBitwise flags describing read state (paired, mapped, strand, etc.).\n\n\nRNAME\nReference sequence (chromosome) the read is aligned to.\n\n\nPOS\n1-based leftmost mapping position on the reference.\n\n\nMAPQ\nMapping quality score indicating confidence of alignment.\n\n\nCIGAR\nEncodes how the read aligns (matches, insertions, deletions, splicing).\n\n\nSEQ\nThe nucleotide sequence of the read.\n\n\nQUAL\nPhred-scaled base quality scores for the read sequence.\n\n\n\n\n\n\n\n\n\n\nResource\n\n\nLearn more at the SIB course: NGS - Quality Control, Alignment, Visualization"
+    "text": "The SAM/BAM/CRAM File Formats\nPurpose: Store sequence alignments\n\n\nKey points:\n\nSAM: Text-based (Human readable)\nBAM: Lossless binary compressed SAM\n\nIndexable (Fast random access)\n\nCRAM: Ref-based compression\n\nLossless or Lossy modes\n~30-60% smaller than BAM\nRequires access to the reference genome for decoding\n\n\n\n1. Header (@ lines)\n@HD VN:1.6  SO:coordinate\n@SQ SN:chr6 LN:170805979\n@SQ SN:chr17    LN:83257441\n@RG ID:HWI-ST466.C1TD1ACXX.normal   LB:normal   PL:ILLUMINA SM:normal   PU:HWI-ST466.C1TD1ACXX\n@PG ID:bwa  PN:bwa  VN:0.7.17-r1188 CL:bwa mem /config/data/reference//ref_genome.fa /config/data/reads/normal_R1.fastq.gz /config/data/reads/normal_R2.fastq.gz\n@PG ID:samtools PN:samtools PP:bwa  VN:1.21 CL:samtools sort\n@PG ID:samtools.1   PN:samtools PP:samtools VN:1.21 CL:samtools view -bh\n2. Alignment Record (The actual reads)\nread1  99  chr6  1000  60  76M  =  1150  226  ATGC...  ####\n\n\n\nField\nMeaning\n\n\n\n\nQNAME\nQuery / Read Name (read1)\n\n\nFLAG\nBitwise flags describing state (99)\n\n\nRNAME\nReference sequence / Chromosome (chr6)\n\n\nPOS\n1-based mapping position (1000)\n\n\nMAPQ\nMapping quality / Confidence (60)\n\n\nCIGAR\nAlignment String (76M)\n\n\nSEQ\nNucleotide sequence (ATGC...)\n\n\nQUAL\nBase quality scores (####)\n\n\n\n\n\n\n\n\n\nAdditional SAM fields in this example\n\n\n\nRNEXT = = (mate maps to same chromosome)\nPNEXT = 1150 (mate’s mapping position)\n\nTLEN = 226 (template/insert length in bp)\n\n\n\n\n\n\n\n\n\n\n\nResource\n\n\nLearn more at the SIB course:\n\nNGS - Quality Control, Alignment, Visualization\nhttps://broadinstitute.github.io/picard/explain-flags.html"
   },
   {
     "objectID": "slides/02_introduction_cancer_variants.html#marking-pcr-duplicates",
@@ -550,14 +480,14 @@
     "href": "slides/02_introduction_cancer_variants.html#read-groups-organizing-your-data",
     "title": "Cancer Variant Analysis",
     "section": "Read Groups: Organizing Your Data",
-    "text": "Read Groups: Organizing Your Data\nPurpose: Track metadata for groups of reads within BAM files\n@RG ID:rg1 LB:lib1 SM:sampleA PL:ILLUMINA PU:flowcell1.lane1\n@RG ID:rg2 LB:lib2 SM:sampleA PL:ILLUMINA PU:flowcell1.lane2\n\nread1  456345 chr20 ... RG:Z:rg1\nread2  456348 chr20 ... RG:Z:rg2\nWhy read groups matter:\n\nBQSR models are built per-read-group\nMerging Lanes Allows combining multiple lanes into one patient file (SM)\nDuplicate marking identifies duplicates within same library\nEssential for QC and troubleshooting\nRequired for multi-sample variant calling\n\n\n\n\n\n\n\nBest Practice\n\n\nAdd read groups during alignment (bwa mem -R) rather than post-hoc (GATK AddOrReplaceReadGroups), for efficiency."
+    "text": "Read Groups: Organizing Your Data\nPurpose: Track metadata for groups of reads within BAM files\n\n\nKey Read Group Tags:\n\nID: Unique read group identifier\nSM: Sample name (patient/specimen)\n\nCritical for multi-sample calling\nTumor vs. Normal distinction\n\nLB: Library prep identifier\n\nUsed for duplicate marking\n\nPL: Sequencing platform\nPU: Platform unit (flowcell.lane)\n\nFor tracking batch effects\n\n\nWhy read groups matter:\n\nBQSR: Models built per-read-group\nMerging: Combine multiple lanes/runs per sample\nDuplicate marking: Per-library detection\nSomatic calling: Required to distinguish tumor/normal\nQC & troubleshooting: Track technical artifacts\n\n\nHeader Example (Tumor-Normal Pair):\nNormal:\n@RG ID:normal.lane1  SM:patient001_normal  LB:lib_n  PL:ILLUMINA  PU:HWI.lane1\n@RG ID:normal.lane2  SM:patient001_normal  LB:lib_n  PL:ILLUMINA  PU:HWI.lane2\nTumor:\n@RG ID:tumor.lane1   SM:patient001_tumor   LB:lib_t  PL:ILLUMINA  PU:HWI.lane1\n@RG ID:tumor.lane2   SM:patient001_tumor   LB:lib_t  PL:ILLUMINA  PU:HWI.lane2\nAlignment Record with Read Group:\nread1  99  chr20  1000  60  76M  =  1150  226  ATGC...  ####  RG:Z:tumor.lane1\n\n\n\nTag\nValue\nMeaning\n\n\n\n\nRG:Z:\ntumor.lane1\nLinks read to @RG ID:tumor.lane1\n\n\n\n\n\n\n\n\n\n\nSomatic Variant Calling Context\n\n\nMutect2 uses the SM: field to identify tumor and normal samples. Without proper read groups, somatic callers cannot distinguish between samples!\n\n\n\n\n\n\n\n\n\nBest Practice\n\n\nAdd read groups during alignment for efficiency:\nbwa mem -R '@RG\\tID:tumor.lane1\\tSM:patient001_tumor\\tLB:lib_t\\tPL:ILLUMINA' ref.fa reads.fq\nAvoid post-hoc addition (e.g., GATK AddOrReplaceReadGroups) when possible."
   },
   {
     "objectID": "slides/02_introduction_cancer_variants.html#somatic-variant-calling-challenges",
     "href": "slides/02_introduction_cancer_variants.html#somatic-variant-calling-challenges",
     "title": "Cancer Variant Analysis",
     "section": "Somatic Variant Calling Challenges",
-    "text": "Somatic Variant Calling Challenges\n\n\nGermline calling assumes:\n\nHeterozygous: ~50% VAF (typically 30-70% due to technical variation)\nHomozygous: ~100% VAF\n\nThese assumptions fail in tumors:\n\nVariable tumor purity (30-80%, which is effectively contamination by normal cells)\nClonal heterogeneity (subclones)\nCopy number alterations\nVAF can be anywhere from &lt;1% to 100%\n\nAdditional challenges:\n\nSequencing errors, alignment artifacts\nFFPE artifacts\n\nC&gt;T/G&gt;A deamination\n8-oxoG which causes the G&gt;T transversions\n\nSample contamination\n\n \n\nLet’s make an example (assuming diploid genome and CN=2)\n1. The Ideal Case Sample is 100% Tumor\nIf a mutation is heterozygous (1 of 2 alleles): \\[\\text{VAF} = \\frac{1}{2} = \\mathbf{50\\%}\\]\nTo a caller, this looks like a clear, standard germline variant.\n2. The Real World Sample is 40% Tumor (60% Normal)\nThe normal cells (wild type) dilute the signal. \\[\\text{VAF} = \\frac{\\text{Purity}}{2}\\] \\[\\text{VAF} = \\frac{0.40}{2} = \\mathbf{20\\%}\\]"
+    "text": "Somatic Variant Calling Challenges\n\n\nGermline calling assumes:\n\nHeterozygous: ~50% VAF (typically 30-70% due to technical variation)\nHomozygous: ~100% VAF\n\nThese assumptions fail in tumors:\n\nVariable tumor purity (30-80%, which is effectively contamination by normal cells)\nClonal heterogeneity (subclones)\nCopy number alterations\nVAF can be anywhere from &lt;1% to 100%\n\nAdditional challenges:\n\nSequencing errors, alignment artifacts\nFFPE artifacts\n\nC&gt;T/G&gt;A deamination\n8-oxoG which causes the G&gt;T transversions\n\nSample contamination\n\n \n\nLet’s make an example (assuming diploid genome and CN=2)\n1. The Ideal Case Sample is 100% Tumor\nIf a mutation is heterozygous (1 of 2 alleles): \\[\\text{VAF} = \\frac{1}{2} = \\mathbf{50\\%}\\]\nTo a caller, this looks like a clear, standard germline variant.\n2. Closer to reality Sample is 40% Tumor (60% Normal)\nThe normal cells (wild type) dilute the signal. \\[\\text{VAF} = \\frac{\\text{Purity}}{2}\\] \\[\\text{VAF} = \\frac{0.40}{2} = \\mathbf{20\\%}\\]\n\n\n\n\n\n\nReal-world complications\n\n\nAneuploidy complicates this further: In real cases, copy number alterations can dramatically change expected VAF. For example, if the mutation is on a region with CN=4, the math becomes more complex.\nTumor-infiltrated controls: Matched control samples can also be tumor-infiltrated, making it sometimes impossible to distinguish true somatic variants from germline or contamination."
   },
   {
     "objectID": "slides/02_introduction_cancer_variants.html#tumor-purity-ploidy-and-clonality",
@@ -578,7 +508,7 @@
     "href": "slides/02_introduction_cancer_variants.html#gatk-mutect2-workflow",
     "title": "Cancer Variant Analysis",
     "section": "GATK Mutect2 Workflow",
-    "text": "GATK Mutect2 Workflow\n\n\n\n\n\nflowchart TD\n    A[Tumor BAM] --&gt; C[Mutect2]\n    B[Normal BAM] --&gt; C\n    D[Panel of Normals] --&gt; C\n    E[Germline Resource] --&gt; C\n    \n    A -.-&gt; |optional| F[GetPileupSummaries]\n    E -.-&gt; F\n    F -.-&gt; G[CalculateContamination]\n    G -.-&gt; |if available| H\n    \n    C --&gt; H[FilterMutectCalls]\n    H --&gt; I[Filtered VCF]\n    I --&gt; J[VEP Annotation]\n    \n    classDef resource fill:#e1f5ff,stroke:#0288d1,stroke-width:2px\n    classDef process fill:#fff9c4,stroke:#f57f17,stroke-width:2px\n    \n    class D,E resource\n    class C,F,G,H,J process\n\n\n\n\n\n\nKey features:\n\nHaplotype-aware variant calling (local assembly)\nJoint analysis of tumor-normal pairs\nIntegrated contamination estimation\nF1R2 (Forward 1st, Reverse 2nd) artifact filtering\n\n\n\n\n\n\n\nPoN vs gnomAD\n\n\n\nGermline Resource: Filters biological germline variants (universal)\nPoN: Filters technical artifacts (platform-specific)\n\nPublic PoNs exist but work best when your sequencing protocol matches theirs. When in doubt, build your own!\n\n\n\nYou can find every step’s relative script here"
+    "text": "GATK Mutect2 Workflow\n\n\n\n\n\nflowchart TD\n    A[Tumor BAM] --&gt; C[Mutect2]\n    B[Normal BAM] --&gt; C\n    D[Panel of Normals] --&gt; C\n    E[Germline Resource] --&gt; C\n    \n    A -.-&gt; |optional| F[GetPileupSummaries]\n    E -.-&gt; F\n    F -.-&gt; G[CalculateContamination]\n    G -.-&gt; |if available| H\n    \n    C --&gt; H[FilterMutectCalls]\n    H --&gt; I[Filtered VCF]\n    I --&gt; J[VEP Annotation]\n\n\n\n\n\n\nKey features:\n\nHaplotype-aware variant calling (local assembly)\nJoint analysis of tumor-normal pairs\nIntegrated contamination estimation\nF1R2 (Forward 1st, Reverse 2nd) artifact filtering\n\n\n\n\n\n\n\nPoN vs gnomAD\n\n\n\nGermline Resource: Filters biological germline variants (universal)\nPoN: Filters technical artifacts (platform-specific)\n\nPublic PoNs exist but work best when your sequencing protocol matches theirs. When in doubt, build your own!\n\n\n\nYou can find every step’s relative script here"
   },
   {
     "objectID": "slides/02_introduction_cancer_variants.html#the-vcf-file-format",
@@ -620,7 +550,7 @@
     "href": "slides/02_introduction_cancer_variants.html#quality-control-metrics",
     "title": "Cancer Variant Analysis",
     "section": "Quality Control Metrics",
-    "text": "Quality Control Metrics\nEssential QC checks at each stage:\n\n\n\n\n\n\n\n\nMetric\nExpected Value\nInterpretation\n\n\n\n\nMapping rate\n&gt;95%\nLow = contamination or poor quality\n\n\nDuplicate rate\n&lt;30% (WGS)\nHigh = low library complexity\n\n\nMean coverage\nAs specified\nLow = insufficient data\n\n\nCoverage uniformity\nCV &lt;0.2\nHigh variability = capture issues\n\n\nContamination\n&lt;1-2%\nHigh = sample swap or cross-contamination\n\n\nTi/Tv ratio\n~2.0-2.1 (WGS), ~3.0-3.3 (exome)\nLow = sequencing errors enriched\n\n\nInsert size\n200-400bp (Illumina)\nBimodal = library issues\n\n\nGC bias\nFlat across 30-70% GC\nStrong bias = PCR or coverage issues\n\n\n\nTools: fastQC, MultiQC, mosdepth, GATK CollectHsMetrics\n\n\n\n\n\n\nCommon Pitfall\n\n\nAlways check for cross-sample contamination - rampant in shared facilities and has caused retractions!"
+    "text": "Quality Control Metrics\nEssential QC checks at each stage:\n\n\n\n\n\n\n\n\nMetric\nExpected Value\nInterpretation\n\n\n\n\nMapping rate\n&gt;95%\nLow = contamination or poor quality\n\n\nDuplicate rate\n&lt;30% (WGS)\nHigh = low library complexity\n\n\nMean coverage\nAs specified\nLow = insufficient data\n\n\nCoverage uniformity\nCV &lt;0.2\nHigh variability = capture issues\n\n\nContamination\n&lt;1-2%\nHigh = sample swap or cross-contamination\n\n\nTi/Tv ratio\n~2.0-2.1 (WGS), ~3.0-3.3 (exome)\nLow = sequencing errors enriched\n\n\nInsert size\n200-400bp (Illumina)\nBimodal = library issues\n\n\nGC bias\nFlat across 30-70% GC\nStrong bias = PCR or coverage issues\n\n\n\nTools: fastQC, MultiQC, mosdepth, GATK CollectHsMetrics"
   },
   {
     "objectID": "slides/02_introduction_cancer_variants.html#summary-and-key-takeaways",

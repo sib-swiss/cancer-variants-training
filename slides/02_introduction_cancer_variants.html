@@ -309,13 +309,13 @@ Flavio Lombardo
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="../assets/presentations/slidedeck_2/02_two_hits_hypot.jpg" alt="Knudson hypothesis"></p>
-<figcaption>Knudson hypothesis: Tumor Suppressor Gene, <a href="https://josefelixrodriguezantonweb.com/tag/two-hit-hypothesis/">Source</a></figcaption>
+<figcaption>Knudson hypothesis: Tumor Suppressor Gene (Knudson, 1971), <a href="https://josefelixrodriguezantonweb.com/tag/two-hit-hypothesis/">Source</a></figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="../assets/presentations/slidedeck_2/02b_germline_vs_somatic.jpg" alt="Somatic mutations create masaicism"></p>
-<figcaption>Somatic mutations, <a href="https://doi.org/10.1016/j.ymeth.2019.11.002">Source</a></figcaption>
+<figcaption>Timing of Mutation Events: An earlier mutation (a) produces a larger population of mutant cells, than a later event (b), (Oota, 2020) <a href="https://doi.org/10.1016/j.ymeth.2019.11.002">Source</a></figcaption>
 </figure>
 </div>
 </div></div>
@@ -401,8 +401,8 @@ Flavio Lombardo
 <h2>Variant Terminology: Essential Definitions</h2>
 <div class="columns">
 <div class="column" style="width:55%;">
-<p><strong>Variant</strong>: A difference in DNA sequence compared to a reference</p>
 <p><strong>Mutation</strong>: The <em>process</em> of change in DNA</p>
+<p><strong>Variant</strong>: A difference in DNA sequence compared to a reference (the <strong>outcome</strong>)</p>
 <p><strong>Somatic variant</strong>: Occurs only in specific cells/tissues - Not inherited - Arises during lifetime</p>
 <p><strong>Germline variant</strong>: Present in all cells - Can be passed to offspring - Present from conception</p>
 <p><strong>Polymorphism</strong>: Traditionally defined as variant &gt;1% frequency in population (though “variant” is now preferred terminology)</p>
@@ -410,7 +410,7 @@ Flavio Lombardo
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="../assets/presentations/slidedeck_2/03_PTC_hereditability.png" alt="Pedigree showing inheritance pattern"></p>
-<figcaption>PTC example: pedigree charts, <a href="https://www.bbc.co.uk/bitesize/guides/z2xbh39/revision/5">Source</a></figcaption>
+<figcaption>PTC (Phenylthiocarbamide): A chemical that tastes <strong>bitter</strong> only to those with a specific inherited dominant variant. This pedigree shows its germline inheritance pattern. <a href="https://www.bbc.co.uk/bitesize/guides/z2xbh39/revision/5">Source</a></figcaption>
 </figure>
 </div>
 </div></div>
@@ -470,15 +470,17 @@ Flavio Lombardo
 <div class="columns">
 <div class="column" style="width:50%;">
 <p>Each mutational process leaves a characteristic pattern:</p>
-<p><strong>Signature 1</strong>: Aging (C&gt;T at CpG)</p>
-<p><strong>Signature 4</strong>: Tobacco smoking (C&gt;A)</p>
-<p><strong>Signature 7</strong>: UV light (C&gt;T at dipyrimidines)</p>
-<p><strong>Signature 6</strong>: Mismatch repair deficiency</p>
+<ul>
+<li><p><strong>Signature 1</strong>: Aging, C&gt;T at CpG sites, <strong>Transition</strong> (Py <span class="math inline">\(\leftrightarrow\)</span> Py)</p></li>
+<li><p><strong>Signature 4</strong>: Tobacco smoking, C&gt;A, <strong>Transversion</strong> (Py <span class="math inline">\(\leftrightarrow\)</span> Pu)</p></li>
+<li><p><strong>Signature 6</strong>: Mismatch repair (MMR) deficiency</p></li>
+<li><p><strong>Signature 7</strong>: UV light, C&gt;T at dipyrimidines, <strong>Transition</strong></p></li>
+</ul>
 <p><strong>Clinical applications:</strong></p>
 <ul>
-<li>Understanding tumor etiology</li>
-<li>Treatment selection (e.g., PARP inhibitors for HRD)</li>
-<li>Immunotherapy response prediction</li>
+<li>Understanding tumor etiology (e.g.&nbsp;Signature 4, 7)</li>
+<li>Treatment selection (e.g., PARP inhibitors for HRD) (Signature 3)</li>
+<li>Immunotherapy response prediction (Signature 6)</li>
 </ul>
 </div><div class="column" style="width:50%;">
 <div class="quarto-figure quarto-figure-center">
@@ -492,6 +494,13 @@ Flavio Lombardo
 <p><img data-src="../assets/presentations/slidedeck_2/05_SBS4_GRCh38.jpg" alt="Mutational signature spectrum plot, SBS4, associated with smoking"></p>
 <figcaption>Mutational signature SBS4: Smoking signature. <a href="https://cancer.sanger.ac.uk/signatures/sbs/sbs1/">Source</a></figcaption>
 </figure>
+</div>
+<div class="callout callout-note no-icon callout-style-simple">
+<div class="callout-body">
+<div class="callout-content">
+<p><strong>Transition:</strong> Swapping similar shapes (Purine <span class="math inline">\(\leftrightarrow\)</span> Purine or Pyrimidine <span class="math inline">\(\leftrightarrow\)</span> Pyrimidine). <strong>Transversion:</strong> Swapping different shapes (Purine <span class="math inline">\(\leftrightarrow\)</span> Pyrimidine).</p>
+</div>
+</div>
 </div>
 </div></div>
 <div class="callout callout-tip callout-titled callout-style-default">
@@ -616,6 +625,12 @@ Flavio Lombardo
     G --&gt; H[Mutect2]
     H --&gt; I[Filter&lt;br/&gt;Calls]
     I --&gt; J[Annotation&lt;br/&gt;VEP]
+
+    %% Define the yellow style class
+    classDef covered fill:#ffeb3b,stroke:#333,stroke-width:2px;
+
+    %% Apply the class to specific nodes
+    class B,H,I,J covered;
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -632,6 +647,21 @@ Flavio Lombardo
 </div>
 <div class="callout-content">
 <p>Variant <strong>annotation</strong> is essential but often overlooked! Without functional annotation and clinical database lookup, variants have limited utility.</p>
+</div>
+</div>
+</div>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Note</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>Course Scope</strong></p>
+<p>The steps highlighted in yellow are directly discussed in this course.</p>
+<p>The remaining steps are not mentioned here but are covered in other courses (e.g., <a href="https://sib-swiss.github.io/NGS-variants-training/2024.9/">NGS - Variant Analysis</a> and <a href="https://sib-swiss.github.io/NGS-introduction-training/latest/">NGS - Quality Control, Alignment, Visualisation</a>). However, we provide the scripts for the analysis in the course GitHub repo.</p>
 </div>
 </div>
 </div>
@@ -656,7 +686,7 @@ Flavio Lombardo
 </ul></li>
 </ul>
 </div><div class="column" style="width:60%;">
-<p>Example of <code>header</code> lines from a bam file</p>
+<p><strong>1. Header</strong> (<code>@</code> lines)</p>
 <pre><code>@HD VN:1.6  SO:coordinate
 @SQ SN:chr6 LN:170805979
 @SQ SN:chr17    LN:83257441
@@ -664,52 +694,68 @@ Flavio Lombardo
 @PG ID:bwa  PN:bwa  VN:0.7.17-r1188 CL:bwa mem /config/data/reference//ref_genome.fa /config/data/reads/normal_R1.fastq.gz /config/data/reads/normal_R2.fastq.gz
 @PG ID:samtools PN:samtools PP:bwa  VN:1.21 CL:samtools sort
 @PG ID:samtools.1   PN:samtools PP:samtools VN:1.21 CL:samtools view -bh</code></pre>
+<p><strong>2. Alignment Record</strong> (The actual reads)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="ex">read1</span>  99  chr6  1000  60  76M  =  1150  226  ATGC...  <span class="co">####</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top">
-<colgroup>
-<col style="width: 9%">
-<col style="width: 90%">
-</colgroup>
 <thead>
 <tr class="header">
-<th>Field</th>
-<th>Meaning</th>
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>QNAME</td>
-<td>Query (read) name. Identifies each sequencing read.</td>
+<td style="text-align: left;"><strong>QNAME</strong></td>
+<td style="text-align: left;">Query / Read Name (<code>read1</code>)</td>
 </tr>
 <tr class="even">
-<td>FLAG</td>
-<td>Bitwise flags describing read state (paired, mapped, strand, etc.).</td>
+<td style="text-align: left;"><strong>FLAG</strong></td>
+<td style="text-align: left;">Bitwise flags describing state (<code>99</code>)</td>
 </tr>
 <tr class="odd">
-<td>RNAME</td>
-<td>Reference sequence (chromosome) the read is aligned to.</td>
+<td style="text-align: left;"><strong>RNAME</strong></td>
+<td style="text-align: left;">Reference sequence / Chromosome (<code>chr6</code>)</td>
 </tr>
 <tr class="even">
-<td>POS</td>
-<td>1-based leftmost mapping position on the reference.</td>
+<td style="text-align: left;"><strong>POS</strong></td>
+<td style="text-align: left;">1-based mapping position (<code>1000</code>)</td>
 </tr>
 <tr class="odd">
-<td>MAPQ</td>
-<td>Mapping quality score indicating confidence of alignment.</td>
+<td style="text-align: left;"><strong>MAPQ</strong></td>
+<td style="text-align: left;">Mapping quality / Confidence (<code>60</code>)</td>
 </tr>
 <tr class="even">
-<td>CIGAR</td>
-<td>Encodes how the read aligns (matches, insertions, deletions, splicing).</td>
+<td style="text-align: left;"><strong>CIGAR</strong></td>
+<td style="text-align: left;">Alignment String (<code>76M</code>)</td>
 </tr>
 <tr class="odd">
-<td>SEQ</td>
-<td>The nucleotide sequence of the read.</td>
+<td style="text-align: left;"><strong>SEQ</strong></td>
+<td style="text-align: left;">Nucleotide sequence (<code>ATGC...</code>)</td>
 </tr>
 <tr class="even">
-<td>QUAL</td>
-<td>Phred-scaled base quality scores for the read sequence.</td>
+<td style="text-align: left;"><strong>QUAL</strong></td>
+<td style="text-align: left;">Base quality scores (<code>####</code>)</td>
 </tr>
 </tbody>
 </table>
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Additional SAM fields in this example</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><strong>RNEXT</strong> = <code>=</code> (mate maps to same chromosome)</li>
+<li><strong>PNEXT</strong> = <code>1150</code> (mate’s mapping position)<br>
+</li>
+<li><strong>TLEN</strong> = <code>226</code> (template/insert length in bp)</li>
+</ul>
+</div>
+</div>
+</div>
 </div></div>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -720,7 +766,11 @@ Flavio Lombardo
 <p><strong>Resource</strong></p>
 </div>
 <div class="callout-content">
-<p>Learn more at the SIB course: <a href="https://sib-swiss.github.io/NGS-introduction-training/latest/day2/file_types/">NGS - Quality Control, Alignment, Visualization</a></p>
+<p>Learn more at the SIB course:</p>
+<ul>
+<li><a href="https://sib-swiss.github.io/NGS-introduction-training/latest/day2/file_types/">NGS - Quality Control, Alignment, Visualization</a></li>
+<li><a href="https://broadinstitute.github.io/picard/explain-flags.html">https://broadinstitute.github.io/picard/explain-flags.html</a></li>
+</ul>
 </div>
 </div>
 </div>
@@ -753,20 +803,75 @@ Flavio Lombardo
 <section id="read-groups-organizing-your-data" class="slide level2">
 <h2>Read Groups: Organizing Your Data</h2>
 <p><strong>Purpose:</strong> Track metadata for groups of reads within BAM files</p>
-<pre><code>@RG ID:rg1 LB:lib1 SM:sampleA PL:ILLUMINA PU:flowcell1.lane1
-@RG ID:rg2 LB:lib2 SM:sampleA PL:ILLUMINA PU:flowcell1.lane2
-
-read1  456345 chr20 ... RG:Z:rg1
-read2  456348 chr20 ... RG:Z:rg2</code></pre>
+<div class="columns">
+<div class="column" style="width:40%;">
+<p><strong>Key Read Group Tags:</strong></p>
+<ul>
+<li><strong>ID</strong>: Unique read group identifier</li>
+<li><strong>SM</strong>: <strong>Sample name</strong> (patient/specimen)
+<ul>
+<li><em>Critical for multi-sample calling</em></li>
+<li><em>Tumor vs.&nbsp;Normal distinction</em></li>
+</ul></li>
+<li><strong>LB</strong>: Library prep identifier
+<ul>
+<li><em>Used for duplicate marking</em></li>
+</ul></li>
+<li><strong>PL</strong>: Sequencing platform</li>
+<li><strong>PU</strong>: Platform unit (flowcell.lane)
+<ul>
+<li><em>For tracking batch effects</em></li>
+</ul></li>
+</ul>
 <p><strong>Why read groups matter:</strong></p>
 <ul>
-<li><strong>BQSR</strong> models are built per-read-group</li>
-<li><strong>Merging Lanes</strong> Allows combining multiple lanes into one patient file (SM)</li>
-<li><strong>Duplicate marking</strong> identifies duplicates within same library</li>
-<li>Essential for <strong>QC and troubleshooting</strong></li>
-<li>Required for <strong>multi-sample variant calling</strong></li>
+<li><strong>BQSR</strong>: Models built per-read-group</li>
+<li><strong>Merging</strong>: Combine multiple lanes/runs per sample</li>
+<li><strong>Duplicate marking</strong>: Per-library detection</li>
+<li><strong>Somatic calling</strong>: Required to distinguish tumor/normal</li>
+<li><strong>QC &amp; troubleshooting</strong>: Track technical artifacts</li>
 </ul>
+</div><div class="column" style="width:60%;">
+<p><strong>Header Example (Tumor-Normal Pair):</strong></p>
+<p><strong>Normal:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="ex">@RG</span> ID:normal.lane1  SM:patient001_normal  LB:lib_n  PL:ILLUMINA  PU:HWI.lane1</span>
+<span id="cb3-2"><a></a><span class="ex">@RG</span> ID:normal.lane2  SM:patient001_normal  LB:lib_n  PL:ILLUMINA  PU:HWI.lane2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Tumor:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="ex">@RG</span> ID:tumor.lane1   SM:patient001_tumor   LB:lib_t  PL:ILLUMINA  PU:HWI.lane1</span>
+<span id="cb4-2"><a></a><span class="ex">@RG</span> ID:tumor.lane2   SM:patient001_tumor   LB:lib_t  PL:ILLUMINA  PU:HWI.lane2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Alignment Record with Read Group:</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a></a><span class="ex">read1</span>  99  chr20  1000  60  76M  =  1150  226  ATGC...  <span class="co">####  RG:Z:tumor.lane1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Tag</th>
+<th style="text-align: left;">Value</th>
+<th style="text-align: left;">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>RG:Z:</strong></td>
+<td style="text-align: left;"><code>tumor.lane1</code></td>
+<td style="text-align: left;">Links read to <code>@RG ID:tumor.lane1</code></td>
+</tr>
+</tbody>
+</table>
+</div></div>
 <div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Somatic Variant Calling Context</strong></p>
+</div>
+<div class="callout-content">
+<p>Mutect2 uses the <code>SM:</code> field to identify tumor and normal samples. Without proper read groups, somatic callers cannot distinguish between samples!</p>
+</div>
+</div>
+</div>
+<div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
@@ -775,7 +880,9 @@ read2  456348 chr20 ... RG:Z:rg2</code></pre>
 <p><strong>Best Practice</strong></p>
 </div>
 <div class="callout-content">
-<p>Add read groups during alignment (<code>bwa mem -R</code>) rather than post-hoc (GATK AddOrReplaceReadGroups), for efficiency.</p>
+<p>Add read groups <strong>during alignment</strong> for efficiency:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a></a><span class="ex">bwa</span> mem <span class="at">-R</span> <span class="st">'@RG\tID:tumor.lane1\tSM:patient001_tumor\tLB:lib_t\tPL:ILLUMINA'</span> ref.fa reads.fq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Avoid post-hoc addition (e.g., GATK <code>AddOrReplaceReadGroups</code>) when possible.</p>
 </div>
 </div>
 </div>
@@ -806,14 +913,28 @@ read2  456348 chr20 ... RG:Z:rg2</code></pre>
 </ul></li>
 <li>Sample contamination</li>
 </ul>
-<p><br> <img data-src="../assets/presentations/slidedeck_2/11_plot_VAF_distributions.png" data-position="center" alt="VAF distribution comparison"></p>
+<p><br> <img data-src="../assets/presentations/slidedeck_2/11_plot_VAF_distributions.png" style="width:95.0%" data-position="center" alt="VAF distribution comparison"></p>
 </div><div class="column" style="width:45%;">
 <h4 id="lets-make-an-example-assuming-diploid-genome-and-cn2">Let’s make an example (assuming <strong>diploid genome</strong> and CN=2)</h4>
 <p><strong>1. The Ideal Case</strong><br> <strong>Sample is 100% Tumor</strong></p>
 <p>If a mutation is heterozygous (1 of 2 alleles): <span class="math display">\[\text{VAF} = \frac{1}{2} = \mathbf{50\%}\]</span></p>
 <p><em>To a caller, this looks like a clear, standard germline variant.</em></p>
-<p><strong>2. The Real World</strong><br> <strong>Sample is 40% Tumor</strong> (60% Normal)</p>
+<p><strong>2. Closer to reality</strong><br> <strong>Sample is 40% Tumor</strong> (60% Normal)</p>
 <p>The normal cells (wild type) dilute the signal. <span class="math display">\[\text{VAF} = \frac{\text{Purity}}{2}\]</span> <span class="math display">\[\text{VAF} = \frac{0.40}{2} = \mathbf{20\%}\]</span></p>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Real-world complications</strong></p>
+</div>
+<div class="callout-content">
+<p><strong>Aneuploidy complicates this further</strong>: In real cases, copy number alterations can dramatically change expected VAF. For example, if the mutation is on a region with CN=4, the math becomes more complex.</p>
+<p><strong>Tumor-infiltrated controls</strong>: Matched control samples can also be tumor-infiltrated, making it sometimes impossible to distinguish true somatic variants from germline or contamination.</p>
+</div>
+</div>
+</div>
 </div></div>
 </section>
 <section id="tumor-purity-ploidy-and-clonality" class="slide level2">
@@ -918,12 +1039,6 @@ read2  456348 chr20 ... RG:Z:rg2</code></pre>
     C --&gt; H[FilterMutectCalls]
     H --&gt; I[Filtered VCF]
     I --&gt; J[VEP Annotation]
-    
-    classDef resource fill:#e1f5ff,stroke:#0288d1,stroke-width:2px
-    classDef process fill:#fff9c4,stroke:#f57f17,stroke-width:2px
-    
-    class D,E resource
-    class C,F,G,H,J process
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -959,17 +1074,17 @@ read2  456348 chr20 ... RG:Z:rg2</code></pre>
 <section id="the-vcf-file-format" class="slide level2">
 <h2>The VCF File Format</h2>
 <p><strong>Variant Call Format</strong> Standard for storing variant data (current: v4.3)</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource vcf number-lines code-with-copy"><code class="sourceCode"><span id="cb3-1"><a></a>##fileformat=VCFv4.3</span>
-<span id="cb3-2"><a></a>##INFO=&lt;ID=DP,Number=1,Type=Integer,Description="Total Depth"&gt;</span>
-<span id="cb3-3"><a></a>##INFO=&lt;ID=AF,Number=A,Type=Float,Description="Allele Frequency"&gt;</span>
-<span id="cb3-4"><a></a>##FILTER=&lt;ID=weak_evidence,Description="Insufficient support"&gt;</span>
-<span id="cb3-5"><a></a>##FILTER=&lt;ID=germline,Description="Likely germline variant"&gt;</span>
-<span id="cb3-6"><a></a>##FORMAT=&lt;ID=GT,Number=1,Type=String,Description="Genotype"&gt;</span>
-<span id="cb3-7"><a></a>##FORMAT=&lt;ID=AD,Number=R,Type=Integer,Description="Allelic depths (REF,ALT)"&gt;</span>
-<span id="cb3-8"><a></a>##FORMAT=&lt;ID=AF,Number=A,Type=Float,Description="Allele Frequency"&gt;</span>
-<span id="cb3-9"><a></a>#CHROM  POS     ID        REF  ALT  QUAL  FILTER  INFO        FORMAT      TUMOR       NORMAL</span>
-<span id="cb3-10"><a></a>chr17   7577538 rs123     G    A    .     PASS    DP=100      GT:AD:AF    0/1:70,30:0.30  0/0:50,0:0.0</span>
-<span id="cb3-11"><a></a>chr17   7578406 .         C    T    .     germline DP=85     GT:AD:AF    0/1:40,45:0.53  0/1:30,25:0.45</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource vcf number-lines code-with-copy"><code class="sourceCode"><span id="cb7-1"><a></a>##fileformat=VCFv4.3</span>
+<span id="cb7-2"><a></a>##INFO=&lt;ID=DP,Number=1,Type=Integer,Description="Total Depth"&gt;</span>
+<span id="cb7-3"><a></a>##INFO=&lt;ID=AF,Number=A,Type=Float,Description="Allele Frequency"&gt;</span>
+<span id="cb7-4"><a></a>##FILTER=&lt;ID=weak_evidence,Description="Insufficient support"&gt;</span>
+<span id="cb7-5"><a></a>##FILTER=&lt;ID=germline,Description="Likely germline variant"&gt;</span>
+<span id="cb7-6"><a></a>##FORMAT=&lt;ID=GT,Number=1,Type=String,Description="Genotype"&gt;</span>
+<span id="cb7-7"><a></a>##FORMAT=&lt;ID=AD,Number=R,Type=Integer,Description="Allelic depths (REF,ALT)"&gt;</span>
+<span id="cb7-8"><a></a>##FORMAT=&lt;ID=AF,Number=A,Type=Float,Description="Allele Frequency"&gt;</span>
+<span id="cb7-9"><a></a>#CHROM  POS     ID        REF  ALT  QUAL  FILTER  INFO        FORMAT      TUMOR       NORMAL</span>
+<span id="cb7-10"><a></a>chr17   7577538 rs123     G    A    .     PASS    DP=100      GT:AD:AF    0/1:70,30:0.30  0/0:50,0:0.0</span>
+<span id="cb7-11"><a></a>chr17   7578406 .         C    T    .     germline DP=85     GT:AD:AF    0/1:40,45:0.53  0/1:30,25:0.45</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Key columns explained:</strong></p>
 <ul>
 <li><strong>CHROM/POS</strong>: Genomic location</li>
@@ -1223,19 +1338,6 @@ Row 2: Germline variant (present in both tumor and normal) ✗</p>
 </tbody>
 </table>
 <p><strong>Tools:</strong> fastQC, MultiQC, mosdepth, GATK CollectHsMetrics</p>
-<div class="callout callout-important callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Common Pitfall</strong></p>
-</div>
-<div class="callout-content">
-<p>Always check for cross-sample contamination - rampant in shared facilities and has caused retractions!</p>
-</div>
-</div>
-</div>
 </section>
 <section id="summary-and-key-takeaways" class="slide level2">
 <h2>Summary and Key Takeaways</h2>

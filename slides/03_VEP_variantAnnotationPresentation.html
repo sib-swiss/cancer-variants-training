@@ -226,20 +226,12 @@ Flavio Lombardo
 
   <p class="date">2025-12-12</p>
 </section>
-<section>
-<section id="introduction" class="title-slide slide level1 center">
-<h1>Introduction</h1>
-
-</section>
 <section id="somatic-vs-germline" class="slide level2">
 <h2>Somatic vs Germline</h2>
-<div class="fragment fade-in">
 <ul>
 <li>A germline mutation is inherited by the individual from birth. They can be oncogenic (ie Rb = retinoblastoma)</li>
 <li>A somatic mutation, or acquired mutation, happens in somatic cells instead of germ cells and will not pass to offspring (ie TP53).</li>
 </ul>
-</div>
-<div class="fragment fade-in">
 <div id="fig-germliine" class="quarto-float quarto-figure quarto-figure-center" data-fig-align="center" data-fig-caption="Germline vs somatic mutations">
 <figure class="quarto-float quarto-float-fig">
 <div aria-describedby="fig-germliine-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -250,7 +242,6 @@ Figure&nbsp;1: Germline vs somatic
 </figcaption>
 </figure>
 </div>
-</div>
 </section>
 <section id="how-do-mutations-appear" class="slide level2">
 <h2>How do mutations appear?</h2>
@@ -259,13 +250,11 @@ Figure&nbsp;1: Germline vs somatic
 <li>As a consequence of DNA damage (~70,000 nucleotide lesions or modifications per day)</li>
 <li>Exposure to mutagens such as UV, smoking increases the mutations’ frequency</li>
 </ul>
-<div class="fragment fade-in">
 <div id="fig_uv_damage" class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="https://knowgenetics.org/wp-content/uploads/2012/12/amanda1.png" width="250" height="200"></p>
-<figcaption>Example UV damage</figcaption>
+<figcaption>Example UV damage,knowgenetics.org</figcaption>
 </figure>
-</div>
 </div>
 <aside class="notes">
 <p>Key points: - https://www.nature.com/articles/s41576-021-00376-2</p>
@@ -299,7 +288,7 @@ Figure&nbsp;1: Germline vs somatic
 <img data-src="../assets/variant_annotation/variant_types.jpg" data-fig-caption="Overview of major DNA repair mechanisms in the cell">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-repair-system-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: DNA Repair Mechanisms
+Figure&nbsp;2: DNA Repair Mechanisms, The origin of human mutation in light of genomic data, Seplyarskiy et al, 2021
 </figcaption>
 </figure>
 </div>
@@ -322,7 +311,7 @@ Figure&nbsp;2: DNA Repair Mechanisms
 <h2>Acquisition of mutation in cancer</h2>
 
 <img data-src="../assets/variant_annotation/cancer_somatic_mut.jpg" data-fig-caption="https://www.nature.com/articles/nature07943" class="r-stretch quarto-figure-center" id="fig-progression_to_cancer"><p class="caption">
-Figure&nbsp;3: Cancer somatic mut
+Figure&nbsp;3: Cancer somatic mutations, The cancer genome, Stratton et al, 2009
 </p><aside class="notes">
 <p>Key points: - https://www.nature.com/articles/nature07943</p>
 <style type="text/css">
@@ -378,20 +367,20 @@ Figure&nbsp;3: Cancer somatic mut
 <section id="types-of-driver-mutations" class="slide level2">
 <h2>Types of Driver Mutations</h2>
 <ul>
-<li class="fragment">Oncogenes:
+<li>Oncogenes:
 <ul>
-<li class="fragment">Gain-of-function mutations in genes like KRAS, BRAF, and EGFR drive tumor growth by promoting uncontrolled cell division or survival.</li>
+<li>Gain-of-function mutations in genes like KRAS, BRAF, and EGFR drive tumor growth by promoting uncontrolled cell division or survival.</li>
 </ul></li>
-<li class="fragment">Tumor Suppressors:
+<li>Tumor Suppressors:
 <ul>
-<li class="fragment">Loss-of-function mutations in genes like TP53, RB1, and PTEN impair cellular mechanisms that prevent tumor formation.</li>
+<li>Loss-of-function mutations in genes like TP53, RB1, and PTEN impair cellular mechanisms that prevent tumor formation.</li>
 </ul></li>
-<li class="fragment">Mutator Genes:
+<li>Mutator Genes:
 <ul>
-<li class="fragment">Mutations in genes like MLH1 or MSH2 lead to genomic instability, enabling the accumulation of additional mutations.</li>
+<li>Mutations in genes like MLH1 or MSH2 lead to genomic instability, enabling the accumulation of additional mutations.</li>
 </ul></li>
 </ul>
-</section></section>
+</section>
 <section>
 <section id="how-can-we-identify-whats-a-mutations-role" class="title-slide slide level1 center">
 <h1>How can we identify what’s a mutation’s role?</h1>
@@ -408,10 +397,10 @@ Figure&nbsp;3: Cancer somatic mut
 <section id="what-is-vep" class="slide level2">
 <h2>What is <a href="https://www.ensembl.org/info/docs/tools/vep/script/index.html">VEP</a>?</h2>
 <ul>
-<li class="fragment">2010: The first version of VEP was introduced as part of the Ensembl project.</li>
-<li class="fragment">2012-2015 Functional prediction scores were introduced.</li>
-<li class="fragment">2017 Other databases are now part of the VEP, such as COSMIC, ClinVar, gnomAD. The tool was made more generalizable and personalizable with the addition of VEP’s plugin feature.</li>
-<li class="fragment">VEP is 100% written in perl <a href="https://github.com/Ensembl/ensembl-vep">VEP Github</a></li>
+<li>2010: The first version of VEP was introduced as part of the Ensembl project.</li>
+<li>2012-2015 Functional prediction scores were introduced.</li>
+<li>2017 Other databases are now part of the VEP, such as COSMIC, ClinVar, gnomAD. The tool was made more generalizable and personalizable with the addition of VEP’s plugin feature.</li>
+<li>VEP is 100% written in perl <a href="https://github.com/Ensembl/ensembl-vep">VEP Github</a></li>
 </ul>
 <aside class="notes">
 <p>Key points: - VEP is widely used in research and clinical settings - Provides comprehensive variant annotation - Especially useful for large-scale analysis</p>
@@ -427,40 +416,164 @@ Figure&nbsp;3: Cancer somatic mut
           display:block!important;
       }</style></aside>
 </section>
-<section id="important-databases" class="slide level2">
-<h2>Important databases</h2>
-<div class="fragment fade-down">
+<section id="important-annotation-databases" class="slide level2">
+<h2>Important Annotation Databases</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="cancer-specific-resources">Cancer-Specific Resources</h3>
+<p><strong>COSMIC</strong> (Catalogue of Somatic Mutations in Cancer)</p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Content</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Purpose</strong></td>
+<td style="text-align: left;">Somatic mutations in cancer</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Example</strong></td>
+<td style="text-align: left;"><code>COSV59384583; OCCURENCE=1(skin)</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Interpretation</strong></td>
+<td style="text-align: left;">Mutation seen in skin cancer; frequency indicates driver likelihood</td>
+</tr>
+</tbody>
+</table>
+<p><strong>ClinVar</strong> (Clinical Variant Database)</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Content</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Purpose</strong></td>
+<td style="text-align: left;">Clinical significance assessment</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Example</strong></td>
+<td style="text-align: left;"><code>Pathogenic/Likely_pathogenic</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Interpretation</strong></td>
+<td style="text-align: left;">Strong evidence for disease causation</td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:50%;">
+<h3 id="population-prediction-resources">Population &amp; Prediction Resources</h3>
+<p><strong>gnomAD</strong> (Genome Aggregation Database)</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Content</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Purpose</strong></td>
+<td style="text-align: left;">Population allele frequency</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Example</strong></td>
+<td style="text-align: left;"><code>AF=0.00001</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Interpretation</strong></td>
+<td style="text-align: left;">Very rare (&lt;0.01% frequency)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>AlphaMissense</strong></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Field</th>
+<th style="text-align: left;">Content</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Purpose</strong></td>
+<td style="text-align: left;">AI-predicted functional impact</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Example</strong></td>
+<td style="text-align: left;"><code>likely_pathogenic</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Interpretation</strong></td>
+<td style="text-align: left;">Model predicts damaging effect</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Filtering Strategy</strong></p>
+</div>
+<div class="callout-content">
+<p>Combine databases for variant prioritization:</p>
 <ul>
-<li class="fragment"><p>COSMIC <br> What it tells us: Somatic mutations found in cancer Example output: COSV59384583; OCCURENCE=1(skin) Interpretation: Mutation seen in skin cancer; frequency helps assess if likely driver</p></li>
-<li class="fragment"><p>ClinVar <br> What it tells us: Clinical significance of variants <br> Example output: Pathogenic/Likely_pathogenic <br> Interpretation: Strong evidence for disease causation</p></li>
-<li class="fragment"><p>gnomAD <br> What it tells us: Population frequency <br> Example output: AF=0.00001 <br> Interpretation: Very rare variant (&lt;0.01% frequency)</p></li>
-<li class="fragment"><p>AlphaMissense <br> What it tells us: Predicted functional impact <br> Example output: likely_pathogenic <br> Interpretation: AI model predicts damaging effect</p></li>
+<li><strong>gnomAD AF &lt; 0.01</strong> → Filters common variants</li>
+<li><strong>COSMIC presence</strong> → Supports somatic driver role</li>
+<li><strong>ClinVar pathogenic</strong> → Clinical validation</li>
+<li><strong>AlphaMissense</strong> → Functional prediction for novel variants</li>
 </ul>
 </div>
-</section></section>
-<section id="what-does-vep-do" class="title-slide slide level1 center">
-<h1>What does VEP do?</h1>
-<p>Imagine thousands of variants to annotate manually to understand what each of them does, searching in different databases, searching in the literature. It would take weeks and it would be error prone. Automation of these tasks reduces the time-to- discovery</p>
-<ul>
-<li>Powerful tool for annotating genomic variants (both somatic and germline)</li>
-<li>Essential in cancer genomics and clinical applications</li>
-<li>Helps understand functional impact of mutations</li>
-</ul>
+</div>
+</div>
 </section>
-
-<section>
-<section id="what-is-vep-not-doing-for-you" class="title-slide slide level1 center">
-<h1>What is VEP NOT doing for you?</h1>
-<p>VEP is a great tool, but it does not remove the work from the scientists. Automation simplifies the process but it can give false positives and false negatives. If the experimental setup is low quality, the results most likely will be low quality too.</p>
+<section id="what-does-vep-do" class="slide level2">
+<h2>What Does VEP Do?</h2>
+<p><strong>The Challenge:</strong> Imagine annotating thousands of variants manually - searching databases, reviewing literature, interpreting functional impact. This would take <strong>weeks</strong> and be highly <strong>error-prone</strong>.</p>
+<p><strong>VEP automates annotation to accelerate discovery:</strong></p>
 <ul>
-<li>Calling variants</li>
-<li>Magic bullet</li>
-<li>Knowing everything</li>
+<li>Annotates genomic variants (somatic and germline)</li>
+<li>Predicts functional consequences</li>
+<li>Integrates multiple databases (COSMIC, ClinVar, gnomAD, etc.)</li>
+<li>Essential for cancer genomics and clinical applications</li>
 </ul>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>What VEP Does NOT Do</strong></p>
+</div>
+<div class="callout-content">
+<p>VEP is powerful, but <strong>it’s not magic:</strong></p>
+<ul>
+<li><strong>Does NOT call variants</strong> - requires pre-called VCF input</li>
+<li><strong>Does NOT guarantee accuracy</strong> - annotation quality depends on input quality</li>
+<li><strong>Does NOT replace human judgment</strong> - false positives/negatives require expert review</li>
+</ul>
+<p><strong>Remember:</strong> Automation simplifies the process, but critical thinking and validation remain essential!</p>
+</div>
+</div>
+</div>
 <aside class="notes">
 <ul>
-<li>Brainstorming, reiteration and analysis</li>
-<li>Discovery phase</li>
+<li>VEP accelerates but doesn’t replace analysis</li>
+<li>Brainstorming and iteration still required</li>
+<li>Quality in = quality out</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -500,256 +613,266 @@ Figure&nbsp;3: Cancer somatic mut
 </ul>
 </section></section>
 <section>
-<section id="installation-setup" class="title-slide slide level1 center scrollable" data-background-color="#2C3E50">
-<h1>Installation &amp; Setup</h1>
-<ol type="1">
-<li><a href="https://www.ensembl.org/info/docs/tools/vep/script/vep_tutorial.html">Installer Script</a></li>
-<li>Manual Installation</li>
-<li>Docker</li>
-<li><a href="https://docs.conda.io/projects/conda/en/stable/user-guide/getting-started.html">Conda/Bioconda</a></li>
-</ol>
-</section>
-<section id="installation-using-conda" class="slide level2">
-<h2>Installation using conda</h2>
-<ul>
-<li><a href="https://docs.conda.io/projects/conda/en/stable/user-guide/getting-started.html">Conda/Bioconda</a></li>
-</ul>
-<div class="fragment">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="co"># Installing Conda #https://docs.anaconda.com/miniconda/</span></span>
-<span id="cb1-2"><a></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/miniconda3</span>
-<span id="cb1-3"><a></a><span class="fu">wget</span> https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh <span class="at">-O</span> ~/miniconda3/miniconda.sh</span>
-<span id="cb1-4"><a></a><span class="fu">bash</span> ~/miniconda3/miniconda.sh <span class="at">-b</span> <span class="at">-u</span> <span class="at">-p</span> ~/miniconda3</span>
-<span id="cb1-5"><a></a><span class="fu">rm</span> ~/miniconda3/miniconda.sh</span>
-<span id="cb1-6"><a></a><span class="bu">source</span> ~/miniconda3/bin/activate</span>
-<span id="cb1-7"><a></a><span class="ex">conda</span> init <span class="at">--all</span></span>
-<span id="cb1-8"><a></a></span>
-<span id="cb1-9"><a></a><span class="co"># Using Conda</span></span>
-<span id="cb1-10"><a></a><span class="ex">conda</span> create <span class="at">-n</span> vep samtools python=3.10 ensembl-vep=115</span>
-<span id="cb1-11"><a></a><span class="co"># conda install -c bioconda ensembl-vep # if installing in current env</span></span>
-<span id="cb1-12"><a></a></span>
-<span id="cb1-13"><a></a><span class="co"># Activate VEP's env</span></span>
-<span id="cb1-14"><a></a><span class="ex">conda</span> activate vep</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<aside class="notes">
-<p><code>mamba create -n vep samtools python=3.10 ensembl-vep=113 -c bioconda -c conda-forge</code></p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
-</section>
-<section id="veps-basic-configuration" class="slide level2">
-<h2>VEP’s Basic Configuration</h2>
-<p><br></p>
-<div class="fragment">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="co"># Test installation</span></span>
-<span id="cb2-2"><a></a><span class="ex">vep</span> <span class="at">--help</span></span>
-<span id="cb2-3"><a></a></span>
-<span id="cb2-4"><a></a><span class="co"># Download cache files, it takes a long time and ~/.vep (~25GB)</span></span>
-<span id="cb2-5"><a></a><span class="ex">vep_install</span> <span class="at">-a</span> cf <span class="at">-s</span> homo_sapiens <span class="at">-y</span> GRCh38 <span class="co"># download precomputed human data</span></span>
-<span id="cb2-6"><a></a></span>
-<span id="cb2-7"><a></a><span class="co"># if install official plugins</span></span>
-<span id="cb2-8"><a></a><span class="ex">vep_install</span> <span class="at">-a</span> p <span class="at">--PLUGINS</span> list <span class="co"># a for action LIST akk plugins</span></span>
-<span id="cb2-9"><a></a><span class="co"># vep_install -a p --PLUGINS all # install all plugins</span></span>
-<span id="cb2-10"><a></a><span class="co"># vep_install -a p --PLUGINS dbNSFP,... # install specific plugins</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><br> if you want to specify a specific folder to store the VEP’s cache: <code>-c ~/vep_cache</code></p>
-</div>
-</section>
-<section id="example-plugin-installation" class="slide level2">
-<h2>Example plugin installation</h2>
-<p>SubsetVCF for example does not need additional data, it works directly on the VEP’s output</p>
-<pre><code>  - installing "SubsetVCF"
-  - add "--plugin SubsetVCF" to your VEP command to use this plugin
-  - OK</code></pre>
-<p>And others like REVEL need additional data to work properly</p>
-<pre><code> - installing "REVEL"
- - This plugin requires data
- - See Plugins/REVEL.pm for details
- - OK</code></pre>
-</section>
-<section id="vep-plugins-manual-install" class="slide level2">
-<h2>VEP Plugins: Manual install</h2>
-<p>Plugins can enhance VEP’s capabilities and can add additional depth of information to the annotations <strong>(with the price of more complexity)</strong>.</p>
-<p>If this command does not work</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a></a><span class="co"># if installing the official plugins</span></span>
-<span id="cb5-2"><a></a><span class="ex">vep_install</span> <span class="at">-a</span> p <span class="at">--PLUGINS</span> all <span class="co"># a for action</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="fragment">
-<p>Please use this manual option</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a></a><span class="co"># clone repository</span></span>
-<span id="cb6-2"><a></a><span class="fu">git</span> clone https://github.com/Ensembl/VEP_plugins.git</span>
-<span id="cb6-3"><a></a></span>
-<span id="cb6-4"><a></a><span class="co"># make a folder in the ~/.vep folder</span></span>
-<span id="cb6-5"><a></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/.vep/Plugins/ <span class="co"># Assuming your cache folder is in your $HOME</span></span>
-<span id="cb6-6"><a></a></span>
-<span id="cb6-7"><a></a><span class="co"># Copy all the files with extension *.pm to the Plugins folder </span></span>
-<span id="cb6-8"><a></a><span class="fu">cp</span> VEP_plugins/<span class="pp">*</span>.pm ~/.vep/Plugins/</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section></section>
-<section>
-<section id="core-concepts" class="title-slide slide level1 center" data-background-color="#2C3E50">
-<h1>Core Concepts</h1>
+<section id="variant-annotation-with-vep" class="title-slide slide level1 center">
+<h1>Variant Annotation with VEP</h1>
 
 </section>
-<section id="transcript-selection" class="slide level2">
-<h2>Transcript Selection</h2>
-<p>VEP options for handling multiple transcripts:</p>
+<section id="vep-transcript-selection-priority" class="slide level2 scrollable">
+<h2>VEP: Transcript Selection &amp; Priority</h2>
+<p><strong>The Challenge:</strong> A single variant can have 4-12+ annotations due to multiple transcript isoforms. Which one matters?</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<h3 id="handling-transcripts">1. Handling Transcripts</h3>
+<p>VEP options to simplify output when a gene has multiple transcripts:</p>
 <ul>
-<li><code>--pick</code>: One consequence per variant</li>
+<li><code>--pick</code>: One consequence per variant (Best for simple filtering)</li>
 <li><code>--pick_allele</code>: One per variant allele</li>
-<li><code>--pick_allele_gene</code>: One per variant allele per gene</li>
 <li><code>--per_gene</code>: One per gene</li>
-<li><code>--flag_pick</code>: Flags selected while keeping others</li>
+<li><code>--flag_pick</code>: Flags the “chosen” one but keeps others</li>
+<li><code>--pick_allele_gene</code>: Most comprehensive filtering</li>
 </ul>
-</section>
-<section id="consequence-priority" class="slide level2 scrollable">
-<h2>Consequence Priority</h2>
-<p>Top 10 most severe consequences:</p>
+<p><strong>Selection hierarchy:</strong></p>
 <ol type="1">
-<li>Transcript ablation</li>
-<li>Splice acceptor/donor variant</li>
-<li>Stop gained</li>
-<li>Frameshift variant</li>
+<li>Canonical transcript (MANE Select for human)</li>
+<li>Protein coding biotype</li>
+<li>Most severe consequence</li>
+<li>Longest transcript</li>
+</ol>
+</div><div class="column" style="width:50%;">
+<h3 id="consequence-severity">2. Consequence Severity</h3>
+<p><strong>Top 10 Most Severe:</strong></p>
+<ol type="1">
+<li><strong>Transcript ablation</strong></li>
+<li><strong>Splice acceptor/donor variant</strong></li>
+<li><strong>Stop gained</strong> (Nonsense)</li>
+<li><strong>Frameshift variant</strong></li>
 <li>Stop lost</li>
 <li>Start lost</li>
 <li>Transcript amplification</li>
 <li>Inframe insertion/deletion</li>
-<li>Missense variant</li>
+<li><strong>Missense variant</strong></li>
 <li>Protein altering variant</li>
 </ol>
-</section>
-<section id="vep-consequences-prediction" class="slide level2">
-<h2>VEP consequences prediction</h2>
-
-<img data-src="../assets/variant_annotation/VEP_consequences.png" class="r-stretch quarto-figure-center" id="fig_vep_effects"><p class="caption">VEP’s consequences</p></section>
-<section id="sif-sequence-ontology-impact-factors-categories" class="slide level2">
-<h2>SIF (Sequence Ontology Impact Factors) Categories</h2>
-</section>
-<section id="high-impact" class="slide level2">
-<h2>HIGH Impact:</h2>
-<p>Likely to cause a severe effect on protein structure/function.</p>
+<p><strong>Cancer examples:</strong></p>
 <ul>
-<li>Examples:
-<ul>
-<li>Frameshift variants</li>
-<li>Nonsense mutations (e.g.&nbsp;stop codon gained)</li>
-<li>Essential splice-site mutations (e.g.&nbsp;disruption of canonical splice sites).</li>
-</ul></li>
+<li>HIGH impact: <em>TP53</em> frameshift → TSG loss</li>
+<li>MODERATE impact: <em>KRAS</em> p.G12D → oncogene gain</li>
 </ul>
-</section>
-<section id="moderate-impact" class="slide level2">
-<h2>MODERATE Impact:</h2>
-<p>Non-disruptive changes that might affect protein structure or function.</p>
-<ul>
-<li>Examples:
-<ul>
-<li>Missense variants (amino acid substitutions).</li>
-<li>In-frame insertions or deletions.</li>
-</ul></li>
-</ul>
-</section>
-<section id="low-impact" class="slide level2">
-<h2>LOW Impact:</h2>
-<p>Variants that are less likely to have a significant effect on protein function.</p>
-<ul>
-<li>Examples:
-<ul>
-<li>Synonymous changes (no amino acid alteration, [Redundancy]).</li>
-<li>Changes in non-coding regions (outside essential regulatory domains).</li>
-</ul></li>
-</ul>
-</section>
-<section id="modifier-impact" class="slide level2">
-<h2>MODIFIER Impact:</h2>
-<p>Usually non-coding or intergenic variants with no expected impact on the protein but might influence gene regulation.</p>
-<ul>
-<li>Examples:
-<ul>
-<li>Intronic variants (non-coding).</li>
-<li>Variants in 5’ or 3’ UTR regions.</li>
-</ul></li>
-</ul>
-</section>
-<section id="interpretation-of-high-vs.-moderate-impact" class="slide level2">
-<h2>Interpretation of HIGH vs.&nbsp;MODERATE Impact</h2>
-<ul>
-<li>HIGH: Typically results in loss of protein function or dominant-negative effects. These mutations are often more critical for cancer development and progression (e.g., TP53 inactivation).</li>
-<li>MODERATE: Produces proteins with altered but functional activity, often conferring selective growth advantages under specific contexts (e.g., KRAS or PIK3CA oncogenic activation).</li>
-</ul>
-</section>
-
-<section id="polyphen-2-another-predictor-included-in-vep" class="slide level2">
-<h2>PolyPhen-2 (another predictor included in VEP):</h2>
-<ul>
-<li class="fragment">Predicts impact of amino acid substitutions</li>
-<li class="fragment">Analyzes both structure and evolutionary conservation</li>
-<li class="fragment">Specific to human proteins</li>
-<li class="fragment">Scores range from 0.0 (benign) to 1.0 (damaging)</li>
-</ul>
-</section>
-<section id="categories" class="slide level2">
-<h2>Categories:</h2>
-<div class="fragment fade-in">
-<ul>
-<li><strong>Probably Damaging</strong> (score &gt; 0.85)
-<ul>
-<li>High confidence prediction of affecting protein function</li>
-</ul></li>
-<li><strong>Possibly Damaging</strong> (score 0.15-0.85)
-<ul>
-<li>Moderate prediction of damaging effects</li>
-</ul></li>
-<li><strong>Benign</strong> (score &lt; 0.15)
-<ul>
-<li>Likely to lack phenotypic effect</li>
-</ul></li>
-</ul>
+</div></div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<aside class="notes">
-<p>Key points: - Complements SIFT predictions - Used in conjunction with other predictors - Important for missense variant interpretation</p>
-<style type="text/css">
-        span.MJX_Assistive_MathML {
-          position:absolute!important;
-          clip: rect(1px, 1px, 1px, 1px);
-          padding: 1px 0 0 0!important;
-          border: 0!important;
-          height: 1px!important;
-          width: 1px!important;
-          overflow: hidden!important;
-          display:block!important;
-      }</style></aside>
+<p><strong>Practical Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>For clinical reporting, use <code>--pick</code> with <code>--transcript_version</code> to ensure reproducibility. Always document which transcript was used.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="vep-impact-categories" class="slide level2">
+<h2>VEP Impact Categories</h2>
+<div id="fig_vep_effects" class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="../assets/variant_annotation/VEP_consequences.png" height="300"></p>
+<figcaption>VEP’s consequences</figcaption>
+</figure>
+</div>
+<table class="caption-top">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Impact</th>
+<th style="text-align: left;">Description</th>
+<th style="text-align: left;">Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>HIGH</strong></td>
+<td style="text-align: left;"><strong>Disruptive.</strong> Likely loss of function.</td>
+<td style="text-align: left;">Frameshift, Stop Gained, Splice acceptor/donor.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>MODERATE</strong></td>
+<td style="text-align: left;"><strong>Non-disruptive</strong> change to protein.</td>
+<td style="text-align: left;">Missense, In-frame indel.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>LOW</strong></td>
+<td style="text-align: left;">Unlikely to change function.</td>
+<td style="text-align: left;">Synonymous, Splice region (non-canonical).</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>MODIFIER</strong></td>
+<td style="text-align: left;">Non-coding / Regulatory.</td>
+<td style="text-align: left;">Intronic, UTRs, Intergenic.</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Important Exceptions</strong></p>
+</div>
+<div class="callout-content">
+<p>Not all HIGH impact = pathogenic</p>
+<p>Not all MODERATE impact = benign (e.g., <em>IDH1</em> p.R132H is LOW but a critical driver mutation)</p>
+<p><strong>Always consider biological context!</strong></p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="polyphen-2-score" class="slide level2 scrollable">
+<h2>PolyPhen-2 Score</h2>
+<p><strong>Purpose:</strong> Predicts if a missense mutation is damaging based on protein structure and evolutionary conservation.</p>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p><strong>Scoring Categories:</strong></p>
+<ol type="1">
+<li><strong>Probably Damaging</strong> (&gt; 0.85)
+<ul>
+<li><em>High confidence</em> functional effect.</li>
+</ul></li>
+<li><strong>Possibly Damaging</strong> (0.15 - 0.85)
+<ul>
+<li><em>Moderate confidence</em> effect.</li>
+</ul></li>
+<li><strong>Benign</strong> (&lt; 0.15)
+<ul>
+<li>Likely no phenotypic effect.</li>
+</ul></li>
+</ol>
+</div><div class="column" style="width:40%;">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Usage</strong></p>
+</div>
+<div class="callout-content">
+<p>PolyPhen-2 is specific to <strong>human proteins</strong>.</p>
+<p>It should be used in conjunction with other tools (like SIFT) to build a consensus on missense variant interpretation.</p>
+</div>
+</div>
+</div>
+</div></div>
+</section>
+<section id="sift-score" class="slide level2 scrollable">
+<h2>SIFT Score</h2>
+<p><strong>Purpose:</strong> Predicts if an amino acid substitution is deleterious based on sequence conservation across species.</p>
+<div class="columns">
+<div class="column" style="width:60%;">
+<p><strong>Scoring Categories:</strong></p>
+<ol type="1">
+<li><strong>Deleterious</strong> (≤ 0.05)
+<ul>
+<li>Substitution at highly conserved position</li>
+<li><em>High confidence</em> damaging effect</li>
+</ul></li>
+<li><strong>Tolerated</strong> (&gt; 0.05)
+<ul>
+<li>Substitution at variable position</li>
+<li>Likely benign or neutral effect</li>
+</ul></li>
+</ol>
+<p><strong>Note:</strong> Lower scores = More damaging (opposite to PolyPhen-2!)</p>
+</div><div class="column" style="width:40%;">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Usage</strong></p>
+</div>
+<div class="callout-content">
+<p>SIFT is available for <strong>10 species</strong> in Ensembl (including human, mouse, zebrafish).</p>
+<p>All possible amino acid substitutions are <strong>pre-calculated</strong>, making annotation very fast.</p>
+<p>Use in combination with PolyPhen-2 for consensus prediction.</p>
+</div>
+</div>
+</div>
+</div></div>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Interpretation Guide</strong></p>
+</div>
+<div class="callout-content">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">SIFT</th>
+<th style="text-align: left;">PolyPhen-2</th>
+<th style="text-align: left;">Confidence</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Deleterious</td>
+<td style="text-align: left;">Probably Damaging</td>
+<td style="text-align: left;"><strong>High</strong> - prioritize</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tolerated</td>
+<td style="text-align: left;">Benign</td>
+<td style="text-align: left;"><strong>High</strong> - likely benign</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Deleterious</td>
+<td style="text-align: left;">Benign</td>
+<td style="text-align: left;">Mixed - manual review</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tolerated</td>
+<td style="text-align: left;">Damaging</td>
+<td style="text-align: left;">Mixed - manual review</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
 </section></section>
 <section>
-<section id="advanced-topics" class="title-slide slide level1 center" data-background-color="#2C3E50">
-<h1>Advanced Topics</h1>
-
-</section>
-<section id="vep-plugins" class="slide level2">
-<h2>VEP Plugins</h2>
+<section id="vep-plugins" class="title-slide slide level1 center">
+<h1>VEP Plugins</h1>
 <p>Essential plugins for cancer analysis:</p>
 </section>
 <section id="revel" class="slide level2">
 <h2><a href="http://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#revel">REVEL</a></h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a></a><span class="ex">--plugin</span> REVEL,/path/to/revel/revel_all_chromosomes.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="ex">--plugin</span> REVEL,/path/to/revel/revel_all_chromosomes.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <blockquote>
 <p><a href="https://pubmed.ncbi.nlm.nih.gov/27666373/">REVEL paper</a>: An Ensemble Method for Predicting the Pathogenicity of Rare Missense Variants</p>
 </blockquote>
 <p>You can download here the data (~6.5GB): https://sites.google.com/site/revelgenomics/downloads or https://zenodo.org/records/7072866</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a></a><span class="fu">unzip</span> revel-v1.3_all_chromosomes.zip</span>
-<span id="cb8-2"><a></a><span class="fu">cat</span> revel_with_transcript_ids <span class="kw">|</span> <span class="fu">tr</span> <span class="st">","</span> <span class="st">"\t"</span> <span class="op">&gt;</span> tabbed_revel.tsv</span>
-<span id="cb8-3"><a></a><span class="fu">sed</span> <span class="st">'1s/.*/#&amp;/'</span> tabbed_revel.tsv <span class="op">&gt;</span> new_tabbed_revel.tsv</span>
-<span id="cb8-4"><a></a><span class="ex">bgzip</span> new_tabbed_revel.tsv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="fu">unzip</span> revel-v1.3_all_chromosomes.zip</span>
+<span id="cb2-2"><a></a><span class="fu">cat</span> revel_with_transcript_ids <span class="kw">|</span> <span class="fu">tr</span> <span class="st">","</span> <span class="st">"\t"</span> <span class="op">&gt;</span> tabbed_revel.tsv</span>
+<span id="cb2-3"><a></a><span class="fu">sed</span> <span class="st">'1s/.*/#&amp;/'</span> tabbed_revel.tsv <span class="op">&gt;</span> new_tabbed_revel.tsv</span>
+<span id="cb2-4"><a></a><span class="ex">bgzip</span> new_tabbed_revel.tsv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Prepare for GRCh38</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a></a><span class="fu">zcat</span> new_tabbed_revel.tsv.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n1</span> <span class="op">&gt;</span> h</span>
-<span id="cb9-2"><a></a><span class="fu">zgrep</span> <span class="at">-h</span> <span class="at">-v</span> ^#chr new_tabbed_revel.tsv.gz <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'$3 != "." '</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-k1,1</span> <span class="at">-k3,3n</span> <span class="at">-</span> <span class="kw">|</span> <span class="fu">cat</span> h <span class="at">-</span> <span class="kw">|</span> <span class="ex">bgzip</span> <span class="at">-c</span> <span class="op">&gt;</span> new_tabbed_revel_grch38.tsv.gz</span>
-<span id="cb9-3"><a></a><span class="ex">tabix</span> <span class="at">-f</span> <span class="at">-s</span> 1 <span class="at">-b</span> 3 <span class="at">-e</span> 3 new_tabbed_revel_grch38.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="fu">zcat</span> new_tabbed_revel.tsv.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n1</span> <span class="op">&gt;</span> h</span>
+<span id="cb3-2"><a></a><span class="fu">zgrep</span> <span class="at">-h</span> <span class="at">-v</span> ^#chr new_tabbed_revel.tsv.gz <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'$3 != "." '</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-k1,1</span> <span class="at">-k3,3n</span> <span class="at">-</span> <span class="kw">|</span> <span class="fu">cat</span> h <span class="at">-</span> <span class="kw">|</span> <span class="ex">bgzip</span> <span class="at">-c</span> <span class="op">&gt;</span> new_tabbed_revel_grch38.tsv.gz</span>
+<span id="cb3-3"><a></a><span class="ex">tabix</span> <span class="at">-f</span> <span class="at">-s</span> 1 <span class="at">-b</span> 3 <span class="at">-e</span> 3 new_tabbed_revel_grch38.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Usage:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a></a><span class="ex">--plugin</span> REVEL,file=/path/to/revel/data.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="ex">--plugin</span> REVEL,file=/path/to/revel/data.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="alphamissense" class="slide level2">
 <h2><a href="http://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#alphamissense">AlphaMissense</a></h2>
@@ -758,10 +881,10 @@ Figure&nbsp;3: Cancer somatic mut
 </blockquote>
 <p><a href="https://console.cloud.google.com/storage/browser/dm_alphamissense;tab=objects?pli=1&amp;prefix=&amp;forceOnObjectsSortingFiltering=false"><strong>Download link</strong></a></p>
 <p>Prepare for GRCh38</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a></a><span class="fu">wget</span> https://storage.googleapis.com/dm_alphamissense/AlphaMissense_hg38.tsv.gz</span>
-<span id="cb11-2"><a></a><span class="ex">tabix</span> <span class="at">-s</span> 1 <span class="at">-b</span> 2 <span class="at">-e</span> 2 <span class="at">-f</span> <span class="at">-S</span> 1 AlphaMissense_hg38.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a></a><span class="fu">wget</span> https://storage.googleapis.com/dm_alphamissense/AlphaMissense_hg38.tsv.gz</span>
+<span id="cb5-2"><a></a><span class="ex">tabix</span> <span class="at">-s</span> 1 <span class="at">-b</span> 2 <span class="at">-e</span> 2 <span class="at">-f</span> <span class="at">-S</span> 1 AlphaMissense_hg38.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Run it with VEP</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a></a><span class="ex">--plugin</span> AlphaMissense,file=/full/path/to/file.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a></a><span class="ex">--plugin</span> AlphaMissense,file=/full/path/to/file.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="dbnsfp" class="slide level2">
 <h2><a href="http://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#dbnsfp">dbNSFP</a></h2>
@@ -769,24 +892,38 @@ Figure&nbsp;3: Cancer somatic mut
 <p><a href="https://pubmed.ncbi.nlm.nih.gov/33261662/">dbNSFP v4 paper</a>: a comprehensive database of transcript-specific functional predictions and annotations for human nonsynonymous and splice-site SNVs</p>
 </blockquote>
 <p>A VEP plugin that retrieves data for missense variants from a tabix-indexed dbNSFP file.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a></a><span class="ex">--plugin</span> dbNSFP,/path/to/dbNSFP.gz,SIFT_score,HDIV_score</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a></a><span class="ex">--plugin</span> dbNSFP,/path/to/dbNSFP.gz,SIFT_score,HDIV_score</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Prepare the data</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a></a><span class="va">version</span><span class="op">=</span>4.7c</span>
-<span id="cb14-2"><a></a><span class="fu">wget</span> ftp://dbnsfp:dbnsfp@dbnsfp.softgenetics.com/dbNSFP<span class="va">${version}</span>.zip</span>
-<span id="cb14-3"><a></a><span class="fu">unzip</span> dbNSFP<span class="va">${version}</span>.zip</span>
-<span id="cb14-4"><a></a><span class="fu">zcat</span> dbNSFP<span class="va">${version}</span>_variant.chr1.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n1</span> <span class="op">&gt;</span> h</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a></a><span class="va">version</span><span class="op">=</span>4.7c</span>
+<span id="cb8-2"><a></a><span class="fu">wget</span> ftp://dbnsfp:dbnsfp@dbnsfp.softgenetics.com/dbNSFP<span class="va">${version}</span>.zip</span>
+<span id="cb8-3"><a></a><span class="fu">unzip</span> dbNSFP<span class="va">${version}</span>.zip</span>
+<span id="cb8-4"><a></a><span class="fu">zcat</span> dbNSFP<span class="va">${version}</span>_variant.chr1.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n1</span> <span class="op">&gt;</span> h</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Prepare for GRCh38</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a></a><span class="fu">zgrep</span> <span class="at">-h</span> <span class="at">-v</span> ^#chr dbNSFP<span class="va">${version}</span>_variant.chr<span class="pp">*</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-k1,1</span> <span class="at">-k2,2n</span> <span class="at">-</span> <span class="kw">|</span> <span class="fu">cat</span> h <span class="at">-</span> <span class="kw">|</span> <span class="ex">bgzip</span> <span class="at">-c</span> <span class="op">&gt;</span> dbNSFP<span class="va">${version}</span>_grch38.gz</span>
-<span id="cb15-2"><a></a>  <span class="ex">tabix</span> <span class="at">-s</span> 1 <span class="at">-b</span> 2 <span class="at">-e</span> 2 dbNSFP<span class="va">${version}</span>_grch38.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a></a><span class="fu">zgrep</span> <span class="at">-h</span> <span class="at">-v</span> ^#chr dbNSFP<span class="va">${version}</span>_variant.chr<span class="pp">*</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-k1,1</span> <span class="at">-k2,2n</span> <span class="at">-</span> <span class="kw">|</span> <span class="fu">cat</span> h <span class="at">-</span> <span class="kw">|</span> <span class="ex">bgzip</span> <span class="at">-c</span> <span class="op">&gt;</span> dbNSFP<span class="va">${version}</span>_grch38.gz</span>
+<span id="cb9-2"><a></a>  <span class="ex">tabix</span> <span class="at">-s</span> 1 <span class="at">-b</span> 2 <span class="at">-e</span> 2 dbNSFP<span class="va">${version}</span>_grch38.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Run it with VEP</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a></a><span class="ex">--plugin</span> dbNSFP,/path/to/dbNSFP.gz,LRT_score,GERP++_RS</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a></a><span class="ex">--plugin</span> dbNSFP,/path/to/dbNSFP.gz,LRT_score,GERP++_RS</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="filter-variants-with-vep" class="slide level2">
 <h2>Filter Variants with VEP</h2>
 <p>You can use the tool that is included in the VEP’s suite of tools. This tool generally works very well with data that have been VEP-annotated</p>
-<p>Filter SIFT deleterious events `<code>filter_vep -i variant_effect_output.txt -filter "SIFT is deleterious" | grep -v "##" | head -n5</code> <br> Can be used with pipes, for example (might save memory)</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb17-1"><a></a><span class="ex">vep</span> <span class="at">-i</span> examples/homo_sapiens_GRCh38.vcf <span class="at">--cache</span> <span class="at">--force_overwrite</span> <span class="at">--sift</span> b <span class="at">--canonical</span> <span class="at">--symbol</span> <span class="at">--tab</span> <span class="at">--fields</span> Uploaded_variation,SYMBOL,CANONICAL,SIFT <span class="at">-o</span> STDOUT <span class="kw">|</span> <span class="dt">\</span></span>
-<span id="cb17-2"><a></a><span class="ex">filter_vep</span> <span class="at">--filter</span> <span class="st">"CANONICAL is YES and SIFT is deleterious"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Filter SIFT deleterious events</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a></a><span class="ex">filter_vep</span> <span class="at">-i</span> variant_effect_output.txt <span class="at">-filter</span> <span class="st">"SIFT is deleterious"</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> <span class="st">"##"</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n5</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><br> Can be used with pipes, for example (might save memory)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a></a><span class="ex">vep</span> <span class="at">-i</span> examples/homo_sapiens_GRCh38.vcf <span class="at">--cache</span> <span class="at">--force_overwrite</span> <span class="at">--sift</span> b <span class="at">--canonical</span> <span class="at">--symbol</span> <span class="at">--tab</span> <span class="at">--fields</span> Uploaded_variation,SYMBOL,CANONICAL,SIFT <span class="at">-o</span> STDOUT <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb12-2"><a></a><span class="ex">filter_vep</span> <span class="at">--filter</span> <span class="st">"CANONICAL is YES and SIFT is deleterious"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><strong>Operators:</strong></p>
+<ul>
+<li><code>is</code>: Exact match</li>
+<li><code>match</code>: Regex pattern</li>
+<li><code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>: Numeric comparison</li>
+<li><code>in</code>: List membership</li>
+<li><code>and</code>, <code>or</code>: Combine conditions</li>
+</ul>
+<p><strong>Example 1: High-confidence damaging</strong></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a></a><span class="ex">filter_vep</span> <span class="at">-i</span> vep_output.txt <span class="dt">\</span></span>
+<span id="cb13-2"><a></a>  <span class="at">-filter</span> <span class="st">"SIFT is deleterious and </span><span class="dt">\</span></span>
+<span id="cb13-3"><a></a><span class="st">           PolyPhen is probably_damaging"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="notes" class="slide level2">
 <h2>Notes</h2>
@@ -824,16 +961,37 @@ Figure&nbsp;3: Cancer somatic mut
 </section>
 <section id="points-to-keep-in-mind" class="slide level2">
 <h2>Points to keep in mind</h2>
+<p><strong>Include MODERATE impact variants</strong></p>
 <ul>
-<li>Using not only the HIGH impact somatic mutations but also the MODERATE</li>
-<li>Remembering that the “driver” mutation is not necessarily fully representative, we simply do not know many of them</li>
-<li>CNVs (Copy number variants) calling is hard, especially for WES data (WES is only 2% of a genome)</li>
-<li>No tool is perfect! This is especially true for CNV calling
-<ul>
-<li>If samples’ tumor purity is too low, or the quality is too low one should be especially careful with the results</li>
-<li>Experimental design is very important</li>
-</ul></li>
+<li>HIGH impact often affects tumor suppressors (<em>TP53</em>, <em>PTEN</em>, <em>RB1</em>)</li>
+<li>MODERATE impact often affects oncogenes (<em>KRAS</em>, <em>BRAF</em>, <em>PIK3CA</em>)</li>
+<li>Examples: <em>KRAS</em> p.G12D, <em>BRAF</em> p.V600E are MODERATE but critical drivers</li>
 </ul>
+<p><strong>Many drivers remain unknown</strong></p>
+<ul>
+<li>Only ~500-600 cancer genes well-characterized</li>
+<li>Absence from databases ≠ passenger mutation</li>
+<li>Look for recurrent mutations across samples</li>
+</ul>
+<p><strong>CNV calling limitations</strong></p>
+<ul>
+<li>Particularly challenging in WES (only 2% of genome covered)</li>
+<li>Requires adequate tumor purity (&gt;40% ideal) and coverage</li>
+<li>VEP is not specialized for CNV annotation (CNVannotator, ClassifyCNV)</li>
+</ul>
+<div class="callout callout-warning callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>No Tool is Perfect</strong></p>
+</div>
+<div class="callout-content">
+<p>Always validate important findings visually (IGV) and consider orthogonal methods for clinical decisions.</p>
+</div>
+</div>
+</div>
 </section></section>
 <section>
 <section id="resources" class="title-slide slide level1 center" data-background-color="#2C3E50">
@@ -863,12 +1021,13 @@ Figure&nbsp;3: Cancer somatic mut
 <li>GitHub: <a href="https://github.com/Ensembl/ensembl-vep" class="uri">https://github.com/Ensembl/ensembl-vep</a></li>
 <li>Bioconductor: <a href="https://bioconductor.org/" class="uri">https://bioconductor.org/</a></li>
 </ul>
-</section></section>
-<section id="practical-part" class="title-slide slide level1 center">
-<h1>Practical part!</h1>
-
-
 </section>
+<section id="exercises" class="slide level2" style="text-align: center">
+<h2>Exercises</h2>
+
+
+
+<img data-src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExOWdxc2J1OHY3eGs3c2ZycGhiNGt1dzQ4dmVlZXQxNjM2NDQxOWQybCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/zIOdLMZDcBDc2gk6vV/giphy.gif" class="r-stretch quarto-figure-center"><p class="caption">Giphy</p></section></section>
     </div>
   <div class="quarto-auto-generated-content" style="display: none;">
 <p><img src="../assets/SIB_logo.svg" class="slide-logo"></p>
