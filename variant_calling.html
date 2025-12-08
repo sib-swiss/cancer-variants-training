@@ -458,10 +458,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="va">ALIGNDIR</span><span class="op">=</span>~/project/course_data/alignments</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="va">REFDIR</span><span class="op">=</span>~/project/course_data/reference</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="va">RESOURCEDIR</span><span class="op">=</span>~/project/course_data/resources</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/course_data/variants</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="va">ALIGNDIR</span><span class="op">=</span>/data/alignments</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="va">REFDIR</span><span class="op">=</span>/data/reference</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="va">RESOURCEDIR</span><span class="op">=</span>/data/resources</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/variants</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="va">$VARIANTDIR</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
@@ -503,10 +503,10 @@ Caution
 <div class="callout-body-container callout-body">
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="va">ALIGNDIR</span><span class="op">=</span>~/project/course_data/alignments</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="va">REFDIR</span><span class="op">=</span>~/project/course_data/reference</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="va">RESOURCEDIR</span><span class="op">=</span>~/project/course_data/resources</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/course_data/variants</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="va">ALIGNDIR</span><span class="op">=</span>/data/alignments</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="va">REFDIR</span><span class="op">=</span>/data/reference</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="va">RESOURCEDIR</span><span class="op">=</span>/data/resources</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/variants</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="va">$VARIANTDIR</span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
@@ -542,8 +542,8 @@ Caution
 <p>Create a script called <code>04_filter_mutect_calls.sh</code> in <code>~/project/scripts</code>. From the script, run the command to filter the somatic variants:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="va">REFDIR</span><span class="op">=</span>~/project/course_data/reference</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/course_data/variants</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="va">REFDIR</span><span class="op">=</span>/data/reference</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/variants</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># fill the filter column</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="ex">gatk</span> FilterMutectCalls <span class="dt">\</span></span>
@@ -586,10 +586,12 @@ Note
 <div id="callout-7" class="callout-7-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>To get the number of variants in the unfiltered vcf:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-H</span> somatic.vcf.gz <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>Resulting in 467 unfiltered variants.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/variants</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-H</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/somatic.vcf.gz <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Resulting in <em>467</em> unfiltered variants.</p>
 <p>To get the 10 most frequently occurring filters in the filter column of the filtered vcf:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-H</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f</span> 7 <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-nr</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 10</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/variants</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-H</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f</span> 7 <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-nr</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n</span> 10</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Resulting in:</p>
 <pre><code>133 PASS
 48 weak_evidence
@@ -603,7 +605,8 @@ Note
 9 strand_bias;weak_evidence</code></pre>
 <p>So most variants were filtered out, and most of the variants were filtered out because of ‘weak evidence’.</p>
 <p>In order to figure out what that means we can check out the vcf header:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-h</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"^##FILTER"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/variants</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-h</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"^##FILTER"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Resulting in:</p>
 <pre><code>##FILTER=&lt;ID=FAIL,Description="Fail the site if all alleles fail but for different reasons."&gt;
 ##FILTER=&lt;ID=PASS,Description="Site contains at least one allele that passes filters"&gt;
@@ -648,13 +651,17 @@ Note
 </div>
 <p>Let’s check out the VCF in a bit more detail. We’d like to have an idea what kind of variants are in there, and what for example their variant allele frequency is.</p>
 <p>First, we can check what the variants look like:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-H</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">head</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/variants</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-H</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">head</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Showing us that both the <code>FORMAT</code> and <code>INFO</code> fields are filled with information. To check out the meaning of what is in the <code>INFO</code> field you can run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-h</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"^##INFO"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/variants</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-h</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"^##INFO"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>And you can do the same for the format fields:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-h</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"^##FORMAT"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/variants</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-h</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"^##FORMAT"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>To summarize the vcf for information in the format or info fields you can use <a href="https://samtools.github.io/bcftools/bcftools.html#query"><code>bcftools query</code></a>. For example, for getting the likelihood of variant and depth of each sample, you can do the following (for the first 20 variants):</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> query <span class="at">-f</span> <span class="st">'%CHROM\t%POS\t%FILTER\t\t%INFO/TLOD\t[%SAMPLE=%DP;]\n'</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-20</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/variants</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> query <span class="at">-f</span> <span class="st">'%CHROM\t%POS\t%FILTER\t\t%INFO/TLOD\t[%SAMPLE=%DP;]\n'</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-20</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -681,7 +688,8 @@ Note
 <div id="callout-10" class="callout-10-contents callout-collapse collapse">
 <div class="callout-body-container callout-body">
 <p>We can check which tag contains the variant allele frequency in the vcf:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-h</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"^##FORMAT"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/variants</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> view <span class="at">-h</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">grep</span> <span class="st">"^##FORMAT"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Returning:</p>
 <pre><code>##FORMAT=&lt;ID=AD,Number=R,Type=Integer,Description="Allelic depths for the ref and alt alleles in the order listed"&gt;
 ##FORMAT=&lt;ID=AF,Number=A,Type=Float,Description="Allele fractions of alternate alleles in the tumor"&gt;
@@ -697,7 +705,8 @@ Note
 ##FORMAT=&lt;ID=PS,Number=1,Type=Integer,Description="Phasing set (typically the position of the first variant in the set)"&gt;
 ##FORMAT=&lt;ID=SB,Number=4,Type=Integer,Description="Per-sample component statistics which comprise the Fisher's Exact Test to detect strand bias."&gt;</code></pre>
 <p>Where <code>AF</code> contains ‘Allele fractions of alternate alleles in the tumor’, so that is the tag we are looking for. So, we replace <code>DP</code> with <code>AF</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> query <span class="at">-f</span> <span class="st">'%CHROM\t%POS\t%FILTER\t\t%INFO/TLOD\t[%SAMPLE=%AF;]\n'</span> somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-30</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/variants</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="ex">bcftools</span> query <span class="at">-f</span> <span class="st">'%CHROM\t%POS\t%FILTER\t\t%INFO/TLOD\t[%SAMPLE=%AF;]\n'</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/somatic.filtered.vcf.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-30</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Returning:</p>
 <pre><code>chr6    106265  map_qual;strand_bias;weak_evidence              3.99    normal=0.00671;tumor=0.01;
 chr6    325357  PASS            719.91  normal=0.001054;tumor=0.161;
@@ -775,13 +784,13 @@ chr6    16147945        PASS            331.72  normal=0.014;tumor=0.978;</code>
 </div>
 <div class="callout-body-container callout-body">
 <p>Check out the <a href="https://cnvkit.readthedocs.io/en/stable/quickstart.html#build-a-reference-from-normal-samples-and-infer-tumor-copy-ratios">documentation</a> of <code>CNVkit.py bash</code>, and the helper (<code>cnvkit.py batch -h</code>), create a script called <code>05_run_cnvkit.sh</code>, and replace the missing values at <code>FIXME</code>.</p>
-<p>After that, checkout the visualizations (<code>tumor-scatter.png</code> and <code>tumor-scatter.png</code>) at <code>~/project/course_data/variants/cnvkit</code>. Do you see any evidence for copy number variation?</p>
+<p>After that, checkout the visualizations (<code>tumor-scatter.png</code>) at <code>~/project/variants/cnvkit</code>. Do you see any evidence for copy number variation?</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="va">ALIGNDIR</span><span class="op">=</span>~/project/course_data/alignments</span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="va">REFDIR</span><span class="op">=</span>~/project/course_data/reference</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="va">RESOURCEDIR</span><span class="op">=</span>~/project/course_data/resources</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/course_data/variants</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="va">ALIGNDIR</span><span class="op">=</span>/data/alignments</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="va">REFDIR</span><span class="op">=</span>/data/reference</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="va">RESOURCEDIR</span><span class="op">=</span>/data/resources</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/variants</span>
 <span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="ex">cnvkit.py</span> batch FIXME <span class="dt">\</span></span>
 <span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>--normal FIXME <span class="dt">\</span></span>
@@ -810,10 +819,10 @@ chr6    16147945        PASS            331.72  normal=0.014;tumor=0.978;</code>
 <p>We provide the tumor bam, normal bam, the interval list (can also be a bed file) and our reference genome:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#!/usr/bin/env bash</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="va">ALIGNDIR</span><span class="op">=</span>~/project/course_data/alignments</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="va">REFDIR</span><span class="op">=</span>~/project/course_data/reference</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="va">RESOURCEDIR</span><span class="op">=</span>~/project/course_data/resources</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/course_data/variants</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="va">ALIGNDIR</span><span class="op">=</span>/data/alignments</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="va">REFDIR</span><span class="op">=</span>/data/reference</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="va">RESOURCEDIR</span><span class="op">=</span>/data/resources</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="va">VARIANTDIR</span><span class="op">=</span>~/project/variants</span>
 <span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a><span class="ex">cnvkit.py</span> batch <span class="st">"</span><span class="va">$ALIGNDIR</span><span class="st">"</span>/tumor.recal.bam <span class="dt">\</span></span>
 <span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>--normal <span class="st">"</span><span class="va">$ALIGNDIR</span><span class="st">"</span>/normal.recal.bam <span class="dt">\</span></span>
@@ -825,7 +834,7 @@ chr6    16147945        PASS            331.72  normal=0.014;tumor=0.978;</code>
 <span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>--processes 4 <span class="dt">\</span></span>
 <span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>--scatter <span class="dt">\</span></span>
 <span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>--diagram</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>After running cnvkit, multiple files are created in <code>~/project/course_data/variants/cnvkit</code>. The scatter plot is typically interesting to investigate at first:</p>
+<p>After running cnvkit, multiple files are created in <code>~/project/variants/cnvkit</code>. The scatter plot is typically interesting to investigate at first:</p>
 <p><img src="assets/images/tumor-scatter.png" class="img-fluid"></p>
 <p><strong>Interpretation:</strong></p>
 <p>CNVkit reports log2 ratios relative to a diploid (2 copy) baseline:</p>
