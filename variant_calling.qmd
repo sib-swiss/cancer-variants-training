@@ -37,10 +37,10 @@ Create a script called `03_run_mutect2.sh`. After that, check out the [manual of
 
 #!/usr/bin/env bash
 
-ALIGNDIR=~/project/course_data/alignments
-REFDIR=~/project/course_data/reference
-RESOURCEDIR=~/project/course_data/resources
-VARIANTDIR=~/project/course_data/variants
+ALIGNDIR=/data/alignments
+REFDIR=/data/reference
+RESOURCEDIR=/data/resources
+VARIANTDIR=~/project/variants
 
 mkdir -p $VARIANTDIR
 
@@ -68,10 +68,10 @@ This takes a while to run. Have a break!
 ```sh
 #!/usr/bin/env bash
 
-ALIGNDIR=~/project/course_data/alignments
-REFDIR=~/project/course_data/reference
-RESOURCEDIR=~/project/course_data/resources
-VARIANTDIR=~/project/course_data/variants
+ALIGNDIR=/data/alignments
+REFDIR=/data/reference
+RESOURCEDIR=/data/resources
+VARIANTDIR=~/project/variants
 
 mkdir -p $VARIANTDIR
 
@@ -104,8 +104,8 @@ Create a script called `04_filter_mutect_calls.sh` in `~/project/scripts`. From 
 ```sh
 #!/usr/bin/env bash
 
-REFDIR=~/project/course_data/reference
-VARIANTDIR=~/project/course_data/variants
+REFDIR=/data/reference
+VARIANTDIR=~/project/variants
 
 # fill the filter column
 gatk FilterMutectCalls \
@@ -141,15 +141,17 @@ bcftools view -H my_variants.vcf.gz | cut -f 7 | sort | uniq -c | sort -nr | hea
 To get the number of variants in the unfiltered vcf:
 
 ```sh
-bcftools view -H somatic.vcf.gz | wc -l
+VARIANTDIR=~/project/variants
+bcftools view -H "$VARIANTDIR"/somatic.vcf.gz | wc -l
 ```
 
-Resulting in 467 unfiltered variants. 
+Resulting in _467_ unfiltered variants. 
 
 To get the 10 most frequently occurring filters in the filter column of the filtered vcf:
 
 ```sh
-bcftools view -H somatic.filtered.vcf.gz | cut -f 7 | sort | uniq -c | sort -nr | head -n 10
+VARIANTDIR=~/project/variants
+bcftools view -H "$VARIANTDIR"/somatic.filtered.vcf.gz | cut -f 7 | sort | uniq -c | sort -nr | head -n 10
 ```
 
 Resulting in:
@@ -171,8 +173,9 @@ So most variants were filtered out, and most of the variants were filtered out b
 
 In order to figure out what that means we can check out the vcf header:
 
-```sh 
-bcftools view -h somatic.filtered.vcf.gz | grep "^##FILTER"
+```sh
+VARIANTDIR=~/project/variants
+bcftools view -h "$VARIANTDIR"/somatic.filtered.vcf.gz | grep "^##FILTER"
 ```
 
 Resulting in:
@@ -217,26 +220,30 @@ Let's check out the VCF in a bit more detail. We'd like to have an idea what kin
 
 First, we can check what the variants look like:
 
-```sh 
-bcftools view -H somatic.filtered.vcf.gz | head
+```sh
+VARIANTDIR=~/project/variants
+bcftools view -H "$VARIANTDIR"/somatic.filtered.vcf.gz | head
 ```
 
 Showing us that both the `FORMAT` and `INFO` fields are filled with information. To check out the meaning of what is in the `INFO` field you can run:
 
 ```sh 
-bcftools view -h somatic.filtered.vcf.gz | grep "^##INFO"
+VARIANTDIR=~/project/variants
+bcftools view -h "$VARIANTDIR"/somatic.filtered.vcf.gz | grep "^##INFO"
 ```
 
 And you can do the same for the format fields:
 
 ```sh
-bcftools view -h somatic.filtered.vcf.gz | grep "^##FORMAT"
+VARIANTDIR=~/project/variants
+bcftools view -h "$VARIANTDIR"/somatic.filtered.vcf.gz | grep "^##FORMAT"
 ```
 
 To summarize the vcf for information in the format or info fields you can use [`bcftools query`](https://samtools.github.io/bcftools/bcftools.html#query). For example, for getting the likelihood of variant and depth of each sample, you can do the following (for the first 20 variants):
 
 ```sh
-bcftools query -f '%CHROM\t%POS\t%FILTER\t\t%INFO/TLOD\t[%SAMPLE=%DP;]\n' somatic.filtered.vcf.gz | head -20
+VARIANTDIR=~/project/variants
+bcftools query -f '%CHROM\t%POS\t%FILTER\t\t%INFO/TLOD\t[%SAMPLE=%DP;]\n' "$VARIANTDIR"/somatic.filtered.vcf.gz | head -20
 ```
 
 ::: {.callout-important}
@@ -252,7 +259,8 @@ Instead of the depth `DP` for each sample get the variant allele frequency for e
 We can check which tag contains the variant allele frequency in the vcf:
 
 ```sh
-bcftools view -h somatic.filtered.vcf.gz | grep "^##FORMAT"
+VARIANTDIR=~/project/variants
+bcftools view -h "$VARIANTDIR"/somatic.filtered.vcf.gz | grep "^##FORMAT"
 ```
 
 Returning:
@@ -276,7 +284,8 @@ Returning:
 Where `AF` contains 'Allele fractions of alternate alleles in the tumor', so that is the tag we are looking for. So, we replace `DP` with `AF`:
 
 ```sh
-bcftools query -f '%CHROM\t%POS\t%FILTER\t\t%INFO/TLOD\t[%SAMPLE=%AF;]\n' somatic.filtered.vcf.gz | head -30
+VARIANTDIR=~/project/variants
+bcftools query -f '%CHROM\t%POS\t%FILTER\t\t%INFO/TLOD\t[%SAMPLE=%AF;]\n' "$VARIANTDIR"/somatic.filtered.vcf.gz | head -30
 ```
 
 Returning:
@@ -349,16 +358,16 @@ Variation of copy number in genes can have a large effect on the phenotype of a 
 
 Check out the [documentation](https://cnvkit.readthedocs.io/en/stable/quickstart.html#build-a-reference-from-normal-samples-and-infer-tumor-copy-ratios) of `CNVkit.py bash`, and the helper (`cnvkit.py batch -h`), create a script called `05_run_cnvkit.sh`, and replace the missing values at `FIXME`.
 
-After that, checkout the visualizations (`tumor-scatter.png` and `tumor-scatter.png`) at `~/project/course_data/variants/cnvkit`. Do you see any evidence for copy number variation? 
+After that, checkout the visualizations (`tumor-scatter.png`) at `~/project/variants/cnvkit`. Do you see any evidence for copy number variation? 
 
 
 ```sh
 #!/usr/bin/env bash
 
-ALIGNDIR=~/project/course_data/alignments
-REFDIR=~/project/course_data/reference
-RESOURCEDIR=~/project/course_data/resources
-VARIANTDIR=~/project/course_data/variants
+ALIGNDIR=/data/alignments
+REFDIR=/data/reference
+RESOURCEDIR=/data/resources
+VARIANTDIR=~/project/variants
 
 cnvkit.py batch FIXME \
 --normal FIXME \
@@ -381,10 +390,10 @@ We provide the tumor bam, normal bam, the interval list (can also be a bed file)
 ```sh
 #!/usr/bin/env bash
 
-ALIGNDIR=~/project/course_data/alignments
-REFDIR=~/project/course_data/reference
-RESOURCEDIR=~/project/course_data/resources
-VARIANTDIR=~/project/course_data/variants
+ALIGNDIR=/data/alignments
+REFDIR=/data/reference
+RESOURCEDIR=/data/resources
+VARIANTDIR=~/project/variants
 
 cnvkit.py batch "$ALIGNDIR"/tumor.recal.bam \
 --normal "$ALIGNDIR"/normal.recal.bam \
@@ -398,7 +407,7 @@ cnvkit.py batch "$ALIGNDIR"/tumor.recal.bam \
 --diagram
 ```
 
-After running cnvkit, multiple files are created in `~/project/course_data/variants/cnvkit`. The scatter plot is typically interesting to investigate at first:
+After running cnvkit, multiple files are created in `~/project/variants/cnvkit`. The scatter plot is typically interesting to investigate at first:
 
 ![](assets/images/tumor-scatter.png)
 
