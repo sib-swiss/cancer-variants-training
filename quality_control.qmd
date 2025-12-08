@@ -40,18 +40,31 @@ For a.o. efficiency and reproducibility it makes sense to execute your commands 
 
 ### Setup
 
-We will start the exercises with pre-aligned bam files. To start, download and extract the `course_data` folder:
+We will start the exercises with pre-aligned bam files. We have already preapred the folders for you with all the data that you need. If you are following the course later on:
+
+::: {.callout-note}
+## If you are following locally (or later):
+To start, download and extract to the into a folder, and change your paths to your folder:
 
 ```sh
 wget https://cancer-variants-training.s3.eu-central-1.amazonaws.com/course_data.tar.gz
 tar -xvzf course_data.tar.gz
 rm course_data.tar.gz
 ```
+Then update your paths, depending on where your data is:
+```bash
+PROJECT=/config/project/alignments
+ALIGNDIR=/data/alignments
+REFDIR=/data/reference
+RESOURCEDIR=/data/resources
+```
 
-Now, check out the directory `course_data` and see what's in there (e.g. with `tree`):
+:::
+
+Now, check out the directory `/data` and see what's in there (e.g. with `tree`):
 
 ```
-└── course_data
+└── /data
     ├── alignments
     │   ├── normal.recal.bai
     │   ├── normal.recal.bam
@@ -159,8 +172,8 @@ f. Which other programs were run to create the bam file?
 To get information on the bam header we run 
 
 ```sh
-cd ~/project/course_data/alignments
-samtools view -H normal.recal.bam
+ALIGNDIR=/data/alignments
+samtools view -H "$ALIGNDIR"/normal.recal.bam
 ```
 
 Which returns:
@@ -206,7 +219,8 @@ c. Are the first reads tagged with the readgroup ID?
 The command:
 
 ```sh
-samtools view normal.recal.bam | head -3
+ALIGNDIR=/data/alignments
+samtools view "$ALIGNDIR"/normal.recal.bam | head -3
 ```
 
 Returns the first three alignments:
@@ -233,11 +247,15 @@ Create a script called `01_samtools_flagstat.sh` and store it in `~/project/scri
 ## Answer
 
 ```sh 
-cd ~/project/course_data/alignments
+ALIGNDIR=/data/alignments
+PROJECT=~/project/alignments
+
+mkdir -p $PROJECT
 
 for sample in tumor normal
 do
-    samtools flagstat "$sample".recal.bam > "$sample".recal.bam.flagstat
+    # Run flagstat on the BAM file in /data and save to ~/project
+    samtools flagstat $ALIGNDIR/"$sample".recal.bam > "$PROJECT"/"$sample".recal.bam.flagstat
 done
 ```
 
@@ -274,15 +292,17 @@ So, all looks good until now. We have many reads and high alignment rates. The b
 Create a script called `02_gatk_collecthsmetrics.sh` in `~/project/scripts` to run `gatk CollectHsMetrics` on the two bam files. Here's an example:
 
 ```sh
-ALIGNDIR=~/project/course_data/alignments
-REFDIR=~/project/course_data/reference
-RESOURCEDIR=~/project/course_data/resources
+PROJECT=~/project/alignments
+ALIGNDIR=/data/alignments
+REFDIR=/data/reference
+
+mkdir -p $PROJECT
 
 for sample in tumor normal
 do
     gatk CollectHsMetrics \
     -I "$ALIGNDIR"/"$sample".recal.bam \
-    -O "$ALIGNDIR"/"$sample".recal.bam_hs_metrics.txt \
+    -O "$PROJECT"/"$sample".recal.bam_hs_metrics.txt \
     -R "$REFDIR"/ref_genome.fa \
     --BAIT_INTERVALS "$REFDIR"/exome_regions.bed.interval_list \
     --TARGET_INTERVALS "$REFDIR"/exome_regions.bed.interval_list
@@ -291,8 +311,12 @@ done
 The produced reports are not so easy to read. To parse the metrics file, we run `multiqc` on the directory:
 
 ```sh 
-cd ~/project/course_data/alignments
-multiqc .
+MULTIQC=~/project/multiqc
+PROJECT=~/project/alignments
+
+mkdir -p $MULTIQC
+
+multiqc $ALIGNDIR -o $MULTIQC
 ```
 
 Download the multiqc report (`multiqc_report.html`) by right-clicking on the file and select 'Download'. Check out the hybrid-selection metrics or by clicking here:

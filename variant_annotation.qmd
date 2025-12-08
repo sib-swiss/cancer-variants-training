@@ -70,8 +70,8 @@ source ~/miniconda3/bin/activate
 conda init --all
 
 # Using Conda
-conda create -n vep samtools python=3.10 ensembl-vep=115
-# conda install -c bioconda ensembl-vep=115 # if installing in current env
+conda create -n vep samtools python=3.10 ensembl-vep=115.0
+# conda install -c bioconda ensembl-vep=115.0 # if installing in current env
 
 # Activate VEP's env
 conda activate vep
@@ -79,7 +79,7 @@ conda activate vep
 # PLEASE DO RUN During the course, only if you follow locally
 # Install all the data locally
 #vep_install -a cf -s homo_sapiens -y GRCh38 --CONVERT (this command will download in $HOME/.vep the cache folder)
-#vep_install -a cf -s homo_sapiens -y GRCh38 -c $HOME/project/course_data/vep --CONVERT (this specify the cache folder)
+#vep_install -a cf -s homo_sapiens -y GRCh38 -c $HOME/project/data/vep --CONVERT (this specify the cache folder)
 
 # Plugins installation
 # vep_install -a p --PLUGINS all
@@ -231,7 +231,7 @@ chmod +x create_vcf.sh
 # Check the content
 cat cancer_variants.vcf
 
-# Make sure you have 13 variants
+# Make sure you have 14 variants
 grep -v '^#' cancer_variants.vcf | wc -l  # it should show 14
 
 # Run VEP ~< 5min
@@ -248,9 +248,11 @@ vep -i cancer_variants.vcf \
     --pick \
     --domains \
     --output_file output.txt
+```
 
 # Some of the variants affect:
 
+```
 ## VEP command-line: vep --assembly GRCh38 --cache /data/.vep --database 0 --force_overwrite --format vcf --input_file cancer_variants.vcf --offline --output_file output.txt --pick --symbol
 #Uploaded_variation	Location	Allele	Gene	Feature	Feature_type	Consequence	cDNA_position	CDS_position	Protein_position	Amino_acids	Codons	Existing_variation	Extra
 rs121913529	chr7:55242465	T	ENSG00000280890	ENST00000626532	Transcript	intron_variant,non_coding_transcript_variant	-	-	-	-	-	-	IMPACT=MODIFIER;STRAND=-1;SYMBOL=ELDR;SYMBOL_SOURCE=HGNC;HGNC_ID=HGNC:49511
@@ -352,7 +354,7 @@ chr6    3723708   .   C   G   .   PASS
 
 The somatic variant call can be annotated with this command
 ``` bash
-VARIANTDIR="${HOME}/project/course_data/variants"
+VARIANTDIR="${HOME}/project/variants"
 
 vep -i "$VARIANTDIR"/somatic.filtered.PASS.vcf.gz \
 --cache /data/.vep \
@@ -363,7 +365,7 @@ vep -i "$VARIANTDIR"/somatic.filtered.PASS.vcf.gz \
 --symbol \
 --force_overwrite \
 --everything \
---output_file chr6ch17_mutect2_annotated.txt
+--output_file "$VARIANTDIR"/chr6ch17_mutect2_annotated.txt
 ```
 ::: {.callout-note}
 We are using as input a vcf.gz file (which has been indexed), and we are provifing the `--format vcf` command, this will output by default a `tsv` file
@@ -414,7 +416,7 @@ chr6_1930220_GA/TT	chr6:1930220-1930221	TT	ENSG00000112699	ENST00000380815	Trans
 Can you run the same command as before adding `--fork 2`, do you note any difference?
 
 ``` bash
-VARIANTDIR="${HOME}/project/course_data/variants"
+VARIANTDIR="${HOME}/project/variants"
 
 vep -i "$VARIANTDIR/somatic.filtered.PASS.vcf.gz" \
 --cache /data/.vep \
@@ -434,15 +436,17 @@ Now when we anaylize our output file `chr6ch17_mutect2_annotated.txt` in more de
 Let's say that now we would like to filter only the deleterious predictions and moderate/high impact variants. We can do that in a couple of ways:
 
 ``` bash
+VARIANTDIR="${HOME}/project/variants"
+
 filter_vep \
--i chr6ch17_mutect2_annotated.txt \
--o chr6ch17_mutect2_annotated_filtered.txt \
+-i "$VARIANTDIR"/chr6ch17_mutect2_annotated.txt \
+-o "$VARIANTDIR"/chr6ch17_mutect2_annotated_filtered.txt \
 --force_overwrite \
 --filter "(IMPACT is HIGH or IMPACT is MODERATE) or (SIFT match deleterious or PolyPhen match probably_damaging)"
 ```
 
 ::: {.callout-caution}
-in this line `--filter "(IMPACT is HIGH or IMPACT is MODERATE) or (SIFT match deleterious or PolyPhen match probably_damaging)"` consider that there is a difference in saying `or` or `and` as the latter is much more stringent and it would look only for variants whose prediction is in agreement.
+in this line `--filter "(IMPACT is HIGH or IMPACT is MODERATE) or (SIFT match deleterious or PolyPhen match probably_damaging)"` consider that there is a difference in saying `or` or `and` as the latter is much more stringent and it would look only for variants whose prediction is in agreement. The latter (`and`) is generally preferred, because it reduces false positives. If you try do you see the difference?
 :::
 
 
@@ -476,10 +480,10 @@ wget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz.tbi
 ``` bash
 # Download ClinVar VCF
 
-VARIANTDIR="${HOME}/project/course_data/variants"
-RESOURCEDIR="${HOME}/project/course_data/VEP_dbs"
+VARIANTDIR="${HOME}/project/variants"
+RESOURCEDIR="/data/VEP_dbs"
 
-# Run VEP with cancer-specific annotations
+# Run VEP with cancer-specific annotations (ClinVar), this takes a while⏰
 vep -i "$VARIANTDIR/somatic.filtered.PASS.vcf.gz" \
     --cache /data/.vep \
     --assembly GRCh38 \
@@ -500,8 +504,16 @@ filter_vep \
 (ClinVar_CLNSIG match pathogenic)"
 
 # Generate summary (using simple grep/awk commands)
-echo "Mutation Type Summary:" > summary.txt
+echo "=== Mutation Type Summary ===" > "$VARIANTDIR"/summary_chr6ch17_mutect2_annotated_with_clinVar_filtered.txt
+
 grep -v "#" "$VARIANTDIR/chr6ch17_mutect2_annotated_with_clinVar_filtered.txt" | cut -f7 | sort | uniq -c >> "$VARIANTDIR/summary_chr6ch17_mutect2_annotated_with_clinVar_filtered.txt"
+
+# Summary for ClinVar clinical significance
+echo "=== ClinVar Clinical Significance ===" >> "$VARIANTDIR"/summary_chr6ch17_mutect2_annotated_with_clinVar_filtered.txt
+
+grep -v "^#" "$VARIANTDIR"/chr6ch17_mutect2_annotated_with_clinVar_filtered.txt | \
+  grep -oP 'ClinVar_CLNSIG=[^;|]+' | cut -d'=' -f2 | sort | uniq -c | sort -rn >> \
+  "$VARIANTDIR"/summary_chr6ch17_mutect2_annotated_with_clinVar_filtered.txt
 ```
 
 The possible values for ClinVar_CLNSIG include:
@@ -516,6 +528,7 @@ The possible values for ClinVar_CLNSIG include:
 - Drug_response - Affects response to medications
 - Other - Other interpretations
 
+What happens if you increase the stringency of your `filter_vep` step?
 :::
 
 The clinvar data provided us with more information coming from curated databases, and for some variants we can have multiple levels of consensus (however this is not a garantee of pathogenicity), but there are many other additional databases that one can try. However not all the databases have the same licensing, therefore each of the integrated datasets should be checked. For example `COSMIC` databases can be accessed only after registration, `onkoKB` as well.
@@ -633,7 +646,7 @@ bash 02_download_all_VEP_dbs.sh
 
 This will create the following structure:
 ```
-~/project/course_data/VEP_dbs/
+/data/VEP_dbs/
 ├── clinvar/
 │   ├── clinvar.vcf.gz
 │   └── clinvar.vcf.gz.tbi
@@ -682,8 +695,8 @@ Here we learn how to use additional data to include additional information to th
 ## Solution
 
 ``` bash
-VARIANTDIR="${HOME}/project/course_data/variants"
-RESOURCEDIR="${HOME}/project/course_data/VEP_dbs"
+VARIANTDIR="${HOME}/project/variants"
+RESOURCEDIR="/data/VEP_dbs"
 
 vep -i "$VARIANTDIR/somatic.filtered.PASS.vcf.gz" \
     --cache /data/.vep \
@@ -699,17 +712,7 @@ vep -i "$VARIANTDIR/somatic.filtered.PASS.vcf.gz" \
     --custom "$RESOURCEDIR/clinvar/clinvar.vcf.gz",ClinVar,vcf,overlap,0,CLNSIG,CLNREVSTAT,CLNDN \
     --output_file "$VARIANTDIR/chr6ch17_mutect2_annotated_with_clinVar_and_plugins.txt"
     
-# Filter the data -> Stringent
-filter_vep \
--i "$VARIANTDIR/chr6ch17_mutect2_annotated_with_clinVar_and_plugins.txt" \
--o "$VARIANTDIR/stringent_filtered.txt" \
---force_overwrite \
---filter "(IMPACT is HIGH or IMPACT is MODERATE) and \
-       (REVEL >= 0.75 or \
-        am_class = 'likely_pathogenic' or \
-        SIFT = 'deleterious' and PolyPhen = 'probably_damaging')"
-          
-# Filter the data -> Moderate
+# Filter the data -> Moderate (discovery)
 filter_vep \
 -i "$VARIANTDIR/chr6ch17_mutect2_annotated_with_clinVar_and_plugins.txt" \
 -o "$VARIANTDIR/moderate_filtered.txt" \
@@ -719,8 +722,33 @@ filter_vep \
           am_class = 'likely_pathogenic' or \
           SIFT = 'deleterious' or \
           PolyPhen = 'probably_damaging')"
+          
+# How many events do you get?
+grep -v "^#" "$VARIANTDIR"/moderate_filtered.txt | wc -l #19
 
+# Filter the data -> Stringent (high confidence)
+filter_vep \
+-i "$VARIANTDIR/chr6ch17_mutect2_annotated_with_clinVar_and_plugins.txt" \
+-o "$VARIANTDIR/stringent_filtered.txt" \
+--force_overwrite \
+--filter "(IMPACT is HIGH or IMPACT is MODERATE) and \
+  (REVEL >= 0.75 or \
+  am_class = 'likely_pathogenic' or \
+  (SIFT = 'deleterious' and PolyPhen = 'probably_damaging'))"
+  
+# How many events do you get?
+grep -v "^#" "$VARIANTDIR"/stringent_filtered.txt | wc -l #14
 ```
+You could also include `and (gnomADe_AF < 0.01 or not gnomADe_AF)` to increase stringency, but this depends on the context.
+
+::: {.callout-caution collapse="true"}
+## `exact` vs `overlap` in VEP --custom
+
+- **exact**: Only matches if all coordinates are identical
+- **overlap**: Matches if regions overlap
+
+For example you can use `overlap` for indels, `exact` for strict SNV matching.
+:::
 
 **A glimpse on the results**
 
@@ -791,7 +819,7 @@ chr6_10801908_C/G	chr6:10801908	G	ENSG00000111837	ENST00000354489	Transcript	mis
 
 ::: {.callout-note}
 At this point we obtained a good annotated set of somatic variants. This paves the way for further analysis. For example you can add more databases to your annotation call, such as COSMIC, cancerhotspots, onkoKB etc. You can also try other plugins, depending on your biological question(s). Those can add addtional data ond possibly additional filtering options.
-
+- What happens if you turn it to `exact` instead of `overalp`?
 - Add other databases
 - Try additional plugins
 - Find interesting genes that could be _drivers_ in your samples
@@ -803,7 +831,7 @@ At this point we obtained a good annotated set of somatic variants. This paves t
 :::
 
 ::: {.callout-note collapse="true"}
-## EXTRA: Advanced Topic: Annotating CNVs with VEP
+## EXTRA: Example of CNVs annotation with VEP
 
 CNV annotation is more challenging than SNV annotation because:
 

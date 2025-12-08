@@ -4,12 +4,13 @@ channels:
   - bioconda
 dependencies:
   - python=3.10
-  - samtools
+  - bcftools=1.21
   - bwa=0.7.19
   - snpeff>=5.2
   - gatk4=4.6.*
   - r-base>=4.4
   - cnvkit>=0.9.12
-  - bcftools
   - multiqc>=1.25
-  - ensembl-vep=115
+  - fastqc>=0.12.1
+  - ensembl-vep=115.0
+  - samtools

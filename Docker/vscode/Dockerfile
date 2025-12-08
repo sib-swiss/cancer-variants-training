@@ -26,7 +26,16 @@ SHELL ["/bin/bash", "-c"]
 
 # Activate environment and install additional packages
 RUN source /opt/miniforge3/etc/profile.d/conda.sh && \
-    conda activate ngs-tools && \
+    eval "$(mamba shell hook --shell bash)" && \
+    mamba activate ngs-tools && \
+    mamba remove perl-bio-samtools samtools ensembl-vep --force -y || true && \
+    mamba install -c bioconda -c conda-forge ensembl-vep=115.0 samtools=1.22.1 -y && \
+    mamba clean -t -y
+
+# activate in the env
+RUN source /opt/miniforge3/etc/profile.d/conda.sh && \
+    eval "$(mamba shell hook --shell bash)" && \
+    mamba activate ngs-tools && \
     vep_install -a p --PLUGINS all
 
 # Settings
@@ -38,4 +47,6 @@ RUN mkdir -p /config/project
 
 # Set default command to activate environment
 RUN echo "source /opt/miniforge3/etc/profile.d/conda.sh" >> /etc/bash.bashrc && \
-    echo "conda activate ngs-tools" >> /etc/bash.bashrc
+    echo "conda activate ngs-tools" >> /etc/bash.bashrc && \
+    echo "source /opt/miniforge3/etc/profile.d/conda.sh" >> /root/.bashrc && \
+    echo "conda activate ngs-tools" >> /root/.bashrc
