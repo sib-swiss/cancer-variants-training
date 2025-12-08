@@ -854,13 +854,16 @@ At first we should load one of the vep annotated files from one of the exercises
 #| title: "Some data preprocessing"
 
 # get libraries
-library(tidyverse)
 library(magrittr)
 library(readr)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(stringr)
 
 # VEP output in
 vep_data <- read_tsv(
-  "scripts/variant_annotation/chr6ch17_mutect2_annotated_with_clinVar.txt",
+  "~/variants/chr6ch17_mutect2_annotated_with_clinVar.txt",
   comment = "##"
 )
 
@@ -1076,8 +1079,8 @@ vep_data$polyphen <- vep_data$Extra %>%
 
 # Extract ClinVar
 vep_data$clinvar <- vep_data$Extra %>%
-  str_extract("CLIN_SIG=.*?;") %>%
-  str_replace("CLIN_SIG=", "") %>%
+  str_extract("ClinVar_CLNSIG=.*?;") %>%
+  str_replace("ClinVar_CLNSIG=", "") %>%
   str_replace(";", "")
 
 # Distribution of SIFT predictions
@@ -1171,7 +1174,6 @@ print(p5)
 ::: {.callout-tip collapse="true"}
 ## 8. Bonus: Gene level damage
 ```{r}
-  
 # Gene-level summary - most frequently mutated genes
 p6 <- vep_data %>%
   filter(!is.na(SYMBOL) & SYMBOL != "") %>%
