@@ -1253,33 +1253,34 @@ wget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz.tbi</cod
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">/somatic.filtered.PASS.vcf.gz"</span> <span class="dt">\</span></span>
 <span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">--cache</span> <span class="va">${HOME}</span>/project/data/.vep <span class="dt">\</span></span>
 <span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">--assembly</span> GRCh38 <span class="dt">\</span></span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">--format</span> vcf <span class="dt">\</span></span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">--force_overwrite</span> <span class="dt">\</span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">--fork</span> 2 <span class="dt">\</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">--everything</span> <span class="dt">\</span></span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">--custom</span> <span class="st">"</span><span class="va">$RESOURCEDIR</span><span class="st">"</span>/clinvar/clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN <span class="dt">\</span></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">--output_file</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">/chr6ch17_mutect2_annotated_with_clinVar.txt"</span></span>
-<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter results</span></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="ex">filter_vep</span> <span class="dt">\</span></span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>-i <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">/chr6ch17_mutect2_annotated_with_clinVar.txt"</span> <span class="dt">\</span></span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>-o <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">/chr6ch17_mutect2_annotated_with_clinVar_filtered.txt"</span> <span class="dt">\</span></span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>--force_overwrite <span class="dt">\</span></span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>--filter <span class="st">"(IMPACT is HIGH or IMPACT is MODERATE) or </span><span class="dt">\</span></span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="st">(SIFT match deleterious or PolyPhen match probably_damaging) or </span><span class="dt">\</span></span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="st">(ClinVar_CLNSIG match pathogenic)"</span></span>
-<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate summary (using simple grep/awk commands)</span></span>
-<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"=== Mutation Type Summary ==="</span> <span class="op">&gt;</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/summary_chr6ch17_mutect2_annotated_with_clinVar_filtered.txt</span>
-<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">"#"</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">/chr6ch17_mutect2_annotated_with_clinVar_filtered.txt"</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f7</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="op">&gt;&gt;</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">/summary_chr6ch17_mutect2_annotated_with_clinVar_filtered.txt"</span></span>
-<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary for ClinVar clinical significance</span></span>
-<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"=== ClinVar Clinical Significance ==="</span> <span class="op">&gt;&gt;</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/summary_chr6ch17_mutect2_annotated_with_clinVar_filtered.txt</span>
-<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">"^#"</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/chr6ch17_mutect2_annotated_with_clinVar_filtered.txt <span class="kw">|</span> <span class="dt">\</span></span>
-<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grep</span> <span class="at">-oP</span> <span class="st">'ClinVar_CLNSIG=[^;|]+'</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-d</span><span class="st">'='</span> <span class="at">-f2</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-rn</span> <span class="op">&gt;&gt;</span> <span class="dt">\</span></span>
-<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>  <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/summary_chr6ch17_mutect2_annotated_with_clinVar_filtered.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">--offline</span> <span class="dt">\</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">--format</span> vcf <span class="dt">\</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">--force_overwrite</span> <span class="dt">\</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">--fork</span> 2 <span class="dt">\</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">--everything</span> <span class="dt">\</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">--custom</span> <span class="st">"</span><span class="va">$RESOURCEDIR</span><span class="st">"</span>/clinvar/clinvar.vcf.gz,ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN <span class="dt">\</span></span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">--output_file</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">/chr6ch17_mutect2_annotated_with_clinVar.txt"</span></span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter results</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="ex">filter_vep</span> <span class="dt">\</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>-i <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">/chr6ch17_mutect2_annotated_with_clinVar.txt"</span> <span class="dt">\</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>-o <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">/chr6ch17_mutect2_annotated_with_clinVar_filtered.txt"</span> <span class="dt">\</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>--force_overwrite <span class="dt">\</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>--filter <span class="st">"(IMPACT is HIGH or IMPACT is MODERATE) or </span><span class="dt">\</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="st">(SIFT match deleterious or PolyPhen match probably_damaging) or </span><span class="dt">\</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="st">(ClinVar_CLNSIG match pathogenic)"</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate summary (using simple grep/awk commands)</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"=== Mutation Type Summary ==="</span> <span class="op">&gt;</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/summary_chr6ch17_mutect2_annotated_with_clinVar_filtered.txt</span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">"#"</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">/chr6ch17_mutect2_annotated_with_clinVar_filtered.txt"</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-f7</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="op">&gt;&gt;</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">/summary_chr6ch17_mutect2_annotated_with_clinVar_filtered.txt"</span></span>
+<span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Summary for ClinVar clinical significance</span></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"=== ClinVar Clinical Significance ==="</span> <span class="op">&gt;&gt;</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/summary_chr6ch17_mutect2_annotated_with_clinVar_filtered.txt</span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">"^#"</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/chr6ch17_mutect2_annotated_with_clinVar_filtered.txt <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">grep</span> <span class="at">-oP</span> <span class="st">'ClinVar_CLNSIG=[^;|]+'</span> <span class="kw">|</span> <span class="fu">cut</span> <span class="at">-d</span><span class="st">'='</span> <span class="at">-f2</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="kw">|</span> <span class="fu">uniq</span> <span class="at">-c</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-rn</span> <span class="op">&gt;&gt;</span> <span class="dt">\</span></span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>  <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/summary_chr6ch17_mutect2_annotated_with_clinVar_filtered.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The possible values for ClinVar_CLNSIG include:</p>
 <ul>
 <li>Pathogenic - Strong evidence the variant causes disease</li>
@@ -1512,43 +1513,44 @@ Note
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="ex">vep</span> <span class="at">-i</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">/somatic.filtered.PASS.vcf.gz"</span> <span class="dt">\</span></span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">--cache</span> <span class="va">${HOME}</span>/project/data/.vep <span class="dt">\</span></span>
 <span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">--assembly</span> GRCh38 <span class="dt">\</span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">--format</span> vcf <span class="dt">\</span></span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">--fork</span> 2 <span class="dt">\</span></span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">--everything</span> <span class="dt">\</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">--af_gnomade</span> <span class="dt">\</span></span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">--force_overwrite</span> <span class="dt">\</span></span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> SpliceRegion <span class="dt">\</span></span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> REVEL,file=<span class="st">"</span><span class="va">$RESOURCEDIR</span><span class="st">/revel/new_tabbed_revel_grch38.tsv.gz"</span> <span class="dt">\</span></span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> AlphaMissense,file=<span class="st">"</span><span class="va">$RESOURCEDIR</span><span class="st">/alphamissense/AlphaMissense_hg38.tsv.gz"</span> <span class="dt">\</span></span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">--custom</span> <span class="st">"</span><span class="va">$RESOURCEDIR</span><span class="st">/clinvar/clinvar.vcf.gz"</span>,ClinVar,vcf,overlap,0,CLNSIG,CLNREVSTAT,CLNDN <span class="dt">\</span></span>
-<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">--output_file</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">/chr6ch17_mutect2_annotated_with_clinVar_and_plugins.txt"</span></span>
-<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data -&gt; Moderate (discovery)</span></span>
-<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="ex">filter_vep</span> <span class="dt">\</span></span>
-<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a>-i <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">/chr6ch17_mutect2_annotated_with_clinVar_and_plugins.txt"</span> <span class="dt">\</span></span>
-<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>-o <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">/moderate_filtered.txt"</span> <span class="dt">\</span></span>
-<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>--force_overwrite <span class="dt">\</span></span>
-<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>--filter <span class="st">"(IMPACT is HIGH or IMPACT is MODERATE) and </span><span class="dt">\</span></span>
-<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a><span class="st">         (REVEL &gt;= 0.5 or </span><span class="dt">\</span></span>
-<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a><span class="st">          am_class = 'likely_pathogenic' or </span><span class="dt">\</span></span>
-<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a><span class="st">          SIFT = 'deleterious' or </span><span class="dt">\</span></span>
-<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a><span class="st">          PolyPhen = 'probably_damaging')"</span></span>
-<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a>          </span>
-<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a><span class="co"># How many events do you get?</span></span>
-<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">"^#"</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/moderate_filtered.txt <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span> <span class="co">#19</span></span>
-<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data -&gt; Stringent (high confidence)</span></span>
-<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a><span class="ex">filter_vep</span> <span class="dt">\</span></span>
-<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a>-i <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">/chr6ch17_mutect2_annotated_with_clinVar_and_plugins.txt"</span> <span class="dt">\</span></span>
-<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>-o <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">/stringent_filtered.txt"</span> <span class="dt">\</span></span>
-<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a>--force_overwrite <span class="dt">\</span></span>
-<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a>--filter <span class="st">"(IMPACT is HIGH or IMPACT is MODERATE) and </span><span class="dt">\</span></span>
-<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a><span class="st">  (REVEL &gt;= 0.75 or </span><span class="dt">\</span></span>
-<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a><span class="st">  am_class = 'likely_pathogenic' or </span><span class="dt">\</span></span>
-<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a><span class="st">  (SIFT = 'deleterious' and PolyPhen = 'probably_damaging'))"</span></span>
-<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a><span class="co"># How many events do you get?</span></span>
-<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">"^#"</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/stringent_filtered.txt <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span> <span class="co">#14</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">--offline</span> <span class="dt">\</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">--format</span> vcf <span class="dt">\</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">--fork</span> 2 <span class="dt">\</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">--everything</span> <span class="dt">\</span></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">--af_gnomade</span> <span class="dt">\</span></span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">--force_overwrite</span> <span class="dt">\</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> SpliceRegion <span class="dt">\</span></span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> REVEL,file=<span class="st">"</span><span class="va">$RESOURCEDIR</span><span class="st">/revel/new_tabbed_revel_grch38.tsv.gz"</span> <span class="dt">\</span></span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">--plugin</span> AlphaMissense,file=<span class="st">"</span><span class="va">$RESOURCEDIR</span><span class="st">/alphamissense/AlphaMissense_hg38.tsv.gz"</span> <span class="dt">\</span></span>
+<span id="cb25-16"><a href="#cb25-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">--custom</span> <span class="st">"</span><span class="va">$RESOURCEDIR</span><span class="st">/clinvar/clinvar.vcf.gz"</span>,ClinVar,vcf,overlap,0,CLNSIG,CLNREVSTAT,CLNDN <span class="dt">\</span></span>
+<span id="cb25-17"><a href="#cb25-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">--output_file</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">/chr6ch17_mutect2_annotated_with_clinVar_and_plugins.txt"</span></span>
+<span id="cb25-18"><a href="#cb25-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb25-19"><a href="#cb25-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data -&gt; Moderate (discovery)</span></span>
+<span id="cb25-20"><a href="#cb25-20" aria-hidden="true" tabindex="-1"></a><span class="ex">filter_vep</span> <span class="dt">\</span></span>
+<span id="cb25-21"><a href="#cb25-21" aria-hidden="true" tabindex="-1"></a>-i <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">/chr6ch17_mutect2_annotated_with_clinVar_and_plugins.txt"</span> <span class="dt">\</span></span>
+<span id="cb25-22"><a href="#cb25-22" aria-hidden="true" tabindex="-1"></a>-o <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">/moderate_filtered.txt"</span> <span class="dt">\</span></span>
+<span id="cb25-23"><a href="#cb25-23" aria-hidden="true" tabindex="-1"></a>--force_overwrite <span class="dt">\</span></span>
+<span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>--filter <span class="st">"(IMPACT is HIGH or IMPACT is MODERATE) and </span><span class="dt">\</span></span>
+<span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a><span class="st">         (REVEL &gt;= 0.5 or </span><span class="dt">\</span></span>
+<span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a><span class="st">          am_class = 'likely_pathogenic' or </span><span class="dt">\</span></span>
+<span id="cb25-27"><a href="#cb25-27" aria-hidden="true" tabindex="-1"></a><span class="st">          SIFT = 'deleterious' or </span><span class="dt">\</span></span>
+<span id="cb25-28"><a href="#cb25-28" aria-hidden="true" tabindex="-1"></a><span class="st">          PolyPhen = 'probably_damaging')"</span></span>
+<span id="cb25-29"><a href="#cb25-29" aria-hidden="true" tabindex="-1"></a>          </span>
+<span id="cb25-30"><a href="#cb25-30" aria-hidden="true" tabindex="-1"></a><span class="co"># How many events do you get?</span></span>
+<span id="cb25-31"><a href="#cb25-31" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">"^#"</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/moderate_filtered.txt <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span> <span class="co">#19</span></span>
+<span id="cb25-32"><a href="#cb25-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-33"><a href="#cb25-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data -&gt; Stringent (high confidence)</span></span>
+<span id="cb25-34"><a href="#cb25-34" aria-hidden="true" tabindex="-1"></a><span class="ex">filter_vep</span> <span class="dt">\</span></span>
+<span id="cb25-35"><a href="#cb25-35" aria-hidden="true" tabindex="-1"></a>-i <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">/chr6ch17_mutect2_annotated_with_clinVar_and_plugins.txt"</span> <span class="dt">\</span></span>
+<span id="cb25-36"><a href="#cb25-36" aria-hidden="true" tabindex="-1"></a>-o <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">/stringent_filtered.txt"</span> <span class="dt">\</span></span>
+<span id="cb25-37"><a href="#cb25-37" aria-hidden="true" tabindex="-1"></a>--force_overwrite <span class="dt">\</span></span>
+<span id="cb25-38"><a href="#cb25-38" aria-hidden="true" tabindex="-1"></a>--filter <span class="st">"(IMPACT is HIGH or IMPACT is MODERATE) and </span><span class="dt">\</span></span>
+<span id="cb25-39"><a href="#cb25-39" aria-hidden="true" tabindex="-1"></a><span class="st">  (REVEL &gt;= 0.75 or </span><span class="dt">\</span></span>
+<span id="cb25-40"><a href="#cb25-40" aria-hidden="true" tabindex="-1"></a><span class="st">  am_class = 'likely_pathogenic' or </span><span class="dt">\</span></span>
+<span id="cb25-41"><a href="#cb25-41" aria-hidden="true" tabindex="-1"></a><span class="st">  (SIFT = 'deleterious' and PolyPhen = 'probably_damaging'))"</span></span>
+<span id="cb25-42"><a href="#cb25-42" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb25-43"><a href="#cb25-43" aria-hidden="true" tabindex="-1"></a><span class="co"># How many events do you get?</span></span>
+<span id="cb25-44"><a href="#cb25-44" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-v</span> <span class="st">"^#"</span> <span class="st">"</span><span class="va">$VARIANTDIR</span><span class="st">"</span>/stringent_filtered.txt <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span> <span class="co">#14</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>You could also include <code>and (gnomADe_AF &lt; 0.01 or not gnomADe_AF)</code> to increase stringency, but this depends on the context.</p>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-24-contents" aria-controls="callout-24" aria-expanded="false" aria-label="Toggle callout">
@@ -1778,7 +1780,17 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>At this point we obtained a good annotated set of somatic variants. This paves the way for further analysis. For example you can add more databases to your annotation call, such as COSMIC, cancerhotspots, onkoKB etc. You can also try other plugins, depending on your biological question(s). Those can add addtional data ond possibly additional filtering options. - What happens if you turn it to <code>exact</code> instead of <code>overalp</code>? - Add other databases - Try additional plugins - Find interesting genes that could be <em>drivers</em> in your samples - Consider population frequency of the mutation(s) (common variants are less likely to be pathogenic) - Consider possible drug-gene interactions - Check in the literature - Visualize the results</p>
+<p>At this point we obtained a good annotated set of somatic variants. This paves the way for further analysis. For example you can add more databases to your annotation call, such as COSMIC, cancerhotspots, onkoKB etc. You can also try other plugins, depending on your biological question(s). Those can add addtional data ond possibly additional filtering options.</p>
+<ul>
+<li>What happens if you turn it to <code>exact</code> instead of <code>overalp</code>?</li>
+<li>Add other databases</li>
+<li>Try additional plugins</li>
+<li>Find interesting genes that could be <em>drivers</em> in your samples</li>
+<li>Consider population frequency of the mutation(s) (common variants are less likely to be pathogenic)</li>
+<li>Consider possible drug-gene interactions</li>
+<li>Check in the literature</li>
+<li>Visualize the results</li>
+</ul>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
