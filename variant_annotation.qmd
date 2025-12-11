@@ -640,7 +640,7 @@ wget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz.tbi
 All three resources (REVEL, AlphaMissense, and ClinVar) can be downloaded and prepared automatically using our setup script:
 <a href="scripts/variant_annotation/01_download_all_VEP_dbs.sh" download>Download the setup script</a>
 ```bash
-bash 02_download_all_VEP_dbs.sh
+bash 01_download_all_VEP_dbs.sh
 ```
 
 This will create the following structure:
