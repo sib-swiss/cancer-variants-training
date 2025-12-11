@@ -485,6 +485,7 @@ RESOURCEDIR="${HOME}/project/data/VEP_dbs"
 vep -i "$VARIANTDIR/somatic.filtered.PASS.vcf.gz" \
     --cache ${HOME}/project/data/.vep \
     --assembly GRCh38 \
+    --offline \
     --format vcf \
     --force_overwrite \
     --fork 2 \
@@ -699,6 +700,7 @@ RESOURCEDIR="${HOME}/project/data/VEP_dbs"
 vep -i "$VARIANTDIR/somatic.filtered.PASS.vcf.gz" \
     --cache ${HOME}/project/data/.vep \
     --assembly GRCh38 \
+    --offline \
     --format vcf \
     --fork 2 \
     --everything \
@@ -817,6 +819,7 @@ chr6_10801908_C/G	chr6:10801908	G	ENSG00000111837	ENST00000354489	Transcript	mis
 
 ::: {.callout-note}
 At this point we obtained a good annotated set of somatic variants. This paves the way for further analysis. For example you can add more databases to your annotation call, such as COSMIC, cancerhotspots, onkoKB etc. You can also try other plugins, depending on your biological question(s). Those can add addtional data ond possibly additional filtering options.
+
 - What happens if you turn it to `exact` instead of `overalp`?
 - Add other databases
 - Try additional plugins
