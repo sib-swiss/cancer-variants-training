@@ -49,16 +49,21 @@ A tool like VEP allows us to:
 This course uses VEP v115 (2025). Some features and default behaviors may differ in other versions. Always check the [release notes](https://www.ensembl.org/info/docs/tools/vep/script/vep_other.html#history) for your version.
 :::
 
-VEP is already pre-installed on the cloud server. In order to load the environment, run:
+# Setup
 
-```bash
-mamba activate ngs-tools
+::: {.panel-tabset}
+
+## Subscribed to the course
+
+All the environment is prepared for you, you just need to create a symbolic link to access the data from your project directory:
+``` bash
+cd ~/project
+ln -s /data .
 ```
 
-If you want to install VEP locally or on your compute cluster, you can follow the instructions below. 
-
-::: {.callout-note collapse="true"}
 ## Instructions for local install
+
+If you want to install VEP locally or on your compute cluster, you can follow the instructions below. 
 
 ``` bash
 # Installing Conda #https://docs.anaconda.com/miniconda/
@@ -76,7 +81,7 @@ conda create -n vep samtools python=3.10 ensembl-vep=115.0
 # Activate VEP's env
 conda activate vep
 
-# PLEASE DO RUN During the course, only if you follow locally
+# PLEASE DO NOT RUN During the course, only if you follow locally (~60 min, > 25GB)
 # Install all the data locally
 #vep_install -a cf -s homo_sapiens -y GRCh38 --CONVERT (this command will download in $HOME/.vep the cache folder)
 #vep_install -a cf -s homo_sapiens -y GRCh38 -c $HOME/project/data/vep --CONVERT (this specify the cache folder)
@@ -86,8 +91,9 @@ conda activate vep
 ```
 
 Instead of conda you could try installing `mamba`. If you are on Unix-based system this is simple [mamba](https://mamba.readthedocs.io/en/latest/installation/mamba-installation.html). 
-<br>
-_If you are following along the course, `mamba` is already installed for you, with all the software required for this course. In this case you can activate the enviroment with `mamba activate ngs-tools`._
+_. In case you are following locally, you can  environment with `mamba activate ngs-tools`._
+
+[Automated download script section](#vep-download) below.
 
 :::
 
@@ -127,14 +133,14 @@ VEP ranks consequences by severity:
 
 ## Practical Exercises
 
-In case that you do not have the Mutect2 call and/or the CNVkit call, you can obtain those from [here](https://drive.google.com/drive/folders/1Rh6qRMGGY1QZL7INrcNd7hULTr8mB6tu?usp=sharing). In this folder there are also a `README.md` and some folders containing preprocessed data for the additional resources that we will use with Ensembl-VEP. The script that is used to download all the databases resources mentioned in the exercises is in the course repo's `scripts` folder.  
+In case that you do not have the `Mutect2` call and/or the `CNVkit` call, you can obtain those from [here](https://drive.google.com/drive/folders/1Rh6qRMGGY1QZL7INrcNd7hULTr8mB6tu?usp=sharing). In this folder there are also a `README.md` and some folders containing preprocessed data for the additional resources that we will use with Ensembl-VEP. The script that is used to download all the databases resources mentioned in the exercises is in the course repo's `scripts` folder.  
 
 _If you are following along the course you should download and extract the data into your `$HOME/project/` folder_.
 
 ::: {.callout-caution collapse="false"}
 ## `--cache` option
 By default VEP will install the cache and plugins into your home folder (`~/.vep/`) and if that is the case, then you can leave it like `--cache `. 
-- If you are following along the course, you need to change the cache folder to `--cache /data/.vep` or VEP will not find the local cache.
+- If you are following along the course, you need to specify the cache location as `--cache ${HOME}/project/data/.vep` (which accesses `/data/.vep` via the symbolic link you created).
 :::
 
 ### Exercise 1
@@ -168,41 +174,11 @@ chr17   43094464    rs28897672    A   C   .   PASS    .
 **Task**: Annotate these variants using VEP and identify which genes are
 affected.
 
-:::
+**Hint**: You can generate your own VCF (pasting the command below in your terminal) or you can download it from here <a href="scripts/variant_annotation/cancer_variants.vcf" download>Download the vcf file </a>
 
-::: {.callout-note collapse="false"}
-## Command
-**VEP can be provided with a VCF file as an input (or vcf.gz + index) file or other formats, see documentation [here](https://www.ensembl.org/info/docs/tools/vep/vep_formats.html) **
-
-``` bash
-vep -i cancer_variants.vcf \
---cache /data/.vep \
---species homo_sapiens \
---assembly GRCh38 \
---offline --format vcf \
---symbol \
---force_overwrite \
---domains \
---sift b \
---polyphen b \
---output_file output.txt
-```
-:::
-
-::: {.callout-tip collapse="true"}
-## Solution
-
-``` bash
-
-# 0. from your terminal go to your project folder
-cd ~/project
-
-# 1. First, create a script that will generate our VCF file. 
-# Copy this code (from #!/usr/bin/env bash) into a new file named `create_vcf.sh`
-# with the command `nano create_vcf.sh`:
-
-#!/usr/bin/env bash
-
+::: {.callout-tip title="Example: make your own VCF from terminal" collapse="true"}
+This script creates a local VCF file, based on the VCF v4.2 standards.
+```bash
 echo -e '##fileformat=VCFv4.2
 ##INFO=<ID=AF,Number=A,Type=Float,Description="Allele Frequency">
 #CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO
@@ -220,23 +196,42 @@ chr1\t11190510\trs6603781\tG\tA\t.\tPASS\t.
 chr7\t140453136\trs121913530\tA\tT\t.\tPASS\t.
 chr17\t43094464\trs28897672\tA\tC\t.\tPASS\t.
 chr5\t112175770\trs121913343\tC\tT\t.\tPASS\t.' > cancer_variants.vcf
+```
+:::
 
-# 2. Make the script executable:
-chmod +x create_vcf.sh
+:::
 
-# 3. Run the script:
-./create_vcf.sh
+::: {.callout-note collapse="false"}
+## Command
+**VEP can be provided with a VCF file as an input (or vcf.gz + index) file or other formats, see documentation [here](https://www.ensembl.org/info/docs/tools/vep/vep_formats.html) **
 
-# 4. Verify the file was created correctly:
-# Check the content
-cat cancer_variants.vcf
+``` bash
+vep -i cancer_variants.vcf \
+--cache ${HOME}/project/data/.vep \
+--species homo_sapiens \
+--assembly GRCh38 \
+--offline --format vcf \
+--symbol \
+--force_overwrite \
+--domains \
+--sift b \
+--polyphen b \
+--output_file output.txt
+```
+:::
+
+::: {.callout-tip collapse="true"}
+## Solution
+
+``` bash
+#!/usr/bin/env bash
 
 # Make sure you have 14 variants
 grep -v '^#' cancer_variants.vcf | wc -l  # it should show 14
 
 # Run VEP ~< 5min
 vep -i cancer_variants.vcf \
-    --cache /data/.vep \
+    --cache ${HOME}/project/data/.vep \
     --species homo_sapiens \
     --offline \
     --force_overwrite \
@@ -320,6 +315,7 @@ SIFT (Sorting Intolerant From Tolerant) and PolyPhen (Polymorphism Phenotyping) 
 
 - SIFT: Based on sequence homology and physical properties of amino acids
 - PolyPhen: Combines sequence-based features with structural information
+
 :::
 
 ## Mutect2 results annotation
@@ -354,10 +350,12 @@ chr6    3723708   .   C   G   .   PASS
 
 The somatic variant call can be annotated with this command
 ``` bash
+PROJECT="${HOME}/project"
 VARIANTDIR="${HOME}/project/variants"
+VEPDBDIR="${PROJECT}/data/VEP_dbs"
 
 vep -i "$VARIANTDIR"/somatic.filtered.PASS.vcf.gz \
---cache /data/.vep \
+--cache ${HOME}/project/data/.vep \
 --species homo_sapiens \
 --assembly GRCh38 \
 --offline \
@@ -419,7 +417,7 @@ Can you run the same command as before adding `--fork 2`, do you note any differ
 VARIANTDIR="${HOME}/project/variants"
 
 vep -i "$VARIANTDIR/somatic.filtered.PASS.vcf.gz" \
---cache /data/.vep \
+--cache ${HOME}/project/data/.vep \
 --species homo_sapiens \
 --assembly GRCh38 \
 --offline \
@@ -481,11 +479,11 @@ wget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz.tbi
 # Download ClinVar VCF
 
 VARIANTDIR="${HOME}/project/variants"
-RESOURCEDIR="/data/VEP_dbs"
+RESOURCEDIR="${HOME}/project/data/VEP_dbs"
 
 # Run VEP with cancer-specific annotations (ClinVar), this takes a while⏰
 vep -i "$VARIANTDIR/somatic.filtered.PASS.vcf.gz" \
-    --cache /data/.vep \
+    --cache ${HOME}/project/data/.vep \
     --assembly GRCh38 \
     --format vcf \
     --force_overwrite \
@@ -636,10 +634,10 @@ wget https://ftp.ncbi.nlm.nih.gov/pub/clinvar/vcf_GRCh38/clinvar.vcf.gz.tbi
 :::
 
 ::: {.callout-note}
-## Automated Download Script
+## Automated Download Script {#vep-download}
 
 All three resources (REVEL, AlphaMissense, and ClinVar) can be downloaded and prepared automatically using our setup script:
-[Download the setup script](https://github.com/sib-swiss/cancer-variants-training/scripts/variant_annotation)
+<a href="scripts/variant_annotation/01_download_all_VEP_dbs.sh" download>Download the setup script</a>
 ```bash
 bash 02_download_all_VEP_dbs.sh
 ```
@@ -696,10 +694,10 @@ Here we learn how to use additional data to include additional information to th
 
 ``` bash
 VARIANTDIR="${HOME}/project/variants"
-RESOURCEDIR="/data/VEP_dbs"
+RESOURCEDIR="${HOME}/project/data/VEP_dbs"
 
 vep -i "$VARIANTDIR/somatic.filtered.PASS.vcf.gz" \
-    --cache /data/.vep \
+    --cache ${HOME}/project/data/.vep \
     --assembly GRCh38 \
     --format vcf \
     --fork 2 \
@@ -1318,7 +1316,7 @@ You can register [here:](https://cancer.sanger.ac.uk/cosmic)
 **Basic annotation:**
 ```bash
 vep -i input.vcf \
-    --cache /data/.vep \
+    --cache ${HOME}/project/data/.vep \
     --offline \
     --assembly GRCh38 \
     -o output.txt
@@ -1327,7 +1325,7 @@ vep -i input.vcf \
 **With common options:**
 ```bash
 vep -i input.vcf \
-    --cache /data/.vep \
+    --cache ${HOME}/project/data/.vep \
     --offline \
     --assembly GRCh38 \
     --everything \
