@@ -37,12 +37,12 @@ Create a script called `03_run_mutect2.sh`. After that, check out the [manual of
 
 #!/usr/bin/env bash
 
-ALIGNDIR=/data/alignments
-REFDIR=/data/reference
-RESOURCEDIR=/data/resources
+ALIGNDIR=~/project/data/alignments
+REFDIR=~/project/data/reference
+RESOURCEDIR=~/project/data/resources
 VARIANTDIR=~/project/variants
 
-mkdir -p $VARIANTDIR
+mkdir -p "$VARIANTDIR"
 
 gatk Mutect2 \
 -R FIXME \
@@ -68,9 +68,9 @@ This takes a while to run. Have a break!
 ```sh
 #!/usr/bin/env bash
 
-ALIGNDIR=/data/alignments
-REFDIR=/data/reference
-RESOURCEDIR=/data/resources
+ALIGNDIR=~/project/data/alignments
+REFDIR=~/project/data/reference
+RESOURCEDIR=~/project/data/resources
 VARIANTDIR=~/project/variants
 
 mkdir -p $VARIANTDIR
@@ -104,7 +104,7 @@ Create a script called `04_filter_mutect_calls.sh` in `~/project/scripts`. From 
 ```sh
 #!/usr/bin/env bash
 
-REFDIR=/data/reference
+REFDIR=~/project/data/reference
 VARIANTDIR=~/project/variants
 
 # fill the filter column
@@ -364,9 +364,9 @@ After that, checkout the visualizations (`tumor-scatter.png`) at `~/project/vari
 ```sh
 #!/usr/bin/env bash
 
-ALIGNDIR=/data/alignments
-REFDIR=/data/reference
-RESOURCEDIR=/data/resources
+ALIGNDIR=~/project/data/alignments
+REFDIR=~/project/data/reference
+RESOURCEDIR=~/project/data/resources
 VARIANTDIR=~/project/variants
 
 cnvkit.py batch FIXME \
@@ -390,9 +390,9 @@ We provide the tumor bam, normal bam, the interval list (can also be a bed file)
 ```sh
 #!/usr/bin/env bash
 
-ALIGNDIR=/data/alignments
-REFDIR=/data/reference
-RESOURCEDIR=/data/resources
+ALIGNDIR=~/project/data/alignments
+REFDIR=~/project/data/reference
+RESOURCEDIR=~/project/data/resources
 VARIANTDIR=~/project/variants
 
 cnvkit.py batch "$ALIGNDIR"/tumor.recal.bam \

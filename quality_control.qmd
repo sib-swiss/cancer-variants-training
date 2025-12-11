@@ -42,29 +42,43 @@ For a.o. efficiency and reproducibility it makes sense to execute your commands 
 
 We will start the exercises with pre-aligned bam files. We have already preapred the folders for you with all the data that you need. If you are following the course later on:
 
-::: {.callout-note}
+::: {.panel-tabset}
+
+## Subscribed to course
+
+You can create a symbolic link to the parent `/data` directory into your project directory `project/`, this simplify the path organization
+```bash
+cd ~/project
+ln -s /data .
+```
+This allows you to browse the data using VSCode's file explorer within your project.
+
 ## If you are following locally (or later):
 To start, download and extract to the into a folder, and change your paths to your folder:
 
 ```sh
+mkdir -p ~/project
+cd ~/project
 wget https://cancer-variants-training.s3.eu-central-1.amazonaws.com/course_data.tar.gz
 tar -xvzf course_data.tar.gz
+mv course_data data
 rm course_data.tar.gz
 ```
 Then update your paths, depending on where your data is:
 ```bash
-PROJECT=/config/project/alignments
-ALIGNDIR=/data/alignments
-REFDIR=/data/reference
-RESOURCEDIR=/data/resources
+PROJECT=~/project/
+ALIGNDIR=~/project/data/alignments
+REFDIR=~/project/data/reference
+RESOURCEDIR=~/project/data/resources
+VEPDBS=~/project/data/VEP_dbs
 ```
 
 :::
 
-Now, check out the directory `/data` and see what's in there (e.g. with `tree`):
+Now, check out the directory `~/project/data` and see what's in there (e.g. with `tree`):
 
 ```
-└── /data
+└── ~/project/data
     ├── alignments
     │   ├── normal.recal.bai
     │   ├── normal.recal.bam
@@ -112,7 +126,7 @@ Now, check out the directory `/data` and see what's in there (e.g. with `tree`):
             ├── new_tabbed_revel_grch38.tsv.gz.tbi
             └── new_tabbed_revel.tsv.gz
 
-10 directories, 38 files
+9 directories, 38 files
 ```
 
 Showing us that we have three directories:
@@ -134,11 +148,7 @@ mkdir scripts
 
 ### Quality control of the bam files
 
-First we use the information in the header to get information about the contents of the bam file and how it was generated. In order to use the tools installed for this course activate the mamba environment (do this every time you open a new terminal):
-
-```sh
-mamba activate ngs-tools 
-```
+First we use the information in the header to get information about the contents of the bam file and how it was generated. 
 
 ::: {.callout-note}
 ## Why QC matters for cancer variant calling
@@ -172,7 +182,7 @@ f. Which other programs were run to create the bam file?
 To get information on the bam header we run 
 
 ```sh
-ALIGNDIR=/data/alignments
+ALIGNDIR=~/project/data/alignments
 samtools view -H "$ALIGNDIR"/normal.recal.bam
 ```
 
@@ -219,7 +229,7 @@ c. Are the first reads tagged with the readgroup ID?
 The command:
 
 ```sh
-ALIGNDIR=/data/alignments
+ALIGNDIR=~/project/data/alignments
 samtools view "$ALIGNDIR"/normal.recal.bam | head -3
 ```
 
@@ -247,7 +257,7 @@ Create a script called `01_samtools_flagstat.sh` and store it in `~/project/scri
 ## Answer
 
 ```sh 
-ALIGNDIR=/data/alignments
+ALIGNDIR=~/project/data/alignments
 PROJECT=~/project/alignments
 
 mkdir -p $PROJECT
@@ -293,8 +303,8 @@ Create a script called `02_gatk_collecthsmetrics.sh` in `~/project/scripts` to r
 
 ```sh
 PROJECT=~/project/alignments
-ALIGNDIR=/data/alignments
-REFDIR=/data/reference
+ALIGNDIR=~/project/data/alignments
+REFDIR=~/project/data/reference
 
 mkdir -p $PROJECT
 
@@ -316,7 +326,7 @@ PROJECT=~/project/alignments
 
 mkdir -p $MULTIQC
 
-multiqc $ALIGNDIR -o $MULTIQC
+multiqc $PROJECT -o $MULTIQC
 ```
 
 Download the multiqc report (`multiqc_report.html`) by right-clicking on the file and select 'Download'. Check out the hybrid-selection metrics or by clicking here:

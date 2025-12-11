@@ -38,19 +38,32 @@ The CNVkit is a software that is specifically tailored to call CNV (Copy number 
 ``` bash
 #!/usr/bin/env bash
 
-BASE_DIR="${HOME}/project/course_data"
-RES_DIR="${BASE_DIR}/resources"
+# Standard directory structure
+PROJECT="${HOME}/project"
+ALIGNDIR="${PROJECT}/data/alignments"
+REFDIR="${PROJECT}/data/reference"
+RESOURCEDIR="${PROJECT}/data/resources"
+
+# Additional directories
+BASE_DIR="${HOME}/project"
+RES_DIR="${BASE_DIR}/data/resources"
 VAR_DIR="${BASE_DIR}/variants"
 CNV_DIR="${VAR_DIR}/cnvkit"
+DBS_DIR="${BASE_DIR}/data/VEP_dbs"
+
+# Create output directories
+mkdir -p "${CNV_DIR}"
 
 # Convert from call.cns to vcf 
 cnvkit.py export vcf "${CNV_DIR}/tumor.call.cns" -o "${CNV_DIR}/tumor.call.vcf"
 ```
+
 2. We can gzip the output
 ``` bash
 # bgzip the file
 bgzip -f "${CNV_DIR}/tumor.call.vcf"
 ```
+
 3. Now let's index the file
 ``` bash
 # Index
@@ -91,21 +104,28 @@ Now we have a nice VCF file and in the right format to call VEP
 ``` bash
 
 # Base directories
-BASE_DIR="${HOME}/project/course_data"
-RES_DIR="${BASE_DIR}/resources"
-DBS_DIR="${BASE_DIR}/VEP_dbs"
+PROJECT="${HOME}/project"
+ALIGNDIR="${PROJECT}/data/alignments"
+REFDIR="${PROJECT}/data/reference"
+RESOURCEDIR="${PROJECT}/data/resources"
+
+# Additional directories
+BASE_DIR="${HOME}/project"
+RES_DIR="${BASE_DIR}/data/resources"
 VAR_DIR="${BASE_DIR}/variants"
 CNV_DIR="${VAR_DIR}/cnvkit"
+DBS_DIR="${BASE_DIR}/data/VEP_dbs"
 VEP_CACHE="${HOME}/.vep"
 
-# Input Files
-MUTECT_VCF="${VAR_DIR}/somatic.filtered.PASS.vcf.gz"
+# Database files
 CLINVAR="${DBS_DIR}/clinvar/clinvar.vcf.gz"
 REVEL="${DBS_DIR}/revel/new_tabbed_revel_grch38.tsv.gz"
 ALPHA="${DBS_DIR}/alphamissense/AlphaMissense_hg38.tsv.gz"
 
+# Input file
+MUTECT_VCF="${VAR_DIR}/somatic.filtered.PASS.vcf.gz"
+
 # Call VEP with full calls ~5min (overlap)
-# Call VEP with full calls (overlap)
 vep -i "${CNV_DIR}/tumor.call.vcf.gz" \
   --cache "${VEP_CACHE}" \
   --assembly GRCh38 \
@@ -123,7 +143,7 @@ vep -i "${CNV_DIR}/tumor.call.vcf.gz" \
   --output_file "${CNV_DIR}/tumor.call_annotated_all_overlap.txt"
 
 # Call VEP per gene (exact)
-vep -i "$CNV_DIR"/tumor.call.vcf.gz \
+vep -i "${CNV_DIR}/tumor.call.vcf.gz" \
   --cache "${VEP_CACHE}" \
   --assembly GRCh38 \
   --format vcf \
@@ -136,7 +156,7 @@ vep -i "$CNV_DIR"/tumor.call.vcf.gz \
   --plugin SpliceRegion \
   --plugin REVEL,file="${REVEL}" \
   --plugin AlphaMissense,file="${ALPHA}" \
-  --custom "${CLINVAR}",ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN \
+  --custom "${CLINVAR},ClinVar,vcf,exact,0,CLNSIG,CLNREVSTAT,CLNDN" \
   --output_file "${CNV_DIR}/tumor.call_annotated_all_exact.txt"
 
 ## Exact
@@ -154,13 +174,11 @@ filter_vep \
   -o "${CNV_DIR}/tumor.call_annotated_all_IMPACT_filtered_overlap.txt" \
   --force_overwrite \
   --filter "(IMPACT is HIGH or IMPACT is MODERATE) or (ClinVar_CLNSIG match pathogenic)"
-
-
-        
 ```
-You can also simplify the output with vep filter
+
+You can also simplify the output with vep filter:
 ``` bash
-## OVERALP
+## OVERLAP
 # filtering by Symbol
 filter_vep \
   -i "${CNV_DIR}/tumor.call_annotated_all_overlap.txt" \
