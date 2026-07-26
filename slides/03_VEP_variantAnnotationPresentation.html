@@ -7,8 +7,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.38">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Flavio Lombardo">
   <meta name="dcterms.date" content="2025-12-12">
@@ -22,10 +22,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -222,7 +225,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Flavio Lombardo 
+Flavio Lombardo
 </div>
 </div>
 </div>
@@ -235,7 +238,7 @@ Flavio Lombardo
 <li>A germline mutation is inherited by the individual from birth. They can be oncogenic (ie Rb = retinoblastoma)</li>
 <li>A somatic mutation, or acquired mutation, happens in somatic cells instead of germ cells and will not pass to offspring (ie TP53).</li>
 </ul>
-<div id="fig-germliine" class="quarto-float quarto-figure quarto-figure-center" data-fig-align="center" data-fig-caption="Germline vs somatic mutations">
+<div id="fig-germliine" class="quarto-float quarto-figure quarto-figure-center" data-fig-caption="Germline vs somatic mutations" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig">
 <div aria-describedby="fig-germliine-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img data-src="https://www.codexgenetics.com/blog/images/30-somatic-mutation-and-germline-mutation%20(eng).png" class="quarto-figure quarto-figure-center" data-fig-caption="Germline vs somatic mutations" width="350" height="300">
@@ -861,21 +864,21 @@ Figure&nbsp;3: Cancer somatic mutations, The cancer genome, Stratton et al, 2009
 </section>
 <section id="revel" class="slide level2">
 <h2><a href="http://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#revel">REVEL</a></h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a></a><span class="ex">--plugin</span> REVEL,/path/to/revel/revel_all_chromosomes.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a aria-label="1"></a><span class="ex">--plugin</span> REVEL,/path/to/revel/revel_all_chromosomes.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <blockquote>
 <p><a href="https://pubmed.ncbi.nlm.nih.gov/27666373/">REVEL paper</a>: An Ensemble Method for Predicting the Pathogenicity of Rare Missense Variants</p>
 </blockquote>
 <p>You can download here the data (~6.5GB): https://sites.google.com/site/revelgenomics/downloads or https://zenodo.org/records/7072866</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="fu">unzip</span> revel-v1.3_all_chromosomes.zip</span>
-<span id="cb2-2"><a></a><span class="fu">cat</span> revel_with_transcript_ids <span class="kw">|</span> <span class="fu">tr</span> <span class="st">","</span> <span class="st">"\t"</span> <span class="op">&gt;</span> tabbed_revel.tsv</span>
-<span id="cb2-3"><a></a><span class="fu">sed</span> <span class="st">'1s/.*/#&amp;/'</span> tabbed_revel.tsv <span class="op">&gt;</span> new_tabbed_revel.tsv</span>
-<span id="cb2-4"><a></a><span class="ex">bgzip</span> new_tabbed_revel.tsv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a aria-label="1"></a><span class="fu">unzip</span> revel-v1.3_all_chromosomes.zip</span>
+<span id="cb2-2"><a aria-label="2"></a><span class="fu">cat</span> revel_with_transcript_ids <span class="kw">|</span> <span class="fu">tr</span> <span class="st">","</span> <span class="st">"\t"</span> <span class="op">&gt;</span> tabbed_revel.tsv</span>
+<span id="cb2-3"><a aria-label="3"></a><span class="fu">sed</span> <span class="st">'1s/.*/#&amp;/'</span> tabbed_revel.tsv <span class="op">&gt;</span> new_tabbed_revel.tsv</span>
+<span id="cb2-4"><a aria-label="4"></a><span class="ex">bgzip</span> new_tabbed_revel.tsv</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Prepare for GRCh38</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="fu">zcat</span> new_tabbed_revel.tsv.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n1</span> <span class="op">&gt;</span> h</span>
-<span id="cb3-2"><a></a><span class="fu">zgrep</span> <span class="at">-h</span> <span class="at">-v</span> ^#chr new_tabbed_revel.tsv.gz <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'$3 != "." '</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-k1,1</span> <span class="at">-k3,3n</span> <span class="at">-</span> <span class="kw">|</span> <span class="fu">cat</span> h <span class="at">-</span> <span class="kw">|</span> <span class="ex">bgzip</span> <span class="at">-c</span> <span class="op">&gt;</span> new_tabbed_revel_grch38.tsv.gz</span>
-<span id="cb3-3"><a></a><span class="ex">tabix</span> <span class="at">-f</span> <span class="at">-s</span> 1 <span class="at">-b</span> 3 <span class="at">-e</span> 3 new_tabbed_revel_grch38.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a aria-label="1"></a><span class="fu">zcat</span> new_tabbed_revel.tsv.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n1</span> <span class="op">&gt;</span> h</span>
+<span id="cb3-2"><a aria-label="2"></a><span class="fu">zgrep</span> <span class="at">-h</span> <span class="at">-v</span> ^#chr new_tabbed_revel.tsv.gz <span class="kw">|</span> <span class="fu">awk</span> <span class="st">'$3 != "." '</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-k1,1</span> <span class="at">-k3,3n</span> <span class="at">-</span> <span class="kw">|</span> <span class="fu">cat</span> h <span class="at">-</span> <span class="kw">|</span> <span class="ex">bgzip</span> <span class="at">-c</span> <span class="op">&gt;</span> new_tabbed_revel_grch38.tsv.gz</span>
+<span id="cb3-3"><a aria-label="3"></a><span class="ex">tabix</span> <span class="at">-f</span> <span class="at">-s</span> 1 <span class="at">-b</span> 3 <span class="at">-e</span> 3 new_tabbed_revel_grch38.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Usage:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="ex">--plugin</span> REVEL,file=/path/to/revel/data.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a aria-label="1"></a><span class="ex">--plugin</span> REVEL,file=/path/to/revel/data.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="alphamissense" class="slide level2">
 <h2><a href="http://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#alphamissense">AlphaMissense</a></h2>
@@ -884,10 +887,10 @@ Figure&nbsp;3: Cancer somatic mutations, The cancer genome, Stratton et al, 2009
 </blockquote>
 <p><a href="https://console.cloud.google.com/storage/browser/dm_alphamissense;tab=objects?pli=1&amp;prefix=&amp;forceOnObjectsSortingFiltering=false"><strong>Download link</strong></a></p>
 <p>Prepare for GRCh38</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a></a><span class="fu">wget</span> https://storage.googleapis.com/dm_alphamissense/AlphaMissense_hg38.tsv.gz</span>
-<span id="cb5-2"><a></a><span class="ex">tabix</span> <span class="at">-s</span> 1 <span class="at">-b</span> 2 <span class="at">-e</span> 2 <span class="at">-f</span> <span class="at">-S</span> 1 AlphaMissense_hg38.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a aria-label="1"></a><span class="fu">wget</span> https://storage.googleapis.com/dm_alphamissense/AlphaMissense_hg38.tsv.gz</span>
+<span id="cb5-2"><a aria-label="2"></a><span class="ex">tabix</span> <span class="at">-s</span> 1 <span class="at">-b</span> 2 <span class="at">-e</span> 2 <span class="at">-f</span> <span class="at">-S</span> 1 AlphaMissense_hg38.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Run it with VEP</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a></a><span class="ex">--plugin</span> AlphaMissense,file=/full/path/to/file.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a aria-label="1"></a><span class="ex">--plugin</span> AlphaMissense,file=/full/path/to/file.tsv.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="dbnsfp" class="slide level2">
 <h2><a href="http://www.ensembl.org/info/docs/tools/vep/script/vep_plugins.html#dbnsfp">dbNSFP</a></h2>
@@ -895,26 +898,26 @@ Figure&nbsp;3: Cancer somatic mutations, The cancer genome, Stratton et al, 2009
 <p><a href="https://pubmed.ncbi.nlm.nih.gov/33261662/">dbNSFP v4 paper</a>: a comprehensive database of transcript-specific functional predictions and annotations for human nonsynonymous and splice-site SNVs</p>
 </blockquote>
 <p>A VEP plugin that retrieves data for missense variants from a tabix-indexed dbNSFP file.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a></a><span class="ex">--plugin</span> dbNSFP,/path/to/dbNSFP.gz,SIFT_score,HDIV_score</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a aria-label="1"></a><span class="ex">--plugin</span> dbNSFP,/path/to/dbNSFP.gz,SIFT_score,HDIV_score</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Prepare the data</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a></a><span class="va">version</span><span class="op">=</span>4.7c</span>
-<span id="cb8-2"><a></a><span class="fu">wget</span> ftp://dbnsfp:dbnsfp@dbnsfp.softgenetics.com/dbNSFP<span class="va">${version}</span>.zip</span>
-<span id="cb8-3"><a></a><span class="fu">unzip</span> dbNSFP<span class="va">${version}</span>.zip</span>
-<span id="cb8-4"><a></a><span class="fu">zcat</span> dbNSFP<span class="va">${version}</span>_variant.chr1.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n1</span> <span class="op">&gt;</span> h</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a aria-label="1"></a><span class="va">version</span><span class="op">=</span>4.7c</span>
+<span id="cb8-2"><a aria-label="2"></a><span class="fu">wget</span> ftp://dbnsfp:dbnsfp@dbnsfp.softgenetics.com/dbNSFP<span class="va">${version}</span>.zip</span>
+<span id="cb8-3"><a aria-label="3"></a><span class="fu">unzip</span> dbNSFP<span class="va">${version}</span>.zip</span>
+<span id="cb8-4"><a aria-label="4"></a><span class="fu">zcat</span> dbNSFP<span class="va">${version}</span>_variant.chr1.gz <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n1</span> <span class="op">&gt;</span> h</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Prepare for GRCh38</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a></a><span class="fu">zgrep</span> <span class="at">-h</span> <span class="at">-v</span> ^#chr dbNSFP<span class="va">${version}</span>_variant.chr<span class="pp">*</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-k1,1</span> <span class="at">-k2,2n</span> <span class="at">-</span> <span class="kw">|</span> <span class="fu">cat</span> h <span class="at">-</span> <span class="kw">|</span> <span class="ex">bgzip</span> <span class="at">-c</span> <span class="op">&gt;</span> dbNSFP<span class="va">${version}</span>_grch38.gz</span>
-<span id="cb9-2"><a></a>  <span class="ex">tabix</span> <span class="at">-s</span> 1 <span class="at">-b</span> 2 <span class="at">-e</span> 2 dbNSFP<span class="va">${version}</span>_grch38.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a aria-label="1"></a><span class="fu">zgrep</span> <span class="at">-h</span> <span class="at">-v</span> ^#chr dbNSFP<span class="va">${version}</span>_variant.chr<span class="pp">*</span> <span class="kw">|</span> <span class="fu">sort</span> <span class="at">-k1,1</span> <span class="at">-k2,2n</span> <span class="at">-</span> <span class="kw">|</span> <span class="fu">cat</span> h <span class="at">-</span> <span class="kw">|</span> <span class="ex">bgzip</span> <span class="at">-c</span> <span class="op">&gt;</span> dbNSFP<span class="va">${version}</span>_grch38.gz</span>
+<span id="cb9-2"><a aria-label="2"></a>  <span class="ex">tabix</span> <span class="at">-s</span> 1 <span class="at">-b</span> 2 <span class="at">-e</span> 2 dbNSFP<span class="va">${version}</span>_grch38.gz</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Run it with VEP</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a></a><span class="ex">--plugin</span> dbNSFP,/path/to/dbNSFP.gz,LRT_score,GERP++_RS</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a aria-label="1"></a><span class="ex">--plugin</span> dbNSFP,/path/to/dbNSFP.gz,LRT_score,GERP++_RS</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="filter-variants-with-vep" class="slide level2">
 <h2>Filter Variants with VEP</h2>
 <p>You can use the tool that is included in the VEP’s suite of tools. This tool generally works very well with data that have been VEP-annotated</p>
 <p>Filter SIFT deleterious events</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a></a><span class="ex">filter_vep</span> <span class="at">-i</span> variant_effect_output.txt <span class="at">-filter</span> <span class="st">"SIFT is deleterious"</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> <span class="st">"##"</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n5</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a aria-label="1"></a><span class="ex">filter_vep</span> <span class="at">-i</span> variant_effect_output.txt <span class="at">-filter</span> <span class="st">"SIFT is deleterious"</span> <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-v</span> <span class="st">"##"</span> <span class="kw">|</span> <span class="fu">head</span> <span class="at">-n5</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><br> Can be used with pipes, for example (might save memory)</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a></a><span class="ex">vep</span> <span class="at">-i</span> examples/homo_sapiens_GRCh38.vcf <span class="at">--cache</span> <span class="at">--force_overwrite</span> <span class="at">--sift</span> b <span class="at">--canonical</span> <span class="at">--symbol</span> <span class="at">--tab</span> <span class="at">--fields</span> Uploaded_variation,SYMBOL,CANONICAL,SIFT <span class="at">-o</span> STDOUT <span class="kw">|</span> <span class="dt">\</span></span>
-<span id="cb12-2"><a></a><span class="ex">filter_vep</span> <span class="at">--filter</span> <span class="st">"CANONICAL is YES and SIFT is deleterious"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a aria-label="1"></a><span class="ex">vep</span> <span class="at">-i</span> examples/homo_sapiens_GRCh38.vcf <span class="at">--cache</span> <span class="at">--force_overwrite</span> <span class="at">--sift</span> b <span class="at">--canonical</span> <span class="at">--symbol</span> <span class="at">--tab</span> <span class="at">--fields</span> Uploaded_variation,SYMBOL,CANONICAL,SIFT <span class="at">-o</span> STDOUT <span class="kw">|</span> <span class="dt">\</span></span>
+<span id="cb12-2"><a aria-label="2"></a><span class="ex">filter_vep</span> <span class="at">--filter</span> <span class="st">"CANONICAL is YES and SIFT is deleterious"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Operators:</strong></p>
 <ul>
 <li><code>is</code>: Exact match</li>
@@ -924,9 +927,9 @@ Figure&nbsp;3: Cancer somatic mutations, The cancer genome, Stratton et al, 2009
 <li><code>and</code>, <code>or</code>: Combine conditions</li>
 </ul>
 <p><strong>Example 1: High-confidence damaging</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a></a><span class="ex">filter_vep</span> <span class="at">-i</span> vep_output.txt <span class="dt">\</span></span>
-<span id="cb13-2"><a></a>  <span class="at">-filter</span> <span class="st">"SIFT is deleterious and </span><span class="dt">\</span></span>
-<span id="cb13-3"><a></a><span class="st">           PolyPhen is probably_damaging"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a aria-label="1"></a><span class="ex">filter_vep</span> <span class="at">-i</span> vep_output.txt <span class="dt">\</span></span>
+<span id="cb13-2"><a aria-label="2"></a>  <span class="at">-filter</span> <span class="st">"SIFT is deleterious and </span><span class="dt">\</span></span>
+<span id="cb13-3"><a aria-label="3"></a><span class="st">           PolyPhen is probably_damaging"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 <section id="notes" class="slide level2">
 <h2>Notes</h2>

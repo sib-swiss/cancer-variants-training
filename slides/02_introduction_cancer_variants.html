@@ -7,8 +7,8 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-de63f62b328812d8e578a4d74e282472.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.38">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-bb62276ab45c84d9efd712f51ff97b5a.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.10.18">
 
   <meta name="author" content="Flavio Lombardo">
   <meta name="dcterms.date" content="2025-12-12">
@@ -22,10 +22,13 @@
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
     */
-    code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.columns{display: flex; gap: 1.5em;}
+    div.column{flex: auto;}
+    @media screen {
+    div.columns{gap: min(4vw, 1.5em);}
+    div.column{overflow-x: auto;}
+    }
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
@@ -225,7 +228,7 @@
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
 <div class="quarto-title-author-name">
-Flavio Lombardo 
+Flavio Lombardo
 </div>
 </div>
 </div>
@@ -698,7 +701,7 @@ Flavio Lombardo
 @PG ID:samtools PN:samtools PP:bwa  VN:1.21 CL:samtools sort
 @PG ID:samtools.1   PN:samtools PP:samtools VN:1.21 CL:samtools view -bh</code></pre>
 <p><strong>2. Alignment Record</strong> (The actual reads)</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a></a><span class="ex">read1</span>  99  chr6  1000  60  76M  =  1150  226  ATGC...  <span class="co">####</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a aria-label="1"></a><span class="ex">read1</span>  99  chr6  1000  60  76M  =  1150  226  ATGC...  <span class="co">####</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -837,13 +840,13 @@ Flavio Lombardo
 </div><div class="column" style="width:60%;">
 <p><strong>Header Example (Tumor-Normal Pair):</strong></p>
 <p><strong>Normal:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a></a><span class="ex">@RG</span> ID:normal.lane1  SM:patient001_normal  LB:lib_n  PL:ILLUMINA  PU:HWI.lane1</span>
-<span id="cb3-2"><a></a><span class="ex">@RG</span> ID:normal.lane2  SM:patient001_normal  LB:lib_n  PL:ILLUMINA  PU:HWI.lane2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a aria-label="1"></a><span class="ex">@RG</span> ID:normal.lane1  SM:patient001_normal  LB:lib_n  PL:ILLUMINA  PU:HWI.lane1</span>
+<span id="cb3-2"><a aria-label="2"></a><span class="ex">@RG</span> ID:normal.lane2  SM:patient001_normal  LB:lib_n  PL:ILLUMINA  PU:HWI.lane2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Tumor:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a></a><span class="ex">@RG</span> ID:tumor.lane1   SM:patient001_tumor   LB:lib_t  PL:ILLUMINA  PU:HWI.lane1</span>
-<span id="cb4-2"><a></a><span class="ex">@RG</span> ID:tumor.lane2   SM:patient001_tumor   LB:lib_t  PL:ILLUMINA  PU:HWI.lane2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a aria-label="1"></a><span class="ex">@RG</span> ID:tumor.lane1   SM:patient001_tumor   LB:lib_t  PL:ILLUMINA  PU:HWI.lane1</span>
+<span id="cb4-2"><a aria-label="2"></a><span class="ex">@RG</span> ID:tumor.lane2   SM:patient001_tumor   LB:lib_t  PL:ILLUMINA  PU:HWI.lane2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Alignment Record with Read Group:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a></a><span class="ex">read1</span>  99  chr20  1000  60  76M  =  1150  226  ATGC...  <span class="co">####  RG:Z:tumor.lane1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a aria-label="1"></a><span class="ex">read1</span>  99  chr20  1000  60  76M  =  1150  226  ATGC...  <span class="co">####  RG:Z:tumor.lane1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -884,7 +887,7 @@ Flavio Lombardo
 </div>
 <div class="callout-content">
 <p>Add read groups <strong>during alignment</strong> for efficiency:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a></a><span class="ex">bwa</span> mem <span class="at">-R</span> <span class="st">'@RG\tID:tumor.lane1\tSM:patient001_tumor\tLB:lib_t\tPL:ILLUMINA'</span> ref.fa reads.fq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a aria-label="1"></a><span class="ex">bwa</span> mem <span class="at">-R</span> <span class="st">'@RG\tID:tumor.lane1\tSM:patient001_tumor\tLB:lib_t\tPL:ILLUMINA'</span> ref.fa reads.fq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Avoid post-hoc addition (e.g., GATK <code>AddOrReplaceReadGroups</code>) when possible.</p>
 </div>
 </div>
@@ -1077,17 +1080,17 @@ Flavio Lombardo
 <section id="the-vcf-file-format" class="slide level2">
 <h2>The VCF File Format</h2>
 <p><strong>Variant Call Format</strong> Standard for storing variant data (current: v4.3)</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource vcf number-lines code-with-copy"><code class="sourceCode"><span id="cb7-1"><a></a>##fileformat=VCFv4.3</span>
-<span id="cb7-2"><a></a>##INFO=&lt;ID=DP,Number=1,Type=Integer,Description="Total Depth"&gt;</span>
-<span id="cb7-3"><a></a>##INFO=&lt;ID=AF,Number=A,Type=Float,Description="Allele Frequency"&gt;</span>
-<span id="cb7-4"><a></a>##FILTER=&lt;ID=weak_evidence,Description="Insufficient support"&gt;</span>
-<span id="cb7-5"><a></a>##FILTER=&lt;ID=germline,Description="Likely germline variant"&gt;</span>
-<span id="cb7-6"><a></a>##FORMAT=&lt;ID=GT,Number=1,Type=String,Description="Genotype"&gt;</span>
-<span id="cb7-7"><a></a>##FORMAT=&lt;ID=AD,Number=R,Type=Integer,Description="Allelic depths (REF,ALT)"&gt;</span>
-<span id="cb7-8"><a></a>##FORMAT=&lt;ID=AF,Number=A,Type=Float,Description="Allele Frequency"&gt;</span>
-<span id="cb7-9"><a></a>#CHROM  POS     ID        REF  ALT  QUAL  FILTER  INFO        FORMAT      TUMOR       NORMAL</span>
-<span id="cb7-10"><a></a>chr17   7577538 rs123     G    A    .     PASS    DP=100      GT:AD:AF    0/1:70,30:0.30  0/0:50,0:0.0</span>
-<span id="cb7-11"><a></a>chr17   7578406 .         C    T    .     germline DP=85     GT:AD:AF    0/1:40,45:0.53  0/1:30,25:0.45</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource vcf number-lines code-with-copy"><code class="sourceCode"><span id="cb7-1"><a aria-label="1"></a>##fileformat=VCFv4.3</span>
+<span id="cb7-2"><a aria-label="2"></a>##INFO=&lt;ID=DP,Number=1,Type=Integer,Description="Total Depth"&gt;</span>
+<span id="cb7-3"><a aria-label="3"></a>##INFO=&lt;ID=AF,Number=A,Type=Float,Description="Allele Frequency"&gt;</span>
+<span id="cb7-4"><a aria-label="4"></a>##FILTER=&lt;ID=weak_evidence,Description="Insufficient support"&gt;</span>
+<span id="cb7-5"><a aria-label="5"></a>##FILTER=&lt;ID=germline,Description="Likely germline variant"&gt;</span>
+<span id="cb7-6"><a aria-label="6"></a>##FORMAT=&lt;ID=GT,Number=1,Type=String,Description="Genotype"&gt;</span>
+<span id="cb7-7"><a aria-label="7"></a>##FORMAT=&lt;ID=AD,Number=R,Type=Integer,Description="Allelic depths (REF,ALT)"&gt;</span>
+<span id="cb7-8"><a aria-label="8"></a>##FORMAT=&lt;ID=AF,Number=A,Type=Float,Description="Allele Frequency"&gt;</span>
+<span id="cb7-9"><a aria-label="9"></a>#CHROM  POS     ID        REF  ALT  QUAL  FILTER  INFO        FORMAT      TUMOR       NORMAL</span>
+<span id="cb7-10"><a aria-label="10"></a>chr17   7577538 rs123     G    A    .     PASS    DP=100      GT:AD:AF    0/1:70,30:0.30  0/0:50,0:0.0</span>
+<span id="cb7-11"><a aria-label="11"></a>chr17   7578406 .         C    T    .     germline DP=85     GT:AD:AF    0/1:40,45:0.53  0/1:30,25:0.45</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><strong>Key columns explained:</strong></p>
 <ul>
 <li><strong>CHROM/POS</strong>: Genomic location</li>
