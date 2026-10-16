@@ -1,5 +1,5 @@
 ---
-title: Setup & quality control
+title: Quality control
 format:
   html:
     css: styles.css
@@ -16,137 +16,7 @@ format:
   Introduction to cancer variant analysis
 </a>
 
-## Exercises 
-
-### First login
-
-If you are participating in this course with a teacher, you have received a link and a password. Copy-paste the link (including the port, e.g.: `http://12.345.678.91:10002`) in your browser. This should result in the following page:
-
-![](assets/images/vscode_login_page.png){width=300}
-
-
-::: {.callout-note}
-The link gives you access to a web version of [Visual Studio Code](https://code.visualstudio.com). This is a powerful code editor that you can also use as a local application on your computer. 
-::: 
-
-Type in the password that was provided to you by the teacher. Now let's open the terminal. You can do that by clicking **Application menu** > **Terminal** > **New Terminal**:
-
-![](assets/images/open_terminal.gif){width=500}
-
-
-For a.o. efficiency and reproducibility it makes sense to execute your commands from a script. With use of the 'new file' button:
-
-![](assets/images/new_file.gif){width=500}
-
-### Setup
-
-We will start the exercises with pre-aligned bam files. We have already preapred the folders for you with all the data that you need. If you are following the course later on:
-
-::: {.panel-tabset}
-
-## Subscribed to course
-
-You can create a symbolic link to the parent `/data` directory into your project directory `project/`, this simplify the path organization
-```bash
-cd ~/project
-ln -s /data .
-```
-This allows you to browse the data using VSCode's file explorer within your project.
-
-## If you are following locally (or later):
-To start, download and extract to the into a folder, and change your paths to your folder:
-
-```sh
-mkdir -p ~/project
-cd ~/project
-wget https://cancer-variants-training.s3.eu-central-1.amazonaws.com/course_data.tar.gz
-tar -xvzf course_data.tar.gz
-mv course_data data
-rm course_data.tar.gz
-```
-Then update your paths, depending on where your data is:
-```bash
-PROJECT=~/project/
-ALIGNDIR=~/project/data/alignments
-REFDIR=~/project/data/reference
-RESOURCEDIR=~/project/data/resources
-VEPDBS=~/project/data/VEP_dbs
-```
-
-:::
-
-Now, check out the directory `~/project/data` and see what's in there (e.g. with `tree`):
-
-```
-└── ~/project/data
-    ├── alignments
-    │   ├── normal.recal.bai
-    │   ├── normal.recal.bam
-    │   ├── tumor.recal.bai
-    │   └── tumor.recal.bam
-    ├── reads
-    │   ├── normal_R1.fastq.gz
-    │   ├── normal_R2.fastq.gz
-    │   ├── tumor_R1.fastq.gz
-    │   └── tumor_R2.fastq.gz
-    ├── reference
-    │   ├── exome_regions.bed.interval_list
-    │   ├── ref_genome.dict
-    │   ├── ref_genome.fa
-    │   ├── ref_genome.fa.fai
-    │   └── ref_genome.fa.gz
-    ├── resources
-    │   ├── 1000G_phase1.snps.high_confidence.hg38.subset.vcf.gz
-    │   ├── 1000G_phase1.snps.high_confidence.hg38.subset.vcf.gz.tbi
-    │   ├── 1000G_phase1.snps.high_confidence.hg38.vcf.gz
-    │   ├── 1000G_phase1.snps.high_confidence.hg38.vcf.gz.tbi
-    │   ├── 1000g_pon.hg38.subset.vcf.gz
-    │   ├── 1000g_pon.hg38.subset.vcf.gz.tbi
-    │   ├── 1000g_pon.hg38.vcf.gz
-    │   ├── 1000g_pon.hg38.vcf.gz.tbi
-    │   ├── af-only-gnomad.hg38.subset.vcf.gz
-    │   ├── af-only-gnomad.hg38.subset.vcf.gz.tbi
-    │   ├── af-only-gnomad.hg38.vcf.gz
-    │   ├── af-only-gnomad.hg38.vcf.gz.tbi
-    │   ├── Mills_and_1000G_gold_standard.indels.hg38.subset.vcf.gz
-    │   ├── Mills_and_1000G_gold_standard.indels.hg38.subset.vcf.gz.tbi
-    │   ├── Mills_and_1000G_gold_standard.indels.hg38.vcf.gz
-    │   ├── Mills_and_1000G_gold_standard.indels.hg38.vcf.gz.tbi
-    │   ├── refFlat.txt
-    │   └── refFlat.txt.gz.1
-    └── VEP_dbs
-        ├── alphamissense
-        │   ├── AlphaMissense_hg38.tsv.gz
-        │   └── AlphaMissense_hg38.tsv.gz.tbi
-        ├── clinvar
-        │   ├── clinvar.vcf.gz
-        │   └── clinvar.vcf.gz.tbi
-        └── revel
-            ├── new_tabbed_revel_grch38.tsv.gz
-            ├── new_tabbed_revel_grch38.tsv.gz.tbi
-            └── new_tabbed_revel.tsv.gz
-
-9 directories, 38 files
-```
-
-Showing us that we have three directories:
-
-- `alignments`: containing bam files of tumor and normal
-- `reference`: containing the genome fasta file and target intervals
-- `resources`: containing amongst other variant files (`vcf`) from among other the [1000 genomes](https://www.internationalgenome.org/) project and [gnomAD](https://gnomad.broadinstitute.org/)
-- `VEP_dbs`: Clinvar and alphamissense and revel databases for usage with VEP. 
-
-The dataset we're working with is prepared by the developers of the [Precision medicine bioinformatics course]() by the Griffith lab. It is whole exome sequencing (WES) data of cell lines derived from a tumor of triple negative breast cancer (TNBC) ([HCC1395](https://www.cellosaurus.org/CVCL_1249)) and derived from normal tissue ([HCC1395 BL](https://www.cellosaurus.org/CVCL_1250)). 
-
-You are strongly encouraged to your work with scripts during the course, which you store in the directory `scripts`. 
-Therefore create a scripts directory:
-
-```sh
-cd ~/project/
-mkdir scripts 
-```
-
-### Quality control of the bam files
+## Quality control of the bam files
 
 First we use the information in the header to get information about the contents of the bam file and how it was generated. 
 
@@ -193,12 +63,11 @@ Which returns:
 @SQ     SN:chr6 LN:170805979
 @SQ     SN:chr17        LN:83257441
 @RG     ID:HWI-ST466.C1TD1ACXX.normal   LB:normal       PL:ILLUMINA     SM:normal       PU:HWI-ST466.C1TD1ACXX
-@PG     ID:bwa  PN:bwa  VN:0.7.17-r1188 CL:bwa mem /config/data/reference//ref_genome.fa /config/data/reads/normal_R1.fastq.gz /config/data/reads/normal_R2.fastq.gz
-@PG     ID:samtools     PN:samtools     PP:bwa  VN:1.21 CL:samtools sort
-@PG     ID:samtools.1   PN:samtools     PP:samtools     VN:1.21 CL:samtools view -bh
-@PG     ID:MarkDuplicates       VN:Version:4.5.0.0      CL:MarkDuplicates --INPUT /config/data/alignments/normal.rg.bam --OUTPUT /config/data/alignments/normal.rg.md.bam --METRICS_FILE /config/data/alignments/marked_dup_metrics_normal.txt ...   PN:MarkDuplicates
-@PG     ID:GATK ApplyBQSR       VN:4.5.0.0      CL:ApplyBQSR --output /config/project/data/alignments/.recal.bam --bqsr-recal-file /config/project/data/alignments/normal.bqsr.recal.table --input /config/project/data/alignments/normal.rg.md.bam ...        PN:GATK ApplyBQSR
-@PG     ID:samtools.2   PN:samtools     PP:samtools.1   VN:1.21 CL:samtools view -H tumor.recal.bam
+@PG	ID:bwa	PN:bwa	VN:0.7.19-r1273	CL:bwa mem /config/project/course_data/reference/ref_genome.fa /config/project/course_data/reads/normal_R1.fastq.gz /config/project/course_data/reads/normal_R2.fastq.gz
+@PG	ID:samtools	PN:samtools	PP:bwa	VN:1.22.1	CL:samtools sort -o /config/project/course_data/alignments/normal.bam -
+@PG	ID:MarkDuplicates	VN:Version:4.6.2.0	CL:MarkDuplicates --INPUT /config/project/course_data/alignments/normal.rg.bam --OUTPUT /config/project/course_data/alignments/normal.rg.md.bam --METRICS_FILE /config/project/course_data/alignments/marked_dup_metrics_normal.txt ...	PN:MarkDuplicates
+@PG	ID:GATK ApplyBQSR	VN:4.6.2.0	CL:ApplyBQSR --output /config/project/course_data/alignments/normal.recal.bam --bqsr-recal-file /config/project/course_data/alignments/normal.bqsr.recal.table --input /config/project/course_data/alignments/normal.rg.md.bam ...	PN:GATK ApplyBQSR
+@PG	ID:samtools.1	PN:samtools	PP:samtools	VN:1.22.1	CL:samtools view -H /config/project/data/alignments/normal.recal.bam
 ```
 
 a. From the `@HD` tag, we can see that the bam file is sorted by coordinate.
@@ -206,7 +75,7 @@ b. We have two lines starting with `@SQ`, which gives us information about the r
 c. We have one line starting with `@RG`. Specifying there is a read group with ID `HWI-ST466.C1TD1ACXX.normal` and sample name (`SM`) `normal`. 
 d. In order to know which programs were run to generate this bam file, we can use the `@PG` tags. Here, we see that the aligner used was `bwa mem` 
 e. The duplicates were marked with `MarkDuplicates`. 
-f. To sort and compress `samtools sort` and `samtools view` were used. For base quality score recalibration (BQSR) `GATK ApplyBQSR` was used. 
+f. To sort the alignments `samtools sort` was used. For base quality score recalibration (BQSR) `GATK ApplyBQSR` was used. 
 
 :::
 
@@ -236,9 +105,9 @@ samtools view "$ALIGNDIR"/normal.recal.bam | head -3
 Returns the first three alignments:
 
 ```
-HWI-ST466:135068617:C1TD1ACXX:7:1114:9733:82689 163     chr6    60001   60      100M    =       60106   205     GATCTTATATAACTGTGAGATTAATCTCAGATAATGACACAAAATATAGTGAAGTTGGTAAGTTATTTAGTAAAGCTCATGAAAATTGTGCCCTCCATTC     ;B@EDB@A@A@DDDGBGBFCBC?DBEEGCGCAADAGCECDCDDDBABAGBECEGCBHH@?EGBCBCDDBHBAEEHGDFBBHBDDDBCHBGEFFEGEDBBG     MC:Z:100M       MD:Z:100        PG:Z:MarkDuplicates     RG:Z:HWI-ST466.C1TD1ACXX.normal NM:i:0  AS:i:100        XS:i:0
-HWI-ST466:135068617:C1TD1ACXX:7:1303:2021:90688 99      chr6    60001   60      100M    =       60104   203     GATCTTATATAACTGTGAGATTAATCTCAGATAATGACACAAAATATAGTGAAGTTGGTAAGTTATTTAGTAAAGCTCATGAAAATTGTGCCCTCCATTC     >A@FDB@A?@>DDCE@FAF@?BAC>ECFCGBAADBEADBDCDDD@@A@FAFADD?ABF@@EF?@ABCDAFB?DCGEBEB@EBCDCBCHBFEFFDGFCBBG     MC:Z:100M       MD:Z:100        PG:Z:MarkDuplicates     RG:Z:HWI-ST466.C1TD1ACXX.normal NM:i:0  AS:i:100        XS:i:0
-HWI-ST466:135068617:C1TD1ACXX:7:2304:7514:30978 113     chr6    60001   60      2S98M   =       61252   1194    TAGATCTTATATAACTGTGAGATTAATCTCAGATAATGACACAAAATATAGTGAAGTTGGTAAGTTATTTAGTAAAGCTCATGAAAATTGTGCCCTCCAT     >DHABFEACBBBCBGCECHEGBEACBDHCGCHCBDBBFAEAGBCCB@BAEECGBEEDBED>@EDDABDDADE@CBDFFBFBCFCCBADBDBDFFFAFF?@     MC:Z:60S40M     MD:Z:98 PG:Z:MarkDuplicates     RG:Z:HWI-ST466.C1TD1ACXX.normal NM:i:0  AS:i:98 XS:i:0
+HWI-ST466:135068617:C1TD1ACXX:7:1114:9733:82689 163     chr6    60001   60      100M    =       60106   205     GATCTTATATAACTGTGAGATTAATCTCAGATAATGACACAAAATATAGTGAAGTTGGTAAGTTATTTAGTAAAGCTCATGAAAATTGTGCCCTCCATTC     ;B@EDB@A@A@DDDGBGBFCBC?DBEEGCGCAADAGCECDCDDDBABAGBECEGCBHH@?EGBCBCDDBHBAEEHGDFBBHBDDDBCHBGEFFEGEDBBG     MC:Z:100M       MD:Z:100        PG:Z:MarkDuplicates     RG:Z:HWI-ST466.C1TD1ACXX.normal NM:i:0  MQ:i:60 AS:i:100        XS:i:0
+HWI-ST466:135068617:C1TD1ACXX:7:1303:2021:90688 99      chr6    60001   60      100M    =       60104   203     GATCTTATATAACTGTGAGATTAATCTCAGATAATGACACAAAATATAGTGAAGTTGGTAAGTTATTTAGTAAAGCTCATGAAAATTGTGCCCTCCATTC     >A@FDB@A?@>DDCE@FAF@?BAC>ECFCGBAADBEADBDCDDD@@A@FAFADD?ABF@@EF?@ABCDAFB?DCGEBEB@EBCDCBCHBFEFFDGFCBBG     MC:Z:100M       MD:Z:100        PG:Z:MarkDuplicates     RG:Z:HWI-ST466.C1TD1ACXX.normal NM:i:0  MQ:i:60 AS:i:100        XS:i:0
+HWI-ST466:135068617:C1TD1ACXX:7:2304:7514:30978 113     chr6    60001   60      2S98M   =       61252   1194    TAGATCTTATATAACTGTGAGATTAATCTCAGATAATGACACAAAATATAGTGAAGTTGGTAAGTTATTTAGTAAAGCTCATGAAAATTGTGCCCTCCAT     >DHABFEACBBBCBGCECHEGBEACBDHCGCHCBDBBFAEAGBCCB@BAEECGBEEDBED>@EDDABDDADE@CBDFFBFBCFCCBADBDBDFFFAFF?@     MC:Z:60S40M     MD:Z:98 PG:Z:MarkDuplicates     RG:Z:HWI-ST466.C1TD1ACXX.normal NM:i:0  MQ:i:60 AS:i:98 XS:i:0
 ```
 
 a. At the CIGAR strings we see `100M` and `2S98M`, meaning that the original read had 100 base pairs. So it's likely a read length of 100 bp has been used. 
@@ -290,8 +159,22 @@ returns for `normal.recal.bam`:
 13194 + 0 with mate mapped to a different chr (mapQ>=5)
 ```
 
-Showing us that we have 12,744,793 reads, and all those were paired. Of the alignments, 1,397,598 were marked as duplicate. If we do the same for the tumor bam file we see that it has 16,674,562 reads and 1,871,521 alignment marked as duplicate. 
+Showing us that we have 12,744,793 reads, and all those were paired. Of the alignments, 1,397,598 were marked as duplicate. If we do the same for the tumor bam file we see that it has 16,674,562 reads and 1,871,521 alignment marked as duplicate.
 
+:::
+
+::: {.callout-note}
+## Check your result
+
+Before moving on, compare your numbers with these:
+
+| Metric | Normal | Tumor | Acceptable |
+|--------|--------|-------|------------|
+| Mapped | 99.43% | 99.45% | > 95% |
+| Duplicates | 11.0% | 11.2% | < 20-30% for exomes |
+| Properly paired | 98.30% | 98.43% | > 90% |
+
+A low mapping rate points to contamination or the wrong reference. A high duplicate rate means low library complexity: fewer independent reads support each variant.
 :::
 
 So, all looks good until now. We have many reads and high alignment rates. The bam files seem to be ready for variant analysis, because they have read groups, duplicates are marked and they are sorted by coordinate. However, since we are working with whole exome sequencing (WES) data, we would like to know whether the reads align to the target regions and what kind of coverage we have. For this, we use `gatk CollectHsMetrics`. 
@@ -318,7 +201,16 @@ do
     --TARGET_INTERVALS "$REFDIR"/exome_regions.bed.interval_list
 done 
 ```
-The produced reports are not so easy to read. To parse the metrics file, we run `multiqc` on the directory:
+The produced reports are not so easy to read. We also run `fastqc` on the two bam files. FastQC works on bam files too and gives general quality plots (base qualities, GC content, read lengths, duplication levels). It writes into the same folder (it takes about 1 minute):
+
+```sh
+PROJECT=~/project/alignments
+ALIGNDIR=~/project/data/alignments
+
+fastqc -t 2 --outdir "$PROJECT" "$ALIGNDIR"/tumor.recal.bam "$ALIGNDIR"/normal.recal.bam
+```
+
+To parse the metrics files and the FastQC reports together, we run `multiqc` on the directory:
 
 ```sh 
 MULTIQC=~/project/multiqc
@@ -335,20 +227,32 @@ Download the multiqc report (`multiqc_report.html`) by right-clicking on the fil
 </a>
 . How did the hybrid capture go? Are most bases on-target? What kind of coverages can we expect in the target regions?
 
+The FastQC reports (`tumor.recal_fastqc.html` and `normal.recal_fastqc.html`) are in `~/project/alignments`. MultiQC shows them as the FastQC section. For comparison, here are the reports of the two samples:
+<a href="assets/quality_control/tumor.recal_fastqc.html" target="_blank" rel="noopener noreferrer">
+  tumor fastqc report
+</a>
+and
+<a href="assets/quality_control/normal.recal_fastqc.html" target="_blank" rel="noopener noreferrer">
+  normal fastqc report
+</a>
+.
+
 :::
 
 ::: {.callout-note}
-You can find the documentation on the different metrics [here](https://broadinstitute.github.io/picard/picard-metric-definitions.html#HsMetrics). Note that the descriptions of the metrics are not always correct. The metrics with `ON_BAIT` contain information including duplicates, while `ON_TARGET` without duplicates. This has been an issue [since 2020](https://github.com/broadinstitute/picard/issues/1494), and hasn't been worked on unfortunately. 
+You can find the documentation on the different metrics [here](https://broadinstitute.github.io/picard/picard-metric-definitions.html#HsMetrics). Note that the descriptions of the metrics are not always correct. The metrics with `ON_BAIT` contain information including duplicates, while `ON_TARGET` without duplicates. This has been an issue [since 2020](https://github.com/broadinstitute/picard/issues/1494), and has not been fixed so far. 
 ::: 
 
 ::: {.callout-tip collapse="true"}
 ## Answer
 
-We see that we have a fold enrichment of around 22 and about 45% usable bases on-target. About 90% were 'selected bases', which means bases aligning within 250 bp of the target region. We're looking at a de-duplicated coverage of 84x for the normal sample and 114.3x for the tumor sample. So, on average, we seem to have acceptable coverages for both samples.
+We see that we have a fold enrichment of around 22 and about 45% usable bases on-target. About 90% were 'selected bases', which means bases aligning within 250 bp of the target region. We're looking at a de-duplicated coverage of 84x for the normal sample and 114.9x for the tumor sample. So, on average, we seem to have acceptable coverages for both samples.
 
 
 
-Notice that tumor coverage (114x) is higher than normal (84x). This is intentional in cancer studies because:
+In the FastQC reports, `Total Sequences` (12,744,793 for normal and 16,674,562 for tumor) is the same number as `samtools flagstat` gave, so duplicates are still counted. Base qualities, per base N content and adapter content pass. The warnings for `Per sequence GC content` and `Sequence Length Distribution` are normal here: the capture of exome regions gives a GC distribution that differs from the theoretical one, and the reads do not all have the same length (30 to 100 bp).
+
+Notice that tumor coverage (115x) is higher than normal (84x). This is intentional in cancer studies because:
 
 - Tumor samples may have subclonal populations with low-frequency variants
 - Tumor purity varies: A deeper coverage is needed to detect variants in impure samples

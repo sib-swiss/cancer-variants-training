@@ -2,7 +2,7 @@
 title: "Cancer variant analysis"
 subtitle: "COURSE INTRODUCTION"
 author: "Flavio Lombardo"
-date: "12.12.2025"
+date: "2026-10-29"
 format:
   revealjs:
     theme: default
@@ -62,15 +62,12 @@ format:
 - **Gregoire Rossier:** Training coordinator at SIB
 - **Diana Marek:** Training coordinator at SIB
 - **Geert Van Geest:** Training Project Manager at SIB
-- **Flavio Lombardo:** Computational Biologist at the University Hospital Basel
+- **Flavio Lombardo:** Computational Biologist
 - **Deepak Tanwar:** Bioinformaticis Specialist and Trainer at SIB
-- **Aparna Pandey:** Bioinformatic Analyst at Interfaculty Bioinformatics Unit, University of Bern
 
 
 ::: {.center-logos}
 ![](../assets/SIB_LogoQ_GBv.svg){width=350}
-![](../assets/logos/university_hospital_basel_logo.png){width=350}
-![](../assets/logos/university_of_basel_logo.png){width=350}
 :::
 
 ## Learning outcomes

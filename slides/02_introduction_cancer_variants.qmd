@@ -2,7 +2,7 @@
 title: "Cancer Variant Analysis"
 subtitle: "Introduction to Cancer Genomics and Variant Detection"
 author: "Flavio Lombardo"
-date: "2025-12-12"
+date: "2026-10-29"
 format:
   revealjs:
     theme: default
@@ -114,16 +114,20 @@ Hereditary cancer syndromes have implications for family screening, risk reducti
 
 **8 Core Hallmarks:**
 
+::: {.sib-slide .sib-wide}
+
 | Hallmark | Description |
-|----------|-------------|
-| Sustaining proliferative signaling | Self-sufficiency in growth signals |
-| Evading growth suppressors | Insensitivity to anti-growth signals |
-| Resisting cell death | Evading apoptosis |
-| Enabling replicative immortality | Limitless replicative potential |
-| Inducing angiogenesis | Sustained blood vessel formation |
-| Activating invasion & metastasis | Tissue invasion and spread |
-| Avoiding immune destruction | Escaping immune surveillance |
-| Deregulating cellular energetics | Altered metabolism (Warburg effect) |
+|:-----|:----------|
+| **Sustaining proliferative signaling** | Self-sufficiency in growth signals |
+| **Evading growth suppressors** | Insensitivity to anti-growth signals |
+| **Resisting cell death** | Evading apoptosis |
+| **Enabling replicative immortality** | Limitless replicative potential |
+| **Inducing angiogenesis** | Sustained blood vessel formation |
+| **Activating invasion & metastasis** | Tissue invasion and spread |
+| **Avoiding immune destruction** | Escaping immune surveillance |
+| **Deregulating cellular energetics** | Altered metabolism (Warburg effect) |
+
+:::
 
 **2 Enabling Characteristics:** Genome instability & mutation; Tumor-promoting inflammation
 
@@ -344,7 +348,7 @@ Typical tumor purity ranges from 30-80%.
 ```{mermaid}
 flowchart LR
     A[Raw FASTQ] --> B[QC + Adapter<br/>fastp/MultiQC]
-    B --> C[Alignment<br/>bwa-mem2]
+    B --> C[Alignment<br/>bwa mem]
     C --> D[Add Read Groups]
     D --> E[Mark Duplicates<br/>GATK]
     E --> F[BQSR]
@@ -380,57 +384,157 @@ However, we provide the scripts for the analysis in the course GitHub repo.
 
 **Purpose:** Store sequence alignments
 
-:::: {.columns}
-::: {.column width="40%"}
+```{=html}
+<style>
+.carbon-wrap { container-type: inline-size; }
+.carbon { background: #abb8c3; padding: 6.4cqw; }
+.carbon.slim { padding: 2.2cqw 2.6cqw; }
+.carbon .win { background: #151718; border-radius: 0.9cqw; padding: 1.9cqw 1.9cqw 2.2cqw; box-shadow: 0 1.4cqw 3.4cqw rgba(0,0,0,.47); }
+.carbon .dots { height: 1.37cqw; display: flex; gap: 0.92cqw; align-items: center; margin-bottom: 2.4cqw; }
+.carbon .dots i { width: 1.37cqw; height: 1.37cqw; border-radius: 50%; display: block; }
+.carbon .dots i:nth-child(1) { background: #ff5f56; }
+.carbon .dots i:nth-child(2) { background: #ffbd2e; }
+.carbon .dots i:nth-child(3) { background: #27c93f; }
+.carbon pre { margin: 0; padding: 0; background: none; border: 0; box-shadow: none; width: auto; font-family: Monaco, Menlo, "DejaVu Sans Mono", monospace; font-size: 1.6cqw; line-height: 2.114cqw; white-space: pre; color: #55b5db; }
+.carbon pre span.b { color: #55b5db; }
+.carbon pre span.r { color: #cd3f45; }
+.carbon pre span.g { color: #9fca56; }
+.sib-slide table { box-sizing: border-box; border-collapse: separate; border-spacing: 0; width: 100%; max-width: 100%; border: 1px solid #d3d9df; border-radius: 10px; overflow: hidden; font-size: 0.7em; }
+.sib-slide.sib-wide table { font-size: 0.95em; }
+.sib-slide table thead tr { background: #151718; }
+.sib-slide table thead th { color: #fff; font-weight: 600; border: 0; padding: 0.35em 0.7em; text-align: left; }
+.sib-slide table tbody td { border: 0; border-top: 1px solid #e3e7eb; padding: 0.3em 0.7em; vertical-align: top; }
+.sib-slide table tbody tr:nth-child(even) { background: #f3f5f7; }
+.sib-slide table code { background: #e6ebf0; color: #151718; border-radius: 4px; padding: 0 0.25em; font-size: 0.95em; }
+.reveal section div.sourceCode { margin-bottom: 0.9em; }
+</style>
+```
 
-**Key points:**
+:::: {.columns .sib-slide}
+::: {.column width="33%"}
+**SAM**: Text-based (Human readable)
+:::
+::: {.column width="33%"}
+**BAM**: **Lossless** binary compressed SAM
 
-- **SAM**: Text-based (Human readable)
-- **BAM**: **Lossless** binary compressed SAM
-  - *Indexable (Fast random access)*
-- **CRAM**: **Ref-based** compression
-  - *Lossless or Lossy modes*
-  - ~30-60% smaller than BAM
-  - Requires access to the reference genome for decoding
+- *Indexable (Fast random access)*
+:::
+::: {.column width="34%"}
+**CRAM**: **Ref-based** compression
+
+- *Lossless or Lossy modes*
+- ~30-60% smaller than BAM
+- Requires access to the reference genome for decoding
+:::
+::::
+
+### Example from our BAM files
+
+Commands from the quality control exercises, run on `normal.recal.bam`. `samtools view` prints the BAM file as SAM text:
+
+**1. Header** (`@` lines, shortened: 6 of 9 lines)
+
+```sh
+ALIGNDIR=~/project/data/alignments
+samtools view -H "$ALIGNDIR"/normal.recal.bam
+```
+
+:::: {.columns .sib-slide}
+::: {.column width="42%"}
+
+| Line | Fields | Our file |
+|:-|:----------|:----------|
+| `@HD` | `VN` format version, `SO` sort order | `1.6`, `coordinate` |
+| `@SQ` | `SN` reference name, `LN` length | `chr6` 170,805,979 bp, `chr17` 83,257,441 bp |
+| `@RG` | `ID` group, `SM` sample, `LB` library, `PL` platform, `PU` flowcell | `normal`, `ILLUMINA`, `HWI-ST466.C1TD1ACXX` |
+| `@PG` | `ID` `PN` program, `VN` version, `PP` previous program, `CL` command | `bwa` 0.7.19, `samtools` 1.22.1 |
 
 :::
+::: {.column width="58%"}
 
-::: {.column width="60%"}
-
-**1. Header** (`@` lines)
+```{=html}
+<div class="carbon-wrap"><div class="carbon"><div class="win"><div class="dots"><i></i><i></i><i></i></div>
+<pre><span class="b">@HD  VN:</span><span class="r">1.6</span><span class="b">  SO:coordinate</span>
+<span class="b">@SQ  SN:chr6  LN:</span><span class="r">170805979</span>
+<span class="b">@SQ  SN:chr17  LN:</span><span class="r">83257441</span>
+<span class="b">@RG  ID:HWI-ST466.</span><span class="g">C1TD1ACXX.normal</span><span class="b">  LB:normal  PL:ILLUMINA  SM:normal  </span>
+<span class="b">PU:HWI-ST466.</span><span class="g">C1TD1ACXX</span>
+<span class="b">@PG  ID:bwa  PN:bwa  VN:</span><span class="r">0.7.19</span><span class="b">-r1273  CL:bwa mem /config/project/course_data</span>
+<span class="b">/reference</span><span class="g">/ref_genome.fa</span><span class="b"> /config/project/course_data/reads</span><span class="g">/normal_R1.fastq.gz</span><span class="b"> /config</span>
+<span class="b">/project/course_data/reads</span><span class="g">/normal_R2.fastq.gz</span>
+<span class="b">@PG  ID:samtools  PN:samtools  PP:bwa  VN:</span><span class="r">1.22.1</span><span class="b">  CL:samtools sort -o /config/project</span>
+<span class="b">/course_data/alignments</span><span class="g">/normal.bam</span><span class="b"> -</span></pre></div></div></div>
 
 ```
-@HD	VN:1.6	SO:coordinate
-@SQ	SN:chr6	LN:170805979
-@SQ	SN:chr17	LN:83257441
-@RG	ID:HWI-ST466.C1TD1ACXX.normal	LB:normal	PL:ILLUMINA	SM:normal	PU:HWI-ST466.C1TD1ACXX
-@PG	ID:bwa	PN:bwa	VN:0.7.17-r1188	CL:bwa mem /config/data/reference//ref_genome.fa /config/data/reads/normal_R1.fastq.gz /config/data/reads/normal_R2.fastq.gz
-@PG	ID:samtools	PN:samtools	PP:bwa	VN:1.21	CL:samtools sort
-@PG	ID:samtools.1	PN:samtools	PP:samtools	VN:1.21	CL:samtools view -bh
+
+:::
+::::
+
+**2. Alignment Record** (The actual reads; shown: the second read of the output, wrapped, `SEQ` and `QUAL` shortened with `…`)
+
+```sh
+samtools view "$ALIGNDIR"/normal.recal.bam | head -3
 ```
 
-**2. Alignment Record** (The actual reads)
-```bash
-read1  99  chr6  1000  60  76M  =  1150  226  ATGC...  ####
-```
+:::: {.columns .sib-slide}
+::: {.column width="42%"}
 
 | Field | Meaning |
 |:---|:---|
-| **QNAME** | Query / Read Name (`read1`) |
+| **QNAME** | Query / Read Name (`HWI-ST466:135068617:C1TD1ACXX:7:1303:2021:90688`) |
 | **FLAG** | Bitwise flags describing state (`99`) |
 | **RNAME** | Reference sequence / Chromosome (`chr6`) |
-| **POS** | 1-based mapping position (`1000`) |
+| **POS** | 1-based mapping position (`60001`) |
 | **MAPQ** | Mapping quality / Confidence (`60`) |
-| **CIGAR** | Alignment String (`76M`) |
-| **SEQ** | Nucleotide sequence (`ATGC...`) |
-| **QUAL** | Base quality scores (`####`) |
+| **CIGAR** | Alignment String (`100M`) |
+| **SEQ** | Nucleotide sequence (`GATCTTATATAACTGTGAGA…`) |
+| **QUAL** | Base quality scores (`>A@FDB@A?@>DDCE@FAF@?…`) |
+
+:::
+::: {.column width="58%"}
+
+```{=html}
+<div class="carbon-wrap"><div class="carbon"><div class="win"><div class="dots"><i></i><i></i><i></i></div>
+<pre><span class="b">HWI-ST466:135068617:C1TD1ACXX:7:1303:2021:90688</span><span class="b">  </span><span class="r">99</span><span class="b">  </span><span class="g">chr6</span><span class="b">  </span><span class="r">60001</span><span class="b">  </span><span class="r">60</span>
+<span class="g">100M</span><span class="b">  </span><span class="b">=</span><span class="b">  </span><span class="r">60104</span><span class="b">  </span><span class="r">203</span><span class="b">  </span><span class="b">GATCTTATATAACTGTGAGA…</span><span class="b">  </span><span class="b">&gt;A@FDB@A?@&gt;DDCE@FAF@?…</span>
+<span class="b">MC:Z:100M</span><span class="b">  </span><span class="b">MD:Z:100</span><span class="b">  </span><span class="b">PG:Z:MarkDuplicates</span>
+<span class="b">RG:Z:HWI-ST466.C1TD1ACXX.normal</span><span class="b">  </span><span class="b">NM:i:0</span><span class="b">  </span><span class="b">MQ:i:60</span><span class="b">  </span><span class="b">AS:i:100</span><span class="b">  </span><span class="b">XS:i:0</span></pre></div></div></div>
+```
 
 ::: {.callout-note collapse="true"}
-## Additional SAM fields in this example
+## Additional fields of the alignment record (the same in SAM and BAM)
 - **RNEXT** = `=` (mate maps to same chromosome)
-- **PNEXT** = `1150` (mate's mapping position)  
-- **TLEN** = `226` (template/insert length in bp)
+- **PNEXT** = `60104` (mate's mapping position)  
+- **TLEN** = `203` (template/insert length in bp)
 :::
+
+:::
+::::
+
+**3. Optional tags** (after `QUAL`, written `TAG:TYPE:VALUE`, type `Z` = text, `i` = integer)
+
+:::: {.columns .sib-slide}
+::: {.column width="58%"}
+
+| Tag | Meaning | Our read |
+|:-|:----------|:--------|
+| `MC:Z` | CIGAR of the mate | `100M` |
+| `MD:Z` | Mismatch string: number of matching bases, reference base at a mismatch | `100` (all 100 bases match) |
+| `PG:Z` | Program that last wrote the read (ID of an `@PG` line) | `MarkDuplicates` |
+| `RG:Z` | Read group (ID of the `@RG` line) | `HWI-ST466.C1TD1ACXX.normal` |
+| `NM:i` | Edit distance to the reference | `0` |
+| `MQ:i` | Mapping quality of the mate | `60` |
+| `AS:i` | Alignment score (bwa) | `100` |
+| `XS:i` | Score of the best other hit (bwa) | `0` |
+
+:::
+::: {.column width="42%"}
+
+::: {.callout-note}
+## Reading this read
+`100M`, `MD:Z:100`, `NM:i:0` and `AS:i:100` all say the same: the 100 bases match the reference. `MAPQ 60` and `XS:i:0` say the placement is unique.
+:::
+
 :::
 ::::
 
@@ -476,51 +580,69 @@ Learn more at the SIB course:
 
 **Purpose:** Track metadata for groups of reads within BAM files
 
-:::: {.columns}
-::: {.column width="40%"}
-**Key Read Group Tags:**
+:::: {.columns .sib-slide}
+::: {.column width="42%"}
 
-- **ID**: Unique read group identifier
-- **SM**: **Sample name** (patient/specimen)
-  - *Critical for multi-sample calling*
-  - *Tumor vs. Normal distinction*
-- **LB**: Library prep identifier
-  - *Used for duplicate marking*
-- **PL**: Sequencing platform
-- **PU**: Platform unit (flowcell.lane)
-  - *For tracking batch effects*
+**Key Read Group Tags**
 
-**Why read groups matter:**
+| Tag | Meaning | Good to know |
+|:-|:----------|:----------|
+| `ID` | Unique read group identifier | |
+| `SM` | **Sample name** (patient/specimen) | Critical for multi-sample calling. Tumor vs. Normal distinction |
+| `LB` | Library prep identifier | Used for duplicate marking |
+| `PL` | Sequencing platform | |
+| `PU` | Platform unit (flowcell.lane) | For tracking batch effects |
 
-- **BQSR**: Models built per-read-group
-- **Merging**: Combine multiple lanes/runs per sample
-- **Duplicate marking**: Per-library detection
-- **Somatic calling**: Required to distinguish tumor/normal
-- **QC & troubleshooting**: Track technical artifacts
+**Why read groups matter**
+
+| Step | What the read group does |
+|:-|:----------|
+| **BQSR** | Models built per-read-group |
+| **Merging** | Combine multiple lanes/runs per sample |
+| **Duplicate marking** | Per-library detection |
+| **Somatic calling** | Required to distinguish tumor/normal |
+| **QC & troubleshooting** | Track technical artifacts |
+
 :::
+::: {.column width="58%"}
 
-::: {.column width="60%"}
-**Header Example (Tumor-Normal Pair):**
+**Header Example (Tumor-Normal Pair)**
 
 **Normal:**
-```bash
-@RG ID:normal.lane1  SM:patient001_normal  LB:lib_n  PL:ILLUMINA  PU:HWI.lane1
-@RG ID:normal.lane2  SM:patient001_normal  LB:lib_n  PL:ILLUMINA  PU:HWI.lane2
-```
-**Tumor:**
-```bash
-@RG ID:tumor.lane1   SM:patient001_tumor   LB:lib_t  PL:ILLUMINA  PU:HWI.lane1
-@RG ID:tumor.lane2   SM:patient001_tumor   LB:lib_t  PL:ILLUMINA  PU:HWI.lane2
+
+```{=html}
+<div class="carbon-wrap"><div class="carbon"><div class="win"><div class="dots"><i></i><i></i><i></i></div>
+<pre style="font-size:1.6cqw;line-height:2.114cqw"><span class="b">@RG</span><span class="b">  </span><span class="b">ID:</span><span class="g">normal.lane1</span><span class="b">  </span><span class="b">SM:</span><span class="g">patient001_normal</span><span class="b">  </span><span class="b">LB:</span><span class="g">lib_n</span><span class="b">  </span><span class="b">PL:</span><span class="g">ILLUMINA</span><span class="b">  </span><span class="b">PU:</span><span class="g">HWI.lane1</span>
+<span class="b">@RG</span><span class="b">  </span><span class="b">ID:</span><span class="g">normal.lane2</span><span class="b">  </span><span class="b">SM:</span><span class="g">patient001_normal</span><span class="b">  </span><span class="b">LB:</span><span class="g">lib_n</span><span class="b">  </span><span class="b">PL:</span><span class="g">ILLUMINA</span><span class="b">  </span><span class="b">PU:</span><span class="g">HWI.lane2</span></pre></div></div></div>
 ```
 
-**Alignment Record with Read Group:**
-```bash
-read1  99  chr20  1000  60  76M  =  1150  226  ATGC...  ####  RG:Z:tumor.lane1
+**Tumor:**
+
+```{=html}
+<div class="carbon-wrap"><div class="carbon"><div class="win"><div class="dots"><i></i><i></i><i></i></div>
+<pre style="font-size:1.6cqw;line-height:2.114cqw"><span class="b">@RG</span><span class="b">  </span><span class="b">ID:</span><span class="g">tumor.lane1</span><span class="b">   </span><span class="b">SM:</span><span class="g">patient001_tumor</span><span class="b">   </span><span class="b">LB:</span><span class="g">lib_t</span><span class="b">  </span><span class="b">PL:</span><span class="g">ILLUMINA</span><span class="b">  </span><span class="b">PU:</span><span class="g">HWI.lane1</span>
+<span class="b">@RG</span><span class="b">  </span><span class="b">ID:</span><span class="g">tumor.lane2</span><span class="b">   </span><span class="b">SM:</span><span class="g">patient001_tumor</span><span class="b">   </span><span class="b">LB:</span><span class="g">lib_t</span><span class="b">  </span><span class="b">PL:</span><span class="g">ILLUMINA</span><span class="b">  </span><span class="b">PU:</span><span class="g">HWI.lane2</span></pre></div></div></div>
 ```
+
+:::
+::::
+
+**Alignment Record with Read Group:**
+
+:::: {.columns .sib-slide}
+::: {.column width="42%"}
 
 | Tag | Value | Meaning |
 |:---|:---|:---|
 | **RG:Z:** | `tumor.lane1` | Links read to `@RG ID:tumor.lane1` |
+
+:::
+::: {.column width="58%"}
+
+```{=html}
+<div class="carbon-wrap"><div class="carbon"><div class="win"><div class="dots"><i></i><i></i><i></i></div>
+<pre style="font-size:1.6cqw;line-height:2.114cqw"><span class="g">read1</span><span class="b">  </span><span class="r">99</span><span class="b">  </span><span class="g">chr20</span><span class="b">  </span><span class="r">1000</span><span class="b">  </span><span class="r">60</span><span class="b">  </span><span class="g">76M</span><span class="b">  </span><span class="b">=</span><span class="b">  </span><span class="r">1150</span><span class="b">  </span><span class="r">226</span><span class="b">  </span><span class="b">ATGC...</span><span class="b">  </span><span class="b">####</span><span class="b">  </span><span class="b">RG:Z:</span><span class="g">tumor.lane1</span></pre></div></div></div>
+```
 
 :::
 ::::
@@ -533,11 +655,15 @@ Mutect2 uses the `SM:` field to identify tumor and normal samples. Without prope
 ::: {.callout-tip}
 ## Best Practice
 Add read groups **during alignment** for efficiency:
-```bash
-bwa mem -R '@RG\tID:tumor.lane1\tSM:patient001_tumor\tLB:lib_t\tPL:ILLUMINA' ref.fa reads.fq
+
+```{=html}
+<div class="carbon-wrap"><div class="carbon"><div class="win"><div class="dots"><i></i><i></i><i></i></div>
+<pre style="font-size:1.39cqw;line-height:1.836cqw"><span class="b">bwa</span><span class="b"> </span><span class="b">mem</span><span class="b"> </span><span class="g">-R</span><span class="b"> </span><span class="r">&#x27;@RG\tID:tumor.lane1\tSM:patient001_tumor\tLB:lib_t\tPL:ILLUMINA&#x27;</span><span class="b"> </span><span class="b">ref.fa</span><span class="b"> </span><span class="b">reads.fq</span></pre></div></div></div>
 ```
+
 Avoid post-hoc addition (e.g., GATK `AddOrReplaceReadGroups`) when possible.
 :::
+
 ---
 
 ## Somatic Variant Calling Challenges
@@ -714,42 +840,57 @@ You can find every step's relative script [here](https://github.com/sib-swiss/ca
 
 ## The VCF File Format
 
-**Variant Call Format**
+**Variant Call Format**  
 Standard for storing variant data (current: v4.3)
 
-```vcf
-##fileformat=VCFv4.3
-##INFO=<ID=DP,Number=1,Type=Integer,Description="Total Depth">
-##INFO=<ID=AF,Number=A,Type=Float,Description="Allele Frequency">
-##FILTER=<ID=weak_evidence,Description="Insufficient support">
-##FILTER=<ID=germline,Description="Likely germline variant">
-##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">
-##FORMAT=<ID=AD,Number=R,Type=Integer,Description="Allelic depths (REF,ALT)">
-##FORMAT=<ID=AF,Number=A,Type=Float,Description="Allele Frequency">
-#CHROM  POS     ID        REF  ALT  QUAL  FILTER  INFO        FORMAT      TUMOR       NORMAL
-chr17   7577538 rs123     G    A    .     PASS    DP=100      GT:AD:AF    0/1:70,30:0.30  0/0:50,0:0.0
-chr17   7578406 .         C    T    .     germline DP=85     GT:AD:AF    0/1:40,45:0.53  0/1:30,25:0.45
+```{=html}
+<div class="carbon-wrap"><div class="carbon slim"><div class="win"><div class="dots"><i></i><i></i><i></i></div>
+<pre style="font-size:1.287cqw;line-height:1.7cqw"><span class="b">##fileformat=VCFv4.3</span>
+<span class="b">##INFO=&lt;ID=DP,Number=1,Type=Integer,Description=&quot;Total Depth&quot;&gt;</span>
+<span class="b">##INFO=&lt;ID=AF,Number=A,Type=Float,Description=&quot;Allele Frequency&quot;&gt;</span>
+<span class="b">##FILTER=&lt;ID=weak_evidence,Description=&quot;Insufficient support&quot;&gt;</span>
+<span class="b">##FILTER=&lt;ID=germline,Description=&quot;Likely germline variant&quot;&gt;</span>
+<span class="b">##FORMAT=&lt;ID=GT,Number=1,Type=String,Description=&quot;Genotype&quot;&gt;</span>
+<span class="b">##FORMAT=&lt;ID=AD,Number=R,Type=Integer,Description=&quot;Allelic depths (REF,ALT)&quot;&gt;</span>
+<span class="b">##FORMAT=&lt;ID=AF,Number=A,Type=Float,Description=&quot;Allele Frequency&quot;&gt;</span>
+<span class="g">#CHROM  POS     ID        REF  ALT  QUAL  FILTER  INFO        FORMAT      TUMOR       NORMAL</span>
+<span class="b">chr17</span><span class="b">   </span><span class="r">7577538</span><span class="b"> </span><span class="g">rs123</span><span class="b">     </span><span class="b">G</span><span class="b">    </span><span class="b">A</span><span class="b">    </span><span class="b">.</span><span class="b">     </span><span class="g">PASS</span><span class="b">    </span><span class="b">DP=100</span><span class="b">      </span><span class="b">GT:AD:AF</span><span class="b">    </span><span class="r">0/1:70,30:0.30</span><span class="b">  </span><span class="r">0/0:50,0:0.0</span>
+<span class="b">chr17</span><span class="b">   </span><span class="r">7578406</span><span class="b"> </span><span class="g">.</span><span class="b">         </span><span class="b">C</span><span class="b">    </span><span class="b">T</span><span class="b">    </span><span class="b">.</span><span class="b">     </span><span class="g">germline</span><span class="b"> </span><span class="b">DP=85</span><span class="b">     </span><span class="b">GT:AD:AF</span><span class="b">    </span><span class="r">0/1:40,45:0.53</span><span class="b">  </span><span class="r">0/1:30,25:0.45</span></pre></div></div></div>
 ```
 
-**Key columns explained:**
+:::: {.columns .sib-slide}
+::: {.column width="46%"}
 
-- **CHROM/POS**: Genomic location
-- **REF/ALT**: Reference and alternate alleles  
-- **FILTER**: Quality filters applied (PASS = passed all)
-- **FORMAT**: Defines sample-specific fields
-- **GT**: Genotype (0/0=hom ref, 0/1=het, 1/1=hom alt)
-- **AD**: Allele depths (REF count, ALT count)
-- **AF**: Variant Allele Frequency = ALT/(REF+ALT)
+**Key columns explained**
 
-**Example interpretation:**
+| Column | Meaning |
+|:-|:----------|
+| `CHROM` / `POS` | Genomic location |
+| `REF` / `ALT` | Reference and alternate alleles |
+| `FILTER` | Quality filters applied (`PASS` = passed all) |
+| `FORMAT` | Defines sample-specific fields |
+| `GT` | Genotype (`0/0` = hom ref, `0/1` = het, `1/1` = hom alt) |
+| `AD` | Allele depths (REF count, ALT count) |
+| `AF` | Variant Allele Frequency = ALT/(REF+ALT) |
 
-Row 1: Somatic mutation (30% VAF in tumor, 0% in normal) ✓  
-Row 2: Germline variant (present in both tumor and normal) ✗
+:::
+::: {.column width="54%"}
+
+**Example interpretation**
+
+| Row | Tumor | Normal | Verdict |
+|:-|:--|:--|:----------|
+| 1 | `0/1:70,30:0.30` | `0/0:50,0:0.0` | Somatic mutation (30% VAF in tumor, 0% in normal) ✓ |
+| 2 | `0/1:40,45:0.53` | `0/1:30,25:0.45` | Germline variant (present in both tumor and normal) ✗ |
+
+:::
+::::
 
 ::: {.callout-important}
 ## FILTER Field
 "PASS" means the variant passed all filters, **not** that it's biologically validated. Clinical decisions require orthogonal validation (Sanger, ddPCR, amplicon-seq).
 :::
+
 ---
 
 ## Variant Annotation: The Critical Step
@@ -904,18 +1045,22 @@ today we can do this computationally.
 
 **Essential QC checks at each stage:**
 
-| Metric | Expected Value | Interpretation |
-|--------|----------------|----------------|
-| Mapping rate | >95% | Low = contamination or poor quality |
-| Duplicate rate | <30% (WGS) | High = low library complexity |
-| Mean coverage | As specified | Low = insufficient data |
-| Coverage uniformity | CV <0.2 | High variability = capture issues |
-| Contamination | <1-2% | High = sample swap or cross-contamination |
-| Ti/Tv ratio | ~2.0-2.1 (WGS), ~3.0-3.3 (exome) | Low = sequencing errors enriched |
-| Insert size | 200-400bp (Illumina) | Bimodal = library issues |
-| GC bias | Flat across 30-70% GC | Strong bias = PCR or coverage issues |
+::: {.sib-slide .sib-wide}
 
-**Tools:** fastQC, MultiQC, mosdepth, GATK CollectHsMetrics
+| Metric | Expected Value | Interpretation |
+|:-|:-----|:----------|
+| **Mapping rate** | >95% | Low = contamination or poor quality |
+| **Duplicate rate** | <30% (WGS) | High = low library complexity |
+| **Mean coverage** | As specified | Low = insufficient data |
+| **Coverage uniformity** | CV <0.2 | High variability = capture issues |
+| **Contamination** | <1-2% | High = sample swap or cross-contamination |
+| **Ti/Tv ratio** | ~2.0-2.1 (WGS), ~3.0-3.3 (exome) | Low = sequencing errors enriched |
+| **Insert size** | 200-400bp (Illumina) | Bimodal = library issues |
+| **GC bias** | Flat across 30-70% GC | Strong bias = PCR or coverage issues |
+
+:::
+
+**Tools:** `fastQC`, `MultiQC`, `mosdepth`, `GATK CollectHsMetrics`
 
 ---
 

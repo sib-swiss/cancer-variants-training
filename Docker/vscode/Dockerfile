@@ -1,4 +1,4 @@
-FROM linuxserver/code-server:4.106.2
+FROM linuxserver/code-server:4.140.0
 
 # Install base utilities
 RUN apt-get update && \
@@ -28,8 +28,8 @@ SHELL ["/bin/bash", "-c"]
 RUN source /opt/miniforge3/etc/profile.d/conda.sh && \
     eval "$(mamba shell hook --shell bash)" && \
     mamba activate ngs-tools && \
-    mamba remove perl-bio-samtools samtools ensembl-vep --force -y || true && \
-    mamba install -c bioconda -c conda-forge ensembl-vep=115.0 samtools=1.22.1 -y && \
+    mamba remove perl-bio-samtools samtools bcftools ensembl-vep --force -y || true && \
+    mamba install -c bioconda -c conda-forge ensembl-vep=116.2 samtools=1.22.1 bcftools=1.22 -y && \
     mamba clean -t -y
 
 # activate in the env

@@ -9,17 +9,25 @@ format:
 **Apart** from the **starting time** the time schedule is **indicative**. Because we can not plan a course by the minute, in practice the time points will deviate. 
 :::
 
-## Day 1
+All times are CET (Central European Time).
+
+## Day 1: Thursday 29 October 2026
 
 | block   	| start    	| end      	| subject                        	|
 |---------	|----------	|----------	|--------------------------------	|
-| introduction 	| 9:00 AM  	| 10:00 AM 	| Introduction - lecture |
-| block 1 	| 10:00 AM  	| 10:30 AM 	| [Setup and quality control](quality_control.qmd) - exercises |
-|         	| 10:30 AM 	| 11:00 AM 	| BREAK                          	|
-| block 2 	| 11:00 AM 	| 12:00 PM 	| [Variant calling](variant_calling.qmd) - exercises	     |
-|         	| 12:00 PM 	| 1:00 PM  	| BREAK                          	|
+| introduction 	| 1:00 PM  	| 2:00 PM 	| Introduction - lecture |
+| block 1 	| 2:00 PM  	| 3:00 PM 	| [Setup](setup.qmd) and [quality control](quality_control.qmd) - exercises |
+|         	| 3:00 PM 	| 3:15 PM 	| BREAK                          	|
+| block 2 	| 3:15 PM 	| 4:45 PM 	| [Variant calling](variant_calling.qmd) - exercises |
+|         	| 4:45 PM 	| 5:00 PM  	| Wrap-up and questions                          	|
+
+## Day 2: Tuesday 3 November 2026
+
+| block   	| start    	| end      	| subject                        	|
+|---------	|----------	|----------	|--------------------------------	|
 | block 3 	| 1:00 PM  	| 1:45 PM  	| [Variant annotation](variant_annotation.qmd) - lecture             	 |
-| block 4   | 1:45 PM   | 3:00      | [Variant annotation](variant_annotation.qmd) - exercises
-|         	| 3:00 PM  	| 3:30 PM  	| BREAK                          	|
-| block 4 	| 3:30 PM  	| 4:10 PM  	| [Variant annotation](variant_annotation.qmd) - exercises         |
-| block 5 	| 4:10 PM  	| 5:00 PM  	| Visualization - exercises         |
+| block 4 	| 1:45 PM   | 2:45 PM  	| [Variant annotation](variant_annotation.qmd) - exercises |
+|         	| 2:45 PM  	| 3:00 PM  	| BREAK                          	|
+| block 5 	| 3:00 PM  	| 3:45 PM  	| [Variant annotation](variant_annotation.qmd) - exercises         |
+| block 6 	| 3:45 PM  	| 4:45 PM  	| [Visualization](visualization.qmd) - exercises         |
+|         	| 4:45 PM  	| 5:00 PM  	| Wrap-up and questions                          	|

@@ -20,9 +20,11 @@ website:
       - href: course_schedule.qmd
       - text: 'Course material'
         menu:
+            - href: setup.qmd
             - href: quality_control.qmd
             - href: variant_calling.qmd
             - href: variant_annotation.qmd 
+            - href: visualization.qmd
           
     right:
       - icon: github

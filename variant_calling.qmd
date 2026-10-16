@@ -157,13 +157,13 @@ bcftools view -H "$VARIANTDIR"/somatic.filtered.vcf.gz | cut -f 7 | sort | uniq 
 Resulting in:
 
 ```
-133 PASS
+132 PASS
 48 weak_evidence
 26 normal_artifact;strand_bias
 21 panel_of_normals
 17 normal_artifact
-13 normal_artifact;slippage;weak_evidence
 13 clustered_events;normal_artifact;strand_bias
+12 normal_artifact;slippage;weak_evidence
 12 germline;multiallelic;normal_artifact;panel_of_normals
 12 base_qual;normal_artifact;strand_bias
 9 strand_bias;weak_evidence
@@ -205,7 +205,105 @@ Resulting in:
 ##FILTER=<ID=weak_evidence,Description="Mutation does not meet likelihood threshold">
 ```
 
-Showing us that these mutations do not meet the likelihood threshold, basically telling us that these are the variants filtered out because of the combined error probability based on technical artifacts, possibility of germline variants, and sequencing error. The other filters are so called 'hard filters', meaning that by themselves they do not meet a fixed threshold.  
+Showing us that these mutations do not meet the likelihood threshold, basically telling us that these are the variants filtered out because of the combined error probability based on technical artifacts, possibility of germline variants, and sequencing error. The other filters are so called 'hard filters', meaning that by themselves they do not meet a fixed threshold.
+
+:::
+
+::: {.callout-note}
+## Check your result
+
+You should have 467 calls in `somatic.filtered.vcf.gz` and 132 `PASS` calls (about 28%). Mutect2 calls generously and relies on `FilterMutectCalls` to remove artifacts, so losing most calls is expected.
+
+[`bcftools stats`](https://samtools.github.io/bcftools/bcftools.html#stats) gives a quick summary of any VCF, including the transition/transversion (Ti/Tv) ratio:
+
+```sh
+VARIANTDIR=~/project/variants
+bcftools stats "$VARIANTDIR"/somatic.filtered.PASS.vcf.gz | grep -E "^SN|^TSTV"
+```
+
+::: {.callout-tip collapse="true"}
+## Expected output
+
+```
+SN	0	number of samples:	2
+SN	0	number of records:	132
+SN	0	number of no-ALTs:	0
+SN	0	number of SNPs:	120
+SN	0	number of MNPs:	2
+SN	0	number of indels:	10
+SN	0	number of others:	0
+SN	0	number of multiallelic sites:	0
+SN	0	number of multiallelic SNP sites:	0
+TSTV	0	67	53	1.26	67	53	1.26
+```
+
+The 132 records are 120 SNPs, 2 MNPs and 10 indels. The `TSTV` line shows 67 transitions, 53 transversions and a Ti/Tv of 1.26.
+:::
+
+Our 120 PASS SNVs give a Ti/Tv of about 1.3. The rule of thumb from the slides (2.0-2.1 for genomes, 3.0-3.3 for exomes) applies to **germline** calls. Somatic Ti/Tv depends on the mutational processes in the tumor, so a low value here does not mean the calls are bad. In a germline call set, a Ti/Tv close to 0.5 would mean mostly random sequencing errors.
+:::
+
+### Normalizing variants
+
+The same variant can be written in more than one way in a VCF. This matters as soon as you compare your calls to a database such as ClinVar or gnomAD: if the representation differs, an identical variant will not match. A VCF is **normalized** when:
+
+- indels are **left-aligned** (shifted to the leftmost position that describes the same change, which matters in repeats like `AAAA`)
+- alleles are **parsimonious** (no redundant shared bases beyond the one padding base)
+- **multiallelic** sites are split into one record per alternative allele (`C,CA` becomes two records)
+
+For example, in our unfiltered calls, `chr6:5103987 CAA > C,CA` is one record with two alternative alleles. After normalizing, it becomes two biallelic records.
+
+::: {.callout-important}
+## Exercise 3
+
+Create a script called `04b_bcftools_norm.sh` in `~/project/scripts`. From the script, normalize `somatic.filtered.vcf.gz` with [`bcftools norm`](https://samtools.github.io/bcftools/bcftools.html#norm), splitting multiallelic sites and left-aligning against the reference genome:
+
+```sh
+#!/usr/bin/env bash
+
+REFDIR=~/project/data/reference
+VARIANTDIR=~/project/variants
+
+bcftools norm -m -any \
+-f "$REFDIR"/ref_genome.fa \
+-Oz -o "$VARIANTDIR"/somatic.filtered.norm.vcf.gz \
+"$VARIANTDIR"/somatic.filtered.vcf.gz
+
+bcftools index --tbi "$VARIANTDIR"/somatic.filtered.norm.vcf.gz
+```
+
+How many records does the file have before and after? Read the summary that `bcftools norm` prints to the terminal (stderr). Then run it on `somatic.filtered.PASS.vcf.gz` as well. Does anything change?
+
+:::
+
+::: {.callout-note}
+
+- `-m -any` splits multiallelic records into biallelic ones (`-m +any` would do the opposite and join them).
+- `-f` provides the reference used for left-aligning, and for checking that the `REF` allele matches the genome (add `--check-ref w` to get a warning on mismatches).
+- Always normalize **before** annotating or comparing against other VCFs.
+
+:::
+
+::: {.callout-tip collapse="true"}
+## Answer
+
+Count the records before and after:
+
+```sh
+VARIANTDIR=~/project/variants
+bcftools view -H "$VARIANTDIR"/somatic.filtered.vcf.gz | wc -l
+bcftools view -H "$VARIANTDIR"/somatic.filtered.norm.vcf.gz | wc -l
+```
+
+Resulting in _467_ records before and _514_ after. 31 multiallelic records carrying 78 alternative alleles in total were split into 78 biallelic records (467 - 31 + 78 = 514). The summary that `bcftools norm` prints to the terminal says the same: `Lines total/split/joined/realigned/mismatch_removed/dup_removed/skipped: 467/31/0/46/0/0/0`. So 31 records were split and 46 were realigned (indels shifted to their leftmost position or trimmed), and none were joined, removed or skipped. Check what happened to one of them:
+
+```sh
+bcftools view -H -r chr6:5103987 "$VARIANTDIR"/somatic.filtered.norm.vcf.gz | cut -f 1-7
+```
+
+Note that every split record keeps the `FILTER` value of the original record. 
+
+On `somatic.filtered.PASS.vcf.gz` nothing needs to change: it holds 132 records and none of them is multiallelic, since all multiallelic calls were already filtered out (the `multiallelic` filter). It is still good practice to run `bcftools norm` in your pipelines, because it is cheap and it protects you from mismatches when the input comes from another caller.
 
 :::
 
@@ -247,7 +345,7 @@ bcftools query -f '%CHROM\t%POS\t%FILTER\t\t%INFO/TLOD\t[%SAMPLE=%DP;]\n' "$VARI
 ```
 
 ::: {.callout-important}
-## Exercise 3
+## Exercise 4
 
 Instead of the depth `DP` for each sample get the variant allele frequency for each sample, and compare that with the FILTER column. 
 
@@ -354,7 +452,7 @@ Where we see that if there's the filter `weak_evidence` the VAF of the tumor is 
 Variation of copy number in genes can have a large effect on the phenotype of a tumor. Therefore, we will also estimate the copy number variation occurring on chromosome 6 and 17. For that, we use [CNVkit](https://cnvkit.readthedocs.io/en/stable/). 
 
 ::: {.callout-important}
-## Exercise 4
+## Exercise 5
 
 Check out the [documentation](https://cnvkit.readthedocs.io/en/stable/quickstart.html#build-a-reference-from-normal-samples-and-infer-tumor-copy-ratios) of `CNVkit.py bash`, and the helper (`cnvkit.py batch -h`), create a script called `05_run_cnvkit.sh`, and replace the missing values at `FIXME`.
 
@@ -471,7 +569,21 @@ This type of arm-level copy number change (one arm deleted, other amplified) is 
 
 CNVkit is described in detail in:
 
-> Talevich et al. (2016). CNVkit: Genome-Wide Copy Number Detection and Visualization from Targeted DNA Sequencing. *PLOS Computational Biology*. 
+> Talevich et al. (2016). CNVkit: Genome-Wide Copy Number Detection and Visualization from Targeted DNA Sequencing. *PLOS Computational Biology*.
+:::
+
+::: {.callout-tip collapse="true"}
+## Beyond Mutect2: DeepSomatic
+
+[DeepSomatic](https://github.com/google/deepsomatic) is a deep learning somatic caller from Google, built on [DeepVariant](https://github.com/google/deepvariant), their germline caller. It turns the tumor and normal reads at each candidate site into pileup images and lets a convolutional neural network classify them as somatic, germline or artifact. Mutect2 instead uses a statistical model plus a separate filtering step (`FilterMutectCalls`).
+
+- Models for Illumina WGS/WES, PacBio HiFi and ONT, plus FFPE models
+- Tumor-normal and tumor-only modes
+- Outputs a standard VCF, so everything we do afterwards (`bcftools norm`, VEP) works the same
+
+> Park et al. (2025). Accurate somatic small variant discovery for multiple sequencing technologies with DeepSomatic. *Nature Biotechnology*. [doi:10.1038/s41587-025-02839-x](https://doi.org/10.1038/s41587-025-02839-x)
+
+> Poplin et al. (2018). A universal SNP and small-indel variant caller using deep neural networks. *Nature Biotechnology*. [doi:10.1038/nbt.4235](https://doi.org/10.1038/nbt.4235)
 :::
 
 ## Summary
@@ -480,6 +592,7 @@ In this section, you've:
 
 - ✅ Called somatic variants with Mutect2 using tumor-normal pairs
 - ✅ Filtered variants based on multiple quality metrics
+- ✅ Normalized variants with bcftools norm
 - ✅ Explored VCF format and variant characteristics
 - ✅ Identified copy number variations with CNVkit
 

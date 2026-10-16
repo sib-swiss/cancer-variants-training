@@ -34,7 +34,7 @@ The CNVkit is a software that is specifically tailored to call CNV (Copy number 
 ::: {.callout-important collapse=false}
 ## In case you want to transform from `.cns` to `.vcf`
 
-1. Let's convert the *.cns (segmentation file) into a VCF file. ~5min
+1. Let's convert the *.cns (segmentation file) into a VCF file. It takes a few seconds.
 ``` bash
 #!/usr/bin/env bash
 
@@ -90,7 +90,7 @@ Now we have a nice VCF file and in the right format to call VEP
 
 **Option**: Consider that VEP will add annotation for each of the transcripts that is overlapping the CNV regions. Therefore the file might be very comprehensive, you can simplify with `--per_gene`, `--pick_allele_gene` or `--pick`. However this can also be excluding interesting data. Moreover for the call you can substitute in the custom clinvar annotation `exact` with `overlap`.
 
-**VEP version matters** We are using VEP v.115.
+**VEP version matters** We are using VEP v.116.
 
 **Note on `exact` vs `overlap` for ClinVar:**
 
@@ -115,7 +115,7 @@ RES_DIR="${BASE_DIR}/data/resources"
 VAR_DIR="${BASE_DIR}/variants"
 CNV_DIR="${VAR_DIR}/cnvkit"
 DBS_DIR="${BASE_DIR}/data/VEP_dbs"
-VEP_CACHE="${HOME}/.vep"
+VEP_CACHE="${HOME}/project/data/.vep"
 
 # Database files
 CLINVAR="${DBS_DIR}/clinvar/clinvar.vcf.gz"
@@ -125,7 +125,7 @@ ALPHA="${DBS_DIR}/alphamissense/AlphaMissense_hg38.tsv.gz"
 # Input file
 MUTECT_VCF="${VAR_DIR}/somatic.filtered.PASS.vcf.gz"
 
-# Call VEP with full calls ~5min (overlap)
+# Call VEP with full calls, under 1 min (overlap)
 vep -i "${CNV_DIR}/tumor.call.vcf.gz" \
   --cache "${VEP_CACHE}" \
   --assembly GRCh38 \
@@ -198,7 +198,7 @@ filter_vep \
 We get for example a duplication of RANBP9 that is annotated having HIGH impact and it is part of the MAME selection (matched between NCBI and Ensembl)
 ```vcf
 #Uploaded_variation	Location	Allele	Gene	Feature	Feature_type	Consequence	cDNA_position	CDS_position	Protein_position	Amino_acids	Codons	Existing_variation	Extra
-chr6_123855_<DUP>	chr6:123855-28994479	duplication	ENSG00000010017	ENST00000011619	Transcript	transcript_amplification	-	-	-	-	-	-	IMPACT=HIGH;STRAND=-1;VARIANT_CLASS=duplication;SYMBOL=RANBP9;SYMBOL_SOURCE=HGNC;HGNC_ID=HGNC:13727;BIOTYPE=protein_coding;CANONICAL=YES;MANE=MANE_Select;MANE_SELECT=NM_005493.3;TSL=1;APPRIS=P1;CCDS=CCDS4529.1;ENSP=ENSP00000011619;SWISSPROT=Q96S59.191;UNIPARC=UPI000006ED83;UNIPROT_ISOFORM=Q96S59-1;OverlapBP=90338;OverlapPC=100.00
+chr6_123854_N/<DUP>	chr6:123855-28994479	duplication	ENSG00000010017	ENST00000011619	Transcript	transcript_amplification	-	-	-	-	-	-	IMPACT=HIGH;STRAND=-1;VARIANT_CLASS=duplication;SYMBOL=RANBP9;SYMBOL_SOURCE=HGNC;HGNC_ID=HGNC:13727;BIOTYPE=protein_coding;CANONICAL=YES;MANE=MANE_Select;MANE_SELECT=NM_005493.3;TSL=1;APPRIS=P2;CCDS=CCDS4529.1;ENSP=ENSP00000011619;SWISSPROT=Q96S59.198;UNIPARC=UPI000006ED83;UNIPROT_ISOFORM=Q96S59-1;OverlapBP=90338;OverlapPC=100.00
 ```
 For CNV annotation we get no data from the plugins and some limited data for clinvar. This is happening because those tools add on SNV and not on CNVs (but in clinvar if you change `exact` to `overalp` you will see all the transcripts that are overalapping that region).
 

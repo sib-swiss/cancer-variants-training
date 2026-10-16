@@ -1,4 +1,4 @@
-FROM rocker/rstudio:4.4.2
+FROM rocker/rstudio:4.6.1
 
 RUN apt-get update && apt-get install -y libz-dev
 

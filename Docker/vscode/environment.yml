@@ -3,14 +3,14 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
-  - python=3.10
-  - bcftools=1.21
+  - python=3.10  # gatk4 4.6.x pins 3.10
+  - bcftools=1.22
   - bwa=0.7.19
-  - snpeff>=5.2
+  - snpeff=5.4.0c
   - gatk4=4.6.*
-  - r-base>=4.4
-  - cnvkit>=0.9.12
-  - multiqc>=1.25
+  - r-base>=4.4  # cnvkit 0.9.13 caps r-base below 4.6
+  - cnvkit=0.9.13  # 0.9.14 needs python>=3.11, gatk4 4.6.x pins python 3.10
+  - multiqc>=1.35
   - fastqc>=0.12.1
-  - ensembl-vep=115.0
+  - ensembl-vep=116.2
   - samtools

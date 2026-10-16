@@ -2,7 +2,7 @@
 title: "Variant Effect Predictor (VEP)"
 subtitle: "A Practical Introduction"
 author: "Flavio Lombardo"
-date: "2025-12-12"
+date: "2026-11-03"
 format:
   revealjs:
     theme: default
@@ -537,6 +537,13 @@ You can have a look here:
 
 - There is a nice ```help``` included in VEP that can be useful for consultation
 
+::: {.callout-tip}
+## AI tools to know
+
+- [DeepSomatic](https://github.com/google/deepsomatic): deep learning somatic caller, an alternative to Mutect2. It writes a standard VCF, so VEP works on its output too.
+- [AlphaGenome](https://deepmind.google/science/alphagenome/): predicts the effect of variants outside coding sequence. It is not a caller and not a VEP plugin: you run it from Python.
+:::
+
 
 # Best Practices {background-color="#2C3E50"}
 
@@ -590,6 +597,11 @@ Always validate important findings visually (IGV) and consider orthogonal method
 -   [COSMIC Database](https://cancer.sanger.ac.uk/cosmic)
 -   [ClinVar](https://www.ncbi.nlm.nih.gov/clinvar/)
 -   [OncoKB](https://www.oncokb.org/)
+
+## Exercises
+
+-   [Variant annotation](../variant_annotation.html): annotate the Mutect2 calls with VEP
+-   [Visualization](../visualization.html): load the VEP output in R and plot it with ggplot2
 
 # Questions? {background-color="#2C3E50"}
 Feel free to drop a line in the chat or to contact us.

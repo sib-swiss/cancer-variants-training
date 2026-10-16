@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-VARIANTDIR="${HOME}/project/course_data/variants/cnvkit"
+VARIANTDIR="${HOME}/project/variants/cnvkit"
 
 cnvkit.py export vcf "$VARIANTDIR"/tumor.call.cns -o "$VARIANTDIR"/tumor.call.vcf
 

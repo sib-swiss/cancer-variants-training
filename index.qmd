@@ -13,15 +13,10 @@ format:
 **Helper**
 - Deepak Tanwar [ORCID](https://orcid.org/0000-0001-8036-1989)
 
-**Helper**
-- Aparna Pandey [ORCID](https://orcid.org/0000-0003-2036-4250)
-
 **Contributors**
-- Geert van Geest [ORCiD](https://orcid.org/0000-0002-1561-078X) (original course materials)
+- Geert van Geest [ORCiD](https://orcid.org/0000-0002-1561-078X)
 
 ---
-
-*This course builds upon materials originally co-developed by Geert van Geest and Flavio Lombardo, with substantial updates and additions by Flavio Lombardo for the 2025 edition.*
 
 ## Attribution
 

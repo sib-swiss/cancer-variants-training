@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
 
-VARIANTDIR="${HOME}/project/course_data/variants/cnvkit"
-RESOURCEDIR="${HOME}/project/course_data/VEP_dbs"
+VARIANTDIR="${HOME}/project/variants/cnvkit"
+RESOURCEDIR="${HOME}/project/data/VEP_dbs"
 
 vep -i "$VARIANTDIR"/tumor.call.vcf.gz \
-    --cache \
-    --dir $HOME/.vep \
+    --cache ${HOME}/project/data/.vep \
     --assembly GRCh38 \
     --format vcf \
     --fork 2 \
@@ -30,6 +29,6 @@ filter_vep \
 # filtering by Symbol
 filter_vep \
     -i "${VARIANTDIR}/tumor.call_annotated_all.txt" \
-    -o "${VARIANTDIR}/chr6ch17_mtumor_annotated_GENE_filtered.txt" \
+    -o "${VARIANTDIR}/tumor.call_annotated_GENE_filtered.txt" \
     --filter "SYMBOL exists" \
     --force_overwrite

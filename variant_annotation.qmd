@@ -46,7 +46,7 @@ A tool like VEP allows us to:
 
 ::: {.callout-note}
 ## VEP Version
-This course uses VEP v115 (2025). Some features and default behaviors may differ in other versions. Always check the [release notes](https://www.ensembl.org/info/docs/tools/vep/script/vep_other.html#history) for your version.
+This course uses VEP v116 (2026). Some features and default behaviors may differ in other versions. Always check the [release notes](https://www.ensembl.org/info/docs/tools/vep/script/vep_other.html#history) for your version.
 :::
 
 # Setup
@@ -55,7 +55,7 @@ This course uses VEP v115 (2025). Some features and default behaviors may differ
 
 ## Subscribed to the course
 
-All the environment is prepared for you, you just need to create a symbolic link to access the data from your project directory:
+All the environment is prepared for you, you just need to create a symbolic link to access the data from your project directory (skip this if you already did it on the quality control page, the command would then print `File exists`):
 ``` bash
 cd ~/project
 ln -s /data .
@@ -75,8 +75,8 @@ source ~/miniconda3/bin/activate
 conda init --all
 
 # Using Conda
-conda create -n vep samtools python=3.10 ensembl-vep=115.0
-# conda install -c bioconda ensembl-vep=115.0 # if installing in current env
+conda create -n vep samtools python=3.10 ensembl-vep=116.2
+# conda install -c bioconda ensembl-vep=116.2 # if installing in current env
 
 # Activate VEP's env
 conda activate vep
@@ -229,7 +229,7 @@ vep -i cancer_variants.vcf \
 # Make sure you have 14 variants
 grep -v '^#' cancer_variants.vcf | wc -l  # it should show 14
 
-# Run VEP ~< 5min
+# Run VEP (a few seconds with the local cache)
 vep -i cancer_variants.vcf \
     --cache ${HOME}/project/data/.vep \
     --species homo_sapiens \
@@ -248,10 +248,10 @@ vep -i cancer_variants.vcf \
 # Some of the variants affect:
 
 ```
-## VEP command-line: vep --assembly GRCh38 --cache /data/.vep --database 0 --force_overwrite --format vcf --input_file cancer_variants.vcf --offline --output_file output.txt --pick --symbol
+## VEP command-line: vep --assembly GRCh38 --cache --database 0 --dir_cache [PATH]/.vep --domains --force_overwrite --format vcf --input_file cancer_variants.vcf --offline --output_file output.txt --pick --polyphen b --sift b --symbol
 #Uploaded_variation	Location	Allele	Gene	Feature	Feature_type	Consequence	cDNA_position	CDS_position	Protein_position	Amino_acids	Codons	Existing_variation	Extra
 rs121913529	chr7:55242465	T	ENSG00000280890	ENST00000626532	Transcript	intron_variant,non_coding_transcript_variant	-	-	-	-	-	-	IMPACT=MODIFIER;STRAND=-1;SYMBOL=ELDR;SYMBOL_SOURCE=HGNC;HGNC_ID=HGNC:49511
-rs28934578	chr17:7577121	T	ENSG00000161960	ENST00000293831	Transcript	missense_variant	597	580	194	D/Y	Gac/Tac	-	IMPACT=MODERATE;STRAND=1;SYMBOL=EIF4A1;SYMBOL_SOURCE=HGNC;HGNC_ID=HGNC:3282
+rs28934578	chr17:7577121	T	ENSG00000129226	ENST00000250092	Transcript	upstream_gene_variant	-	-	-	-	-	-	IMPACT=MODIFIER;DISTANCE=2517;STRAND=1;SYMBOL=CD68;SYMBOL_SOURCE=HGNC;HGNC_ID=HGNC:1693
 rs28897743	chr13:32936646	T	-	-	-	intergenic_variant	-	-	-	-	-	-	IMPACT=MODIFIER
 rs28934574	chr17:7674894	A	ENSG00000141510	ENST00000269305	Transcript	stop_gained	779	637	213	R/*	Cga/Tga	-	IMPACT=HIGH;STRAND=-1;SYMBOL=TP53;SYMBOL_SOURCE=HGNC;HGNC_ID=HGNC:11998
 rs28897686	chr17:41245466	A	ENSG00000241595	ENST00000334109	Transcript	upstream_gene_variant	-	-	-	-	-	-	IMPACT=MODIFIER;DISTANCE=4221;STRAND=1;SYMBOL=KRTAP9-4;SYMBOL_SOURCE=HGNC;HGNC_ID=HGNC:18902
@@ -327,7 +327,6 @@ The previous section demonstrated how to run VEP and how different arguments sig
 ``` vcf
 ##fileformat=VCFv4.2 
 #CHROM  POS     ID      REF  ALT   QUAL  FILTER  INFO 
-chr17   745040    .   G   T   .   PASS
 chr17   1492466   .   C   T   .   PASS
 chr17   2364457   .   T   G   .   PASS
 chr17   3433669   .   G   T   .   PASS
@@ -369,6 +368,18 @@ vep -i "$VARIANTDIR"/somatic.filtered.PASS.vcf.gz \
 We are using as input a vcf.gz file (which has been indexed), and we are provifing the `--format vcf` command, this will output by default a `tsv` file
 :::
 
+::: {.callout-note}
+## Check your result
+
+Open `chr6ch17_mutect2_annotated.txt_summary.html`. The number of variants processed should match the number of records in the input, 132 for `somatic.filtered.PASS.vcf.gz`:
+
+```sh
+bcftools view -H "$VARIANTDIR"/somatic.filtered.PASS.vcf.gz | wc -l
+```
+
+If VEP processed fewer, some lines were skipped: check the warnings file next to the output. Also look at the consequence chart. Mostly `intron_variant` or `intergenic_variant` is normal; zero coding consequences would suggest a wrong assembly or cache version.
+:::
+
 ### Exercise 2
 ::: {.callout-important}
 ## Output to VCF
@@ -376,13 +387,38 @@ What if the output of this file should be formatted as vcf instead? You can chec
 hint: use `--vcf`
 :::
 
-::: {.callout-tip collapse="true"}
+:::: {.callout-tip collapse="true"}
 ## Solution
 
 With the option ``--output_file`` you can use ``vcf``.
-After you can compress the VCF ``bgzip <output_file.vcf>`` and then you can index it ``tabix -p vcf <output_file.vcf.gz>``. 
+After you can compress the VCF ``bgzip <output_file.vcf>`` and then you can index it ``tabix -p vcf <output_file.vcf.gz>``.
 If you see VEP's documentation there is an option to skip `bgzip` and instead incorporating it directly in VEP, which will be doing the compression for you `--compress_output bgzip` in the call. Afterwards you still need to index the file.
+
+::: {.callout-note collapse="true"}
+## The full call
+
+```bash
+VARIANTDIR="${HOME}/project/variants"
+
+vep -i "$VARIANTDIR"/somatic.filtered.PASS.vcf.gz \
+--cache ${HOME}/project/data/.vep \
+--species homo_sapiens \
+--assembly GRCh38 \
+--offline \
+--format vcf \
+--symbol \
+--force_overwrite \
+--everything \
+--vcf \
+--compress_output bgzip \
+--output_file "$VARIANTDIR"/chr6ch17_mutect2_annotated.vcf.gz
+
+tabix -p vcf "$VARIANTDIR"/chr6ch17_mutect2_annotated.vcf.gz
+```
+
+`--vcf` writes VCF instead of the default tab-separated file, and `--compress_output bgzip` compresses it while VEP writes it. `tabix` then creates the index `chr6ch17_mutect2_annotated.vcf.gz.tbi`.
 :::
+::::
 
 **Interesting results:**
 We will obtain a file with many annotations.
@@ -404,7 +440,7 @@ chr6_1930220_GA/TT	chr6:1930220-1930221	TT	ENSG00000112699	ENST00000380815	Trans
 | HIGH | SERPINB1 | chr6:2834013 | splice_acceptor_variant | C>G | Affects splice site |
 | MODERATE | OR1E2 | chr17:3433669 | missense_variant | P→H | Position 58 |
 | MODERATE | PLD2 | chr17:4818362 | inframe_deletion | VDRILK→V | 15bp deletion |
-| LOW | GEMIN4 | chr17:745040 | synonymous_variant | L→L | No amino acid change |
+| LOW | DSP | chr6:7585458 | synonymous_variant | L→L | No amino acid change |
 | MODIFIER | DUSP22 | chr6:325357 | intron_variant | G>A | Within intron |
 :::
 
@@ -430,7 +466,7 @@ vep -i "$VARIANTDIR/somatic.filtered.PASS.vcf.gz" \
 ```
 :::
 
-Now when we anaylize our output file `chr6ch17_mutect2_annotated.txt` in more details, there are about 160 lines and a lot of information on different transcripts that are related to the mutations found by Mutect2.
+Now when we anaylize our output file `chr6ch17_mutect2_annotated.txt` in more details, there are about 2900 lines and a lot of information on different transcripts that are related to the mutations found by Mutect2.
 Let's say that now we would like to filter only the deleterious predictions and moderate/high impact variants. We can do that in a couple of ways:
 
 ``` bash
@@ -600,6 +636,20 @@ Run it with VEP
 ```
 :::
 
+::: {.callout-tip collapse="true"}
+## Beyond coding variants: AlphaGenome
+
+AlphaMissense only scores missense variants. Most variants sit outside coding sequence, where VEP can only say `intron_variant` or `upstream_gene_variant`. [AlphaGenome](https://deepmind.google/science/alphagenome/) from Google DeepMind fills this gap. It reads up to 1 Mb of DNA sequence and predicts thousands of regulatory tracks: gene expression, splicing, chromatin accessibility, histone marks, TF binding and 3D contacts. To score a variant, it compares the predictions for the reference and the alternative sequence.
+
+In a cancer example from the authors, AlphaGenome reproduced how non-coding mutations found in T-cell acute lymphoblastic leukemia (T-ALL) create a new enhancer that switches on the *TAL1* oncogene.
+
+- Not a VEP plugin: you call it from Python (`pip install alphagenome`)
+- Free API for non-commercial use, with your own API key
+- Model weights are on Kaggle and Hugging Face (non-commercial terms), but running them locally needs a large GPU
+
+> Avsec et al. (2026). Advancing regulatory variant effect prediction with AlphaGenome. *Nature*. [doi:10.1038/s41586-025-10014-0](https://doi.org/10.1038/s41586-025-10014-0)
+:::
+
 3.  **ClinVar**
 ClinVar: A curated database with mutation->disease data
 
@@ -653,6 +703,7 @@ This will create the following structure:
 │   ├── AlphaMissense_hg38.tsv.gz
 │   └── AlphaMissense_hg38.tsv.gz.tbi
 └── revel/
+    ├── new_tabbed_revel.tsv.gz
     ├── new_tabbed_revel_grch38.tsv.gz
     └── new_tabbed_revel_grch38.tsv.gz.tbi
 ```
@@ -799,7 +850,7 @@ chr6_10801908_C/G	chr6:10801908	G	ENSG00000111837	ENST00000354489	Transcript	mis
   - Class: likely_pathogenic
   - Pathogenicity score: 0.9946 (very high confidence)
 - **SpliceRegion**: No splice site effects detected
-- **ClinVar**: No clinical data found in ClinVar database
+- **ClinVar**: Uncertain significance (variation ID 1900332, one submitter, ClinVar release of October 2026)
 - **SIF**: SIFT=deleterious(0)
 - **PolyPhen**: PolyPhe=probably_damaging(1)
 - **IMPACT**: MODERATE
@@ -843,383 +894,10 @@ CNV annotation is more challenging than SNV annotation because:
 For those interested in CNV annotation, expanded materials are available in the [advanced resources section](cnv_example_using_vep.html).
 :::
 
-# Let's visualize some of the data from our somatic call annotation!
+::: {.callout-note}
+## Next: visualization
 
-At first we should load one of the vep annotated files from one of the exercises. Let's load the results from **exercise 3** (feel free to load another one!), `chr6ch17_mutect2_annotated_with_clinVar.txt` from the exercise `Cancer-Specific Annotation`.
-
-```{r}
-#| echo: true
-#| warning: false
-#| code-fold: true
-#| code-tools: true
-#| title: "Some data preprocessing"
-
-# get libraries
-library(magrittr)
-library(readr)
-library(ggplot2)
-library(dplyr)
-library(tidyr)
-library(stringr)
-
-# VEP output in
-vep_data <- read_tsv(
-  "~/variants/chr6ch17_mutect2_annotated_with_clinVar.txt",
-  comment = "##"
-)
-
-# better to set up a ggplot2 theme
-theme_course <- function() {
-  theme_minimal(base_size = 14) +  # Base size affects all text
-    theme(
-      plot.title = element_text(size = 16, face = "bold"),
-      axis.title = element_text(size = 14, face = "bold"),
-      axis.text = element_text(size = 12),
-      legend.title = element_text(size = 13, face = "bold"),
-      legend.text = element_text(size = 12),
-      strip.text = element_text(size = 13, face = "bold"),  # For facets
-      legend.position = "bottom"
-    )
-}
-
-# Split when it contains multiple values
-consequences_df <- vep_data %>%
-  separate_rows(Consequence, sep="&") %>%
-  select(Consequence)
-
-# get chr
-vep_data <- vep_data %>%
-  separate(Location, into = c("chr", "position"), sep=":") %>% 
-  mutate(chr = factor(chr, levels = c("chr6", "chr17")))
-
-# Extract IMPACT from Extra column
-vep_data$IMPACT <- gsub(".*IMPACT=([^;]+).*", "\\1", vep_data$Extra)
-
-# get nice data out of the df
-extract_field <- function(data, field) {
-  gsub(paste0(".*", field, "=([^;]+).*"), "\\1", data$Extra)
-}
-
-# combine multiple fields
-vep_data <- vep_data %>%
-  mutate(
-    IMPACT = extract_field(., "IMPACT"),
-    SYMBOL = extract_field(., "SYMBOL"),
-    VARIANT_CLASS = extract_field(., "VARIANT_CLASS"),
-    BIOTYPE = extract_field(., "BIOTYPE")
-  )
-```
-
-### Exercise 5
-::: {.callout-important}
-## Visualize the data from VEP
-
-**Objective**: Learn how to quickly visualize your variants.
-
-**Task**: Visualize: 
-
-1. Consequence plot, to visualize the distribution of consequences?
-2. Consequence plot, by chromosome?
-3. Can we see the consequence colored by impact?
-4. Can we see the consequence colored by impact by chromosome?
-5. What are the most common variant classes?
-6. What are the most common biotypes?
-7. Bonus: ClinVar, SIFT, and PolyPhen
-8. Bonus: Gene level damage
-
-:::
-
-::: {.callout-tip collapse="true"}
-## 1. Consequence plot, to visualize the distribution of consequences
-```{r}
-#| fig-width: 8
-#| fig-height: 6
-
-# consequence plot
-ggplot(vep_data, aes(x=reorder(Consequence, table(Consequence)[Consequence]))) +
-  geom_bar() +
-  coord_flip() +
-  theme_minimal() +
-  labs(title="Distribution of \n Variant Consequences",
-       x="Consequence Type",
-       y="Count") +
-  theme_course()
-```
-![](assets/variant_annotation/a1.png)
-
-:::
-
-::: {.callout-tip collapse="true"}
-## 2. Consequence plot, by chromosome
-```{r}
-#| fig-width: 8
-#| fig-height: 6
-# consequence plot 
-ggplot(vep_data, aes(x=reorder(Consequence, table(Consequence)[Consequence]))) +
-  geom_bar() +
-  coord_flip() +
-  theme_minimal() +
-  labs(title="Distribution of \n Variant Consequences",
-       x="Consequence Type",
-       y="Count") +
-  facet_grid(~chr) +
-  theme(
-    legend.position = "bottom"
-  ) +
-  theme_course()
-```
-![](assets/variant_annotation/a2.png)
-:::
-
-
-::: {.callout-tip collapse="true"}
-## 3. Can we see the consequence colored by impact
-```{r}
-#| fig-width: 8
-#| fig-height: 6
-
-# Impact + Consequence plot
-ggplot(vep_data, aes(x=reorder(Consequence, table(Consequence)[Consequence]), fill=IMPACT)) +
-  geom_bar() +
-  coord_flip() +
-  theme_minimal() +
-  scale_fill_brewer(palette="Set1") +
-  labs(title="Variant Consequences \n by Impact",
-       x="Consequence Type",
-       y="Count") +
-  theme(
-    legend.position = "bottom"
-  ) +
-  theme_course()
-```
-![](assets/variant_annotation/a3.png)
-:::
-
-
-::: {.callout-tip collapse="true"}
-## 4. Can we see the consequence colored by impact by chromosome
-```{r}
-#| fig-width: 8
-#| fig-height: 6
-# Impact + consequence plot x chr
-ggplot(vep_data, aes(x=reorder(Consequence, table(Consequence)[Consequence]), fill=IMPACT)) +
-  geom_bar() +
-  coord_flip() +
-  theme_minimal() +
-  scale_fill_brewer(palette="Set1") +
-  labs(title="Variant Consequences \n by Impact",
-       x="Consequence Type",
-       y="Count") +
-  facet_grid(~chr) +
-  theme(
-    legend.position = "bottom"
-  ) +
-  theme_course()
-```
-![](assets/variant_annotation/a4.png)
-:::
-
-
-::: {.callout-tip collapse="true"}
-## 5. What are the most common variant classes?
-```{r}
-#| fig-width: 8
-#| fig-height: 6
-# variant class plot
-vep_data %>%
-  count(VARIANT_CLASS) %>%  # Count the classees
-  arrange(desc(n)) %>%  # Sort in descending ord
-  ggplot(aes(x = reorder(VARIANT_CLASS, n), y = n)) +
-  geom_bar(stat = "identity", fill = "steelblue") +
-  coord_flip() +
-  theme_minimal() +
-  labs(title = "Distribution of \n Variant Classes",
-       x = "Variant Class",
-       y = "Count"
-       ) +
-  theme_course()
-```
-![](assets/variant_annotation/a5.png)
-:::
-
-
-::: {.callout-tip collapse="true"}
-## 6. What are the most common biotypes?
-```{r}
-#| fig-width: 8
-#| fig-height: 6
-# biotype distribution
-ggplot(vep_data, aes(x=reorder(BIOTYPE, table(BIOTYPE)[BIOTYPE]))) +
-  geom_bar(fill="steelblue") +
-  coord_flip() +
-  theme_minimal() +
-  labs(title="Distribution of \n Biotypes",
-       x="Biotype",
-       y="Count"
-       ) +
-  theme_course()
-```
-![](assets/variant_annotation/a6.png)
-:::
-
-::: {.callout-tip collapse="true"}
-## 7. Bonus: ClinVar, SIFT, ans PolyPhen
-```{r}
-# Extract SIFT
-vep_data$sift <- str_extract(vep_data$Extra, "SIFT=.*?;")
-vep_data$sift <- str_replace(vep_data$sift, "SIFT=", "") 
-vep_data$sift <- str_replace(vep_data$sift, ";", "")
-vep_data$sift <- str_replace(vep_data$sift, "\\(.*\\)", "")
-
-# Extract PolyPhen 
-vep_data$polyphen <- vep_data$Extra %>%
-  str_extract("PolyPhen=.*?;") %>%
-  str_replace("PolyPhen=", "") %>%
-  str_replace(";", "") %>%
-  str_replace("\\(.*\\)", "")
-
-# Extract ClinVar
-vep_data$clinvar <- vep_data$Extra %>%
-  str_extract("ClinVar_CLNSIG=.*?;") %>%
-  str_replace("ClinVar_CLNSIG=", "") %>%
-  str_replace(";", "")
-
-# Distribution of SIFT predictions
-ggplot(subset(vep_data, !is.na(sift)), 
-       aes(x = reorder(sift, table(sift)[sift]))) +
-  geom_bar(fill = "steelblue") +
-  coord_flip() +
-  theme_minimal() +
-  labs(title = "Distribution of SIFT Predictions",
-       x = "SIFT Prediction",
-       y = "Count",
-       caption = "Only missense variants are scored by SIFT") +
-  theme_course()
-
-# Distribution of PolyPhen predictions 
-ggplot(subset(vep_data, !is.na(polyphen)), 
-       aes(x = reorder(polyphen, table(polyphen)[polyphen]))) +
-  geom_bar(fill = "darkred") +
-  coord_flip() +
-  theme_minimal() +
-  labs(title = "Distribution of PolyPhen Predictions",
-       x = "PolyPhen Prediction",
-       y = "Count",
-       caption = "Only missense variants are scored by PolyPhen") +
-  theme_course()
-```
-![](assets/variant_annotation/a7.png)
-![](assets/variant_annotation/a8.png)
-
-### Combined SIFT and PolyPhen predictions with Impact
-```{r}
-# Only for variants with both predictions
-p3 <- subset(vep_data, !is.na(sift) & !is.na(polyphen)) %>%
-  ggplot(aes(x = sift, fill = IMPACT)) +
-  geom_bar() +
-  facet_wrap(~polyphen) +
-  coord_flip() +
-  theme_minimal() +
-  scale_fill_brewer(palette = "Set1") +
-  labs(title = "SIFT and PolyPhen Predictions by Impact",
-       x = "SIFT Prediction",
-       y = "Count") +
-  theme(legend.position = "bottom") +
-  theme_course()
-
-# 4. ClinVar significance with impact 
-p4 <- subset(vep_data, !is.na(clinvar)) %>%
-  ggplot(aes(x = reorder(clinvar, table(clinvar)[clinvar]), fill = IMPACT)) +
-  geom_bar() +
-  coord_flip() +
-  scale_fill_brewer(palette = "Set1") +
-  theme_minimal() +
-  labs(title = "Clinical Significance by Impact",
-       x = "ClinVar Clinical Significance",
-       y = "Count") +
-  theme(legend.position = "bottom") +
-  theme_course()
-
-# 5. For missense variants only - comparison of predictions
-p5 <- subset(vep_data, Consequence == "missense_variant" & !is.na(sift) & !is.na(polyphen)) %>%
-  ggplot(aes(x = sift, fill = polyphen)) +
-  geom_bar(position = "dodge") +
-  theme_minimal() +
-  scale_fill_brewer(palette = "Set2") +
-  labs(title = "SIFT vs PolyPhen Predictions\nfor Missense Variants",
-       x = "SIFT Prediction",
-       y = "Count",
-       fill = "PolyPhen Prediction") +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  theme_course()
-```
-
-### Plots
-```{r}
-print(p3)
-```
-![](assets/variant_annotation/p3.png)
-
-```{r}
-print(p4)
-```
-![](assets/variant_annotation/p4.png)
-
-```{r}
-print(p5)
-```
-![](assets/variant_annotation/p5.png)
-
-:::
-
-::: {.callout-tip collapse="true"}
-## 8. Bonus: Gene level damage
-```{r}
-# Gene-level summary - most frequently mutated genes
-p6 <- vep_data %>%
-  filter(!is.na(SYMBOL) & SYMBOL != "") %>%
-  count(SYMBOL, chr) %>%
-  arrange(desc(n)) %>%
-  slice_head(n = 20) %>%
-  ggplot(aes(x = reorder(SYMBOL, n), y = n, fill = chr)) +
-  geom_col() +
-  coord_flip() +
-  scale_fill_brewer(palette = "Set1") +
-  labs(title = "Top 20 Most Frequently Mutated Genes",
-       x = "Gene Symbol",
-       y = "Number of Variants",
-       fill = "Chromosome") +
-  theme_course()
-
-# High impact variants by gene
-p7 <- vep_data %>%
-  filter(IMPACT %in% c("HIGH", "MODERATE") & !is.na(SYMBOL) & SYMBOL != "") %>%
-  count(SYMBOL, IMPACT) %>%
-  arrange(desc(n)) %>%
-  slice_head(n = 30) %>%
-  ggplot(aes(x = reorder(SYMBOL, n), y = n, fill = IMPACT)) +
-  geom_col() +
-  coord_flip() +
-  scale_fill_manual(values = c("HIGH" = "#d62728", "MODERATE" = "#ff7f0e")) +
-  labs(title = "Genes with High/Moderate Impact Variants",
-       x = "Gene Symbol",
-       y = "Number of Variants",
-       fill = "Impact Level") +
-  theme_course()
-```
-
-### Plots
-```{r}
-print(p6)
-```
-![](assets/variant_annotation/p6.png)
-
-```{r}
-print(p7)
-```
-![](assets/variant_annotation/p7.png)
-
-
+Continue with the [visualization of the annotated variants](visualization.qmd): you load the VEP output in R and plot it with ggplot2.
 :::
 
 ### VEP Performance Optimization
