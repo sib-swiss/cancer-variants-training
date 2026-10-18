@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="Flavio Lombardo">
-  <meta name="dcterms.date" content="2025-12-12">
+  <meta name="dcterms.date" content="2026-10-29">
   <title>Cancer variant analysis – Cancer Variant Analysis</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -233,7 +233,7 @@ Flavio Lombardo
 </div>
 </div>
 
-  <p class="date">2025-12-12</p>
+  <p class="date">2026-10-29</p>
 </section>
 <section id="learning-objectives" class="slide level2">
 <h2>Learning Objectives</h2>
@@ -342,52 +342,54 @@ Flavio Lombardo
 <section id="the-hallmarks-of-cancer" class="slide level2">
 <h2>The Hallmarks of Cancer</h2>
 <p><strong>8 Core Hallmarks:</strong></p>
+<div class="sib-slide sib-wide">
 <table class="caption-top">
 <colgroup>
-<col style="width: 43%">
-<col style="width: 56%">
+<col style="width: 35%">
+<col style="width: 64%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Hallmark</th>
-<th>Description</th>
+<th style="text-align: left;">Hallmark</th>
+<th style="text-align: left;">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Sustaining proliferative signaling</td>
-<td>Self-sufficiency in growth signals</td>
+<td style="text-align: left;"><strong>Sustaining proliferative signaling</strong></td>
+<td style="text-align: left;">Self-sufficiency in growth signals</td>
 </tr>
 <tr class="even">
-<td>Evading growth suppressors</td>
-<td>Insensitivity to anti-growth signals</td>
+<td style="text-align: left;"><strong>Evading growth suppressors</strong></td>
+<td style="text-align: left;">Insensitivity to anti-growth signals</td>
 </tr>
 <tr class="odd">
-<td>Resisting cell death</td>
-<td>Evading apoptosis</td>
+<td style="text-align: left;"><strong>Resisting cell death</strong></td>
+<td style="text-align: left;">Evading apoptosis</td>
 </tr>
 <tr class="even">
-<td>Enabling replicative immortality</td>
-<td>Limitless replicative potential</td>
+<td style="text-align: left;"><strong>Enabling replicative immortality</strong></td>
+<td style="text-align: left;">Limitless replicative potential</td>
 </tr>
 <tr class="odd">
-<td>Inducing angiogenesis</td>
-<td>Sustained blood vessel formation</td>
+<td style="text-align: left;"><strong>Inducing angiogenesis</strong></td>
+<td style="text-align: left;">Sustained blood vessel formation</td>
 </tr>
 <tr class="even">
-<td>Activating invasion &amp; metastasis</td>
-<td>Tissue invasion and spread</td>
+<td style="text-align: left;"><strong>Activating invasion &amp; metastasis</strong></td>
+<td style="text-align: left;">Tissue invasion and spread</td>
 </tr>
 <tr class="odd">
-<td>Avoiding immune destruction</td>
-<td>Escaping immune surveillance</td>
+<td style="text-align: left;"><strong>Avoiding immune destruction</strong></td>
+<td style="text-align: left;">Escaping immune surveillance</td>
 </tr>
 <tr class="even">
-<td>Deregulating cellular energetics</td>
-<td>Altered metabolism (Warburg effect)</td>
+<td style="text-align: left;"><strong>Deregulating cellular energetics</strong></td>
+<td style="text-align: left;">Altered metabolism (Warburg effect)</td>
 </tr>
 </tbody>
 </table>
+</div>
 <p><strong>2 Enabling Characteristics:</strong> Genome instability &amp; mutation; Tumor-promoting inflammation</p>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -623,7 +625,7 @@ Flavio Lombardo
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
     A[Raw FASTQ] --&gt; B[QC + Adapter&lt;br/&gt;fastp/MultiQC]
-    B --&gt; C[Alignment&lt;br/&gt;bwa-mem2]
+    B --&gt; C[Alignment&lt;br/&gt;bwa mem]
     C --&gt; D[Add Read Groups]
     D --&gt; E[Mark Duplicates&lt;br/&gt;GATK]
     E --&gt; F[BQSR]
@@ -675,34 +677,111 @@ Flavio Lombardo
 <section id="the-sambamcram-file-formats" class="slide level2">
 <h2>The SAM/BAM/CRAM File Formats</h2>
 <p><strong>Purpose:</strong> Store sequence alignments</p>
-<div class="columns">
-<div class="column" style="width:40%;">
-<p><strong>Key points:</strong></p>
-<ul>
-<li><strong>SAM</strong>: Text-based (Human readable)</li>
-<li><strong>BAM</strong>: <strong>Lossless</strong> binary compressed SAM
+<style>
+.carbon-wrap { container-type: inline-size; }
+.carbon { background: #abb8c3; padding: 6.4cqw; }
+.carbon.slim { padding: 2.2cqw 2.6cqw; }
+.carbon .win { background: #151718; border-radius: 0.9cqw; padding: 1.9cqw 1.9cqw 2.2cqw; box-shadow: 0 1.4cqw 3.4cqw rgba(0,0,0,.47); }
+.carbon .dots { height: 1.37cqw; display: flex; gap: 0.92cqw; align-items: center; margin-bottom: 2.4cqw; }
+.carbon .dots i { width: 1.37cqw; height: 1.37cqw; border-radius: 50%; display: block; }
+.carbon .dots i:nth-child(1) { background: #ff5f56; }
+.carbon .dots i:nth-child(2) { background: #ffbd2e; }
+.carbon .dots i:nth-child(3) { background: #27c93f; }
+.carbon pre { margin: 0; padding: 0; background: none; border: 0; box-shadow: none; width: auto; font-family: Monaco, Menlo, "DejaVu Sans Mono", monospace; font-size: 1.6cqw; line-height: 2.114cqw; white-space: pre; color: #55b5db; }
+.carbon pre span.b { color: #55b5db; }
+.carbon pre span.r { color: #cd3f45; }
+.carbon pre span.g { color: #9fca56; }
+.sib-slide table { box-sizing: border-box; border-collapse: separate; border-spacing: 0; width: 100%; max-width: 100%; border: 1px solid #d3d9df; border-radius: 10px; overflow: hidden; font-size: 0.7em; }
+.sib-slide.sib-wide table { font-size: 0.95em; }
+.sib-slide table thead tr { background: #151718; }
+.sib-slide table thead th { color: #fff; font-weight: 600; border: 0; padding: 0.35em 0.7em; text-align: left; }
+.sib-slide table tbody td { border: 0; border-top: 1px solid #e3e7eb; padding: 0.3em 0.7em; vertical-align: top; }
+.sib-slide table tbody tr:nth-child(even) { background: #f3f5f7; }
+.sib-slide table code { background: #e6ebf0; color: #151718; border-radius: 4px; padding: 0 0.25em; font-size: 0.95em; }
+.reveal section div.sourceCode { margin-bottom: 0.9em; }
+</style>
+<div class="columns sib-slide">
+<div class="column" style="width:33%;">
+<p><strong>SAM</strong>: Text-based (Human readable)</p>
+</div><div class="column" style="width:33%;">
+<p><strong>BAM</strong>: <strong>Lossless</strong> binary compressed SAM</p>
 <ul>
 <li><em>Indexable (Fast random access)</em></li>
-</ul></li>
-<li><strong>CRAM</strong>: <strong>Ref-based</strong> compression
+</ul>
+</div><div class="column" style="width:34%;">
+<p><strong>CRAM</strong>: <strong>Ref-based</strong> compression</p>
 <ul>
 <li><em>Lossless or Lossy modes</em></li>
 <li>~30-60% smaller than BAM</li>
 <li>Requires access to the reference genome for decoding</li>
-</ul></li>
 </ul>
-</div><div class="column" style="width:60%;">
-<p><strong>1. Header</strong> (<code>@</code> lines)</p>
-<pre><code>@HD VN:1.6  SO:coordinate
-@SQ SN:chr6 LN:170805979
-@SQ SN:chr17    LN:83257441
-@RG ID:HWI-ST466.C1TD1ACXX.normal   LB:normal   PL:ILLUMINA SM:normal   PU:HWI-ST466.C1TD1ACXX
-@PG ID:bwa  PN:bwa  VN:0.7.17-r1188 CL:bwa mem /config/data/reference//ref_genome.fa /config/data/reads/normal_R1.fastq.gz /config/data/reads/normal_R2.fastq.gz
-@PG ID:samtools PN:samtools PP:bwa  VN:1.21 CL:samtools sort
-@PG ID:samtools.1   PN:samtools PP:samtools VN:1.21 CL:samtools view -bh</code></pre>
-<p><strong>2. Alignment Record</strong> (The actual reads)</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a aria-label="1"></a><span class="ex">read1</span>  99  chr6  1000  60  76M  =  1150  226  ATGC...  <span class="co">####</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div></div>
+<h3 id="example-from-our-bam-files">Example from our BAM files</h3>
+<p>Commands from the quality control exercises, run on <code>normal.recal.bam</code>. <code>samtools view</code> prints the BAM file as SAM text:</p>
+<p><strong>1. Header</strong> (<code>@</code> lines, shortened: 6 of 9 lines)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a aria-label="1"></a><span class="va">ALIGNDIR</span><span class="op">=</span>~/project/data/alignments</span>
+<span id="cb1-2"><a aria-label="2"></a><span class="ex">samtools</span> view <span class="at">-H</span> <span class="st">"</span><span class="va">$ALIGNDIR</span><span class="st">"</span>/normal.recal.bam</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="columns sib-slide">
+<div class="column" style="width:42%;">
 <table class="caption-top">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 45%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Line</th>
+<th style="text-align: left;">Fields</th>
+<th style="text-align: left;">Our file</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>@HD</code></td>
+<td style="text-align: left;"><code>VN</code> format version, <code>SO</code> sort order</td>
+<td style="text-align: left;"><code>1.6</code>, <code>coordinate</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>@SQ</code></td>
+<td style="text-align: left;"><code>SN</code> reference name, <code>LN</code> length</td>
+<td style="text-align: left;"><code>chr6</code> 170,805,979 bp, <code>chr17</code> 83,257,441 bp</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>@RG</code></td>
+<td style="text-align: left;"><code>ID</code> group, <code>SM</code> sample, <code>LB</code> library, <code>PL</code> platform, <code>PU</code> flowcell</td>
+<td style="text-align: left;"><code>normal</code>, <code>ILLUMINA</code>, <code>HWI-ST466.C1TD1ACXX</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>@PG</code></td>
+<td style="text-align: left;"><code>ID</code> <code>PN</code> program, <code>VN</code> version, <code>PP</code> previous program, <code>CL</code> command</td>
+<td style="text-align: left;"><code>bwa</code> 0.7.19, <code>samtools</code> 1.22.1</td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:58%;">
+<div class="carbon-wrap"><div class="carbon"><div class="win"><div class="dots"><i></i><i></i><i></i></div>
+<pre><span class="b">@HD  VN:</span><span class="r">1.6</span><span class="b">  SO:coordinate</span>
+<span class="b">@SQ  SN:chr6  LN:</span><span class="r">170805979</span>
+<span class="b">@SQ  SN:chr17  LN:</span><span class="r">83257441</span>
+<span class="b">@RG  ID:HWI-ST466.</span><span class="g">C1TD1ACXX.normal</span><span class="b">  LB:normal  PL:ILLUMINA  SM:normal  </span>
+<span class="b">PU:HWI-ST466.</span><span class="g">C1TD1ACXX</span>
+<span class="b">@PG  ID:bwa  PN:bwa  VN:</span><span class="r">0.7.19</span><span class="b">-r1273  CL:bwa mem /config/project/course_data</span>
+<span class="b">/reference</span><span class="g">/ref_genome.fa</span><span class="b"> /config/project/course_data/reads</span><span class="g">/normal_R1.fastq.gz</span><span class="b"> /config</span>
+<span class="b">/project/course_data/reads</span><span class="g">/normal_R2.fastq.gz</span>
+<span class="b">@PG  ID:samtools  PN:samtools  PP:bwa  VN:</span><span class="r">1.22.1</span><span class="b">  CL:samtools sort -o /config/project</span>
+<span class="b">/course_data/alignments</span><span class="g">/normal.bam</span><span class="b"> -</span></pre></div></div></div>
+
+</div></div>
+<p><strong>2. Alignment Record</strong> (The actual reads; shown: the second read of the output, wrapped, <code>SEQ</code> and <code>QUAL</code> shortened with <code>…</code>)</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource sh number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a aria-label="1"></a><span class="ex">samtools</span> view <span class="st">"</span><span class="va">$ALIGNDIR</span><span class="st">"</span>/normal.recal.bam <span class="kw">|</span> <span class="fu">head</span> <span class="at">-3</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="columns sib-slide">
+<div class="column" style="width:42%;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Field</th>
@@ -712,7 +791,7 @@ Flavio Lombardo
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><strong>QNAME</strong></td>
-<td style="text-align: left;">Query / Read Name (<code>read1</code>)</td>
+<td style="text-align: left;">Query / Read Name (<code>HWI-ST466:135068617:C1TD1ACXX:7:1303:2021:90688</code>)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>FLAG</strong></td>
@@ -724,7 +803,7 @@ Flavio Lombardo
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>POS</strong></td>
-<td style="text-align: left;">1-based mapping position (<code>1000</code>)</td>
+<td style="text-align: left;">1-based mapping position (<code>60001</code>)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><strong>MAPQ</strong></td>
@@ -732,33 +811,113 @@ Flavio Lombardo
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>CIGAR</strong></td>
-<td style="text-align: left;">Alignment String (<code>76M</code>)</td>
+<td style="text-align: left;">Alignment String (<code>100M</code>)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><strong>SEQ</strong></td>
-<td style="text-align: left;">Nucleotide sequence (<code>ATGC...</code>)</td>
+<td style="text-align: left;">Nucleotide sequence (<code>GATCTTATATAACTGTGAGA…</code>)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>QUAL</strong></td>
-<td style="text-align: left;">Base quality scores (<code>####</code>)</td>
+<td style="text-align: left;">Base quality scores (<code>&gt;A@FDB@A?@&gt;DDCE@FAF@?…</code>)</td>
 </tr>
 </tbody>
 </table>
+</div><div class="column" style="width:58%;">
+<div class="carbon-wrap"><div class="carbon"><div class="win"><div class="dots"><i></i><i></i><i></i></div>
+<pre><span class="b">HWI-ST466:135068617:C1TD1ACXX:7:1303:2021:90688</span><span class="b">  </span><span class="r">99</span><span class="b">  </span><span class="g">chr6</span><span class="b">  </span><span class="r">60001</span><span class="b">  </span><span class="r">60</span>
+<span class="g">100M</span><span class="b">  </span><span class="b">=</span><span class="b">  </span><span class="r">60104</span><span class="b">  </span><span class="r">203</span><span class="b">  </span><span class="b">GATCTTATATAACTGTGAGA…</span><span class="b">  </span><span class="b">&gt;A@FDB@A?@&gt;DDCE@FAF@?…</span>
+<span class="b">MC:Z:100M</span><span class="b">  </span><span class="b">MD:Z:100</span><span class="b">  </span><span class="b">PG:Z:MarkDuplicates</span>
+<span class="b">RG:Z:HWI-ST466.C1TD1ACXX.normal</span><span class="b">  </span><span class="b">NM:i:0</span><span class="b">  </span><span class="b">MQ:i:60</span><span class="b">  </span><span class="b">AS:i:100</span><span class="b">  </span><span class="b">XS:i:0</span></pre></div></div></div>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<p><strong>Additional SAM fields in this example</strong></p>
+<p><strong>Additional fields of the alignment record (the same in SAM and BAM)</strong></p>
 </div>
 <div class="callout-content">
 <ul>
 <li><strong>RNEXT</strong> = <code>=</code> (mate maps to same chromosome)</li>
-<li><strong>PNEXT</strong> = <code>1150</code> (mate’s mapping position)<br>
+<li><strong>PNEXT</strong> = <code>60104</code> (mate’s mapping position)<br>
 </li>
-<li><strong>TLEN</strong> = <code>226</code> (template/insert length in bp)</li>
+<li><strong>TLEN</strong> = <code>203</code> (template/insert length in bp)</li>
 </ul>
+</div>
+</div>
+</div>
+</div></div>
+<p><strong>3. Optional tags</strong> (after <code>QUAL</code>, written <code>TAG:TYPE:VALUE</code>, type <code>Z</code> = text, <code>i</code> = integer)</p>
+<div class="columns sib-slide">
+<div class="column" style="width:58%;">
+<table class="caption-top">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 50%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Tag</th>
+<th style="text-align: left;">Meaning</th>
+<th style="text-align: left;">Our read</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>MC:Z</code></td>
+<td style="text-align: left;">CIGAR of the mate</td>
+<td style="text-align: left;"><code>100M</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>MD:Z</code></td>
+<td style="text-align: left;">Mismatch string: number of matching bases, reference base at a mismatch</td>
+<td style="text-align: left;"><code>100</code> (all 100 bases match)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>PG:Z</code></td>
+<td style="text-align: left;">Program that last wrote the read (ID of an <code>@PG</code> line)</td>
+<td style="text-align: left;"><code>MarkDuplicates</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>RG:Z</code></td>
+<td style="text-align: left;">Read group (ID of the <code>@RG</code> line)</td>
+<td style="text-align: left;"><code>HWI-ST466.C1TD1ACXX.normal</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>NM:i</code></td>
+<td style="text-align: left;">Edit distance to the reference</td>
+<td style="text-align: left;"><code>0</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>MQ:i</code></td>
+<td style="text-align: left;">Mapping quality of the mate</td>
+<td style="text-align: left;"><code>60</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>AS:i</code></td>
+<td style="text-align: left;">Alignment score (bwa)</td>
+<td style="text-align: left;"><code>100</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>XS:i</code></td>
+<td style="text-align: left;">Score of the best other hit (bwa)</td>
+<td style="text-align: left;"><code>0</code></td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:42%;">
+<div class="callout callout-note callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Reading this read</strong></p>
+</div>
+<div class="callout-content">
+<p><code>100M</code>, <code>MD:Z:100</code>, <code>NM:i:0</code> and <code>AS:i:100</code> all say the same: the 100 bases match the reference. <code>MAPQ 60</code> and <code>XS:i:0</code> say the placement is unique.</p>
 </div>
 </div>
 </div>
@@ -809,44 +968,95 @@ Flavio Lombardo
 <section id="read-groups-organizing-your-data" class="slide level2">
 <h2>Read Groups: Organizing Your Data</h2>
 <p><strong>Purpose:</strong> Track metadata for groups of reads within BAM files</p>
-<div class="columns">
-<div class="column" style="width:40%;">
-<p><strong>Key Read Group Tags:</strong></p>
-<ul>
-<li><strong>ID</strong>: Unique read group identifier</li>
-<li><strong>SM</strong>: <strong>Sample name</strong> (patient/specimen)
-<ul>
-<li><em>Critical for multi-sample calling</em></li>
-<li><em>Tumor vs.&nbsp;Normal distinction</em></li>
-</ul></li>
-<li><strong>LB</strong>: Library prep identifier
-<ul>
-<li><em>Used for duplicate marking</em></li>
-</ul></li>
-<li><strong>PL</strong>: Sequencing platform</li>
-<li><strong>PU</strong>: Platform unit (flowcell.lane)
-<ul>
-<li><em>For tracking batch effects</em></li>
-</ul></li>
-</ul>
-<p><strong>Why read groups matter:</strong></p>
-<ul>
-<li><strong>BQSR</strong>: Models built per-read-group</li>
-<li><strong>Merging</strong>: Combine multiple lanes/runs per sample</li>
-<li><strong>Duplicate marking</strong>: Per-library detection</li>
-<li><strong>Somatic calling</strong>: Required to distinguish tumor/normal</li>
-<li><strong>QC &amp; troubleshooting</strong>: Track technical artifacts</li>
-</ul>
-</div><div class="column" style="width:60%;">
-<p><strong>Header Example (Tumor-Normal Pair):</strong></p>
+<div class="columns sib-slide">
+<div class="column" style="width:42%;">
+<p><strong>Key Read Group Tags</strong></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 45%">
+<col style="width: 45%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Tag</th>
+<th style="text-align: left;">Meaning</th>
+<th style="text-align: left;">Good to know</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>ID</code></td>
+<td style="text-align: left;">Unique read group identifier</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>SM</code></td>
+<td style="text-align: left;"><strong>Sample name</strong> (patient/specimen)</td>
+<td style="text-align: left;">Critical for multi-sample calling. Tumor vs.&nbsp;Normal distinction</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>LB</code></td>
+<td style="text-align: left;">Library prep identifier</td>
+<td style="text-align: left;">Used for duplicate marking</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>PL</code></td>
+<td style="text-align: left;">Sequencing platform</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>PU</code></td>
+<td style="text-align: left;">Platform unit (flowcell.lane)</td>
+<td style="text-align: left;">For tracking batch effects</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why read groups matter</strong></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Step</th>
+<th style="text-align: left;">What the read group does</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>BQSR</strong></td>
+<td style="text-align: left;">Models built per-read-group</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Merging</strong></td>
+<td style="text-align: left;">Combine multiple lanes/runs per sample</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Duplicate marking</strong></td>
+<td style="text-align: left;">Per-library detection</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Somatic calling</strong></td>
+<td style="text-align: left;">Required to distinguish tumor/normal</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>QC &amp; troubleshooting</strong></td>
+<td style="text-align: left;">Track technical artifacts</td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:58%;">
+<p><strong>Header Example (Tumor-Normal Pair)</strong></p>
 <p><strong>Normal:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a aria-label="1"></a><span class="ex">@RG</span> ID:normal.lane1  SM:patient001_normal  LB:lib_n  PL:ILLUMINA  PU:HWI.lane1</span>
-<span id="cb3-2"><a aria-label="2"></a><span class="ex">@RG</span> ID:normal.lane2  SM:patient001_normal  LB:lib_n  PL:ILLUMINA  PU:HWI.lane2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="carbon-wrap"><div class="carbon"><div class="win"><div class="dots"><i></i><i></i><i></i></div>
+<pre style="font-size:1.6cqw;line-height:2.114cqw"><span class="b">@RG</span><span class="b">  </span><span class="b">ID:</span><span class="g">normal.lane1</span><span class="b">  </span><span class="b">SM:</span><span class="g">patient001_normal</span><span class="b">  </span><span class="b">LB:</span><span class="g">lib_n</span><span class="b">  </span><span class="b">PL:</span><span class="g">ILLUMINA</span><span class="b">  </span><span class="b">PU:</span><span class="g">HWI.lane1</span>
+<span class="b">@RG</span><span class="b">  </span><span class="b">ID:</span><span class="g">normal.lane2</span><span class="b">  </span><span class="b">SM:</span><span class="g">patient001_normal</span><span class="b">  </span><span class="b">LB:</span><span class="g">lib_n</span><span class="b">  </span><span class="b">PL:</span><span class="g">ILLUMINA</span><span class="b">  </span><span class="b">PU:</span><span class="g">HWI.lane2</span></pre></div></div></div>
 <p><strong>Tumor:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a aria-label="1"></a><span class="ex">@RG</span> ID:tumor.lane1   SM:patient001_tumor   LB:lib_t  PL:ILLUMINA  PU:HWI.lane1</span>
-<span id="cb4-2"><a aria-label="2"></a><span class="ex">@RG</span> ID:tumor.lane2   SM:patient001_tumor   LB:lib_t  PL:ILLUMINA  PU:HWI.lane2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="carbon-wrap"><div class="carbon"><div class="win"><div class="dots"><i></i><i></i><i></i></div>
+<pre style="font-size:1.6cqw;line-height:2.114cqw"><span class="b">@RG</span><span class="b">  </span><span class="b">ID:</span><span class="g">tumor.lane1</span><span class="b">   </span><span class="b">SM:</span><span class="g">patient001_tumor</span><span class="b">   </span><span class="b">LB:</span><span class="g">lib_t</span><span class="b">  </span><span class="b">PL:</span><span class="g">ILLUMINA</span><span class="b">  </span><span class="b">PU:</span><span class="g">HWI.lane1</span>
+<span class="b">@RG</span><span class="b">  </span><span class="b">ID:</span><span class="g">tumor.lane2</span><span class="b">   </span><span class="b">SM:</span><span class="g">patient001_tumor</span><span class="b">   </span><span class="b">LB:</span><span class="g">lib_t</span><span class="b">  </span><span class="b">PL:</span><span class="g">ILLUMINA</span><span class="b">  </span><span class="b">PU:</span><span class="g">HWI.lane2</span></pre></div></div></div>
+</div></div>
 <p><strong>Alignment Record with Read Group:</strong></p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a aria-label="1"></a><span class="ex">read1</span>  99  chr20  1000  60  76M  =  1150  226  ATGC...  <span class="co">####  RG:Z:tumor.lane1</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="columns sib-slide">
+<div class="column" style="width:42%;">
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -863,6 +1073,9 @@ Flavio Lombardo
 </tr>
 </tbody>
 </table>
+</div><div class="column" style="width:58%;">
+<div class="carbon-wrap"><div class="carbon"><div class="win"><div class="dots"><i></i><i></i><i></i></div>
+<pre style="font-size:1.6cqw;line-height:2.114cqw"><span class="g">read1</span><span class="b">  </span><span class="r">99</span><span class="b">  </span><span class="g">chr20</span><span class="b">  </span><span class="r">1000</span><span class="b">  </span><span class="r">60</span><span class="b">  </span><span class="g">76M</span><span class="b">  </span><span class="b">=</span><span class="b">  </span><span class="r">1150</span><span class="b">  </span><span class="r">226</span><span class="b">  </span><span class="b">ATGC...</span><span class="b">  </span><span class="b">####</span><span class="b">  </span><span class="b">RG:Z:</span><span class="g">tumor.lane1</span></pre></div></div></div>
 </div></div>
 <div class="callout callout-note callout-titled callout-style-default">
 <div class="callout-body">
@@ -887,7 +1100,8 @@ Flavio Lombardo
 </div>
 <div class="callout-content">
 <p>Add read groups <strong>during alignment</strong> for efficiency:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a aria-label="1"></a><span class="ex">bwa</span> mem <span class="at">-R</span> <span class="st">'@RG\tID:tumor.lane1\tSM:patient001_tumor\tLB:lib_t\tPL:ILLUMINA'</span> ref.fa reads.fq</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="carbon-wrap"><div class="carbon"><div class="win"><div class="dots"><i></i><i></i><i></i></div>
+<pre style="font-size:1.39cqw;line-height:1.836cqw"><span class="b">bwa</span><span class="b"> </span><span class="b">mem</span><span class="b"> </span><span class="g">-R</span><span class="b"> </span><span class="r">'@RG\tID:tumor.lane1\tSM:patient001_tumor\tLB:lib_t\tPL:ILLUMINA'</span><span class="b"> </span><span class="b">ref.fa</span><span class="b"> </span><span class="b">reads.fq</span></pre></div></div></div>
 <p>Avoid post-hoc addition (e.g., GATK <code>AddOrReplaceReadGroups</code>) when possible.</p>
 </div>
 </div>
@@ -1079,32 +1293,94 @@ Flavio Lombardo
 </section>
 <section id="the-vcf-file-format" class="slide level2">
 <h2>The VCF File Format</h2>
-<p><strong>Variant Call Format</strong> Standard for storing variant data (current: v4.3)</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode numberSource vcf number-lines code-with-copy"><code class="sourceCode"><span id="cb7-1"><a aria-label="1"></a>##fileformat=VCFv4.3</span>
-<span id="cb7-2"><a aria-label="2"></a>##INFO=&lt;ID=DP,Number=1,Type=Integer,Description="Total Depth"&gt;</span>
-<span id="cb7-3"><a aria-label="3"></a>##INFO=&lt;ID=AF,Number=A,Type=Float,Description="Allele Frequency"&gt;</span>
-<span id="cb7-4"><a aria-label="4"></a>##FILTER=&lt;ID=weak_evidence,Description="Insufficient support"&gt;</span>
-<span id="cb7-5"><a aria-label="5"></a>##FILTER=&lt;ID=germline,Description="Likely germline variant"&gt;</span>
-<span id="cb7-6"><a aria-label="6"></a>##FORMAT=&lt;ID=GT,Number=1,Type=String,Description="Genotype"&gt;</span>
-<span id="cb7-7"><a aria-label="7"></a>##FORMAT=&lt;ID=AD,Number=R,Type=Integer,Description="Allelic depths (REF,ALT)"&gt;</span>
-<span id="cb7-8"><a aria-label="8"></a>##FORMAT=&lt;ID=AF,Number=A,Type=Float,Description="Allele Frequency"&gt;</span>
-<span id="cb7-9"><a aria-label="9"></a>#CHROM  POS     ID        REF  ALT  QUAL  FILTER  INFO        FORMAT      TUMOR       NORMAL</span>
-<span id="cb7-10"><a aria-label="10"></a>chr17   7577538 rs123     G    A    .     PASS    DP=100      GT:AD:AF    0/1:70,30:0.30  0/0:50,0:0.0</span>
-<span id="cb7-11"><a aria-label="11"></a>chr17   7578406 .         C    T    .     germline DP=85     GT:AD:AF    0/1:40,45:0.53  0/1:30,25:0.45</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p><strong>Key columns explained:</strong></p>
-<ul>
-<li><strong>CHROM/POS</strong>: Genomic location</li>
-<li><strong>REF/ALT</strong>: Reference and alternate alleles<br>
-</li>
-<li><strong>FILTER</strong>: Quality filters applied (PASS = passed all)</li>
-<li><strong>FORMAT</strong>: Defines sample-specific fields</li>
-<li><strong>GT</strong>: Genotype (0/0=hom ref, 0/1=het, 1/1=hom alt)</li>
-<li><strong>AD</strong>: Allele depths (REF count, ALT count)</li>
-<li><strong>AF</strong>: Variant Allele Frequency = ALT/(REF+ALT)</li>
-</ul>
-<p><strong>Example interpretation:</strong></p>
-<p>Row 1: Somatic mutation (30% VAF in tumor, 0% in normal) ✓<br>
-Row 2: Germline variant (present in both tumor and normal) ✗</p>
+<p><strong>Variant Call Format</strong><br>
+Standard for storing variant data (current: v4.3)</p>
+<div class="carbon-wrap"><div class="carbon slim"><div class="win"><div class="dots"><i></i><i></i><i></i></div>
+<pre style="font-size:1.287cqw;line-height:1.7cqw"><span class="b">##fileformat=VCFv4.3</span>
+<span class="b">##INFO=&lt;ID=DP,Number=1,Type=Integer,Description="Total Depth"&gt;</span>
+<span class="b">##INFO=&lt;ID=AF,Number=A,Type=Float,Description="Allele Frequency"&gt;</span>
+<span class="b">##FILTER=&lt;ID=weak_evidence,Description="Insufficient support"&gt;</span>
+<span class="b">##FILTER=&lt;ID=germline,Description="Likely germline variant"&gt;</span>
+<span class="b">##FORMAT=&lt;ID=GT,Number=1,Type=String,Description="Genotype"&gt;</span>
+<span class="b">##FORMAT=&lt;ID=AD,Number=R,Type=Integer,Description="Allelic depths (REF,ALT)"&gt;</span>
+<span class="b">##FORMAT=&lt;ID=AF,Number=A,Type=Float,Description="Allele Frequency"&gt;</span>
+<span class="g">#CHROM  POS     ID        REF  ALT  QUAL  FILTER  INFO        FORMAT      TUMOR       NORMAL</span>
+<span class="b">chr17</span><span class="b">   </span><span class="r">7577538</span><span class="b"> </span><span class="g">rs123</span><span class="b">     </span><span class="b">G</span><span class="b">    </span><span class="b">A</span><span class="b">    </span><span class="b">.</span><span class="b">     </span><span class="g">PASS</span><span class="b">    </span><span class="b">DP=100</span><span class="b">      </span><span class="b">GT:AD:AF</span><span class="b">    </span><span class="r">0/1:70,30:0.30</span><span class="b">  </span><span class="r">0/0:50,0:0.0</span>
+<span class="b">chr17</span><span class="b">   </span><span class="r">7578406</span><span class="b"> </span><span class="g">.</span><span class="b">         </span><span class="b">C</span><span class="b">    </span><span class="b">T</span><span class="b">    </span><span class="b">.</span><span class="b">     </span><span class="g">germline</span><span class="b"> </span><span class="b">DP=85</span><span class="b">     </span><span class="b">GT:AD:AF</span><span class="b">    </span><span class="r">0/1:40,45:0.53</span><span class="b">  </span><span class="r">0/1:30,25:0.45</span></pre></div></div></div>
+<div class="columns sib-slide">
+<div class="column" style="width:46%;">
+<p><strong>Key columns explained</strong></p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Column</th>
+<th style="text-align: left;">Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>CHROM</code> / <code>POS</code></td>
+<td style="text-align: left;">Genomic location</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>REF</code> / <code>ALT</code></td>
+<td style="text-align: left;">Reference and alternate alleles</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>FILTER</code></td>
+<td style="text-align: left;">Quality filters applied (<code>PASS</code> = passed all)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>FORMAT</code></td>
+<td style="text-align: left;">Defines sample-specific fields</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>GT</code></td>
+<td style="text-align: left;">Genotype (<code>0/0</code> = hom ref, <code>0/1</code> = het, <code>1/1</code> = hom alt)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>AD</code></td>
+<td style="text-align: left;">Allele depths (REF count, ALT count)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>AF</code></td>
+<td style="text-align: left;">Variant Allele Frequency = ALT/(REF+ALT)</td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:54%;">
+<p><strong>Example interpretation</strong></p>
+<table class="caption-top">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 15%">
+<col style="width: 15%">
+<col style="width: 57%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Row</th>
+<th style="text-align: left;">Tumor</th>
+<th style="text-align: left;">Normal</th>
+<th style="text-align: left;">Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"><code>0/1:70,30:0.30</code></td>
+<td style="text-align: left;"><code>0/0:50,0:0.0</code></td>
+<td style="text-align: left;">Somatic mutation (30% VAF in tumor, 0% in normal) ✓</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;"><code>0/1:40,45:0.53</code></td>
+<td style="text-align: left;"><code>0/1:30,25:0.45</code></td>
+<td style="text-align: left;">Germline variant (present in both tumor and normal) ✗</td>
+</tr>
+</tbody>
+</table>
+</div></div>
 <div class="callout callout-important callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -1287,63 +1563,65 @@ Row 2: Germline variant (present in both tumor and normal) ✗</p>
 <section id="quality-control-metrics" class="slide level2">
 <h2>Quality Control Metrics</h2>
 <p><strong>Essential QC checks at each stage:</strong></p>
+<div class="sib-slide sib-wide">
 <table class="caption-top">
 <colgroup>
-<col style="width: 20%">
-<col style="width: 40%">
-<col style="width: 40%">
+<col style="width: 10%">
+<col style="width: 31%">
+<col style="width: 57%">
 </colgroup>
 <thead>
 <tr class="header">
-<th>Metric</th>
-<th>Expected Value</th>
-<th>Interpretation</th>
+<th style="text-align: left;">Metric</th>
+<th style="text-align: left;">Expected Value</th>
+<th style="text-align: left;">Interpretation</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>Mapping rate</td>
-<td>&gt;95%</td>
-<td>Low = contamination or poor quality</td>
+<td style="text-align: left;"><strong>Mapping rate</strong></td>
+<td style="text-align: left;">&gt;95%</td>
+<td style="text-align: left;">Low = contamination or poor quality</td>
 </tr>
 <tr class="even">
-<td>Duplicate rate</td>
-<td>&lt;30% (WGS)</td>
-<td>High = low library complexity</td>
+<td style="text-align: left;"><strong>Duplicate rate</strong></td>
+<td style="text-align: left;">&lt;30% (WGS)</td>
+<td style="text-align: left;">High = low library complexity</td>
 </tr>
 <tr class="odd">
-<td>Mean coverage</td>
-<td>As specified</td>
-<td>Low = insufficient data</td>
+<td style="text-align: left;"><strong>Mean coverage</strong></td>
+<td style="text-align: left;">As specified</td>
+<td style="text-align: left;">Low = insufficient data</td>
 </tr>
 <tr class="even">
-<td>Coverage uniformity</td>
-<td>CV &lt;0.2</td>
-<td>High variability = capture issues</td>
+<td style="text-align: left;"><strong>Coverage uniformity</strong></td>
+<td style="text-align: left;">CV &lt;0.2</td>
+<td style="text-align: left;">High variability = capture issues</td>
 </tr>
 <tr class="odd">
-<td>Contamination</td>
-<td>&lt;1-2%</td>
-<td>High = sample swap or cross-contamination</td>
+<td style="text-align: left;"><strong>Contamination</strong></td>
+<td style="text-align: left;">&lt;1-2%</td>
+<td style="text-align: left;">High = sample swap or cross-contamination</td>
 </tr>
 <tr class="even">
-<td>Ti/Tv ratio</td>
-<td>~2.0-2.1 (WGS), ~3.0-3.3 (exome)</td>
-<td>Low = sequencing errors enriched</td>
+<td style="text-align: left;"><strong>Ti/Tv ratio</strong></td>
+<td style="text-align: left;">~2.0-2.1 (WGS), ~3.0-3.3 (exome)</td>
+<td style="text-align: left;">Low = sequencing errors enriched</td>
 </tr>
 <tr class="odd">
-<td>Insert size</td>
-<td>200-400bp (Illumina)</td>
-<td>Bimodal = library issues</td>
+<td style="text-align: left;"><strong>Insert size</strong></td>
+<td style="text-align: left;">200-400bp (Illumina)</td>
+<td style="text-align: left;">Bimodal = library issues</td>
 </tr>
 <tr class="even">
-<td>GC bias</td>
-<td>Flat across 30-70% GC</td>
-<td>Strong bias = PCR or coverage issues</td>
+<td style="text-align: left;"><strong>GC bias</strong></td>
+<td style="text-align: left;">Flat across 30-70% GC</td>
+<td style="text-align: left;">Strong bias = PCR or coverage issues</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Tools:</strong> fastQC, MultiQC, mosdepth, GATK CollectHsMetrics</p>
+</div>
+<p><strong>Tools:</strong> <code>fastQC</code>, <code>MultiQC</code>, <code>mosdepth</code>, <code>GATK CollectHsMetrics</code></p>
 </section>
 <section id="summary-and-key-takeaways" class="slide level2">
 <h2>Summary and Key Takeaways</h2>

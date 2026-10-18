@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Downloads ClinVar, AlphaMissense, REVEL for VEP v115
+# Downloads ClinVar, AlphaMissense, REVEL for VEP v116
 
 set -e
 

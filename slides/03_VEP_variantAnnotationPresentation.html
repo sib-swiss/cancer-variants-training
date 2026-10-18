@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.10.19">
 
   <meta name="author" content="Flavio Lombardo">
-  <meta name="dcterms.date" content="2025-12-12">
+  <meta name="dcterms.date" content="2026-11-03">
   <title>Cancer variant analysis – Variant Effect Predictor (VEP)</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -230,7 +230,7 @@ Flavio Lombardo
 </div>
 </div>
 
-  <p class="date">2025-12-12</p>
+  <p class="date">2026-11-03</p>
 </section>
 <section id="somatic-vs-germline" class="slide level2">
 <h2>Somatic vs Germline</h2>
@@ -939,6 +939,22 @@ Figure&nbsp;3: Cancer somatic mutations, The cancer genome, Stratton et al, 2009
 <li><p>The more plugins the more computationally expensive it could become</p></li>
 <li><p>There is a nice <code>help</code> included in VEP that can be useful for consultation</p></li>
 </ul>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>AI tools to know</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><a href="https://github.com/google/deepsomatic">DeepSomatic</a>: deep learning somatic caller, an alternative to Mutect2. It writes a standard VCF, so VEP works on its output too.</li>
+<li><a href="https://deepmind.google/science/alphagenome/">AlphaGenome</a>: predicts the effect of variants outside coding sequence. It is not a caller and not a VEP plugin: you run it from Python.</li>
+</ul>
+</div>
+</div>
+</div>
 </section></section>
 <section>
 <section id="best-practices" class="title-slide slide level1 center" data-background-color="#2C3E50">
@@ -1013,6 +1029,13 @@ Figure&nbsp;3: Cancer somatic mutations, The cancer genome, Stratton et al, 2009
 <li><a href="https://www.ncbi.nlm.nih.gov/clinvar/">ClinVar</a></li>
 <li><a href="https://www.oncokb.org/">OncoKB</a></li>
 </ul>
+</section>
+<section id="exercises" class="slide level2">
+<h2>Exercises</h2>
+<ul>
+<li><a href="../variant_annotation.html">Variant annotation</a>: annotate the Mutect2 calls with VEP</li>
+<li><a href="../visualization.html">Visualization</a>: load the VEP output in R and plot it with ggplot2</li>
+</ul>
 </section></section>
 <section>
 <section id="questions" class="title-slide slide level1 center" data-background-color="#2C3E50">
@@ -1028,7 +1051,7 @@ Figure&nbsp;3: Cancer somatic mutations, The cancer genome, Stratton et al, 2009
 <li>Bioconductor: <a href="https://bioconductor.org/" class="uri">https://bioconductor.org/</a></li>
 </ul>
 </section>
-<section id="exercises" class="slide level2" style="text-align: center">
+<section id="exercises-1" class="slide level2" style="text-align: center">
 <h2>Exercises</h2>
 
 
