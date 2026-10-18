@@ -31,6 +31,8 @@ For this, we use `Mutect2` which is a somatic variant caller from the GATK toolk
 ::: {.callout-important}
 ## Exercise 1
 
+Let's call the somatic variants: we give `Mutect2` the tumor and the matched normal BAM together, so it can separate variants found only in the tumor from germline variants and technical artifacts.
+
 Create a script called `03_run_mutect2.sh`. After that, check out the [manual of `Mutect2`](https://gatk.broadinstitute.org/hc/en-us/articles/360037593851-Mutect2) and replace the placeholders `FIXME` with the required values of the `Mutect2` below command and run it:
 
 ```bash
@@ -56,10 +58,8 @@ gatk Mutect2 \
 
 ```
 
-:::
+⚠️ This takes a while to run. Have a break!
 
-::: {.callout-caution}
-This takes a while to run. Have a break!
 :::
 
 ::: {.callout-tip collapse="true"}
@@ -90,7 +90,7 @@ gatk Mutect2 \
 
 - `-normal`: comes from the read group in the bam files (`SM` tag)
 - `--germline-resource`: A VCF of **known germline variants** from large population studies (gnomAD, 1000 Genomes)
-- `--panel-of-normals`: These are NOT real biological variants - they're sequencing/alignment errors (ideally from >40-100 normal samples from the same cohort)
+- `--panel-of-normals`: sites that are NOT real biological variants but sequencing/alignment errors (ideally from >40-100 normal samples from the same cohort)
 
 ::: 
 
@@ -248,7 +248,7 @@ Our 120 PASS SNVs give a Ti/Tv of about 1.3. The rule of thumb from the slides (
 The same variant can be written in more than one way in a VCF. This matters as soon as you compare your calls to a database such as ClinVar or gnomAD: if the representation differs, an identical variant will not match. A VCF is **normalized** when:
 
 - indels are **left-aligned** (shifted to the leftmost position that describes the same change, which matters in repeats like `AAAA`)
-- alleles are **parsimonious** (no redundant shared bases beyond the one padding base)
+- alleles are **trimmed** (REF and ALT share no extra bases, only the one anchor base of an indel). For example, an SNV written as `ACT > ACG` is trimmed to `T > G`, because `AC` is shared
 - **multiallelic** sites are split into one record per alternative allele (`C,CA` becomes two records)
 
 For example, in our unfiltered calls, `chr6:5103987 CAA > C,CA` is one record with two alternative alleles. After normalizing, it becomes two biallelic records.

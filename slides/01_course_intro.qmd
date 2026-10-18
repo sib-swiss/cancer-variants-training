@@ -62,8 +62,8 @@ format:
 - **Gregoire Rossier:** Training coordinator at SIB
 - **Diana Marek:** Training coordinator at SIB
 - **Geert Van Geest:** Training Project Manager at SIB
-- **Flavio Lombardo:** Computational Biologist
-- **Deepak Tanwar:** Bioinformaticis Specialist and Trainer at SIB
+- **Flavio Lombardo:** Computational Biologist, Consultant
+- **Deepak Tanwar:** Bioinformatics Specialist and Trainer at SIB
 
 
 ::: {.center-logos}
