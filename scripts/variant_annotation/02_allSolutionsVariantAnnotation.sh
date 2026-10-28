@@ -25,26 +25,26 @@ mamba activate ngs-tools
 echo -e '##fileformat=VCFv4.2
 ##INFO=<ID=AF,Number=A,Type=Float,Description="Allele Frequency">
 #CHROM\tPOS\tID\tREF\tALT\tQUAL\tFILTER\tINFO
-chr7\t55242465\trs121913529\tA\tT\t.\tPASS\t.
-chr17\t7577121\trs28934578\tC\tT\t.\tPASS\t.
-chr13\t32936646\trs28897743\tC\tT\t.\tPASS\t.
-chr17\t7674894\trs28934574\tG\tA\t.\tPASS\t.
-chr13\t32914438\trs80357090\tT\tC\t.\tPASS\t.
-chr17\t41245466\trs28897686\tG\tA\t.\tPASS\t.
-chr3\t178936091\trs63751289\tG\tA\t.\tPASS\t.
-chr10\t89624230\trs61751507\tG\tA\t.\tPASS\t.
-chr11\t108098576\trs386833395\tG\tA\t.\tPASS\t.
-chr4\t55141055\trs1800744\tA\tG\t.\tPASS\t.
-chr1\t11190510\trs6603781\tG\tA\t.\tPASS\t.
-chr7\t140453136\trs121913530\tA\tT\t.\tPASS\t.
-chr17\t43094464\trs28897672\tA\tC\t.\tPASS\t.
-chr5\t112175770\trs121913343\tC\tT\t.\tPASS\t.' >"$VAR_DIR"/cancer_variants.vcf
+chr7\t55191822\trs121434568\tT\tG\t.\tPASS\t.
+chr12\t25245350\trs121913529\tC\tT\t.\tPASS\t.
+chr1\t114713908\trs11554290\tT\tC\t.\tPASS\t.
+chr7\t140753336\trs113488022\tA\tT\t.\tPASS\t.
+chr3\t179218303\trs104886003\tG\tA\t.\tPASS\t.
+chr3\t179234297\trs121913279\tA\tG\t.\tPASS\t.
+chr17\t7675088\trs28934578\tC\tT\t.\tPASS\t.
+chr17\t7674894\trs397516436\tG\tA\t.\tPASS\t.
+chr17\t7673802\trs28934576\tC\tT\t.\tPASS\t.
+chr2\t208248388\trs121913500\tC\tT\t.\tPASS\t.
+chr17\t43106487\trs28897672\tA\tC\t.\tPASS\t.
+chr13\t32398489\trs11571833\tA\tT\t.\tPASS\t.
+chr10\t87933147\trs121909224\tC\tT\t.\tPASS\t.
+chr5\t112839520\trs121913224\tAAAAGA\tA\t.\tPASS\t.' >"$VAR_DIR"/cancer_variants.vcf
 
 # 4. Verify the file was created correctly:
 # Check the content
 cat "$VAR_DIR"/cancer_variants.vcf
 
-# Make sure you have 13 variants
+# Make sure you have 14 variants
 grep -v '^#' "$VAR_DIR"/cancer_variants.vcf | wc -l # it should show 14
 
 # 1. BASIC VEP CALLS
