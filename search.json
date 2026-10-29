@@ -193,7 +193,7 @@
     "href": "slides/02_introduction_cancer_variants.html#mutation-vs-variant-a-practical-example",
     "title": "Cancer Variant Analysis",
     "section": "Mutation vs Variant: A Practical Example",
-    "text": "Mutation vs Variant: A Practical Example\n\n\nThe Yellow Flower Example:\n\nMutation: The change in DNA that caused petals to turn yellow\nVariant: The resulting DNA difference between yellow and white flowers\n\nThis is a somatic mutation - occurring during the plant’s development in one branch, analogous to somatic mutations in cancer.\nThe CCD4a gene mutation prevents breakdown of carotenoids, leading to yellow pigmentation.\n\n\n\n\nMutation example: chrysanthemum flowers (credit: Geert van Gest). Source"
+    "text": "Mutation vs Variant: A Practical Example\n\n\nThe Yellow Flower Example:\n\nMutation: The change in DNA that caused petals to turn yellow\nVariant: The resulting DNA difference between yellow and white flowers\n\nThis is a somatic mutation - occurring during the plant’s development in one branch, analogous to somatic mutations in cancer.\nThe CCD4a gene mutation prevents breakdown of carotenoids, leading to yellow pigmentation.\n\n\n\n\nMutation example: chrysanthemum flowers (credit: Geert van Geest). Source"
   },
   {
     "objectID": "slides/02_introduction_cancer_variants.html#types-of-mutations-in-cancer",
@@ -214,7 +214,7 @@
     "href": "slides/02_introduction_cancer_variants.html#sequencing-strategies-for-cancer-genomics",
     "title": "Cancer Variant Analysis",
     "section": "Sequencing Strategies for Cancer Genomics",
-    "text": "Sequencing Strategies for Cancer Genomics\n\n\nCoverage strategies\n\nWhole Genome Sequencing (WGS)\n\nComplete genome coverage\nDetects all variant types\nBest for structural variants\n\nWhole Exome Sequencing (WES) (Bait Capture)\n\nProtein-coding regions only\nCost-effective (WES 100x: 25 M 2 x 100 bpWGS 30x: 450 M 2 x 100 bp)\nMisses non-coding regions\n\nCustom panels (Bait Capture, mostly)\n\nTargeted cancer genes\nDeep coverage\n\n\n\nSequencing technologies\nShort reads (2x150bp standard):\n\nIllumina, MGI, Element, Ultima\nHigh accuracy, mature pipelines\n\nLong reads:\n\nPacBio HiFi: &gt;Q30 accuracy\nOxford Nanopore: Q20+ with R10.4.1\nSuperior for SVs and phasing\n\n\n\n\nSequencing cost vs throughput, credit: Geert van Gest\n\n\n\n\n\n\n\n\n\nDepth Recommendations\n\n\nWGS: 60-100x tumor, 30-40x normal WES: 100-200x ctDNA: 10,000-30,000x"
+    "text": "Sequencing Strategies for Cancer Genomics\n\n\nCoverage strategies\n\nWhole Genome Sequencing (WGS)\n\nComplete genome coverage\nDetects all variant types\nBest for structural variants\n\nWhole Exome Sequencing (WES) (Bait Capture)\n\nProtein-coding regions only\nCost-effective (WES 100x: 25 M 2 x 100 bpWGS 30x: 450 M 2 x 100 bp)\nMisses non-coding regions\n\nCustom panels (Bait Capture, mostly)\n\nTargeted cancer genes\nDeep coverage\n\n\n\nSequencing technologies\nShort reads (2x150bp standard):\n\nIllumina, MGI, Element, Ultima\nHigh accuracy, mature pipelines\n\nLong reads:\n\nPacBio HiFi: &gt;Q30 accuracy\nOxford Nanopore: Q20+ with R10.4.1\nSuperior for SVs and phasing\n\n\n\n\nSequencing cost vs throughput, credit: Geert van Geest\n\n\n\n\n\n\n\n\n\nDepth Recommendations\n\n\nWGS: 60-100x tumor, 30-40x normal WES: 100-200x ctDNA: 10,000-30,000x"
   },
   {
     "objectID": "slides/02_introduction_cancer_variants.html#experimental-design-tumor-normal-pairs",
@@ -305,7 +305,7 @@
     "href": "slides/02_introduction_cancer_variants.html#copy-number-variation-cnv",
     "title": "Cancer Variant Analysis",
     "section": "Copy Number Variation (CNV)",
-    "text": "Copy Number Variation (CNV)\n\n\nCharacteristics:\n\nGains or losses of genomic segments\nFull chromosome or arm-level events common\nCan cause Loss of Heterozygosity (LOH)\n\nDetection approach:\n\nCalculate coverage in bins\nNormalize for GC content and mappability\nCompare tumor vs normal ratio\nSegment and call CNV regions\n\nTools: CNVkit, ASCAT, Control-FREEC, PURPLE\n\n\n\n\nCNV scatter pot, Source\n\n\n\n\n\n\n\n\n\nClinical Example\n\n\nERBB2 (HER2) amplification in breast cancer determines eligibility for trastuzumab. MYC amplification is prognostic in many cancers."
+    "text": "Copy Number Variation (CNV)\n\n\nCharacteristics:\n\nGains or losses of genomic segments\nFull chromosome or arm-level events common\nCan cause Loss of Heterozygosity (LOH)\n\nDetection approach:\n\nCalculate coverage in bins\nNormalize for GC content and mappability\nCompare tumor vs normal ratio\nSegment and call CNV regions\n\nTools: CNVkit, ASCAT, Control-FREEC, PURPLE\n\n\n\n\nCNV scatter plot, Source\n\n\n\n\n\n\n\n\n\nClinical Example\n\n\nERBB2 (HER2) amplification in breast cancer determines eligibility for trastuzumab. MYC amplification is prognostic in many cancers."
   },
   {
     "objectID": "slides/02_introduction_cancer_variants.html#gene-fusions-in-cancer",
