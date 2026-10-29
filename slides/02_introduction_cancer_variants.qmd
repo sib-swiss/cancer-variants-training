@@ -67,7 +67,7 @@ Start by setting expectations. Cancer genomics is a rapidly evolving field that 
 :::
 
 ::: {.column width="40%"}
-![CT image showing multiple lung masses in a patient with metastatic testicular seminoma, [Source](https://doi.org/10.1102/1470-7330.2006.0020)](../assets/presentations/slidedeck_2/01_lung_metastases_CT_image.png){fig-alt="CT scan showing liver-metastatic cancer"}
+![CT image showing multiple lung masses in a patient with metastatic testicular seminoma, [Source](https://doi.org/10.1102/1470-7330.2006.0020)](../assets/presentations/slidedeck_2/01_lung_metastases_CT_image.png){fig-alt="CT scan showing lung metastases"}
 :::
 ::::
 
@@ -99,7 +99,7 @@ Cancer genomes typically harbor **2-8 driver mutations** (Vogelstein et al., 201
 ::: {.column width="50%"}
 ![Knudson hypothesis: Tumor Suppressor Gene (Knudson, 1971), [Source](https://josefelixrodriguezantonweb.com/tag/two-hit-hypothesis/)](../assets/presentations/slidedeck_2/02_two_hits_hypot.jpg){fig-alt="Knudson hypothesis"}
 
-![Timing of Mutation Events: An earlier mutation (a) produces a larger population of mutant cells, than a later event (b), (Oota, 2020) [Source](https://doi.org/10.1016/j.ymeth.2019.11.002)](../assets/presentations/slidedeck_2/02b_germline_vs_somatic.jpg){fig-alt="Somatic mutations create masaicism"}
+![Timing of Mutation Events: An earlier mutation (a) produces a larger population of mutant cells, than a later event (b), (Oota, 2020) [Source](https://doi.org/10.1016/j.ymeth.2019.11.002)](../assets/presentations/slidedeck_2/02b_germline_vs_somatic.jpg){fig-alt="Somatic mutations create mosaicism"}
 :::
 ::::
 
@@ -183,7 +183,7 @@ The CCD4a gene mutation prevents breakdown of carotenoids, leading to yellow pig
 :::
 
 ::: {.column width="50%"}
-![Mutation example: chrysanthemum flowers (credit: Geert van Gest). [Source](https://doi.org/10.1104/pp.106.087130)](../assets/presentations/slidedeck_2/04_mutations_effects.jpg){width="60%" fig-alt="Yellow and white chrysanthemum flowers"}
+![Mutation example: chrysanthemum flowers (credit: Geert van Geest). [Source](https://doi.org/10.1104/pp.106.087130)](../assets/presentations/slidedeck_2/04_mutations_effects.jpg){width="60%" fig-alt="Yellow and white chrysanthemum flowers"}
 :::
 ::::
 
@@ -236,9 +236,9 @@ Each mutational process leaves a characteristic pattern:
 :::
 
 ::: {.column width="50%"}
-![Mutational signature SBS1: Ageing signature. [Source](https://cancer.sanger.ac.uk/signatures/sbs/sbs4/)](../assets/presentations/slidedeck_2/05B_SBS1_GRCh38.jpg){fig-alt="Mutational signature spectrum plot, SBS1, associated with ageing"}
+![Mutational signature SBS1: Ageing signature. [Source](https://cancer.sanger.ac.uk/signatures/sbs/sbs1/)](../assets/presentations/slidedeck_2/05B_SBS1_GRCh38.jpg){fig-alt="Mutational signature spectrum plot, SBS1, associated with ageing"}
 
-![Mutational signature SBS4: Smoking signature. [Source](https://cancer.sanger.ac.uk/signatures/sbs/sbs1/)](../assets/presentations/slidedeck_2/05_SBS4_GRCh38.jpg){fig-alt="Mutational signature spectrum plot, SBS4, associated with smoking"}
+![Mutational signature SBS4: Smoking signature. [Source](https://cancer.sanger.ac.uk/signatures/sbs/sbs4/)](../assets/presentations/slidedeck_2/05_SBS4_GRCh38.jpg){fig-alt="Mutational signature spectrum plot, SBS4, associated with smoking"}
 
 ::: {.callout-note appearance="minimal"}
 **Transition:** Swapping similar shapes (Purine $\leftrightarrow$ Purine or Pyrimidine $\leftrightarrow$ Pyrimidine).
@@ -294,7 +294,7 @@ ___
 - Oxford Nanopore: Q20+ with R10.4.1
 - Superior for SVs and phasing
 
-![Sequencing cost vs throughput, credit: Geert van Gest](../assets/presentations/slidedeck_2/06_sequencing.png){fig-alt="Sequencing technologies"}
+![Sequencing cost vs throughput, credit: Geert van Geest](../assets/presentations/slidedeck_2/06_sequencing.png){fig-alt="Sequencing technologies"}
 
 :::
 ::::
@@ -986,7 +986,7 @@ Long-read sequencing (PacBio HiFi, ONT) dramatically improves structural variant
 :::
 
 ::: {.column width="50%"}
-![CNV scatter pot, [Source](https://cnvkit.readthedocs.io/en/v0.7.6/plots.html?highlight=re)](../assets/presentations/slidedeck_2/14_CNV.png){width="110%"height="110%"  fig-alt="CNVKit scatter plot"}
+![CNV scatter plot, [Source](https://cnvkit.readthedocs.io/en/stable/plots.html)](../assets/presentations/slidedeck_2/14_CNV.png){width="110%"height="110%"  fig-alt="CNVKit scatter plot"}
 
 :::
 ::::
@@ -1023,7 +1023,7 @@ Discordant alignments where paired reads map to different genes/chromosomes
 :::
 
 ::: {.column width="50%"}
-![BCR::ABL1 fusion, [Source](https://www.cancer.gov/publications/dictionaries/cancer-terms/def/bcrabl1-fusion-gene)](../assets/presentations/slidedeck_2/15_Gene_fusion.jpg){width="110%"height="110%"  fig-alt="CNVKit scatter plot"}
+![BCR::ABL1 fusion, [Source](https://www.cancer.gov/publications/dictionaries/cancer-terms/def/bcrabl1-fusion-gene)](../assets/presentations/slidedeck_2/15_Gene_fusion.jpg){width="110%"height="110%"  fig-alt="BCR::ABL1 fusion gene"}
 :::
 ::::
 
