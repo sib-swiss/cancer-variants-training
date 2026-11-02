@@ -380,6 +380,11 @@ bcftools view -H "$VARIANTDIR"/somatic.filtered.PASS.vcf.gz | wc -l
 If VEP processed fewer, some lines were skipped: check the warnings file next to the output. Also look at the consequence chart. Mostly `intron_variant` or `intergenic_variant` is normal; zero coding consequences would suggest a wrong assembly or cache version.
 :::
 
+::: {.callout-tip collapse="true"}
+## Is this input normalized?
+Yes. `bcftools norm -m -any -f ref_genome.fa` splits, joins and realigns none of the 132 records in `somatic.filtered.PASS.vcf.gz`. Normalize your own VCF first when it comes from another caller, because matching against ClinVar needs the same allele representation.
+:::
+
 ### Exercise 2
 ::: {.callout-important}
 ## Output to VCF
